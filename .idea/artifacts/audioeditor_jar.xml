@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="audioeditor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/audioeditor_jar</output-path>
+    <root id="archive" name="audioeditor.jar">
+      <element id="module-output" name="audioeditor" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../szakdolgozat/matlabcontrol-4.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../szakdolgozat/mysql-connector-java-3.1.6-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

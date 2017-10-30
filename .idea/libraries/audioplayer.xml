@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="audioplayer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/matlab/audioeditor/application/audioeditor.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
