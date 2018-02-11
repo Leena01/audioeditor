@@ -1,6 +1,7 @@
 package view;
 
 import database.entities.Song;
+import view.decorated.Button;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -47,7 +48,7 @@ class EditPanel extends JPanel {
         mainPanel.setOpaque(false);
 
         infoLabel = new JLabel();
-        doneButton = new JButton("Done");
+        doneButton = new Button("Done");
 
         nameLabel = new JLabel("Song name:");
         artistLabel = new JLabel("Artist: ");

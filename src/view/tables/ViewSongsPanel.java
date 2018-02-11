@@ -1,17 +1,16 @@
 package view.tables;
 
-import javax.swing.*;
-
 import database.entities.Song;
 import model.SongTableModel;
 import model.TableModel;
-
 import view.decorated.Panel;
+import view.decorated.Button;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
@@ -62,10 +61,10 @@ public class ViewSongsPanel extends Panel {
 
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(400, 100));
-        selectButton = new JButton();
-        editButton = new JButton();
-        deleteButton = new JButton();
-        backButton = new JButton();
+        selectButton = new Button();
+        editButton = new Button();
+        deleteButton = new Button();
+        backButton = new Button();
         infoLabel.setText("Please choose a song from the list below:");
         infoLabel.setForeground(Color.WHITE);
         selectButton.setText("Load");

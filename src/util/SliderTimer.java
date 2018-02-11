@@ -7,6 +7,9 @@ import java.util.Timer;
 import static util.Utils.formatDuration;
 
 public class SliderTimer extends Observable {
+    private static final int MIN = 0;
+    private static int MAX;
+
     private Timer timer;
     private JSlider slider;
     private JLabel timeField;
@@ -16,9 +19,6 @@ public class SliderTimer extends Observable {
     private double freq;
     private long timeElapsed;
     private long totalLength;
-
-    private static final int MIN = 0;
-    private static int MAX;
 
     public SliderTimer(JSlider slider, JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
         this.timer = null;

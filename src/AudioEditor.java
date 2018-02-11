@@ -5,7 +5,7 @@ import model.*;
 import model.exceptions.SQLConnectionException;
 import static util.Utils.showDialog;
 
-import util.MatlabHandler;
+import model.MatlabHandler;
 import view.*;
 
 import java.awt.event.WindowAdapter;
@@ -32,7 +32,7 @@ public class AudioEditor {
             try {
                 model.createTable();
                 eng = MatlabEngine.startMatlab();
-                matlabHandler = new MatlabHandler(eng);
+                matlabHandler = MatlabHandler.getInstance(eng);
                 mainWindow = new MainWindow(model, matlabHandler);
                 mainWindow.run();
 

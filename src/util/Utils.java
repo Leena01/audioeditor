@@ -2,7 +2,7 @@ package util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Duration;
+import java.awt.image.BufferedImage;
 
 public final class Utils {
     public static void showDialog(String message) {
@@ -25,5 +25,16 @@ public final class Utils {
                 (absSeconds % 3600) / 60,
                 absSeconds % 60);
         return duration < 0 ? "-" + positive : positive;
+    }
+
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, newW, newH, null);
+        g2d.dispose();
+
+        return dimg;
     }
 }

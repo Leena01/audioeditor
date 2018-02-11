@@ -39,5 +39,6 @@
     <orderEntry type="library" name="audioplayer" level="project" />
     <orderEntry type="library" name="javabuilder" level="project" />
     <orderEntry type="library" name="sqlite-jdbc-3.16.1" level="project" />
+    <orderEntry type="library" name="UMLDesignToolPluginProj" level="project" />
   </component>
 </module>
