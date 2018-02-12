@@ -1,7 +1,8 @@
 package view;
 
 import database.entities.Song;
-import view.decorated.Button;
+import view.decorated.OptionButton;
+import view.decorated.Label;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -47,11 +48,11 @@ class EditPanel extends JPanel {
         bodyPanel.setOpaque(false);
         mainPanel.setOpaque(false);
 
-        infoLabel = new JLabel();
-        doneButton = new Button("Done");
+        infoLabel = new Label();
+        doneButton = new OptionButton("Done");
 
-        nameLabel = new JLabel("Song name:");
-        artistLabel = new JLabel("Artist: ");
+        nameLabel = new Label("Song name:");
+        artistLabel = new Label("Artist: ");
         nameTextField = new JTextField("", 20);
         artistTextField = new JTextField("", 20);
         doneButton.addActionListener(al);
@@ -71,10 +72,6 @@ class EditPanel extends JPanel {
         bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 30, 30));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
         add(bodyPanel, BorderLayout.CENTER);
-
-        infoLabel.setForeground(Color.WHITE);
-        nameLabel.setForeground(Color.WHITE);
-        artistLabel.setForeground(Color.WHITE);
     }
 
     @Override

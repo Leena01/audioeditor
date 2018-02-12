@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import matlabcontrol.MatlabInvocationException;
+import view.decorated.Label;
 
 import java.sql.ResultSet;
 
@@ -57,7 +58,7 @@ public class LFrame extends JFrame implements ActionListener{
         setSize(240,340);
         setResizable(false);
 
-        background = new JLabel(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
+        background = new Label(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
 
         ImageIcon backi = new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/library.png");
         back = new JButton("",backi);
@@ -74,14 +75,14 @@ public class LFrame extends JFrame implements ActionListener{
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            slabel = new JLabel();
+            slabel = new Label();
             slabel.setOpaque(true);
             slabel.setBackground(Color.lightGray);
 
 
-            lbackground = new JLabel(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
+            lbackground = new Label(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
 
-            lfilename = new JLabel();
+            lfilename = new Label();
             try {
                 lfilename.setText(rs.getString("song_name"));
             } catch (SQLException e) {
@@ -91,7 +92,7 @@ public class LFrame extends JFrame implements ActionListener{
             lfilename.setOpaque(false);
             lfilename.setForeground(Color.red);
 
-            duration = new JLabel();
+            duration = new Label();
             duration.setText("Song Duration");
             duration.setVisible(true);
             duration.setForeground(Color.black);

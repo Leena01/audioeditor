@@ -1,3 +1,4 @@
+import com.jtattoo.plaf.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import database.*;
@@ -8,8 +9,10 @@ import static util.Utils.showDialog;
 import model.MatlabHandler;
 import view.*;
 
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Properties;
 
 public class AudioEditor {
 

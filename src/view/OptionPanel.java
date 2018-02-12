@@ -1,24 +1,22 @@
 package view;
 
-import view.decorated.Button;
+import view.decorated.OptionButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import static util.Utils.fillColor;
 
 public class OptionPanel extends JPanel {
     private static final Dimension BUTTON_SIZE = new Dimension(140, 30);
 
-    private JButton changePitchButton;
-    private JButton cutButton;
-    private JButton fftButton;
-    private JButton analyzeButton;
+    private OptionButton openFileOptionButton;
+    private OptionButton viewSongsOptionButton;
+    private OptionButton changePitchOptionButton;
+    private OptionButton cutOptionButton;
+    private OptionButton fftOptionButton;
+    private OptionButton analyzeOptionButton;
 
-    public OptionPanel(ActionListener cp, ActionListener cf, ActionListener fft, ActionListener as) {
+    public OptionPanel(ActionListener of, ActionListener vs, ActionListener cp, ActionListener cf, ActionListener fft, ActionListener as) {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = GridBagConstraints.RELATIVE;
@@ -28,18 +26,38 @@ public class OptionPanel extends JPanel {
         c.weighty = 1.0;
         c.anchor = GridBagConstraints.NORTH;
 
-        changePitchButton = new Button("Change pitch", BUTTON_SIZE);
-        changePitchButton.addActionListener(cp);
-        cutButton = new Button("Cut file", BUTTON_SIZE);
-        cutButton.addActionListener(cf);
-        fftButton = new Button("View spectrogram", BUTTON_SIZE);
-        fftButton.addActionListener(fft);
-        analyzeButton = new Button("Analyze song", BUTTON_SIZE);
-        analyzeButton.addActionListener(as);
-        add(changePitchButton, c);
-        add(cutButton, c);
-        add(fftButton, c);
-        add(analyzeButton, c);
+        openFileOptionButton = new OptionButton("Open file");
+        openFileOptionButton.addActionListener(of);
+        openFileOptionButton.addMouseListener();
+        viewSongsOptionButton = new OptionButton("View favorite songs");
+        viewSongsOptionButton.addActionListener(vs);
+        viewSongsOptionButton.addMouseListener();
+        changePitchOptionButton = new OptionButton("Change pitch", BUTTON_SIZE);
+        changePitchOptionButton.addActionListener(cp);
+        changePitchOptionButton.addMouseListener();
+        cutOptionButton = new OptionButton("Cut file", BUTTON_SIZE);
+        cutOptionButton.addActionListener(cf);
+        cutOptionButton.addMouseListener();
+        fftOptionButton = new OptionButton("View spectrogram", BUTTON_SIZE);
+        fftOptionButton.addActionListener(fft);
+        fftOptionButton.addMouseListener();
+        analyzeOptionButton = new OptionButton("Analyze song", BUTTON_SIZE);
+        analyzeOptionButton.addActionListener(as);
+        analyzeOptionButton.addMouseListener();
+        add(openFileOptionButton, c);
+        add(viewSongsOptionButton, c);
+        add(changePitchOptionButton, c);
+        add(cutOptionButton, c);
+        add(fftOptionButton, c);
+        add(analyzeOptionButton, c);
         setOpaque(false);
+        showOptions(false);
+    }
+
+    void showOptions(boolean l) {
+        changePitchOptionButton.setVisible(l);
+        cutOptionButton.setVisible(l);
+        fftOptionButton.setVisible(l);
+        analyzeOptionButton.setVisible(l);
     }
 }

@@ -19,6 +19,7 @@ public class Window extends JFrame {
     private JPanel titlePanel;
     private JPanel menuPanel;
     private JButton minimizeButton;
+    private JButton maximizeButton;
     private JButton exitButton;
     private JPanel titleBar = new JPanel(new BorderLayout()) {
         @Override
@@ -30,16 +31,20 @@ public class Window extends JFrame {
 
     public Window() {
         super();
+        try {
+            UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+        } catch(Exception ignored) { }
         titlePanel = new JPanel(new GridBagLayout());
-        titleLabel = new JLabel("Audio Editor");
+        titleLabel = new Label("Audio Editor");
         titleLabel.setFont(new Font("Alex Brush", Font.ITALIC, 60));
-        titleLabel.setForeground(Color.WHITE);
 
         menuPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         minimizeButton = new JButton("-");
+        minimizeButton.addActionListener(e -> setExtendedState(JFrame.ICONIFIED));
+        maximizeButton = new JButton("O");
+        maximizeButton.addActionListener(e -> setExtendedState(JFrame.MAXIMIZED_BOTH));
         exitButton = new JButton("X");
         exitButton.addActionListener(e -> System.exit(0));
-        minimizeButton.addActionListener(e -> setState(JFrame.ICONIFIED));
         compCoords = null;
         titleBar.addMouseListener(new MouseListener() {
             @Override
@@ -83,6 +88,7 @@ public class Window extends JFrame {
         titlePanel.setOpaque(false);
         menuPanel.setOpaque(false);
         menuPanel.add(minimizeButton);
+        menuPanel.add(maximizeButton);
         menuPanel.add(exitButton);
         menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         titlePanel.add(titleLabel);
@@ -91,7 +97,6 @@ public class Window extends JFrame {
         add(titleBar, BorderLayout.NORTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        JFrame.setDefaultLookAndFeelDecorated(true);
         setUndecorated(true);
         setVisible(true);
     }

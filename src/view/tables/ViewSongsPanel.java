@@ -3,7 +3,7 @@ package view.tables;
 import database.entities.Song;
 import model.SongTableModel;
 import model.TableModel;
-import view.decorated.Panel;
+import view.decorated.Label;
 import view.decorated.Button;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * View list of books
  */
-public class ViewSongsPanel extends Panel {
+public class ViewSongsPanel extends JPanel {
     private JLabel infoLabel;
     private JPanel buttonPanel;
     private JPanel mainPanel;
@@ -24,10 +24,10 @@ public class ViewSongsPanel extends Panel {
     private TableModel tableModel;
     private JTable table;
     private JScrollPane scrollPane;
-    private JButton selectButton;
-    private JButton editButton;
-    private JButton deleteButton;
-    private JButton backButton;
+    private Button selectOptionButton;
+    private Button editOptionButton;
+    private Button deleteOptionButton;
+    private Button backOptionButton;
 
     /**
      * Constructor
@@ -35,9 +35,10 @@ public class ViewSongsPanel extends Panel {
      */
     public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener e, ActionListener d, ActionListener b) {
         super();
+        setBackground(Color.BLACK);
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        infoLabel = new JLabel();
+        infoLabel = new Label();
         infoPanel = new JPanel(new FlowLayout());
         buttonPanel = new JPanel(new FlowLayout());
 
@@ -52,7 +53,6 @@ public class ViewSongsPanel extends Panel {
                 try {
                     tip = getValueAt(rowIndex, colIndex).toString();
                 } catch (Exception ignored) { }
-
                 return tip;
             }
 
@@ -61,23 +61,26 @@ public class ViewSongsPanel extends Panel {
 
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(400, 100));
-        selectButton = new Button();
-        editButton = new Button();
-        deleteButton = new Button();
-        backButton = new Button();
+        selectOptionButton = new Button();
+        selectOptionButton.addMouseListener();
+        editOptionButton = new Button();
+        editOptionButton.addMouseListener();
+        deleteOptionButton = new Button();
+        deleteOptionButton.addMouseListener();
+        backOptionButton = new Button();
+        backOptionButton.addMouseListener();
         infoLabel.setText("Please choose a song from the list below:");
-        infoLabel.setForeground(Color.WHITE);
-        selectButton.setText("Load");
-        editButton.setText("Edit");
-        backButton.setText("Back to Main Menu");
-        selectButton.addActionListener(l);
-        editButton.addActionListener(e);
-        deleteButton.addActionListener(d);
-        backButton.addActionListener(b);
+        selectOptionButton.setText("Load");
+        editOptionButton.setText("Edit");
+        backOptionButton.setText("Back to Main Menu");
+        selectOptionButton.addActionListener(l);
+        editOptionButton.addActionListener(e);
+        deleteOptionButton.addActionListener(d);
+        backOptionButton.addActionListener(b);
 
-        buttonPanel.add(selectButton);
-        buttonPanel.add(editButton);
-        buttonPanel.add(backButton);
+        buttonPanel.add(selectOptionButton);
+        buttonPanel.add(editOptionButton);
+        buttonPanel.add(backOptionButton);
         infoPanel.add(infoLabel);
         mainPanel.add(infoPanel, BorderLayout.NORTH);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);

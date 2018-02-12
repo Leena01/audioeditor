@@ -5,6 +5,7 @@ import model.exceptions.SQLConnectionException;
 import model.MatlabHandler;
 import view.decorated.SideBar;
 import view.decorated.Window;
+import view.decorated.Label;
 import view.tables.ViewSongsPanel;
 import database.entities.Song;
 import model.*;
@@ -36,7 +37,7 @@ public class MainWindow extends Window {
     private ViewSongsPanel viewSongsPanel;
     private JDialog editFrame;
     private EditPanel editPanel;
-    private JPanel optionPanel;
+    private OptionPanel optionPanel;
     private JPanel sideBar;
 
     private SongTableModel songTableModel;
@@ -83,8 +84,7 @@ public class MainWindow extends Window {
         getRootPane().setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        menuPanel = new MenuPanel(matlabHandler, openFileListener, viewSongsListener,
-                favoriteButtonListener, unfavoriteButtonListener);
+        menuPanel = new MenuPanel(matlabHandler, favoriteButtonListener, unfavoriteButtonListener);
         viewSongsPanel = new ViewSongsPanel(songTableModel, loadSongListener, editSongListener,
                 deleteSongListener, backToMenuListener); // TODO
 
@@ -94,7 +94,8 @@ public class MainWindow extends Window {
         editFrame.pack();
         editFrame.setVisible(false);
 
-        optionPanel = new OptionPanel(changePitchListener, cutFileListener, viewFFTListener, analyzeSongListener);
+        optionPanel = new OptionPanel(openFileListener, viewSongsListener, changePitchListener, cutFileListener,
+                viewFFTListener, analyzeSongListener);
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
@@ -110,14 +111,12 @@ public class MainWindow extends Window {
         totalSamples = 0.0;
         freq = 0.0;
         Dimension fieldDimension = new Dimension(250, 10);
-        currentSongName = new JLabel();
+        currentSongName = new Label();
         currentSongName.setPreferredSize(fieldDimension);
-        currentSongName.setForeground(Color.WHITE);
         currentSongName.setOpaque(false);
         bottomPanel.add(currentSongName);
-        currentSongArtist = new JLabel();
+        currentSongArtist = new Label();
         currentSongArtist.setPreferredSize(fieldDimension);
-        currentSongArtist.setForeground(Color.WHITE);
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
         lastOpenPath = null;
@@ -189,7 +188,7 @@ public class MainWindow extends Window {
                             try {
                                 BufferedImage plot = ImageIO.read(new File(imageName));
                                 menuPanel.setCurrentSong(totalSamples, freq, plot);
-                                optionPanel.setVisible(false);
+                                optionPanel.showOptions(true);
                                 pack();
                                 setMinimumSize(getSize());
                             } catch  (IOException ioe) {

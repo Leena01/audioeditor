@@ -5,38 +5,33 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Button extends JButton implements MouseListener {
+public class OptionButton extends JButton implements MouseListener {
     private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
     private static final Color HOVER_COLOR = Color.WHITE;
-    private static final Color PRESSED_COLOR = Color.GRAY;
+    private static final Color BACKGROUND_COLOR = Color.GRAY;
 
-    public Button() {
-        super();
-        setAttributes();
-    }
-
-    public Button(String text) {
+    public OptionButton(String text) {
         super(text);
         setAttributes();
     }
 
-    public Button(String text, Dimension d) {
+    public OptionButton(String text, Dimension d) {
         this(text);
         setPreferredSize(d);
         setAttributes();
     }
 
     public void mouseClicked(MouseEvent e) {
-        setForeground(PRESSED_COLOR);
-        setForeground(DEFAULT_COLOR);
+        setContentAreaFilled(true);
+        setContentAreaFilled(false);
     }
 
     public void mousePressed(MouseEvent e) {
-        setForeground(PRESSED_COLOR);
+        setContentAreaFilled(true);
     }
 
     public void mouseReleased(MouseEvent e) {
-        setForeground(DEFAULT_COLOR);
+        setContentAreaFilled(false);
     }
 
     public void mouseEntered(MouseEvent e) {
@@ -53,6 +48,7 @@ public class Button extends JButton implements MouseListener {
 
     private void setAttributes() {
         setForeground(DEFAULT_COLOR);
+        setBackground(BACKGROUND_COLOR);
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);

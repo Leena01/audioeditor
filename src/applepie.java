@@ -83,8 +83,8 @@ class applepie extends JFrame implements ActionListener
         setResizable(false);
 
 
-        background = new JLabel(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
-        art = new JLabel(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/02.jpg"));
+        background = new Label(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/background.png"));
+        art = new Label(new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/02.jpg"));
         ImageIcon closei = new ImageIcon("C:/Users/Livia/Desktop/audioeditor/images/close.png");
         closeButton = new JButton("",closei);
         closeButton.addActionListener(this);
@@ -93,7 +93,7 @@ class applepie extends JFrame implements ActionListener
         fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-        name = new JLabel("");
+        name = new Label("");
         name.setText("Choose an audio file.");
 
 

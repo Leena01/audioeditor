@@ -1,5 +1,11 @@
 package view;
 
+import model.MatlabHandler;
+import util.*;
+import view.decorated.AudioSliderUI;
+import view.decorated.Slider;
+import view.decorated.Label;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -9,11 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
-
-import model.MatlabHandler;
-import util.*;
-import view.decorated.AudioSliderUI;
-import view.decorated.Slider;
 
 class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Observer {
     private static final ImageIcon playIcon = new ImageIcon("resources/images/play.png");
@@ -56,9 +57,8 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         this.matlabHandler = matlabHandler;
         this.isPlaying = false;
 
-        timeField = new JLabel("", SwingConstants.RIGHT);
+        timeField = new Label("", SwingConstants.RIGHT);
         timeField.setOpaque(false);
-        timeField.setForeground(Color.WHITE);
         timeField.setMinimumSize(FIELD_DIMENSION);
         timeField.setPreferredSize(FIELD_DIMENSION);
         c.gridx = 0;
@@ -70,9 +70,8 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         c.gridx = 1;
         add(timeSlider, c);
 
-        totalLengthField = new JLabel("", SwingConstants.LEFT);
+        totalLengthField = new Label("", SwingConstants.LEFT);
         totalLengthField.setOpaque(false);
-        totalLengthField.setForeground(Color.WHITE);
         totalLengthField.setMinimumSize(FIELD_DIMENSION);
         totalLengthField.setPreferredSize(FIELD_DIMENSION);
         c.gridx = 2;
@@ -235,7 +234,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         g2d.drawLine(200, 0, 200,  scaledPlot.getHeight());
         g2d.dispose();
 
-        JLabel img = new JLabel(new ImageIcon(scaledPlot));
+        JLabel img = new Label(new ImageIcon(scaledPlot));
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 3;
