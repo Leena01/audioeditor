@@ -1,10 +1,12 @@
 package view;
 
-import model.MatlabHandler;
+import logic.matlab.MatlabHandler;
 import util.*;
-import view.decorated.AudioSliderUI;
-import view.decorated.Slider;
-import view.decorated.Label;
+import util.AudioSliderUI;
+import view.elements.playerpanel.TrackSlider;
+import view.elements.Label;
+import view.elements.Button;
+import view.elements.playerpanel.VolumeSlider;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -16,31 +18,34 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
+import static util.Utils.resizeImageIcon;
+
 class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Observer {
-    private static final ImageIcon playIcon = new ImageIcon("resources/images/play.png");
-    private static final ImageIcon playIconHover = new ImageIcon("resources/images/play2.png");
-    private static final ImageIcon pauseIcon = new ImageIcon("resources/images/pause.png");
-    private static final ImageIcon pauseIconHover = new ImageIcon("resources/images/pause2.png");
-    private static final ImageIcon stopIcon = new ImageIcon("resources/images/stop.png");
-    private static final ImageIcon stopIconHover = new ImageIcon("resources/images/stop2.png");
-    // private static final ImageIcon backwardIcon = new ImageIcon("resources/images/backward.png");
-    // private static final ImageIcon backwardIconHover = new ImageIcon("resources/images/backward2.png");
-    private static final ImageIcon favoriteIcon = new ImageIcon("resources/images/heart.png");
-    private static final ImageIcon unfavoriteIcon = new ImageIcon("resources/images/heart_red.png");
     private static final Dimension BUTTON_SIZE = new Dimension(40, 30);
-    private static final long refreshMillis = 50;
+    private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon("resources/images/play.png"), BUTTON_SIZE);
+    private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/play2.png"), BUTTON_SIZE);
+    private static final ImageIcon PAUSE_ICON = resizeImageIcon(new ImageIcon("resources/images/pause.png"), BUTTON_SIZE);
+    private static final ImageIcon PAUSE_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/pause2.png"), BUTTON_SIZE);
+    private static final ImageIcon STOP_ICON = resizeImageIcon(new ImageIcon("resources/images/stop.png"), BUTTON_SIZE);
+    private static final ImageIcon STOP_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/stop2.png"), BUTTON_SIZE);
+    // private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon("resources/images/backward.png"), BUTTON_SIZE);
+    // private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/backward2.png"), BUTTON_SIZE);
+    private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon("resources/images/heart.png"), BUTTON_SIZE);
+    private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon("resources/images/heart_red.png"), BUTTON_SIZE);
+    private static final ImageIcon BACKGROUND = new ImageIcon("resources/images/background.png");
+    private static final long REFRESH_MILLIS = 50;
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
 
     private JLabel timeField;
     private JLabel totalLengthField;
-    private Slider timeSlider;
-    private JButton playButton;
-    private JButton pauseButton;
-    private JButton stopButton;
-    private JButton favoriteButton;
-    private JButton unfavoriteButton;
+    private TrackSlider trackSlider;
+    private Button playButton;
+    private Button pauseButton;
+    private Button stopButton;
+    private Button favoriteButton;
+    private Button unfavoriteButton;
     private JPanel buttonPanel;
-    private JSlider volumeSlider;
+    private VolumeSlider volumeSlider;
     private MatlabHandler matlabHandler;
     private boolean isPlaying;
     private SliderTimer sliderTimer;
@@ -66,9 +71,9 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         c.gridwidth = 1;
         add(timeField, c);
 
-        timeSlider = new Slider(JSlider.HORIZONTAL);
+        trackSlider = new TrackSlider(JSlider.HORIZONTAL);
         c.gridx = 1;
-        add(timeSlider, c);
+        add(trackSlider, c);
 
         totalLengthField = new Label("", SwingConstants.LEFT);
         totalLengthField.setOpaque(false);
@@ -77,58 +82,30 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         c.gridx = 2;
         add(totalLengthField, c);
 
-        playButton = new JButton();
-        playButton.setPreferredSize(BUTTON_SIZE);
-        playButton.setIcon(playIcon);
-        playButton.setBorderPainted(false);
-        playButton.setRolloverIcon(playIconHover);
-        playButton.setOpaque(false);
-        playButton.setContentAreaFilled(false);
+        playButton = new Button(PLAY_ICON, BUTTON_SIZE);
+        playButton.setRolloverIcon(PLAY_ICON_HOVER);
+        playButton.addMouseListener();
 
-        pauseButton = new JButton();
-        pauseButton.setPreferredSize(BUTTON_SIZE);
-        pauseButton.setIcon(pauseIcon);
-        pauseButton.setBorderPainted(false);
-        pauseButton.setRolloverIcon(pauseIconHover);
-        pauseButton.setOpaque(false);
-        pauseButton.setContentAreaFilled(false);
+        pauseButton = new Button(PAUSE_ICON, BUTTON_SIZE);
+        pauseButton.setRolloverIcon(PAUSE_ICON_HOVER);
+        pauseButton.addMouseListener();
 
-        stopButton = new JButton();
-        stopButton.setPreferredSize(BUTTON_SIZE);
-        stopButton.setIcon(stopIcon);
-        stopButton.setBorderPainted(false);
-        stopButton.setRolloverIcon(stopIconHover);
-        stopButton.setOpaque(false);
-        stopButton.setContentAreaFilled(false);
+        stopButton = new Button(STOP_ICON, BUTTON_SIZE);
+        stopButton.setRolloverIcon(STOP_ICON_HOVER);
+        stopButton.addMouseListener();
 
-        favoriteButton = new JButton();
-        favoriteButton.setPreferredSize(BUTTON_SIZE);
-        favoriteButton.setIcon(favoriteIcon);
-        favoriteButton.setBorderPainted(false);
-        favoriteButton.setOpaque(false);
-        favoriteButton.setContentAreaFilled(false);
+        favoriteButton = new Button(FAVORITE_ICON, BUTTON_SIZE);
+        favoriteButton.addMouseListener();
 
-        unfavoriteButton = new JButton();
-        unfavoriteButton.setPreferredSize(BUTTON_SIZE);
-        unfavoriteButton.setIcon(unfavoriteIcon);
-        unfavoriteButton.setBorderPainted(false);
-        unfavoriteButton.setOpaque(false);
-        unfavoriteButton.setContentAreaFilled(false);
+        unfavoriteButton = new Button(UNFAVORITE_ICON, BUTTON_SIZE);
+        unfavoriteButton.addMouseListener();
 
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        volumeSlider = new JSlider(JSlider.HORIZONTAL);
+        volumeSlider = new VolumeSlider(new Dimension(100, 30));
         // volumeSlider.setForeground(Color.BLUE);
-        volumeSlider.setPreferredSize(new Dimension(100, 30));
-        volumeSlider.setMajorTickSpacing(10);
-        volumeSlider.setMinorTickSpacing(5);
-        volumeSlider.setPaintTicks(false);
-        volumeSlider.setPaintLabels(false);
-        volumeSlider.setPaintTrack(true);
-        volumeSlider.setOpaque(false);
-        volumeSlider.setValue(50);
 
         pauseButton.setVisible(false);
         favoriteButton.setVisible(false);
@@ -143,16 +120,11 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         c.gridy = 2;
         add(buttonPanel, c);
 
-        sliderTimer = new SliderTimer(timeSlider, timeField, totalLengthField, true);
+        sliderTimer = new SliderTimer(trackSlider, timeField, totalLengthField, true);
 
-        timeSlider.addChangeListener(this);
-        volumeSlider.addChangeListener(this);
-        playButton.addActionListener(this);
-        pauseButton.addActionListener(this);
-        stopButton.addActionListener(this);
+        initInnerListeners();
         favoriteButton.addActionListener(fb);
         unfavoriteButton.addActionListener(ufb);
-        sliderTimer.addObserver(this);
     }
 
     @Override
@@ -172,17 +144,14 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     @Override
     public void stateChanged(ChangeEvent e) {
         Object source = e.getSource();
-        if (source == timeSlider) {
-            Slider s = (Slider) source;
+        if (source == trackSlider) {
+            TrackSlider s = (TrackSlider) source;
             // if (!s.getValueIsAdjusting()) {
                 // sliderTimer.pauseTimer();
-                // timeSlider.removeListeners();
+                // trackSlider.removeListeners();
                 int frame = s.getValue();
                 sliderTimer.changeTime(frame);
-                new Thread(() -> {
-                    matlabHandler.relocateSong(frame, isPlaying);
-
-                }).start();
+                new Thread(() -> matlabHandler.relocateSong(frame, isPlaying)).start();
             // }
             /* else {
                 new Thread(() -> {
@@ -213,35 +182,16 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image background = new ImageIcon("resources/images/background.png").getImage();
+        Image background = BACKGROUND.getImage();
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
 
     void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
         stopSong();
-        sliderTimer.schedule(refreshMillis, totalSamples, freq);
+        sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
 
-        timeSlider.setImage(plot);
-        timeSlider.setUI(new AudioSliderUI(timeSlider));
-        // BufferedImage scaledPlot = Utils.resize(plot, 375, 60);
-        // timeSlider.setImage(scaledPlot);
-
-        /*
-        Graphics2D g2d = scaledPlot.createGraphics();
-        g2d.setColor(Color.BLUE);
-        BasicStroke bs = new BasicStroke(2);
-        g2d.setStroke(bs);
-        g2d.drawLine(200, 0, 200,  scaledPlot.getHeight());
-        g2d.dispose();
-
-        JLabel img = new Label(new ImageIcon(scaledPlot));
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 3;
-        add(img, c);
-        img.setHorizontalAlignment(JLabel.CENTER);
-        img.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        */
+        trackSlider.setImage(plot);
+        trackSlider.setUI(new AudioSliderUI(trackSlider));
     }
 
     private void playSong() {
@@ -278,5 +228,14 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
                 playButton.setVisible(true);
             });
         }).start();
+    }
+
+    private void initInnerListeners() {
+        sliderTimer.addObserver(this);
+        trackSlider.addChangeListener(this);
+        volumeSlider.addChangeListener(this);
+        playButton.addActionListener(this);
+        pauseButton.addActionListener(this);
+        stopButton.addActionListener(this);
     }
 }

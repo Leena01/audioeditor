@@ -1,18 +1,15 @@
-import com.jtattoo.plaf.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import database.*;
-import model.*;
-import model.exceptions.SQLConnectionException;
+import logic.*;
+import logic.exceptions.SQLConnectionException;
 import static util.Utils.showDialog;
 
-import model.MatlabHandler;
+import logic.matlab.MatlabHandler;
 import view.*;
 
-import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Properties;
 
 public class AudioEditor {
 

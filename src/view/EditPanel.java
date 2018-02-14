@@ -1,8 +1,8 @@
 package view;
 
 import database.entities.Song;
-import view.decorated.OptionButton;
-import view.decorated.Label;
+import view.elements.OptionButton;
+import view.elements.Label;
 
 import java.awt.*;
 import java.awt.event.*;

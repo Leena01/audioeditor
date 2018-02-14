@@ -1,14 +1,15 @@
 package view;
 
-import model.exceptions.InvalidOperationException;
-import model.exceptions.SQLConnectionException;
-import model.MatlabHandler;
-import view.decorated.SideBar;
-import view.decorated.Window;
-import view.decorated.Label;
+import logic.exceptions.InvalidOperationException;
+import logic.exceptions.SQLConnectionException;
+import logic.matlab.MatlabHandler;
+import logic.tablemodel.SongTableModel;
+import view.elements.SideBar;
+import view.elements.Window;
+import view.elements.Label;
 import view.tables.ViewSongsPanel;
 import database.entities.Song;
-import model.*;
+import logic.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,9 +26,12 @@ public class MainWindow extends Window {
     /**
      * Constants
      */
+    private static final String IMAGE_NAME = "temp.png";
     private static final String SUCCESSFUL_OPERATION = "Successful operation.";
     private static final String MENU_PANEL = "Menu Panel";
     private static final String VIEW_SONGS_PANEL = "View Songs Panel";
+    private static final String LAST_OPEN_PATH = null;
+    private static final Song LAST_OPEN_SONG = null;
 
     /**
      * Private data members
@@ -107,7 +111,7 @@ public class MainWindow extends Window {
             }
         };
 
-        currentSong = null;
+        currentSong = LAST_OPEN_SONG;
         totalSamples = 0.0;
         freq = 0.0;
         Dimension fieldDimension = new Dimension(250, 10);
@@ -119,7 +123,7 @@ public class MainWindow extends Window {
         currentSongArtist.setPreferredSize(fieldDimension);
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
-        lastOpenPath = null;
+        lastOpenPath = LAST_OPEN_PATH;
 
 
         mainPanel.add(menuPanel, MENU_PANEL);
@@ -140,8 +144,9 @@ public class MainWindow extends Window {
 
     public void run() {
         cardLayout.show(mainPanel, MENU_PANEL);
-        pack();
-        setMinimumSize(getSize());
+        // pack();
+        setMinimumSize(new Dimension(800, 400));
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -171,7 +176,6 @@ public class MainWindow extends Window {
                 if (f != null) {
                     lastOpenPath = f.getParent();
                     String p = f.getPath();
-                    String imageName = "temp.png";
                     currentSong = new Song(f.getName(), "-", p);
                     currentSongArtist.setText(currentSong.getArtist());
                     currentSongName.setText(currentSong.getName());
@@ -180,17 +184,16 @@ public class MainWindow extends Window {
 
                     new Thread(() -> {
                         matlabHandler.openSong(p);
-                        matlabHandler.plotSong(imageName);
+                        matlabHandler.plotSong(IMAGE_NAME);
                         totalSamples = matlabHandler.getTotalSamples();
                         freq = matlabHandler.getFreq();
                         // System.out.println(totalSamples);
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                BufferedImage plot = ImageIO.read(new File(imageName));
+                                BufferedImage plot = ImageIO.read(new File(IMAGE_NAME));
                                 menuPanel.setCurrentSong(totalSamples, freq, plot);
                                 optionPanel.showOptions(true);
-                                pack();
-                                setMinimumSize(getSize());
+                                cardLayout.show(mainPanel, MENU_PANEL);
                             } catch  (IOException ioe) {
                                 ioe.printStackTrace();
                             }

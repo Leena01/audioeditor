@@ -1,6 +1,6 @@
 package view;
 
-import view.decorated.OptionButton;
+import view.elements.OptionButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,16 +32,16 @@ public class OptionPanel extends JPanel {
         viewSongsOptionButton = new OptionButton("View favorite songs");
         viewSongsOptionButton.addActionListener(vs);
         viewSongsOptionButton.addMouseListener();
-        changePitchOptionButton = new OptionButton("Change pitch", BUTTON_SIZE);
+        changePitchOptionButton = new OptionButton("Change pitch");
         changePitchOptionButton.addActionListener(cp);
         changePitchOptionButton.addMouseListener();
-        cutOptionButton = new OptionButton("Cut file", BUTTON_SIZE);
+        cutOptionButton = new OptionButton("Cut file");
         cutOptionButton.addActionListener(cf);
         cutOptionButton.addMouseListener();
-        fftOptionButton = new OptionButton("View spectrogram", BUTTON_SIZE);
+        fftOptionButton = new OptionButton("View spectrogram");
         fftOptionButton.addActionListener(fft);
         fftOptionButton.addMouseListener();
-        analyzeOptionButton = new OptionButton("Analyze song", BUTTON_SIZE);
+        analyzeOptionButton = new OptionButton("Analyze song");
         analyzeOptionButton.addActionListener(as);
         analyzeOptionButton.addMouseListener();
         add(openFileOptionButton, c);

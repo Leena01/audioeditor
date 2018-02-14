@@ -1,10 +1,10 @@
 package view;
-import view.decorated.Label;
+import view.elements.Label;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-import model.MatlabHandler;
+import logic.matlab.MatlabHandler;
 
 import javax.swing.*;
 

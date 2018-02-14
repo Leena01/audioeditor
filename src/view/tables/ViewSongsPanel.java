@@ -1,10 +1,10 @@
 package view.tables;
 
 import database.entities.Song;
-import model.SongTableModel;
-import model.TableModel;
-import view.decorated.Label;
-import view.decorated.Button;
+import logic.tablemodel.SongTableModel;
+import logic.tablemodel.TableModel;
+import view.elements.Label;
+import view.elements.Button;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class ViewSongsPanel extends JPanel {
 
     /**
      * Constructor
-     * @param tm Table model
+     * @param tm Table logic
      */
     public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener e, ActionListener d, ActionListener b) {
         super();
