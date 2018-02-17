@@ -1,7 +1,7 @@
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import database.*;
-import logic.*;
+import logic.dbaccess.DatabaseAccessModel;
 import logic.exceptions.SQLConnectionException;
 import static util.Utils.showDialog;
 
@@ -22,24 +22,24 @@ public class AudioEditor {
         // DatabaseDao database = new MockDatabase();
         final Cache cache = new Cache(database, 1);
         final Persistence persistence = new Persistence(cache);
-        final Model model = new Model(persistence);
+        final DatabaseAccessModel databaseAccessModel = new DatabaseAccessModel(persistence);
         MatlabHandler matlabHandler;
         MainWindow mainWindow;
 
-        if (!model.isConnected())
+        if (!databaseAccessModel.isConnected())
             showDialog("Error: DatabaseDao connection failed.");
         else {
             try {
-                model.createTable();
+                databaseAccessModel.createTable();
                 eng = MatlabEngine.startMatlab();
                 matlabHandler = MatlabHandler.getInstance(eng);
-                mainWindow = new MainWindow(model, matlabHandler);
+                mainWindow = new MainWindow(databaseAccessModel, matlabHandler);
                 mainWindow.run();
 
                 mainWindow.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent we) {
                         matlabHandler.close();
-                        model.close();
+                        databaseAccessModel.close();
                     }
                 });
             } catch (SQLConnectionException e) {

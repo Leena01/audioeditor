@@ -1,37 +1,47 @@
 package view;
 
+import static util.Utils.showDialog;
+import com.mpatric.mp3agic.ID3v1;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
+import logic.dbaccess.SongModel;
+import logic.dbaccess.DatabaseAccessModel;
 import logic.exceptions.InvalidOperationException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
-import logic.tablemodel.SongTableModel;
-import view.elements.SideBar;
-import view.elements.Window;
-import view.elements.Label;
-import view.tables.ViewSongsPanel;
-import database.entities.Song;
-import logic.*;
+import view.element.core.bar.HorizontalBar;
+import view.panel.EditPanel;
+import view.panel.MenuPanel;
+import view.panel.OptionPanel;
+import logic.dbaccess.tablemodel.SongTableModel;
+import view.element.core.bar.SideBar;
+import view.element.core.window.Window;
+import view.element.core.label.Label;
+import view.panel.ViewSongsPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-
-import static util.Utils.fillColor;
-import static util.Utils.showDialog;
 
 public class MainWindow extends Window {
     /**
      * Constants
      */
     private static final String IMAGE_NAME = "temp.png";
+    private static final String COVER_NAME = "resources/images/default-artwork.png";
     private static final String SUCCESSFUL_OPERATION = "Successful operation.";
     private static final String MENU_PANEL = "Menu Panel";
     private static final String VIEW_SONGS_PANEL = "View Songs Panel";
     private static final String LAST_OPEN_PATH = null;
-    private static final Song LAST_OPEN_SONG = null;
+    private static final String DEFAULT_FIELD = "-";
+    private static final int BOTTOM_PANEL_HEIGHT = 12;
+    private static final Dimension WIN_MIN_SIZE = new Dimension(800, 400);
+    private static final Dimension FIELD_SIZE = new Dimension(250, 10);
 
     /**
      * Private data members
@@ -43,22 +53,15 @@ public class MainWindow extends Window {
     private EditPanel editPanel;
     private OptionPanel optionPanel;
     private JPanel sideBar;
-
-    private SongTableModel songTableModel;
+    private HorizontalBar bottomPanel;
     private CardLayout cardLayout;
 
-    private Song currentSong;
-    private double totalSamples;
-    private double freq;
+    private SongTableModel songTableModel;
+    private SongModel currentSongModel;
 
-    private JLabel currentSongName;
+    private JLabel currentSongTitle;
     private JLabel currentSongArtist;
     private String lastOpenPath;
-
-    /**
-     * Bottom panel
-     */
-    private JPanel bottomPanel;
 
     /**
      * Listeners
@@ -77,10 +80,11 @@ public class MainWindow extends Window {
     private ActionListener deleteSongListener;
     private ActionListener editDoneListener;
 
-    public MainWindow(Model model, MatlabHandler matlabHandler) {
+    public MainWindow(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {
         super();
         this.songTableModel = new SongTableModel();
-        initializeListeners(model, matlabHandler);
+        this.currentSongModel = new SongModel();
+        initializeListeners(databaseAccessModel, matlabHandler);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -103,34 +107,24 @@ public class MainWindow extends Window {
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
-        bottomPanel = new JPanel(new FlowLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                fillColor(g, Color.GRAY, Color.BLACK, getWidth(), getHeight());
-            }
-        };
+        bottomPanel = new HorizontalBar();
 
-        currentSong = LAST_OPEN_SONG;
-        totalSamples = 0.0;
-        freq = 0.0;
-        Dimension fieldDimension = new Dimension(250, 10);
-        currentSongName = new Label();
-        currentSongName.setPreferredSize(fieldDimension);
-        currentSongName.setOpaque(false);
-        bottomPanel.add(currentSongName);
+        Dimension fieldDimension = FIELD_SIZE;
+        currentSongTitle = new Label();
+        currentSongTitle.setPreferredSize(fieldDimension);
+        currentSongTitle.setOpaque(false);
+        bottomPanel.add(currentSongTitle);
         currentSongArtist = new Label();
         currentSongArtist.setPreferredSize(fieldDimension);
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
         lastOpenPath = LAST_OPEN_PATH;
 
-
         mainPanel.add(menuPanel, MENU_PANEL);
         mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
-        bottomPanel.setOpaque(false);
+        bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
     }
 
     @Override
@@ -145,7 +139,7 @@ public class MainWindow extends Window {
     public void run() {
         cardLayout.show(mainPanel, MENU_PANEL);
         // pack();
-        setMinimumSize(new Dimension(800, 400));
+        setMinimumSize(WIN_MIN_SIZE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -153,45 +147,66 @@ public class MainWindow extends Window {
     private File openFile() {
         JFileChooser fileChooser;
 
-        if (lastOpenPath != null && !lastOpenPath.equals("")) {
+        if (lastOpenPath != null && !lastOpenPath.equals(""))
             fileChooser = new JFileChooser(lastOpenPath);
-        } else {
+        else
             fileChooser = new JFileChooser();
-        }
 
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION)
-        {
             return fileChooser.getSelectedFile();
-        }
         return null;
     }
 
-    private void initializeListeners(Model model, MatlabHandler matlabHandler) {
+    private void initializeListeners(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {
         backToMenuListener = ae -> cardLayout.show(mainPanel, MENU_PANEL);
 
         openFileListener = ae -> {
             try {
                 File f = openFile();
                 if (f != null) {
-                    lastOpenPath = f.getParent();
-                    String p = f.getPath();
-                    currentSong = new Song(f.getName(), "-", p);
-                    currentSongArtist.setText(currentSong.getArtist());
-                    currentSongName.setText(currentSong.getName());
-                    // currentSongArtist.setText("Name: " + currentSong.getArtist()); // TODO
-                    // currentSongName.setText("Artist: " + currentSong.getName());
+                        lastOpenPath = f.getParent();
+                        String path = f.getPath();
+                        BufferedImage cover = ImageIO.read(new File(COVER_NAME));
+                        String title = f.getName();
+                        String track = DEFAULT_FIELD;
+                        String artist = DEFAULT_FIELD;
+                        String album = DEFAULT_FIELD;
+                        String year = DEFAULT_FIELD;
+                        String genre = DEFAULT_FIELD;
+                        String comment = DEFAULT_FIELD;
+                        try {
+                            Mp3File song = new Mp3File(path);
+                            if (song.hasId3v2Tag()) {
+                                ID3v2 id3v2tag = song.getId3v2Tag();
+                                byte[] imageData = id3v2tag.getAlbumImage();
+                                cover = ImageIO.read(new ByteArrayInputStream(imageData));
+                            }
+                            if (song.hasId3v1Tag()) {
+                                ID3v1 id3v1Tag = song.getId3v1Tag();
+                                title = id3v1Tag.getTitle();
+                                track = id3v1Tag.getTrack();
+                                artist = id3v1Tag.getArtist();
+                                album = id3v1Tag.getAlbum();
+                                year = id3v1Tag.getYear();
+                                genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
+                                comment = id3v1Tag.getComment();
+                            }
+                        } catch (Exception ignored) {}
+                        currentSongModel = new SongModel(title, track, artist, album, year, genre, comment, path);
+                        currentSongArtist.setText(currentSongModel.getArtist());
+                        currentSongTitle.setText(currentSongModel.getTitle());
+                        final BufferedImage artwork = cover;
 
                     new Thread(() -> {
-                        matlabHandler.openSong(p);
+                        matlabHandler.openSong(path);
                         matlabHandler.plotSong(IMAGE_NAME);
-                        totalSamples = matlabHandler.getTotalSamples();
-                        freq = matlabHandler.getFreq();
-                        // System.out.println(totalSamples);
+                        matlabHandler.passData(currentSongModel);
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 BufferedImage plot = ImageIO.read(new File(IMAGE_NAME));
-                                menuPanel.setCurrentSong(totalSamples, freq, plot);
+                                menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
+                                        currentSongModel.getFreq(), plot, artwork);
                                 optionPanel.showOptions(true);
                                 cardLayout.show(mainPanel, MENU_PANEL);
                             } catch  (IOException ioe) {
@@ -207,7 +222,7 @@ public class MainWindow extends Window {
 
         viewSongsListener = ae -> {
             try {
-                viewSongsPanel.setList(model.getSongs());
+                viewSongsPanel.setList(databaseAccessModel.getSongs());
                 cardLayout.show(mainPanel, VIEW_SONGS_PANEL);
             } catch (SQLConnectionException sqe) {
                 showDialog(sqe.getMessage());
@@ -216,8 +231,7 @@ public class MainWindow extends Window {
 
         favoriteButtonListener = ae -> {
             try {
-                int newId = model.addSong(currentSong);
-                currentSong.setId(newId);
+                databaseAccessModel.addSong(currentSongModel);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -225,7 +239,7 @@ public class MainWindow extends Window {
 
         unfavoriteButtonListener = ae -> {
             try {
-                model.deleteSong(currentSong);
+                databaseAccessModel.deleteSong(currentSongModel);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -252,13 +266,13 @@ public class MainWindow extends Window {
         };
 
         editSongListener = ae -> {
-            editPanel.setSelectedSong(viewSongsPanel.getSelected());
+            editPanel.setSelectedSong(viewSongsPanel.getSelectedSongModel());
             editFrame.setVisible(true);
         };
 
         deleteSongListener = ae -> {
             try {
-                model.deleteSong(viewSongsPanel.getSelected());
+                databaseAccessModel.deleteSong(viewSongsPanel.getSelectedSongModel());
                 showDialog(SUCCESSFUL_OPERATION);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
@@ -268,8 +282,7 @@ public class MainWindow extends Window {
         editDoneListener = ae -> {
             editFrame.setVisible(false);
             try {
-                model.editSong(editPanel.getSelectedId(), editPanel.getNameField(),
-                        editPanel.getArtistField(), editPanel.getSelectedPath());
+                databaseAccessModel.editSong(editPanel.getSelectedSongModel());
                 showDialog(SUCCESSFUL_OPERATION);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());

@@ -39,8 +39,8 @@ public class Cache implements DatabaseDao {
     }
 
     @Override
-    public boolean deleteSong(int id) {
-        boolean success = database.deleteSong(id);
+    public boolean deleteSong(Song s) {
+        boolean success = database.deleteSong(s);
         refreshCache();
         return success;
     }

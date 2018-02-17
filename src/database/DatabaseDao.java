@@ -7,7 +7,7 @@ public interface DatabaseDao {
     boolean createTable();
     List<Song> getSongs();
     boolean addSong(Song s);
-    boolean deleteSong(int id);
+    boolean deleteSong(Song s);
     boolean editSong(Song s);
     boolean isConnected();
     void commit();

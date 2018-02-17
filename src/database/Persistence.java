@@ -22,8 +22,8 @@ public class Persistence {
         return database.addSong(new Song(s));
     }
 
-    public boolean deleteSong(int id) {
-        return database.deleteSong(id);
+    public boolean deleteSong(Song s) {
+        return database.deleteSong(s);
     }
 
     public boolean editSong(Song s) {

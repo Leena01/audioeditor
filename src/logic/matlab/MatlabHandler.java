@@ -1,8 +1,10 @@
 package logic.matlab;
 
+import static logic.matlab.MatlabCommands.*;
+import static util.Utils.showDialog;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
-import static util.Utils.showDialog;
+import logic.dbaccess.SongModel;
 
 public class MatlabHandler {
     private MatlabEngine eng;
@@ -12,11 +14,11 @@ public class MatlabHandler {
 
     private final static String FILE_FORMAT_ERROR = "Wrong file format.";
     private final static String NO_SONG_ERROR = "No media found/selected.";
+    private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
 
     public static MatlabHandler getInstance(MatlabEngine eng) {
-        if(instance == null) {
+        if(instance == null)
             instance = new MatlabHandler(eng);
-        }
         return instance;
     }
 
@@ -26,12 +28,9 @@ public class MatlabHandler {
         this.freq = 0.0;
     }
 
-    public double getTotalSamples() {
-        return totalSamples;
-    }
-
-    public double getFreq() {
-        return freq;
+    public void passData(SongModel sm) {
+        sm.setTotalSamples(totalSamples);
+        sm.setFreq(freq);
     }
 
     public void close() {
@@ -40,7 +39,7 @@ public class MatlabHandler {
                 eng.close();
                 instance = null;
             } catch(EngineException e) {
-                showDialog("Error closing Matlab Engine.");
+                showDialog(CLOSE_ERROR);
             } catch (Exception e) {
                 showDialog(e.getMessage());
             }
@@ -49,12 +48,10 @@ public class MatlabHandler {
 
     public synchronized void openSong(String p) {
         try {
-            eng.putVariable("path", p.toCharArray());
-            eng.eval("[x, fs] = audioread(path); player = audioplayer(x, fs); " +
-                    "total = get(player, 'TotalSamples');");
-            this.totalSamples = eng.getVariable("total");
-            // System.out.println("AAAA" + totalSamples);
-            this.freq = eng.getVariable("fs");
+            eng.putVariable(PATH_VAR, p.toCharArray());
+            eng.eval(OPEN_SONG);
+            this.totalSamples = eng.getVariable(TOTAL_VAR);
+            this.freq = eng.getVariable(FREQ_VAR);
             // TODO: too long
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -63,22 +60,8 @@ public class MatlabHandler {
 
     public synchronized void plotSong(String imageName) {
         try {
-            eng.putVariable("imgname", imageName.toCharArray());
-            eng.eval("figure('visible', 'off');" +
-                    "x1 = x(:, 1); xlen = length(x); tlen = xlen/fs; tper = 1/fs; " +
-                    "t = 0:tper:(xlen/fs) - tper;" +
-                    "plot(t, x1); set(gca,'Color','k');" +
-                    "axis([t(1) t(end) -max(x1) max(x1)]);" +
-                    "ax = gca; box off;" +
-                    "set(gca, 'XTick', [], 'YTick', []); " +
-                    "outerpos = ax.OuterPosition; " +
-                    "ti = ax.TightInset; " +
-                    "left = outerpos(1) + ti(1); " +
-                    "bottom = outerpos(2) + ti(2); " +
-                    "ax_width = outerpos(3) - ti(1) - ti(3); " +
-                    "ax_height = outerpos(4) - ti(2) - ti(4); " +
-                    "ax.Position = [left bottom ax_width ax_height];");
-            eng.eval("hgexport(gcf, imgname, hgexport('factorystyle'), 'Format', 'png');");
+            eng.putVariable(IMG_VAR, imageName.toCharArray());
+            eng.eval(PLOT_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -86,7 +69,7 @@ public class MatlabHandler {
 
     public synchronized void pauseSong() {
         try {
-            eng.eval("pause(player)");
+            eng.eval(PAUSE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -94,7 +77,7 @@ public class MatlabHandler {
 
     public synchronized void resumeSong() {
         try {
-            eng.eval("resume(player)");
+            eng.eval(RESUME_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -102,7 +85,7 @@ public class MatlabHandler {
 
     public synchronized void stopSong() {
         try {
-            eng.eval("stop(player)");
+            eng.eval(STOP_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -110,14 +93,14 @@ public class MatlabHandler {
 
     public synchronized void relocateSong(int frame, boolean isPlaying) {
         try {
-            eng.putVariable("start", frame);
+            eng.putVariable(START_VAR, frame);
             if (frame == 0 || frame == totalSamples)
-                eng.eval("stop(player); play(player);");
+                eng.eval(RELOCATE_SONG_EMPTY);
             else
-                eng.eval("stop(player); play(player, start);");
+                eng.eval(RELOCATE_SONG);
 
             if (!isPlaying)
-                eng.eval("pause(player)");
+                eng.eval(PAUSE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -125,11 +108,10 @@ public class MatlabHandler {
 
     public synchronized void changeVolume(float level, boolean isPlaying) {
         try {
-            eng.putVariable("level", level);
-            eng.eval("current = get(player, 'CurrentSample'); y = x * level; " +
-                    "player = audioplayer(y, fs); play(player, current);");
+            eng.putVariable(LEVEL_VAR, level);
+            eng.eval(CHANGE_VOLUME);
             if (!isPlaying)
-                eng.eval("pause(player)");
+                eng.eval(PAUSE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
