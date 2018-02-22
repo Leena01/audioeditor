@@ -32,6 +32,10 @@ public class Song {
     }
 
 
+    public Song() {
+        this.id = -1;
+    }
+
     public Song(Song other) {
         this.id = other.id;
         this.title = other.title;

@@ -38,13 +38,13 @@ public class SliderTimer extends Observable {
         MAX = (int)totalSamples;
         this.freq = freq;
         this.totalLength = (long)((MAX / freq) * 1000);
-        System.out.println("MMMMMMMMMMMMMMM" + formatDuration(totalLength));
         this.totalLengthField.setText(formatDuration(totalLength));
         this.slider.setMinimum(MIN);
         this.slider.setMaximum(MAX);
     }
 
     public void resumeTimer() {
+        System.out.println("Hiiiiiii");
         if (refreshMillis != 0) {
             System.out.println(refreshMillis);
             timer = new Timer(isDaemon);

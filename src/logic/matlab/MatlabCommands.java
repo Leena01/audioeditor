@@ -1,6 +1,9 @@
 package logic.matlab;
 
 final class MatlabCommands {
+    /**
+     * Matlab language injection
+     */
     static final String PATH_VAR = "path";
     static final String TOTAL_VAR = "total";
     static final String FREQ_VAR = "fs";

@@ -11,7 +11,7 @@ public class TrackSlider extends JSlider {
         super(n, 0, 100, 50);
     }
 
-    public Image getImage() {
+    Image getImage() {
         return img;
     }
 

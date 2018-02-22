@@ -1,10 +1,11 @@
 package logic.dbaccess;
 
+import static util.Constants.LAST_OPEN_SONG;
 import database.entities.Song;
+import org.jetbrains.annotations.NotNull;
 
 public class SongModel {
-    private static final Song LAST_OPEN_SONG = null;
-
+    @NotNull
     private Song song;
     private double totalSamples = 0.0;
     private double freq = 0.0;

@@ -4,6 +4,7 @@ import database.entities.Song;
 import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
 import logic.dbaccess.tablemodel.TableModel;
+import org.jetbrains.annotations.NotNull;
 import view.element.core.label.Label;
 import view.element.core.button.Button;
 
@@ -14,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
- * View list of books
+ * View list of songs
  */
 public class ViewSongsPanel extends JPanel {
     private static final Dimension TABLE_SIZE = new Dimension(400, 100);
@@ -51,7 +52,7 @@ public class ViewSongsPanel extends JPanel {
             /**
              * Table cell tooltips
              */
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(@NotNull MouseEvent e) {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
@@ -61,8 +62,8 @@ public class ViewSongsPanel extends JPanel {
                 } catch (Exception ignored) { }
                 return tip;
             }
-
         };
+
         table.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(TABLE_SIZE);

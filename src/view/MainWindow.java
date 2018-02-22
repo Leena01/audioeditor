@@ -1,6 +1,7 @@
 package view;
 
 import static util.Utils.showDialog;
+import static view.util.Constants.*;
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
@@ -32,20 +33,16 @@ public class MainWindow extends Window {
     /**
      * Constants
      */
-    private static final String IMAGE_NAME = "temp.png";
-    private static final String COVER_NAME = "resources/images/default-artwork.png";
     private static final String SUCCESSFUL_OPERATION = "Successful operation.";
-    private static final String MENU_PANEL = "Menu Panel";
     private static final String VIEW_SONGS_PANEL = "View Songs Panel";
-    private static final String LAST_OPEN_PATH = null;
-    private static final String DEFAULT_FIELD = "-";
-    private static final int BOTTOM_PANEL_HEIGHT = 12;
-    private static final Dimension WIN_MIN_SIZE = new Dimension(800, 400);
-    private static final Dimension FIELD_SIZE = new Dimension(250, 10);
+    private static final String MENU_PANEL = "Menu Panel";
 
     /**
      * Private data members
      */
+    private SongTableModel songTableModel;
+    private SongModel currentSongModel;
+
     private JPanel mainPanel;
     private MenuPanel menuPanel;
     private ViewSongsPanel viewSongsPanel;
@@ -56,9 +53,6 @@ public class MainWindow extends Window {
     private HorizontalBar bottomPanel;
     private CardLayout cardLayout;
 
-    private SongTableModel songTableModel;
-    private SongModel currentSongModel;
-
     private JLabel currentSongTitle;
     private JLabel currentSongArtist;
     private String lastOpenPath;
@@ -66,6 +60,7 @@ public class MainWindow extends Window {
     /**
      * Listeners
      */
+    private MouseListener emptyMouseListener;
     private ActionListener backToMenuListener;
     private ActionListener openFileListener;
     private ActionListener viewSongsListener;
@@ -86,13 +81,14 @@ public class MainWindow extends Window {
         this.currentSongModel = new SongModel();
         initializeListeners(databaseAccessModel, matlabHandler);
 
+        getGlassPane().addMouseListener(emptyMouseListener);
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         mainPanel.setVisible(true);
         getRootPane().setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        menuPanel = new MenuPanel(matlabHandler, favoriteButtonListener, unfavoriteButtonListener);
+        menuPanel = new MenuPanel(matlabHandler, getGlassPane(), favoriteButtonListener, unfavoriteButtonListener);
         viewSongsPanel = new ViewSongsPanel(songTableModel, loadSongListener, editSongListener,
                 deleteSongListener, backToMenuListener); // TODO
 
@@ -109,16 +105,15 @@ public class MainWindow extends Window {
 
         bottomPanel = new HorizontalBar();
 
-        Dimension fieldDimension = FIELD_SIZE;
         currentSongTitle = new Label();
-        currentSongTitle.setPreferredSize(fieldDimension);
+        currentSongTitle.setPreferredSize(BOTTOM_FIELD_SIZE);
         currentSongTitle.setOpaque(false);
         bottomPanel.add(currentSongTitle);
         currentSongArtist = new Label();
-        currentSongArtist.setPreferredSize(fieldDimension);
+        currentSongArtist.setPreferredSize(BOTTOM_FIELD_SIZE);
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
-        lastOpenPath = LAST_OPEN_PATH;
+        lastOpenPath = currentSongModel.getPath();
 
         mainPanel.add(menuPanel, MENU_PANEL);
         mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
@@ -167,7 +162,7 @@ public class MainWindow extends Window {
                 if (f != null) {
                         lastOpenPath = f.getParent();
                         String path = f.getPath();
-                        BufferedImage cover = ImageIO.read(new File(COVER_NAME));
+                        Image cover = ImageIO.read(new File(COVER_NAME));
                         String title = f.getName();
                         String track = DEFAULT_FIELD;
                         String artist = DEFAULT_FIELD;
@@ -196,19 +191,23 @@ public class MainWindow extends Window {
                         currentSongModel = new SongModel(title, track, artist, album, year, genre, comment, path);
                         currentSongArtist.setText(currentSongModel.getArtist());
                         currentSongTitle.setText(currentSongModel.getTitle());
-                        final BufferedImage artwork = cover;
+                        final Image artwork = cover;
 
                     new Thread(() -> {
+                        getGlassPane().setVisible(true);
+                        setCursor(new Cursor(Cursor.WAIT_CURSOR));
                         matlabHandler.openSong(path);
-                        matlabHandler.plotSong(IMAGE_NAME);
+                        matlabHandler.plotSong(PLOT_IMAGE_NAME);
                         matlabHandler.passData(currentSongModel);
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                BufferedImage plot = ImageIO.read(new File(IMAGE_NAME));
+                                BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
                                 menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
                                         currentSongModel.getFreq(), plot, artwork);
                                 optionPanel.showOptions(true);
                                 cardLayout.show(mainPanel, MENU_PANEL);
+                                setCursor(Cursor.getDefaultCursor());
+                                getGlassPane().setVisible(false);
                             } catch  (IOException ioe) {
                                 ioe.printStackTrace();
                             }
@@ -288,6 +287,23 @@ public class MainWindow extends Window {
                 showDialog(ex.getMessage());
             }
             editPanel.clearFields();
+        };
+
+        emptyMouseListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) { }
+
+            @Override
+            public void mousePressed(MouseEvent e) { }
+
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+
+            @Override
+            public void mouseExited(MouseEvent e) { }
         };
     }
 }

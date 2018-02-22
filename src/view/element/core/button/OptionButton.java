@@ -37,23 +37,28 @@ public class OptionButton extends JButton implements MouseListener {
         setAttributes();
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
         setContentAreaFilled(true);
         setContentAreaFilled(false);
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         setContentAreaFilled(true);
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         setContentAreaFilled(false);
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
         setForeground(HOVER_COLOR);
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         setForeground(DEFAULT_COLOR);
     }

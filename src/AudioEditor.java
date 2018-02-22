@@ -38,8 +38,12 @@ public class AudioEditor {
 
                 mainWindow.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent we) {
+                        mainWindow.getGlassPane().setVisible(true);
                         matlabHandler.close();
                         databaseAccessModel.close();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignored) { }
                     }
                 });
             } catch (SQLConnectionException e) {
