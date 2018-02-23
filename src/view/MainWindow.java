@@ -135,6 +135,7 @@ public class MainWindow extends Window {
         cardLayout.show(mainPanel, MENU_PANEL);
         // pack();
         setMinimumSize(WIN_MIN_SIZE);
+        setSize(WIN_MIN_SIZE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -151,6 +152,11 @@ public class MainWindow extends Window {
         if (returnVal == JFileChooser.APPROVE_OPTION)
             return fileChooser.getSelectedFile();
         return null;
+    }
+
+    protected void changePanelSize() {
+        if (currentSongModel.getId() != -1)
+            menuPanel.hideCover(isHidden);
     }
 
     private void initializeListeners(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {
@@ -203,7 +209,7 @@ public class MainWindow extends Window {
                             try {
                                 BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
                                 menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
-                                        currentSongModel.getFreq(), plot, artwork);
+                                        currentSongModel.getFreq(), plot, artwork, isHidden);
                                 optionPanel.showOptions(true);
                                 cardLayout.show(mainPanel, MENU_PANEL);
                                 setCursor(Cursor.getDefaultCursor());

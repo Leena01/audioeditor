@@ -9,20 +9,18 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 import static javax.swing.border.BevelBorder.LOWERED;
+import static view.util.Constants.AUDIO_SLIDER_SIZE;
 
 public class AudioSliderUI extends BasicSliderUI {
 
     public AudioSliderUI(TrackSlider b) {
         super(b);
-        b.setPreferredSize(new Dimension(500, 65));
+        b.setPreferredSize(AUDIO_SLIDER_SIZE);
         b.setPaintTicks(false);
         b.setPaintLabels(false);
         b.setPaintLabels(false);
         b.setPaintTrack(true);
         b.setOpaque(false);
-        b.setBorder(new CompoundBorder(
-                BorderFactory.createEmptyBorder(0, 10, 10, 10),
-                BorderFactory.createBevelBorder(LOWERED, Color.GRAY, Color.DARK_GRAY)));
     }
 
     @Override

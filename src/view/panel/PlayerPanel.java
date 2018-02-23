@@ -1,8 +1,8 @@
 package view.panel;
 
+import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
 import view.element.playerpanel.*;
-import view.element.core.label.Label;
 import view.element.core.button.Button;
 
 import javax.swing.*;
@@ -21,17 +21,17 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private static final long REFRESH_MILLIS = 50;
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
     private static final Dimension BUTTON_SIZE = new Dimension(40, 30);
-    private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon("resources/images/play.png"), BUTTON_SIZE);
-    private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/play2.png"), BUTTON_SIZE);
-    private static final ImageIcon PAUSE_ICON = resizeImageIcon(new ImageIcon("resources/images/pause.png"), BUTTON_SIZE);
-    private static final ImageIcon PAUSE_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/pause2.png"), BUTTON_SIZE);
-    private static final ImageIcon STOP_ICON = resizeImageIcon(new ImageIcon("resources/images/stop.png"), BUTTON_SIZE);
-    private static final ImageIcon STOP_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/stop2.png"), BUTTON_SIZE);
-    // private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon("resources/images/backward.png"), BUTTON_SIZE);
-    // private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon("resources/images/backward2.png"), BUTTON_SIZE);
-    private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon("resources/images/heart.png"), BUTTON_SIZE);
-    private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon("resources/images/heart_red.png"), BUTTON_SIZE);
-    private static final ImageIcon BACKGROUND = new ImageIcon("resources/images/background.png");
+    private static final Dimension VOLUME_SLIDER_SIZE = new Dimension(100, 30);
+    private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon(PLAY_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon(PLAY_ICON_HOVER_NAME), BUTTON_SIZE);
+    private static final ImageIcon PAUSE_ICON = resizeImageIcon(new ImageIcon(PAUSE_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon PAUSE_ICON_HOVER = resizeImageIcon(new ImageIcon(PAUSE_ICON_HOVER_NAME), BUTTON_SIZE);
+    private static final ImageIcon STOP_ICON = resizeImageIcon(new ImageIcon(STOP_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon STOP_ICON_HOVER = resizeImageIcon(new ImageIcon(STOP_ICON_HOVER_NAME), BUTTON_SIZE);
+    // private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon(BACKWARD_ICON_NAME), BUTTON_SIZE);
+    // private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon(BACKWARD_ICON_HOVER_NAME), BUTTON_SIZE);
+    private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon(FAVORITE_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon(UNFAVORITE_ICON_NAME), BUTTON_SIZE);
 
     private JLabel timeField;
     private JLabel totalLengthField;
@@ -94,7 +94,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        volumeSlider = new VolumeSlider(new Dimension(100, 30));
+        volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE);
         volumeSlider.setForeground(Color.BLUE);
 
         pauseButton.setVisible(false);
@@ -183,14 +183,6 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         isPlaying = !isPlaying;
         pauseButton.setVisible(false);
         playButton.setVisible(true);
-    }
-
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Image background = BACKGROUND.getImage();
-        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
 
     void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {

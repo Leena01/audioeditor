@@ -21,10 +21,10 @@ final class MatlabCommands {
             "x1 = " + SAMPLE_VAR + "(:, 1); xlen = length(" + SAMPLE_VAR + "); " +
             "tlen = xlen/" + FREQ_VAR + "; tper = 1/" + FREQ_VAR + "; " +
             "t = 0:tper:(xlen/" + FREQ_VAR + ") - tper; " +
-            "plot(t, x1); set(gca, 'Color', 'k'); " +
+            "p = plot(t, x1); set(gca, 'Color', 'k'); " +
             "axis([t(1) t(end) -max(x1) max(x1)]); " +
             "ax = gca; box off; " +
-            "set(gca, 'XTick', [], 'YTick', []); " +
+            "set(ax, 'XTick', [], 'YTick', []); " +
             "outerpos = ax.OuterPosition; " +
             "ti = ax.TightInset; " +
             "left = outerpos(1) + ti(1); " +

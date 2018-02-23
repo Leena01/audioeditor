@@ -5,28 +5,33 @@ import view.element.core.button.Button;
 import view.element.core.label.Label;
 
 import static util.Utils.resizeImageIcon;
+import static view.util.Constants.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 
-public class Window extends JFrame {
+public abstract class Window extends JFrame {
     private static Point COMP_COORDS = null;
     private static final Dimension IMAGE_SIZE = new Dimension(20, 20);
     private static final Dimension BUTTON_SIZE = new Dimension(30, 20);
-    private static final ImageIcon MINIMIZE_ICON = resizeImageIcon(new ImageIcon("resources/images/minimize.png"), IMAGE_SIZE);
-    private static final ImageIcon MAXIMIZE_ICON = resizeImageIcon(new ImageIcon("resources/images/maximize.png"), IMAGE_SIZE);
-    private static final ImageIcon NORMALIZE_ICON = resizeImageIcon(new ImageIcon("resources/images/normalize.png"), IMAGE_SIZE);
-    private static final ImageIcon CLOSE_ICON = resizeImageIcon(new ImageIcon("resources/images/close.png"), IMAGE_SIZE);
+    private static final ImageIcon UP_ICON = resizeImageIcon(new ImageIcon(UP_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon DOWN_ICON = resizeImageIcon(new ImageIcon(DOWN_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon MINIMIZE_ICON = resizeImageIcon(new ImageIcon(MINIMIZE_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon MAXIMIZE_ICON = resizeImageIcon(new ImageIcon(MAXIMIZE_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon NORMALIZE_ICON = resizeImageIcon(new ImageIcon(NORMALIZE_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon CLOSE_ICON = resizeImageIcon(new ImageIcon(CLOSE_ICON_NAME), IMAGE_SIZE);
 
+    protected boolean isHidden;
     private HorizontalBar titleBar;
     private JLabel titleLabel;
     private JPanel titlePanel;
     private JPanel menuPanel;
-    private view.element.core.button.Button minimizeButton;
-    private view.element.core.button.Button maximizeButton;
-    private view.element.core.button.Button exitButton;
+    private Button hideButton;
+    private Button minimizeButton;
+    private Button maximizeButton;
+    private Button exitButton;
     private MouseListener maximizeMouseListener = new MouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {
@@ -77,6 +82,7 @@ public class Window extends JFrame {
             UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         } catch(Exception ignored) { }
 
+        isHidden = false;
         titleBar = new HorizontalBar(maximizeMouseListener, dragListener);
         titlePanel = new JPanel(new GridBagLayout());
         titleLabel = new Label("Audio Editor");
@@ -87,18 +93,22 @@ public class Window extends JFrame {
         menuPanelLayout.setHgap(0);
         menuPanelLayout.setVgap(0);
 
-        minimizeButton = new view.element.core.button.Button(MINIMIZE_ICON, BUTTON_SIZE);
+        hideButton = new Button(UP_ICON, BUTTON_SIZE);
+        hideButton.addMouseListener();
+        hideButton.addActionListener(ae -> changeSize());
+        minimizeButton = new Button(MINIMIZE_ICON, BUTTON_SIZE);
         minimizeButton.addMouseListener();
-        minimizeButton.addActionListener(ae -> setExtendedState(JFrame.ICONIFIED));
-        maximizeButton = new view.element.core.button.Button(MAXIMIZE_ICON, BUTTON_SIZE);
+        minimizeButton.addActionListener(ae -> minimize());
+        maximizeButton = new Button(MAXIMIZE_ICON, BUTTON_SIZE);
         maximizeButton.addMouseListener();
         maximizeButton.addActionListener(ae -> maximize());
         exitButton = new Button(CLOSE_ICON, BUTTON_SIZE);
         exitButton.addMouseListener();
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButton.addActionListener(e -> close());
 
         titlePanel.setOpaque(false);
         menuPanel.setOpaque(false);
+        menuPanel.add(hideButton);
         menuPanel.add(minimizeButton);
         menuPanel.add(maximizeButton);
         menuPanel.add(exitButton);
@@ -113,14 +123,46 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    private void changeSize() {
+        if (getExtendedState() == MAXIMIZED_BOTH) {
+            setExtendedState(NORMAL);
+            maximizeButton.setIcon(MAXIMIZE_ICON);
+        }
+        isHidden = !isHidden;
+        changePanelSize();
+        if (isHidden) {
+            hideButton.setIcon(DOWN_ICON);
+            setMinimumSize(WIN_MIN_SIZE_HIDDEN);
+            setSize(WIN_MIN_SIZE_HIDDEN);
+        }
+        else {
+            hideButton.setIcon(UP_ICON);
+            setMinimumSize(WIN_MIN_SIZE);
+            setSize(WIN_MIN_SIZE);
+        }
+    }
+
+    private void minimize() {
+        setExtendedState(JFrame.ICONIFIED);
+    }
+
     private void maximize() {
         if (getExtendedState() == NORMAL) {
             setExtendedState(MAXIMIZED_BOTH);
             maximizeButton.setIcon(NORMALIZE_ICON);
+            changePanelSize();
         }
         else {
             setExtendedState(NORMAL);
             maximizeButton.setIcon(MAXIMIZE_ICON);
+            if (isHidden)
+                changePanelSize();
         }
     }
+
+    private void close() {
+        System.exit(0);
+    }
+
+    protected abstract void changePanelSize();
 }
