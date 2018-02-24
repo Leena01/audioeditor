@@ -23,7 +23,7 @@ public abstract class Window extends JFrame {
     private static final ImageIcon NORMALIZE_ICON = resizeImageIcon(new ImageIcon(NORMALIZE_ICON_NAME), IMAGE_SIZE);
     private static final ImageIcon CLOSE_ICON = resizeImageIcon(new ImageIcon(CLOSE_ICON_NAME), IMAGE_SIZE);
 
-    protected boolean isHidden;
+    protected boolean isNormal;
     private HorizontalBar titleBar;
     private JLabel titleLabel;
     private JPanel titlePanel;
@@ -82,7 +82,7 @@ public abstract class Window extends JFrame {
             UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         } catch(Exception ignored) { }
 
-        isHidden = false;
+        isNormal = true;
         titleBar = new HorizontalBar(maximizeMouseListener, dragListener);
         titlePanel = new JPanel(new GridBagLayout());
         titleLabel = new Label("Audio Editor");
@@ -125,38 +125,40 @@ public abstract class Window extends JFrame {
 
     private void changeSize() {
         if (getExtendedState() == MAXIMIZED_BOTH) {
+            maximizeCover(false);
             setExtendedState(NORMAL);
             maximizeButton.setIcon(MAXIMIZE_ICON);
         }
-        isHidden = !isHidden;
-        changePanelSize();
-        if (isHidden) {
-            hideButton.setIcon(DOWN_ICON);
-            setMinimumSize(WIN_MIN_SIZE_HIDDEN);
-            setSize(WIN_MIN_SIZE_HIDDEN);
-        }
-        else {
+        hideCover(isNormal);
+        isNormal = !isNormal;
+        if (isNormal) {
             hideButton.setIcon(UP_ICON);
             setMinimumSize(WIN_MIN_SIZE);
             setSize(WIN_MIN_SIZE);
         }
+        else {
+            hideButton.setIcon(DOWN_ICON);
+            setMinimumSize(WIN_MIN_SIZE_HIDDEN);
+            setSize(WIN_MIN_SIZE_HIDDEN);
+        }
     }
 
     private void minimize() {
-        setExtendedState(JFrame.ICONIFIED);
+        setState(ICONIFIED);
     }
 
     private void maximize() {
         if (getExtendedState() == NORMAL) {
+            maximizeCover(true);
+            hideCover(false);
             setExtendedState(MAXIMIZED_BOTH);
             maximizeButton.setIcon(NORMALIZE_ICON);
-            changePanelSize();
         }
         else {
+            maximizeCover(false);
+            hideCover(!isNormal);
             setExtendedState(NORMAL);
             maximizeButton.setIcon(MAXIMIZE_ICON);
-            if (isHidden)
-                changePanelSize();
         }
     }
 
@@ -164,5 +166,6 @@ public abstract class Window extends JFrame {
         System.exit(0);
     }
 
-    protected abstract void changePanelSize();
+    protected abstract void hideCover(boolean isHidden);
+    protected abstract void maximizeCover(boolean isMaximized);
 }

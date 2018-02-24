@@ -1,9 +1,5 @@
 package view.util;
-
-import javax.swing.*;
 import java.awt.*;
-
-import static util.Utils.resizeImageIcon;
 
 public final class Constants {
     public static final String PLOT_IMAGE_NAME = "temp.png";
@@ -24,12 +20,14 @@ public final class Constants {
     public static final String UP_ICON_NAME = "resources/images/up.png";
     public static final String DOWN_ICON_NAME = "resources/images/down.png";
     public static final String CLOSE_ICON_NAME = "resources/images/close.png";
-    public static final String DEFAULT_FIELD = "-";
+    public static final String DEFAULT = "-";
 
     public static final int BOTTOM_PANEL_HEIGHT = 30;
     public static final Dimension WIN_MIN_SIZE = new Dimension(850, 600);
-    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(850, 250);
-    public static final Dimension COVER_SIZE = new Dimension(1000, 1000);
+    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(850, 300);
+    public static final Dimension COVER_SIZE = new Dimension(300, 300);
+    public static final Dimension COVER_SIZE_MAX = new Dimension(480, 480);
     public static final Dimension BOTTOM_FIELD_SIZE = new Dimension(250, BOTTOM_PANEL_HEIGHT - 6);
+    public static final Dimension DATA_LABEL_SIZE = new Dimension(250, 20);
     public static final Dimension AUDIO_SLIDER_SIZE = new Dimension(500, 50);
 }

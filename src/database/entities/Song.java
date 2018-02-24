@@ -2,6 +2,8 @@ package database.entities;
 
 import java.util.Objects;
 
+import static view.util.Constants.DEFAULT;
+
 public class Song {
     private int id;
     private String title;
@@ -33,7 +35,7 @@ public class Song {
 
 
     public Song() {
-        this.id = -1;
+        this(-1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
     }
 
     public Song(Song other) {

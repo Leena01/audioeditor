@@ -37,13 +37,15 @@ public class MenuPanel extends JPanel {
     private JPanel mainPanel;
     private JPanel bodyPanel;
     private JLabel noMediaFoundLabel;
+    private ImageIcon coverIcon;
 
     public MenuPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
         super();
         setBackground(Color.BLACK);
         infoPanel = new JPanel(new FlowLayout());
         imagePanel = new JPanel();
-        imageLabel = new JLabel(COVER_IMAGE);
+        coverIcon = COVER_IMAGE;
+        imageLabel = new JLabel(coverIcon);
         playerPanel = new PlayerPanel(matlabHandler, glassPane, fb, ufb);
         playerPanel.setVisible(false);
         noMediaFoundLabel = new Label(NO_MEDIA_LABEL);
@@ -76,10 +78,12 @@ public class MenuPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover, boolean isHidden) {
+    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover, boolean isNormal) {
         infoPanel.setVisible(false);
-        imageLabel.setIcon(new ImageIcon(cover));
-        if (!isHidden)
+        coverIcon = new ImageIcon(cover);
+        coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
+        imageLabel.setIcon(coverIcon);
+        if (isNormal)
             imagePanel.setVisible(true);
         playerPanel.setVisible(true);
         playerPanel.setCurrentSong(totalSamples, freq, plot);
@@ -90,5 +94,13 @@ public class MenuPanel extends JPanel {
             imagePanel.setVisible(false);
         else
             imagePanel.setVisible(true);
+    }
+
+    public void maximizeCover(boolean isMaximized) {
+        if (isMaximized)
+            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
+        else
+            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
+        imageLabel.setIcon(coverIcon);
     }
 }

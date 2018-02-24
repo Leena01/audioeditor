@@ -11,14 +11,11 @@ import logic.exceptions.InvalidOperationException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
 import view.element.core.bar.HorizontalBar;
-import view.panel.EditPanel;
-import view.panel.MenuPanel;
-import view.panel.OptionPanel;
+import view.panel.*;
 import logic.dbaccess.tablemodel.SongTableModel;
 import view.element.core.bar.SideBar;
 import view.element.core.window.Window;
 import view.element.core.label.Label;
-import view.panel.ViewSongsPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,8 +31,9 @@ public class MainWindow extends Window {
      * Constants
      */
     private static final String SUCCESSFUL_OPERATION = "Successful operation.";
-    private static final String VIEW_SONGS_PANEL = "View Songs Panel";
     private static final String MENU_PANEL = "Menu Panel";
+    private static final String VIEW_SONGS_PANEL = "View Songs Panel";
+    private static final String DATA_PANEL = "Data Panel";
 
     /**
      * Private data members
@@ -48,6 +46,7 @@ public class MainWindow extends Window {
     private ViewSongsPanel viewSongsPanel;
     private JDialog editFrame;
     private EditPanel editPanel;
+    private DataPanel dataPanel;
     private OptionPanel optionPanel;
     private JPanel sideBar;
     private HorizontalBar bottomPanel;
@@ -64,6 +63,7 @@ public class MainWindow extends Window {
     private ActionListener backToMenuListener;
     private ActionListener openFileListener;
     private ActionListener viewSongsListener;
+    private ActionListener showDataListener;
     private ActionListener favoriteButtonListener;
     private ActionListener unfavoriteButtonListener;
     private ActionListener changePitchListener;
@@ -98,7 +98,9 @@ public class MainWindow extends Window {
         editFrame.pack();
         editFrame.setVisible(false);
 
-        optionPanel = new OptionPanel(openFileListener, viewSongsListener, changePitchListener, cutFileListener,
+        dataPanel = new DataPanel(currentSongModel, backToMenuListener);
+
+        optionPanel = new OptionPanel(openFileListener, viewSongsListener, showDataListener, changePitchListener, cutFileListener,
                 viewFFTListener, analyzeSongListener);
         sideBar = new SideBar();
         sideBar.add(optionPanel);
@@ -106,17 +108,18 @@ public class MainWindow extends Window {
         bottomPanel = new HorizontalBar();
 
         currentSongTitle = new Label();
-        currentSongTitle.setPreferredSize(BOTTOM_FIELD_SIZE);
+        currentSongTitle.setSize(BOTTOM_FIELD_SIZE);
         currentSongTitle.setOpaque(false);
         bottomPanel.add(currentSongTitle);
         currentSongArtist = new Label();
-        currentSongArtist.setPreferredSize(BOTTOM_FIELD_SIZE);
+        currentSongArtist.setSize(BOTTOM_FIELD_SIZE);
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
         lastOpenPath = currentSongModel.getPath();
 
         mainPanel.add(menuPanel, MENU_PANEL);
         mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
+        mainPanel.add(dataPanel, DATA_PANEL);
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
@@ -133,6 +136,8 @@ public class MainWindow extends Window {
 
     public void run() {
         cardLayout.show(mainPanel, MENU_PANEL);
+        if (currentSongModel.getId() == -1)
+            optionPanel.showOptions(false);
         // pack();
         setMinimumSize(WIN_MIN_SIZE);
         setSize(WIN_MIN_SIZE);
@@ -154,9 +159,13 @@ public class MainWindow extends Window {
         return null;
     }
 
-    protected void changePanelSize() {
+    protected void hideCover(boolean isHidden) {
         if (currentSongModel.getId() != -1)
             menuPanel.hideCover(isHidden);
+    }
+
+    protected void maximizeCover(boolean isMaximized) {
+        menuPanel.maximizeCover(isMaximized);
     }
 
     private void initializeListeners(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {
@@ -170,12 +179,12 @@ public class MainWindow extends Window {
                         String path = f.getPath();
                         Image cover = ImageIO.read(new File(COVER_NAME));
                         String title = f.getName();
-                        String track = DEFAULT_FIELD;
-                        String artist = DEFAULT_FIELD;
-                        String album = DEFAULT_FIELD;
-                        String year = DEFAULT_FIELD;
-                        String genre = DEFAULT_FIELD;
-                        String comment = DEFAULT_FIELD;
+                        String track = DEFAULT;
+                        String artist = DEFAULT;
+                        String album = DEFAULT;
+                        String year = DEFAULT;
+                        String genre = DEFAULT;
+                        String comment = DEFAULT;
                         try {
                             Mp3File song = new Mp3File(path);
                             if (song.hasId3v2Tag()) {
@@ -209,7 +218,7 @@ public class MainWindow extends Window {
                             try {
                                 BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
                                 menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
-                                        currentSongModel.getFreq(), plot, artwork, isHidden);
+                                        currentSongModel.getFreq(), plot, artwork, isNormal);
                                 optionPanel.showOptions(true);
                                 cardLayout.show(mainPanel, MENU_PANEL);
                                 setCursor(Cursor.getDefaultCursor());
@@ -232,6 +241,11 @@ public class MainWindow extends Window {
             } catch (SQLConnectionException sqe) {
                 showDialog(sqe.getMessage());
             }
+        };
+
+        showDataListener = ae -> {
+            dataPanel.setSongData(currentSongModel);
+            cardLayout.show(mainPanel, DATA_PANEL);
         };
 
         favoriteButtonListener = ae -> {

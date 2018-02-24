@@ -15,6 +15,12 @@ public class Label extends JLabel {
         setForeground(FONT_COLOR);
     }
 
+    public Label(String text, Dimension d) {
+        super(text);
+        setForeground(FONT_COLOR);
+        setPreferredSize(d);
+    }
+
     public Label(Icon image) {
         super(image);
         setForeground(FONT_COLOR);
