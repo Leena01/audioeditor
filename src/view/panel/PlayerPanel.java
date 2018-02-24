@@ -20,7 +20,8 @@ import static util.Utils.resizeImageIcon;
 class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Observer {
     private static final long REFRESH_MILLIS = 50;
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
-    private static final Dimension BUTTON_SIZE = new Dimension(40, 30);
+    private static final Dimension BUTTON_SIZE = new Dimension(36, 27);
+    private static final Dimension BUTTON_SIZE_FAV = new Dimension(36, 36);
     private static final Dimension VOLUME_SLIDER_SIZE = new Dimension(100, 30);
     private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon(PLAY_ICON_NAME), BUTTON_SIZE);
     private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon(PLAY_ICON_HOVER_NAME), BUTTON_SIZE);
@@ -30,8 +31,8 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private static final ImageIcon STOP_ICON_HOVER = resizeImageIcon(new ImageIcon(STOP_ICON_HOVER_NAME), BUTTON_SIZE);
     // private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon(BACKWARD_ICON_NAME), BUTTON_SIZE);
     // private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon(BACKWARD_ICON_HOVER_NAME), BUTTON_SIZE);
-    private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon(FAVORITE_ICON_NAME), BUTTON_SIZE);
-    private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon(UNFAVORITE_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon(FAVORITE_ICON_NAME), BUTTON_SIZE_FAV);
+    private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon(UNFAVORITE_ICON_NAME), BUTTON_SIZE_FAV);
 
     private JLabel timeField;
     private JLabel totalLengthField;
@@ -98,7 +99,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         volumeSlider.setForeground(Color.BLUE);
 
         pauseButton.setVisible(false);
-        favoriteButton.setVisible(false);
+        setFavorite(false);
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(stopButton);
@@ -191,6 +192,17 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
 
         trackSlider.setImage(plot);
         trackSlider.setUI(new AudioSliderUI(trackSlider));
+    }
+
+    void setFavorite(boolean isFavorite) {
+        if (isFavorite) {
+            favoriteButton.setVisible(false);
+            unfavoriteButton.setVisible(true);
+        }
+        else {
+            unfavoriteButton.setVisible(false);
+            favoriteButton.setVisible(true);
+        }
     }
 
     private void playSong() {

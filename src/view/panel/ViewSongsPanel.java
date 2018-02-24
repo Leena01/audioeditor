@@ -121,12 +121,4 @@ public class ViewSongsPanel extends JPanel {
         selectedSongModel = new SongModel(tableModel.getRow(table.getSelectedRow()));
         return selectedSongModel;
     }
-
-    public void minimizeTable(boolean isHidden) {
-
-    }
-
-    public void maximizeTable(boolean isMaximized) {
-
-    }
 }

@@ -88,15 +88,13 @@ public class DatabaseAccessModel {
         Song s = sm.getSong();
         if (s == null)
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
-        String path = s.getPath();
-        if (getSong(path) != null) {
+        if (getId(sm) != 0)
             throw new InvalidOperationException(ALREADY_EXISTS_ERROR);
-        }
         else {
             if (!persistence.addSong(s))
                 throw new SQLConnectionException(SQL_ERROR);
             try {
-                Song newSong = getSong(path);
+                Song newSong = getSong(sm.getPath());
                 if (newSong == null) {
                     throw new InvalidOperationException(OPERATION_ERROR);
                 }
@@ -136,6 +134,19 @@ public class DatabaseAccessModel {
                 throw new SQLConnectionException(SQL_ERROR);
         } catch(InvalidOperationException e) {
             throw new InvalidOperationException(e.getMessage());
+        } catch(SQLConnectionException e) {
+            throw new SQLConnectionException(e.getMessage());
+        }
+    }
+
+    public int getId(SongModel sm) throws SQLConnectionException {
+        try {
+            String path = sm.getPath();
+            Song s = getSong(path);
+            if (s != null)
+                return s.getId();
+            else
+                return 0;
         } catch(SQLConnectionException e) {
             throw new SQLConnectionException(e.getMessage());
         }

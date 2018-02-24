@@ -116,6 +116,7 @@ public class MainWindow extends Window {
         currentSongArtist.setOpaque(false);
         bottomPanel.add(currentSongArtist);
         lastOpenPath = currentSongModel.getPath();
+        getSaved(databaseAccessModel);
 
         mainPanel.add(menuPanel, MENU_PANEL);
         mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
@@ -162,12 +163,10 @@ public class MainWindow extends Window {
     protected void hideCover(boolean isHidden) {
         if (currentSongModel.getId() != -1)
             menuPanel.hideCover(isHidden);
-        viewSongsPanel.minimizeTable(isHidden);
     }
 
     protected void maximizeCover(boolean isMaximized) {
         menuPanel.maximizeCover(isMaximized);
-        viewSongsPanel.maximizeTable(isMaximized);
     }
 
     private void initializeListeners(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {
@@ -208,6 +207,7 @@ public class MainWindow extends Window {
                         currentSongModel = new SongModel(title, track, artist, album, year, genre, comment, path);
                         currentSongArtist.setText(currentSongModel.getArtist());
                         currentSongTitle.setText(currentSongModel.getTitle());
+                        getSaved(databaseAccessModel);
                         final Image artwork = cover;
 
                     new Thread(() -> {
@@ -219,8 +219,8 @@ public class MainWindow extends Window {
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
-                                menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
-                                        currentSongModel.getFreq(), plot, artwork, isNormal);
+                                menuPanel.setCurrentSong(currentSongModel.getTotalSamples(), currentSongModel.getFreq(),
+                                        plot, artwork, isNormal, getExtendedState() == MAXIMIZED_BOTH);
                                 optionPanel.showOptions(true);
                                 cardLayout.show(mainPanel, MENU_PANEL);
                                 setCursor(Cursor.getDefaultCursor());
@@ -253,6 +253,8 @@ public class MainWindow extends Window {
         favoriteButtonListener = ae -> {
             try {
                 databaseAccessModel.addSong(currentSongModel);
+                menuPanel.setFavorite(true);
+                dataPanel.setSongData(currentSongModel);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -261,6 +263,8 @@ public class MainWindow extends Window {
         unfavoriteButtonListener = ae -> {
             try {
                 databaseAccessModel.deleteSong(currentSongModel);
+                menuPanel.setFavorite(false);
+                dataPanel.setSongData(currentSongModel);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -327,5 +331,20 @@ public class MainWindow extends Window {
             @Override
             public void mouseExited(MouseEvent e) { }
         };
+    }
+
+    private void getSaved(DatabaseAccessModel databaseAccessModel) {
+        try {
+            int id = databaseAccessModel.getId(currentSongModel);
+            if (id != 0) {
+                menuPanel.setFavorite(true);
+                currentSongModel.setId(id);
+            }
+            else
+                menuPanel.setFavorite(false);
+        } catch (SQLConnectionException e) {
+            showDialog(e.getMessage());
+            menuPanel.setFavorite(false);
+        }
     }
 }

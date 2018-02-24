@@ -81,10 +81,13 @@ public class MenuPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover, boolean isNormal) {
+    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover, boolean isNormal, boolean isMaximized) {
         infoPanel.setVisible(false);
         coverIcon = new ImageIcon(cover);
-        coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
+        if (isMaximized)
+            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
+        else
+            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
         imageLabel.setIcon(coverIcon);
         if (isNormal)
             imagePanel.setVisible(true);
@@ -105,5 +108,9 @@ public class MenuPanel extends JPanel {
         else
             coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
         imageLabel.setIcon(coverIcon);
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        playerPanel.setFavorite(isFavorite);
     }
 }
