@@ -1,5 +1,6 @@
 package view.panel;
 
+import static javax.swing.BoxLayout.PAGE_AXIS;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
 import view.element.core.label.Label;
@@ -42,7 +43,8 @@ public class MenuPanel extends JPanel {
     public MenuPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
         super();
         setBackground(Color.BLACK);
-        infoPanel = new JPanel(new FlowLayout());
+        infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         imagePanel = new JPanel();
         coverIcon = COVER_IMAGE;
         imageLabel = new JLabel(coverIcon);
@@ -52,7 +54,7 @@ public class MenuPanel extends JPanel {
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
 
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.setLayout(new BoxLayout(mainPanel, PAGE_AXIS));
         infoPanel.setOpaque(false);
         imagePanel.setOpaque(false);
         playerPanel.setOpaque(false);
@@ -61,6 +63,7 @@ public class MenuPanel extends JPanel {
 
         infoLabel = new Label(INFO_LABEL);
         infoPanel.add(infoLabel);
+        infoPanel.add(Box.createRigidArea(new Dimension(0,30)));
         infoPanel.add(noMediaFoundLabel);
         imagePanel.add(imageLabel);
 

@@ -162,10 +162,12 @@ public class MainWindow extends Window {
     protected void hideCover(boolean isHidden) {
         if (currentSongModel.getId() != -1)
             menuPanel.hideCover(isHidden);
+        viewSongsPanel.minimizeTable(isHidden);
     }
 
     protected void maximizeCover(boolean isMaximized) {
         menuPanel.maximizeCover(isMaximized);
+        viewSongsPanel.maximizeTable(isMaximized);
     }
 
     private void initializeListeners(DatabaseAccessModel databaseAccessModel, MatlabHandler matlabHandler) {

@@ -5,7 +5,6 @@ import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
 import logic.dbaccess.tablemodel.TableModel;
 import org.jetbrains.annotations.NotNull;
-import view.element.core.label.Label;
 import view.element.core.button.Button;
 
 import javax.swing.*;
@@ -14,16 +13,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import static view.util.Constants.*;
+
 /**
  * View list of songs
  */
 public class ViewSongsPanel extends JPanel {
-    private static final Dimension TABLE_SIZE = new Dimension(400, 100);
-
-    private JLabel infoLabel;
     private JPanel buttonPanel;
-    private JPanel mainPanel;
-    private JPanel infoPanel;
     private TableModel<Song> tableModel;
     private SongModel selectedSongModel;
     private JTable table;
@@ -40,10 +36,7 @@ public class ViewSongsPanel extends JPanel {
     public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener e, ActionListener d, ActionListener b) {
         super();
         setBackground(Color.BLACK);
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        infoLabel = new Label();
-        infoPanel = new JPanel(new FlowLayout());
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         buttonPanel = new JPanel(new FlowLayout());
 
         tableModel = tm;
@@ -63,10 +56,10 @@ public class ViewSongsPanel extends JPanel {
                 return tip;
             }
         };
-
         table.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setPreferredSize(TABLE_SIZE);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
+        scrollPane.setOpaque(false);
         selectOptionButton = new Button();
         selectOptionButton.addMouseListener();
         editOptionButton = new Button();
@@ -75,7 +68,6 @@ public class ViewSongsPanel extends JPanel {
         deleteOptionButton.addMouseListener();
         backOptionButton = new Button();
         backOptionButton.addMouseListener();
-        infoLabel.setText("Please choose a song from the list below:");
         selectOptionButton.setText("Load");
         editOptionButton.setText("Edit");
         backOptionButton.setText("Back to Main Menu");
@@ -87,19 +79,10 @@ public class ViewSongsPanel extends JPanel {
         buttonPanel.add(selectOptionButton);
         buttonPanel.add(editOptionButton);
         buttonPanel.add(backOptionButton);
-        infoPanel.add(infoLabel);
-        mainPanel.add(infoPanel, BorderLayout.NORTH);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-        mainPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
-        infoPanel.setOpaque(false);
 
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 30, 30, 30));
-        add(mainPanel);
+        add(scrollPane);
+        add(buttonPanel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
@@ -137,5 +120,13 @@ public class ViewSongsPanel extends JPanel {
             return null;
         selectedSongModel = new SongModel(tableModel.getRow(table.getSelectedRow()));
         return selectedSongModel;
+    }
+
+    public void minimizeTable(boolean isHidden) {
+
+    }
+
+    public void maximizeTable(boolean isMaximized) {
+
     }
 }
