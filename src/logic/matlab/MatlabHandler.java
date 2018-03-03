@@ -26,6 +26,14 @@ public class MatlabHandler {
         this.eng = eng;
         this.totalSamples = 0.0;
         this.freq = 0.0;
+        try {
+            System.out.println(FOLDER);
+            eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
+            eng.eval(ADD_PATH);
+        } catch (Exception e) {
+            showDialog(e.getMessage());
+        }
+
     }
 
     public void passData(SongModel sm) {
@@ -52,7 +60,6 @@ public class MatlabHandler {
             eng.eval(OPEN_SONG);
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
-            // TODO: too long
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -112,6 +119,19 @@ public class MatlabHandler {
             eng.eval(CHANGE_VOLUME);
             if (!isPlaying)
                 eng.eval(PAUSE_SONG);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public synchronized void analyzeSong(int windowSize, float hopSize, int nfft, int fs, int channel) {
+        try {
+            eng.putVariable(WINDOW_SIZE_VAR, windowSize);
+            eng.putVariable(HOP_SIZE_VAR, hopSize);
+            eng.putVariable(NFFT_VAR, nfft);
+            eng.putVariable(FREQ_VAR, fs);
+            eng.putVariable(CHANNEL_VAR, channel);
+            eng.eval(ANALYZE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

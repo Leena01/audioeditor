@@ -20,6 +20,7 @@ public final class Constants {
     public static final String UP_ICON_NAME = "resources/images/up.png";
     public static final String DOWN_ICON_NAME = "resources/images/down.png";
     public static final String CLOSE_ICON_NAME = "resources/images/close.png";
+
     public static final String DEFAULT = "-";
 
     public static final int BOTTOM_PANEL_HEIGHT = 30;
