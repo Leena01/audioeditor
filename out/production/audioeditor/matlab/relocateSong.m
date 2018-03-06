@@ -1,4 +1,8 @@
-function relocateSong(player, start)
+function relocateSong(player, start, empty)
     stop(player);
-    play(player, start);
+	if (empty == 1)
+		play(player);
+	else
+		play(player, start);
+	end
 end

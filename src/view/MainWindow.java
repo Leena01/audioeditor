@@ -16,6 +16,8 @@ import logic.dbaccess.tablemodel.SongTableModel;
 import view.element.core.bar.SideBar;
 import view.element.core.window.Window;
 import view.element.core.label.Label;
+import view.panel.analysis.AnalysisPanel;
+import view.panel.analysis.SpectrogramPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,6 +36,8 @@ public class MainWindow extends Window {
     private static final String MENU_PANEL = "Menu Panel";
     private static final String VIEW_SONGS_PANEL = "View Songs Panel";
     private static final String DATA_PANEL = "Data Panel";
+    private static final String ANALYSIS_PANEL = "Analysis Panel";
+    private static final String SPECTROGRAM_PANEL = "Spectrogram Panel";
 
     /**
      * Private data members
@@ -44,6 +48,8 @@ public class MainWindow extends Window {
     private JPanel mainPanel;
     private MenuPanel menuPanel;
     private ViewSongsPanel viewSongsPanel;
+    private AnalysisPanel analysisPanel;
+    private SpectrogramPanel spectrogramPanel;
     private JDialog editFrame;
     private EditPanel editPanel;
     private DataPanel dataPanel;
@@ -107,6 +113,10 @@ public class MainWindow extends Window {
 
         bottomPanel = new HorizontalBar();
 
+        analysisPanel = new AnalysisPanel(matlabHandler);
+
+        spectrogramPanel = new SpectrogramPanel(matlabHandler, getGlassPane());
+
         currentSongTitle = new Label();
         currentSongTitle.setSize(BOTTOM_FIELD_SIZE);
         currentSongTitle.setOpaque(false);
@@ -121,6 +131,8 @@ public class MainWindow extends Window {
         mainPanel.add(menuPanel, MENU_PANEL);
         mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
         mainPanel.add(dataPanel, DATA_PANEL);
+        mainPanel.add(analysisPanel, ANALYSIS_PANEL);
+        mainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL);
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
@@ -279,11 +291,11 @@ public class MainWindow extends Window {
         };
 
         viewFFTListener = ae -> {
-            // TODO
+            cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
         };
 
         analyzeSongListener = ae -> {
-            // TODO
+            cardLayout.show(mainPanel, ANALYSIS_PANEL);
         };
 
         loadSongListener = ae -> {

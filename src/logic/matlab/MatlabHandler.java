@@ -102,9 +102,10 @@ public class MatlabHandler {
         try {
             eng.putVariable(START_VAR, frame);
             if (frame == 0 || frame == totalSamples)
-                eng.eval(RELOCATE_SONG_EMPTY);
+                eng.putVariable(EMPTY_VAR, 1);
             else
-                eng.eval(RELOCATE_SONG);
+                eng.putVariable(EMPTY_VAR, 0);
+            eng.eval(RELOCATE_SONG);
 
             if (!isPlaying)
                 eng.eval(PAUSE_SONG);
@@ -124,13 +125,12 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void analyzeSong(int windowSize, float hopSize, int nfft, int fs, int channel) {
+    public synchronized void analyzeSong(int windowSize, int hopSize, int nfft) {
         try {
+            System.out.println(windowSize + " " + hopSize + " " + nfft);
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
             eng.putVariable(NFFT_VAR, nfft);
-            eng.putVariable(FREQ_VAR, fs);
-            eng.putVariable(CHANNEL_VAR, channel);
             eng.eval(ANALYZE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();

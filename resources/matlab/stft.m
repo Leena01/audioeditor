@@ -28,7 +28,7 @@ win = hamming(wlen, 'periodic');
 
 % stft matrix estimation and preallocation
 rown = ceil((1+nfft)/2);            % calculate the total number of rows
-coln = 1+fix((xlen-wlen)/hop);      % calculate the total number of columns
+coln = 1+fix((xlen-wlen)/hop)      % calculate the total number of columns
 stft = zeros(rown, coln);           % form the stft matrix
 
 % initialize the signal time segment index
