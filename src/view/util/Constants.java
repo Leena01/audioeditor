@@ -3,6 +3,7 @@ import java.awt.*;
 
 public final class Constants {
     public static final String PLOT_IMAGE_NAME = "temp.png";
+    public static final String SPEC_IMAGE_NAME = "temp2.png";
     public static final String COVER_NAME = "resources/images/default-artwork.png";
     public static final String PLAY_ICON_NAME = "resources/images/play.png";
     public static final String PLAY_ICON_HOVER_NAME = "resources/images/play2.png";

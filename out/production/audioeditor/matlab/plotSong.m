@@ -8,7 +8,7 @@ function plotSong(x, fs, imgname)
 	if (xsize(2) == 2)
 		x1 = x(:, 1);
 		x2 = x(:, 2);
-		plot(t, x1, 'g', t, x2);
+		plot(t, x1, 'b', t, x2);
 	else
 		plot(t, x);
 	end
@@ -26,4 +26,6 @@ function plotSong(x, fs, imgname)
 	ax_height = outerpos(4) - ti(2) - ti(4);
 	ax.Position = [left bottom ax_width ax_height];
 	hgexport(gcf, imgname, hgexport('factorystyle'), 'Format', 'png');
+	reset(gca);
+	cla(ax);
 end

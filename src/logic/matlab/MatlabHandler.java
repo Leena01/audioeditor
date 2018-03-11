@@ -67,7 +67,7 @@ public class MatlabHandler {
 
     public synchronized void plotSong(String imageName) {
         try {
-            eng.putVariable(IMG_VAR, imageName.toCharArray());
+            eng.putVariable(PLOT_IMG_VAR, imageName.toCharArray());
             eng.eval(PLOT_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -125,12 +125,12 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void analyzeSong(int windowSize, int hopSize, int nfft) {
+    public synchronized void analyzeSong(double windowSize, double hopSize, double nfft, String imageName) {
         try {
-            System.out.println(windowSize + " " + hopSize + " " + nfft);
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
             eng.putVariable(NFFT_VAR, nfft);
+            eng.putVariable(SPEC_IMG_VAR, imageName.toCharArray());
             eng.eval(ANALYZE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();

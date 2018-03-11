@@ -115,7 +115,7 @@ public class MainWindow extends Window {
 
         analysisPanel = new AnalysisPanel(matlabHandler);
 
-        spectrogramPanel = new SpectrogramPanel(matlabHandler, getGlassPane());
+        spectrogramPanel = new SpectrogramPanel(matlabHandler, getGlassPane(), backToMenuListener);
 
         currentSongTitle = new Label();
         currentSongTitle.setSize(BOTTOM_FIELD_SIZE);
@@ -233,13 +233,13 @@ public class MainWindow extends Window {
                                 BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
                                 menuPanel.setCurrentSong(currentSongModel.getTotalSamples(), currentSongModel.getFreq(),
                                         plot, artwork, isNormal, getExtendedState() == MAXIMIZED_BOTH);
-                                optionPanel.showOptions(true);
-                                cardLayout.show(mainPanel, MENU_PANEL);
-                                setCursor(Cursor.getDefaultCursor());
-                                getGlassPane().setVisible(false);
-                            } catch  (IOException ioe) {
+                            } catch (IOException ioe) {
                                 ioe.printStackTrace();
                             }
+                            optionPanel.showOptions(true);
+                            cardLayout.show(mainPanel, MENU_PANEL);
+                            setCursor(Cursor.getDefaultCursor());
+                            getGlassPane().setVisible(false);
                         });
                     }).start();
                 }
