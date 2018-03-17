@@ -5,6 +5,7 @@ import static util.Utils.showDialog;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import logic.dbaccess.SongModel;
+import logic.exceptions.MatlabEngineException;
 
 public class MatlabHandler {
     private MatlabEngine eng;
@@ -27,7 +28,6 @@ public class MatlabHandler {
         this.totalSamples = 0.0;
         this.freq = 0.0;
         try {
-            System.out.println(FOLDER);
             eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
             eng.eval(ADD_PATH);
         } catch (Exception e) {
@@ -54,14 +54,14 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void openSong(String p) {
+    public synchronized void openSong(String p) throws MatlabEngineException {
         try {
             eng.putVariable(PATH_VAR, p.toCharArray());
             eng.eval(OPEN_SONG);
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new MatlabEngineException("The file type is not supported.");
         }
     }
 
@@ -125,13 +125,16 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void analyzeSong(double windowSize, double hopSize, double nfft, String imageName) {
+    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, String imageName,
+         String imageName2) {
         try {
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
             eng.putVariable(NFFT_VAR, nfft);
             eng.putVariable(SPEC_IMG_VAR, imageName.toCharArray());
-            eng.eval(ANALYZE_SONG);
+            eng.putVariable(SPEC_3D_IMG_VAR, imageName2.toCharArray());
+            eng.eval(SHOW_SPECTROGRAM);
+            eng.eval(SHOW_SPECTROGRAM_3D);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package view.panel;
 
+import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
 import view.element.playerpanel.*;
@@ -15,14 +16,12 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
-import static util.Utils.resizeImageIcon;
-
 class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Observer {
     private static final long REFRESH_MILLIS = 50;
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
     private static final Dimension BUTTON_SIZE = new Dimension(36, 27);
     private static final Dimension BUTTON_SIZE_FAV = new Dimension(36, 36);
-    private static final Dimension VOLUME_SLIDER_SIZE = new Dimension(100, 30);
+    private static final Dimension VOLUME_SLIDER_SIZE = new Dimension(80, 30);
     private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon(PLAY_ICON_NAME), BUTTON_SIZE);
     private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon(PLAY_ICON_HOVER_NAME), BUTTON_SIZE);
     private static final ImageIcon PAUSE_ICON = resizeImageIcon(new ImageIcon(PAUSE_ICON_NAME), BUTTON_SIZE);

@@ -7,6 +7,10 @@ import view.element.core.label.Label;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+
+import static view.util.Constants.GENRE_MAX;
+import static view.util.Constants.GENRE_MIN;
 
 /**
  * Edit panel
@@ -14,10 +18,20 @@ import javax.swing.*;
 public class EditPanel extends JPanel {
 
     private JLabel infoLabel;
-    private JLabel nameLabel;
+    private JLabel titleLabel;
+    private JLabel trackLabel;
     private JLabel artistLabel;
+    private JLabel albumLabel;
+    private JLabel yearLabel;
+    private JLabel genreLabel;
+    private JLabel commentLabel;
     private JTextField titleTextField;
+    private JTextField trackTextField;
     private JTextField artistTextField;
+    private JTextField albumTextField;
+    private JTextField yearTextField;
+    private JFormattedTextField genreTextField;
+    private JTextField commentTextField;
     private JButton doneButton;
     private JPanel formPanel;
     private JPanel infoPanel;
@@ -36,7 +50,7 @@ public class EditPanel extends JPanel {
 
         selectedSongModel = new SongModel();
         infoPanel = new JPanel(new FlowLayout());
-        formPanel = new JPanel(new GridLayout(2, 2));
+        formPanel = new JPanel(new GridLayout(7, 2));
         bottomPanel = new JPanel(new FlowLayout());
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
@@ -51,17 +65,41 @@ public class EditPanel extends JPanel {
         infoLabel = new Label();
         doneButton = new OptionButton("Done");
 
-        nameLabel = new Label("Song name:");
+        titleLabel = new Label("Title:");
+        trackLabel = new Label("Track:");
         artistLabel = new Label("Artist: ");
+        albumLabel = new Label("Album:");
+        yearLabel = new Label("Year:");
+        genreLabel = new Label("Genre:");
+        commentLabel = new Label("Comment:");
         titleTextField = new JTextField("", 20);
+        trackTextField = new JTextField("", 20);
         artistTextField = new JTextField("", 20);
+        albumTextField = new JTextField("", 20);
+        yearTextField = new JTextField("", 20);
+
+        NumberFormatter nf = new NumberFormatter();
+        nf.setMinimum(GENRE_MIN);
+        nf.setMaximum(GENRE_MAX);
+        genreTextField = new JFormattedTextField(nf);
+        commentTextField = new JTextField("", 20);
         doneButton.addActionListener(al);
 
         infoPanel.add(infoLabel);
-        formPanel.add(nameLabel);
+        formPanel.add(titleLabel);
         formPanel.add(titleTextField);
+        formPanel.add(trackLabel);
+        formPanel.add(trackTextField);
         formPanel.add(artistLabel);
         formPanel.add(artistTextField);
+        formPanel.add(albumLabel);
+        formPanel.add(albumTextField);
+        formPanel.add(yearLabel);
+        formPanel.add(yearTextField);
+        formPanel.add(genreLabel);
+        formPanel.add(genreTextField);
+        formPanel.add(commentLabel);
+        formPanel.add(commentTextField);
         bottomPanel.add(doneButton);
 
         mainPanel.add(infoPanel);
@@ -86,44 +124,28 @@ public class EditPanel extends JPanel {
         g2d.fillRect(0, 0, w, h);
     }
 
-    /**
-     * Getter
-     * @return Return input data entered (name)
-     */
-    public String getTitleField() {
-        return titleTextField.getText();
-    }
-
-    /**
-     * Getter
-     * @return Return input data entered (password)
-     */
-    public String getArtistField() {
-        return artistTextField.getText();
-    }
-
-
-    public int getSelectedId() {
-        if (selectedSongModel.isSongAvailable())
-            return selectedSongModel.getId();
-        return 0;
-    }
-
-    public String getSelectedPath() {
-        if (selectedSongModel.isSongAvailable())
-            return selectedSongModel.getPath();
-        return "";
+    public void setNewData() {
+        selectedSongModel.setTitle(titleTextField.getText());
+        selectedSongModel.setTrack(trackTextField.getText());
+        selectedSongModel.setArtist(artistTextField.getText());
+        selectedSongModel.setAlbum(albumTextField.getText());
+        selectedSongModel.setYear(yearTextField.getText());
+        selectedSongModel.setGenre(genreTextField.getText());
+        selectedSongModel.setComment(commentTextField.getText());
     }
 
     public SongModel getSelectedSongModel() {
         return selectedSongModel;
     }
-    /**
-     * Clear all fields
-     */
+
     public void clearFields() {
         titleTextField.setText("");
+        trackTextField.setText("");
         artistTextField.setText("");
+        albumTextField.setText("");
+        yearTextField.setText("");
+        genreTextField.setText("");
+        commentTextField.setText("");
     }
 
     public void setSelectedSong(SongModel sm) {

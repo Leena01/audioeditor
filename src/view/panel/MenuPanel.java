@@ -29,6 +29,7 @@ public class MenuPanel extends JPanel {
     private static final String NO_MEDIA_LABEL = "No media found. Please choose a file.";
     private static final String INFO_LABEL = "Welcome! Please select a song and choose from the options on the left.";
     private static final ImageIcon COVER_IMAGE = resizeImageIcon(new ImageIcon(COVER_NAME), COVER_SIZE);
+    private static final ImageIcon COVER_IMAGE_MAX = resizeImageIcon(new ImageIcon(COVER_NAME), COVER_SIZE_MAX);
 
     private JLabel infoLabel;
     private PlayerPanel playerPanel;
@@ -39,6 +40,7 @@ public class MenuPanel extends JPanel {
     private JPanel bodyPanel;
     private JLabel noMediaFoundLabel;
     private ImageIcon coverIcon;
+    private ImageIcon coverIconMax;
 
     public MenuPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
         super();
@@ -47,6 +49,7 @@ public class MenuPanel extends JPanel {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         imagePanel = new JPanel();
         coverIcon = COVER_IMAGE;
+        coverIconMax = COVER_IMAGE_MAX;
         imageLabel = new JLabel(coverIcon);
         playerPanel = new PlayerPanel(matlabHandler, glassPane, fb, ufb);
         playerPanel.setVisible(false);
@@ -81,14 +84,15 @@ public class MenuPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover, boolean isNormal, boolean isMaximized) {
+    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover,
+               boolean isNormal, boolean isMaximized) {
         infoPanel.setVisible(false);
+        coverIcon.getImage().flush();
+        coverIconMax.getImage().flush();
         coverIcon = new ImageIcon(cover);
-        if (isMaximized)
-            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
-        else
-            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
-        imageLabel.setIcon(coverIcon);
+        coverIconMax = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
+        coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
+        maximizeCover(isMaximized);
         if (isNormal)
             imagePanel.setVisible(true);
         playerPanel.setVisible(true);
@@ -104,10 +108,9 @@ public class MenuPanel extends JPanel {
 
     public void maximizeCover(boolean isMaximized) {
         if (isMaximized)
-            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
+            imageLabel.setIcon(coverIconMax);
         else
-            coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
-        imageLabel.setIcon(coverIcon);
+            imageLabel.setIcon(coverIcon);
     }
 
     public void setFavorite(boolean isFavorite) {

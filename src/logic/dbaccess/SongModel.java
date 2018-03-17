@@ -29,7 +29,7 @@ public class SongModel {
         this.freq = other.freq;
     }
 
-    Song getSong() {
+    @NotNull Song getSong() {
         return song;
     }
 
@@ -79,35 +79,35 @@ public class SongModel {
 
     public void setId(int id) { song.setId(id); }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         song.setTitle(title);
     }
 
-    void setTrack(String track) {
+    public void setTrack(String track) {
         song.setTrack(track);
     }
 
-    void setArtist(String artist) {
+    public void setArtist(String artist) {
         song.setArtist(artist);
     }
 
-    void setAlbum(String album) {
+    public void setAlbum(String album) {
         song.setAlbum(album);
     }
 
-    void setYear(String year) {
+    public void setYear(String year) {
         song.setYear(year);
     }
 
-    void setGenre(String genre) {
+    public void setGenre(String genre) {
         song.setGenre(genre);
     }
 
-    void setComment(String comment) {
+    public void setComment(String comment) {
         song.setComment(comment);
     }
 
-    void setPath(String path) {
+    public void setPath(String path) {
         song.setPath(path);
     }
 
