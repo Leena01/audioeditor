@@ -16,7 +16,7 @@ public class HorizontalBar extends JPanel {
     }
 
     public HorizontalBar() {
-        super(new FlowLayout());
+        super(new BorderLayout());
         setOpaque(false);
     }
 

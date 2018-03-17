@@ -23,7 +23,6 @@ public final class Constants {
     public static final String DOWN_ICON_NAME = "resources/images/down.png";
     public static final String CLOSE_ICON_NAME = "resources/images/close.png";
 
-    public static final String DEFAULT = "-";
     public static final int GENRE_MIN = 0;
     public static final int GENRE_MAX = 191;
 
@@ -32,7 +31,7 @@ public final class Constants {
     public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 300);
     public static final Dimension COVER_SIZE = new Dimension(300, 300);
     public static final Dimension COVER_SIZE_MAX = new Dimension(480, 480);
-    public static final Dimension BOTTOM_FIELD_SIZE = new Dimension(250, BOTTOM_PANEL_HEIGHT - 6);
+    public static final Dimension BOTTOM_FIELD_SIZE = new Dimension(250, BOTTOM_PANEL_HEIGHT - 5);
     public static final Dimension DATA_LABEL_SIZE = new Dimension(250, 20);
     public static final Dimension AUDIO_SLIDER_SIZE = new Dimension(500, 50);
     public static final Dimension SPEC_IMAGE_SIZE = new Dimension(360, 270);

@@ -15,10 +15,10 @@ public class Cache implements DatabaseDao {
      * Constructor
      * @param database DatabaseDao class
      */
-    public Cache(DatabaseDao database, int minutes) {
+    public Cache(DatabaseDao database, int millis) {
         this.database = database;
         refreshCache();
-        setRefreshInterval(minutes);
+        setRefreshInterval(millis);
     }
 
     @Override
@@ -79,13 +79,10 @@ public class Cache implements DatabaseDao {
     /**
      * Set refresh interval
      * Default: 5 mins
-     * @param minutes to be set
+     * @param millis to be set
      */
-    private void setRefreshInterval(int minutes) {
-        if (minutes <= 0)
-            interval = 300000;
-        else
-            interval = minutes * 60000;
+    private void setRefreshInterval(int millis) {
+        interval = millis;
         startTimer();
     }
 

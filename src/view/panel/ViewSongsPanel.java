@@ -78,6 +78,7 @@ public class ViewSongsPanel extends JPanel {
 
         buttonPanel.add(selectOptionButton);
         buttonPanel.add(editOptionButton);
+        buttonPanel.add(deleteOptionButton);
         buttonPanel.add(backOptionButton);
         buttonPanel.setOpaque(false);
 

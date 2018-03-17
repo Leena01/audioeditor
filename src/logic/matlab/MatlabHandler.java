@@ -13,7 +13,7 @@ public class MatlabHandler {
     private double freq;
     private static MatlabHandler instance = null;
 
-    private final static String FILE_FORMAT_ERROR = "Wrong file format.";
+    private final static String FILE_FORMAT_ERROR = "ThIS file type is not supported.";
     private final static String NO_SONG_ERROR = "No media found/selected.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
 
@@ -61,7 +61,7 @@ public class MatlabHandler {
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
         } catch (Exception ex) {
-            throw new MatlabEngineException("The file type is not supported.");
+            throw new MatlabEngineException(FILE_FORMAT_ERROR);
         }
     }
 
@@ -105,10 +105,8 @@ public class MatlabHandler {
                 eng.putVariable(EMPTY_VAR, 1);
             else
                 eng.putVariable(EMPTY_VAR, 0);
+            eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(RELOCATE_SONG);
-
-            if (!isPlaying)
-                eng.eval(PAUSE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -117,9 +115,8 @@ public class MatlabHandler {
     public synchronized void changeVolume(float level, boolean isPlaying) {
         try {
             eng.putVariable(LEVEL_VAR, level);
+            eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(CHANGE_VOLUME);
-            if (!isPlaying)
-                eng.eval(PAUSE_SONG);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

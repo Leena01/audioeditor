@@ -1,8 +1,10 @@
 package database.entities;
 
-import java.util.Objects;
+import static util.Constants.DEFAULT;
+import static util.Constants.DEFAULT_SONG_ID;
+import static util.Constants.EMPTY_SONG_ID;
 
-import static view.util.Constants.DEFAULT;
+import java.util.Objects;
 
 public class Song {
     private int id;
@@ -30,12 +32,12 @@ public class Song {
 
     public Song(String title, String track, String artist, String album, String year,
                 String genre, String comment, String path) {
-        this(0, title, track, artist, album, year, genre, comment, path);
+        this(DEFAULT_SONG_ID, title, track, artist, album, year, genre, comment, path);
     }
 
 
     public Song() {
-        this(-1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+        this(EMPTY_SONG_ID, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
     }
 
     public Song(Song other) {

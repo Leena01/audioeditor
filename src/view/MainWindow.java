@@ -1,5 +1,7 @@
 package view;
 
+import static util.Constants.DEFAULT_SONG_ID;
+import static util.Constants.REFRESH_MILLIS;
 import static util.Utils.showDialog;
 import static view.panel.analysis.SpectrogramPanel.DIGIT_SIZE_MIN;
 import static view.util.Constants.*;
@@ -13,6 +15,7 @@ import logic.exceptions.InvalidOperationException;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
+import util.Constants;
 import view.element.core.bar.HorizontalBar;
 import view.panel.*;
 import logic.dbaccess.tablemodel.SongTableModel;
@@ -62,7 +65,7 @@ public class MainWindow extends Window {
     private CardLayout cardLayout;
 
     private JLabel currentSongTitle;
-    private JLabel currentSongArtist;
+    private JLabel infoLabel;
     private String path;
     private String lastOpenDir;
 
@@ -125,11 +128,13 @@ public class MainWindow extends Window {
         currentSongTitle = new Label();
         currentSongTitle.setSize(BOTTOM_FIELD_SIZE);
         currentSongTitle.setOpaque(false);
-        bottomPanel.add(currentSongTitle);
-        currentSongArtist = new Label();
-        currentSongArtist.setSize(BOTTOM_FIELD_SIZE);
-        currentSongArtist.setOpaque(false);
-        bottomPanel.add(currentSongArtist);
+        currentSongTitle.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        bottomPanel.add(currentSongTitle, BorderLayout.WEST);
+        infoLabel = new Label();
+        infoLabel.setSize(BOTTOM_FIELD_SIZE);
+        infoLabel.setOpaque(false);
+        infoLabel.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        bottomPanel.add(infoLabel, BorderLayout.EAST);
 
         path = currentSongModel.getPath();
         int pos = Math.max(path.lastIndexOf("\\"),
@@ -148,6 +153,10 @@ public class MainWindow extends Window {
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
+
+        Timer t = new Timer(REFRESH_MILLIS, e -> refreshCache(databaseAccessModel));
+        t.setRepeats(true);
+        t.start();
     }
 
     @Override
@@ -200,92 +209,50 @@ public class MainWindow extends Window {
         backToMenuListener = ae -> cardLayout.show(mainPanel, MENU_PANEL);
 
         openFileListener = ae -> {
-            try {
-                File f = openFile();
-                if (f != null) {
-                        lastOpenDir = f.getParent();
-                        path = f.getPath();
-                        Image cover = ImageIO.read(new File(COVER_NAME));
-                        String title = f.getName();
-                        String track = DEFAULT;
-                        String artist = DEFAULT;
-                        String album = DEFAULT;
-                        String year = DEFAULT;
-                        String genre = DEFAULT;
-                        String comment = DEFAULT;
-                        try {
-                            Mp3File song = new Mp3File(path);
-                            if (song.hasId3v2Tag()) {
-                                ID3v2 id3v2tag = song.getId3v2Tag();
-                                byte[] imageData = id3v2tag.getAlbumImage();
-                                cover = ImageIO.read(new ByteArrayInputStream(imageData));
-                            }
-                            if (song.hasId3v1Tag()) {
-                                ID3v1 id3v1Tag = song.getId3v1Tag();
-                                title = id3v1Tag.getTitle();
-                                track = id3v1Tag.getTrack();
-                                artist = id3v1Tag.getArtist();
-                                album = id3v1Tag.getAlbum();
-                                year = id3v1Tag.getYear();
-                                genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
-                                comment = id3v1Tag.getComment();
-                            }
-                        } catch (Exception ignored) {}
-                        currentSongModel = new SongModel(title, track, artist, album, year, genre, comment, path);
-                        currentSongArtist.setText(currentSongModel.getArtist());
-                        currentSongTitle.setText(currentSongModel.getTitle());
-                        getSaved(databaseAccessModel);
-                        final Image artwork = cover;
+            File f = openFile();
+            if (f != null) {
+                    lastOpenDir = f.getParent();
+                    path = f.getPath();
+                    String title = f.getName();
+                    final Image cover = getTags(title);
+                    currentSongTitle.setText(currentSongModel.getTitle());
+                    getSaved(databaseAccessModel);
 
-                    new Thread(() -> {
-                        getGlassPane().setVisible(true);
-                        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                        try {
-                            matlabHandler.openSong(path);
-                            matlabHandler.plotSong(PLOT_IMAGE_NAME);
-                            matlabHandler.passData(currentSongModel);
-                            SwingUtilities.invokeLater(() -> {
-                                try {
-                                    BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
-                                    menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
-                                            currentSongModel.getFreq(), plot, artwork, isNormal,
-                                            getExtendedState() == MAXIMIZED_BOTH);
-                                } catch (IOException ignored) { }
-                                optionPanel.showOptions(true);
-                                cardLayout.show(mainPanel, MENU_PANEL);
-                            });
-                        } catch (MatlabEngineException mee) {
-                            showDialog(mee.getMessage());
-                        } finally {
-                            setCursor(Cursor.getDefaultCursor());
-                            getGlassPane().setVisible(false);
-                        }
-                    }).start();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                new Thread(() -> {
+                    getGlassPane().setVisible(true);
+                    setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                    try {
+                        matlabHandler.openSong(path);
+                        matlabHandler.plotSong(PLOT_IMAGE_NAME);
+                        matlabHandler.passData(currentSongModel);
+                        SwingUtilities.invokeLater(() -> {
+                            try {
+                                BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
+                                menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
+                                        currentSongModel.getFreq(), plot, cover, isNormal,
+                                        getExtendedState() == MAXIMIZED_BOTH);
+                            } catch (IOException ignored) { }
+                            optionPanel.showOptions(true);
+                            cardLayout.show(mainPanel, MENU_PANEL);
+                        });
+                    } catch (MatlabEngineException mee) {
+                        showDialog(mee.getMessage());
+                    } finally {
+                        setCursor(Cursor.getDefaultCursor());
+                        getGlassPane().setVisible(false);
+                    }
+                }).start();
             }
         };
 
-        viewSongsListener = ae -> {
-            try {
-                viewSongsPanel.setList(databaseAccessModel.getSongs());
-                cardLayout.show(mainPanel, VIEW_SONGS_PANEL);
-            } catch (SQLConnectionException sqe) {
-                showDialog(sqe.getMessage());
-            }
-        };
+        viewSongsListener = ae -> cardLayout.show(mainPanel, VIEW_SONGS_PANEL);
 
-        showDataListener = ae -> {
-            dataPanel.setSongData(currentSongModel);
-            cardLayout.show(mainPanel, DATA_PANEL);
-        };
+        showDataListener = ae -> cardLayout.show(mainPanel, DATA_PANEL);
 
         favoriteButtonListener = ae -> {
             try {
                 databaseAccessModel.addSong(currentSongModel);
-                menuPanel.setFavorite(true);
-                dataPanel.setSongData(currentSongModel);
+                setFavorite(true);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -294,8 +261,7 @@ public class MainWindow extends Window {
         unfavoriteButtonListener = ae -> {
             try {
                 databaseAccessModel.deleteSong(currentSongModel);
-                menuPanel.setFavorite(false);
-                dataPanel.setSongData(currentSongModel);
+                setFavorite(false);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -309,9 +275,7 @@ public class MainWindow extends Window {
             // TODO
         };
 
-        viewSpecListener = ae -> {
-            cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
-        };
+        viewSpecListener = ae -> cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
 
         showSpecListener = ae -> {
             String windowSizeString = spectrogramPanel.getWindowSize();
@@ -345,9 +309,7 @@ public class MainWindow extends Window {
             spectrogramPanel.clearFields();
         };
 
-        analyzeSongListener = ae -> {
-            cardLayout.show(mainPanel, ANALYSIS_PANEL);
-        };
+        analyzeSongListener = ae -> cardLayout.show(mainPanel, ANALYSIS_PANEL);
 
         loadSongListener = ae -> {
             // TODO
@@ -372,28 +334,10 @@ public class MainWindow extends Window {
             try {
                 editPanel.setNewData();
                 SongModel sm = editPanel.getSelectedSongModel();
-                Mp3File song = new Mp3File(sm.getPath());
-                ID3v1 id3v1Tag;
-                if (song.hasId3v1Tag())
-                    id3v1Tag =  song.getId3v1Tag();
-                else {
-                    id3v1Tag = new ID3v1Tag();
-                    song.setId3v1Tag(id3v1Tag);
-                }
-
-                id3v1Tag.setTitle(sm.getTitle());
-                id3v1Tag.setTrack(sm.getTrack());
-                id3v1Tag.setArtist(sm.getArtist());
-                id3v1Tag.setAlbum(sm.getAlbum());
-                id3v1Tag.setYear(sm.getYear());
-                id3v1Tag.setGenre(Integer.parseInt(sm.getGenre()));
-                id3v1Tag.setComment(sm.getComment());
-                song.save(sm.getPath());
-
-                sm.setGenre(id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
+                setTags(sm);
                 databaseAccessModel.editSong(editPanel.getSelectedSongModel());
                 showDialog(SUCCESSFUL_OPERATION);
-            } catch(Exception ex) {
+            } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
             editPanel.clearFields();
@@ -420,7 +364,7 @@ public class MainWindow extends Window {
     private void getSaved(DatabaseAccessModel databaseAccessModel) {
         try {
             int id = databaseAccessModel.getId(currentSongModel);
-            if (id != 0) {
+            if (id != DEFAULT_SONG_ID) {
                 menuPanel.setFavorite(true);
                 currentSongModel.setId(id);
             }
@@ -430,5 +374,85 @@ public class MainWindow extends Window {
             showDialog(e.getMessage());
             menuPanel.setFavorite(false);
         }
+    }
+
+    private void refreshCache(DatabaseAccessModel databaseAccessModel) {
+        dataPanel.setSongData(currentSongModel);
+        try {
+            viewSongsPanel.setList(databaseAccessModel.getSongs());
+            if (databaseAccessModel.hasInvalid()) {
+                infoLabel.setText("Some songs in the database were deleted.");
+                Timer t = new Timer(3000, e -> infoLabel.setText(null));
+                t.setRepeats(false);
+                t.start();
+            }
+            if (!databaseAccessModel.isSongValid(currentSongModel))
+                setFavorite(false);
+        } catch (SQLConnectionException sqe) {
+            showDialog(sqe.getMessage());
+        }
+    }
+
+    private Image getTags(String title) {
+        try {
+            Image cover = ImageIO.read(new File(COVER_NAME));
+            String track = Constants.DEFAULT;
+            String artist = Constants.DEFAULT;
+            String album = Constants.DEFAULT;
+            String year = Constants.DEFAULT;
+            String genre = Constants.DEFAULT;
+            String comment = Constants.DEFAULT;
+            Mp3File song = new Mp3File(path);
+            if (song.hasId3v2Tag()) {
+                ID3v2 id3v2tag = song.getId3v2Tag();
+                byte[] imageData = id3v2tag.getAlbumImage();
+                cover = ImageIO.read(new ByteArrayInputStream(imageData));
+            }
+            if (song.hasId3v1Tag()) {
+                ID3v1 id3v1Tag = song.getId3v1Tag();
+                title = id3v1Tag.getTitle();
+                track = id3v1Tag.getTrack();
+                artist = id3v1Tag.getArtist();
+                album = id3v1Tag.getAlbum();
+                year = id3v1Tag.getYear();
+                genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
+                comment = id3v1Tag.getComment();
+            }
+            currentSongModel = new SongModel(title, track, artist, album, year, genre, comment, path);
+            return cover;
+        } catch (Exception ignored) {}
+        return null;
+    }
+
+    private void setTags(SongModel sm) {
+        try {
+            Mp3File song = new Mp3File(sm.getPath());
+            ID3v1 id3v1Tag;
+            if (song.hasId3v1Tag())
+                id3v1Tag = song.getId3v1Tag();
+            else {
+                id3v1Tag = new ID3v1Tag();
+                song.setId3v1Tag(id3v1Tag);
+            }
+            id3v1Tag.setTitle(sm.getTitle());
+            id3v1Tag.setTrack(sm.getTrack());
+            id3v1Tag.setArtist(sm.getArtist());
+            id3v1Tag.setAlbum(sm.getAlbum());
+            id3v1Tag.setYear(sm.getYear());
+            id3v1Tag.setGenre(Integer.parseInt(sm.getGenre()));
+            id3v1Tag.setComment(sm.getComment());
+            song.save(sm.getPath());
+            sm.setGenre(id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
+        } catch (Exception e) {
+            showDialog(e.getMessage());
+        }
+    }
+
+    private void setFavorite(boolean isFavorite) {
+        menuPanel.setFavorite(isFavorite);
+        if (isFavorite)
+            dataPanel.setSongData(currentSongModel);
+        else
+            currentSongModel.setId(DEFAULT_SONG_ID);
     }
 }

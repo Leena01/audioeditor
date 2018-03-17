@@ -3,6 +3,8 @@ import com.mathworks.engine.MatlabEngine;
 import database.*;
 import logic.dbaccess.DatabaseAccessModel;
 import logic.exceptions.SQLConnectionException;
+
+import static util.Constants.REFRESH_MILLIS;
 import static util.Utils.showDialog;
 
 import logic.matlab.MatlabHandler;
@@ -20,7 +22,7 @@ public class AudioEditor {
         final String URL = "jdbc:sqlite:music.sqlite";
         final DatabaseDao database = new DatabaseDaoImpl(DRIVER, URL);
         // DatabaseDao database = new MockDatabase();
-        final Cache cache = new Cache(database, 1);
+        final Cache cache = new Cache(database, REFRESH_MILLIS);
         final Persistence persistence = new Persistence(cache);
         final DatabaseAccessModel databaseAccessModel = new DatabaseAccessModel(persistence);
         MatlabHandler matlabHandler;

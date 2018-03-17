@@ -107,19 +107,11 @@ public class SongModel {
         song.setComment(comment);
     }
 
-    public void setPath(String path) {
-        song.setPath(path);
-    }
-
     public void setTotalSamples(double totalSamples) {
         this.totalSamples = totalSamples;
     }
 
     public void setFreq(double freq) {
         this.freq = freq;
-    }
-
-    public boolean isSongAvailable() {
-        return song != null;
     }
 }
