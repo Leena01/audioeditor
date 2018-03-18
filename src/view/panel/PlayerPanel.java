@@ -3,7 +3,7 @@ package view.panel;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
-import view.element.playerpanel.*;
+import view.element.slider.*;
 import view.element.core.button.Button;
 
 import javax.swing.*;
@@ -48,11 +48,12 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private boolean isPlaying;
     private SliderTimer sliderTimer;
     private GridBagConstraints c;
+    private GridBagLayout gridbag;
 
     PlayerPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
         super();
         this.glassPane = glassPane;
-        GridBagLayout gridbag = new GridBagLayout();
+        gridbag = new GridBagLayout();
         setLayout(gridbag);
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.CENTER;
@@ -188,9 +189,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
         stopSong();
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
-
         trackSlider.setImage(plot);
-        trackSlider.setUI(new AudioSliderUI(trackSlider));
     }
 
     void setFavorite(boolean isFavorite) {

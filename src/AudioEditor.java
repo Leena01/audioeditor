@@ -8,6 +8,7 @@ import static util.Constants.REFRESH_MILLIS;
 import static util.Utils.showDialog;
 
 import logic.matlab.MatlabHandler;
+import view.element.slider.RangeSliderDemo;
 import view.*;
 
 import java.awt.event.WindowAdapter;

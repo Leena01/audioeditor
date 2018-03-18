@@ -13,7 +13,7 @@ public class MatlabHandler {
     private double freq;
     private static MatlabHandler instance = null;
 
-    private final static String FILE_FORMAT_ERROR = "ThIS file type is not supported.";
+    private final static String FILE_FORMAT_ERROR = "This file type is not supported.";
     private final static String NO_SONG_ERROR = "No media found/selected.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
 
@@ -54,9 +54,9 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void openSong(String p) throws MatlabEngineException {
+    public synchronized void openSong(String file) throws MatlabEngineException {
         try {
-            eng.putVariable(PATH_VAR, p.toCharArray());
+            eng.putVariable(FILE_VAR, file.toCharArray());
             eng.eval(OPEN_SONG);
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
@@ -101,7 +101,7 @@ public class MatlabHandler {
     public synchronized void relocateSong(int frame, boolean isPlaying) {
         try {
             eng.putVariable(START_VAR, frame);
-            if (frame == 0 || frame == totalSamples)
+            if (frame <= 0 || frame >= totalSamples)
                 eng.putVariable(EMPTY_VAR, 1);
             else
                 eng.putVariable(EMPTY_VAR, 0);
@@ -134,6 +134,26 @@ public class MatlabHandler {
             eng.eval(SHOW_SPECTROGRAM_3D);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public synchronized void cutSong(int from, int to) {
+        try {
+            eng.putVariable(FROM_VAR, from);
+            eng.putVariable(TO_VAR, to);
+            System.out.println(from + " " + to);
+            eng.eval(CUT_SONG);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public synchronized void saveSong(String file) throws MatlabEngineException {
+        try {
+            eng.putVariable(FILE_VAR, file.toCharArray());
+            eng.eval(SAVE_SONG);
+        } catch (Exception ex) {
+            throw new MatlabEngineException(FILE_FORMAT_ERROR);
         }
     }
 }

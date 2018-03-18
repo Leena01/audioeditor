@@ -1,4 +1,6 @@
-package view.element.playerpanel;
+package view.element.slider;
+
+import view.element.slider.ui.AudioSliderUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +13,18 @@ public class TrackSlider extends JSlider {
         super(n, 0, 100, 50);
     }
 
-    Image getImage() {
+    public Image getImage() {
         return img;
     }
 
     public void setImage(Image img) {
         this.img = img;
+    }
+
+    @Override
+    public void updateUI() {
+        setUI(new AudioSliderUI(this));
+        updateLabelUIs();
     }
 
     @Override

@@ -34,6 +34,7 @@ public final class Constants {
     public static final Dimension BOTTOM_FIELD_SIZE = new Dimension(250, BOTTOM_PANEL_HEIGHT - 5);
     public static final Dimension DATA_LABEL_SIZE = new Dimension(250, 20);
     public static final Dimension AUDIO_SLIDER_SIZE = new Dimension(500, 50);
+    public static final Dimension RANGE_SLIDER_SIZE = new Dimension(600, 100);
     public static final Dimension SPEC_IMAGE_SIZE = new Dimension(360, 270);
     public static final Dimension SPEC_IMAGE_SIZE_MAX = new Dimension(560, 420);
 }

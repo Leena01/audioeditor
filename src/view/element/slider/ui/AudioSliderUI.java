@@ -1,15 +1,13 @@
-package view.element.playerpanel;
+package view.element.slider.ui;
 
-import view.element.playerpanel.TrackSlider;
+import view.element.slider.TrackSlider;
 
+import static view.util.Constants.AUDIO_SLIDER_SIZE;
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import static javax.swing.border.BevelBorder.LOWERED;
-import static view.util.Constants.AUDIO_SLIDER_SIZE;
 
 public class AudioSliderUI extends BasicSliderUI {
 
@@ -40,7 +38,6 @@ public class AudioSliderUI extends BasicSliderUI {
         Graphics2D g2d = (Graphics2D) g;
         Image img = ((TrackSlider)slider).getImage();
         g2d.drawImage(img, focusRect.x,focusRect.y, focusRect.width, focusRect.height, slider);
-
     }
 
     @Override
@@ -48,10 +45,9 @@ public class AudioSliderUI extends BasicSliderUI {
         Graphics2D g2d = (Graphics2D) g;
         int w = thumbRect.width;
         int h = thumbRect.height;
-        // int newStarty = thumbRect.height / 2 - h / 2;
         g2d.translate(thumbRect.x, thumbRect.y);
-        GradientPaint bgPaint = new GradientPaint(0, 0, new Color(0,0,169),
-                w, 0, new Color(169,169,169));
+        GradientPaint bgPaint = new GradientPaint(0, 0, Color.DARK_GRAY,
+                w, 0, Color.LIGHT_GRAY);
         g2d.setPaint(bgPaint);
         g2d.fillRect(0, 0, w, h);
     }

@@ -1,4 +1,4 @@
-package view.element.playerpanel;
+package view.element.slider;
 
 import javax.swing.*;
 import java.awt.*;

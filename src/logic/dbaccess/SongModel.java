@@ -107,6 +107,10 @@ public class SongModel {
         song.setComment(comment);
     }
 
+    public void setPath(String path) {
+        song.setPath(path);
+    }
+
     public void setTotalSamples(double totalSamples) {
         this.totalSamples = totalSamples;
     }

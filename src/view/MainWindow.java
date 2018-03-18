@@ -1,5 +1,6 @@
 package view;
 
+import static util.Constants.DEFAULT;
 import static util.Constants.DEFAULT_SONG_ID;
 import static util.Constants.REFRESH_MILLIS;
 import static util.Utils.showDialog;
@@ -15,7 +16,6 @@ import logic.exceptions.InvalidOperationException;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
-import util.Constants;
 import view.element.core.bar.HorizontalBar;
 import view.panel.*;
 import logic.dbaccess.tablemodel.SongTableModel;
@@ -44,6 +44,7 @@ public class MainWindow extends Window {
     private static final String DATA_PANEL = "Data Panel";
     private static final String ANALYSIS_PANEL = "Analysis Panel";
     private static final String SPECTROGRAM_PANEL = "Spectrogram Panel";
+    private static final String CUT_SONG_PANEL = "Cut Song Panel";
 
     /**
      * Private data members
@@ -59,6 +60,7 @@ public class MainWindow extends Window {
     private JDialog editFrame;
     private EditPanel editPanel;
     private DataPanel dataPanel;
+    private CutSongPanel cutSongPanel;
     private OptionPanel optionPanel;
     private JPanel sideBar;
     private HorizontalBar bottomPanel;
@@ -68,6 +70,7 @@ public class MainWindow extends Window {
     private JLabel infoLabel;
     private String path;
     private String lastOpenDir;
+    private BufferedImage plot;
 
     /**
      * Listeners
@@ -81,6 +84,7 @@ public class MainWindow extends Window {
     private ActionListener unfavoriteButtonListener;
     private ActionListener changePitchListener;
     private ActionListener cutFileListener;
+    private ActionListener cutDoneListener;
     private ActionListener viewSpecListener;
     private ActionListener showSpecListener;
     private ActionListener analyzeSongListener;
@@ -113,6 +117,7 @@ public class MainWindow extends Window {
         editFrame.setVisible(false);
 
         dataPanel = new DataPanel(currentSongModel, backToMenuListener);
+        cutSongPanel = new CutSongPanel(cutDoneListener);
 
         optionPanel = new OptionPanel(openFileListener, viewSongsListener, showDataListener, changePitchListener, cutFileListener,
                 viewSpecListener, analyzeSongListener);
@@ -150,6 +155,7 @@ public class MainWindow extends Window {
         mainPanel.add(dataPanel, DATA_PANEL);
         mainPanel.add(analysisPanel, ANALYSIS_PANEL);
         mainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL);
+        mainPanel.add(cutSongPanel, CUT_SONG_PANEL);
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
@@ -227,7 +233,7 @@ public class MainWindow extends Window {
                         matlabHandler.passData(currentSongModel);
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                BufferedImage plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
+                                plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
                                 menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
                                         currentSongModel.getFreq(), plot, cover, isNormal,
                                         getExtendedState() == MAXIMIZED_BOTH);
@@ -272,7 +278,36 @@ public class MainWindow extends Window {
         };
 
         cutFileListener = ae -> {
-            // TODO
+            cutSongPanel.setCurrentSong(currentSongModel.getTotalSamples(), plot);
+            cardLayout.show(mainPanel, CUT_SONG_PANEL);
+        };
+
+        cutDoneListener = e -> {
+            new Thread(() -> {
+                getGlassPane().setVisible(true);
+                setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                matlabHandler.cutSong(cutSongPanel.getFrom(), cutSongPanel.getTo());
+                int result = JOptionPane.showConfirmDialog(null,
+                        "Do you want to save the new file?", null, JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Specify a file to save");
+                    int userSelection = fileChooser.showSaveDialog(this);
+                    try {
+                        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                            File fileToSave = fileChooser.getSelectedFile();
+                            matlabHandler.saveSong(fileToSave.getAbsolutePath());
+                            // TODO check if path already exists
+                        }
+                    } catch (MatlabEngineException mee) {
+                        showDialog(mee.getMessage());
+                    }
+                }
+                SwingUtilities.invokeLater(() -> {
+                    getGlassPane().setVisible(false);
+                    setCursor(Cursor.getDefaultCursor());
+                });
+            }).start();
         };
 
         viewSpecListener = ae -> cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
@@ -386,8 +421,10 @@ public class MainWindow extends Window {
                 t.setRepeats(false);
                 t.start();
             }
-            if (!databaseAccessModel.isSongValid(currentSongModel))
+            if (!databaseAccessModel.isSongValid(currentSongModel)) {
                 setFavorite(false);
+                currentSongModel.setPath(DEFAULT);
+            }
         } catch (SQLConnectionException sqe) {
             showDialog(sqe.getMessage());
         }
@@ -396,12 +433,12 @@ public class MainWindow extends Window {
     private Image getTags(String title) {
         try {
             Image cover = ImageIO.read(new File(COVER_NAME));
-            String track = Constants.DEFAULT;
-            String artist = Constants.DEFAULT;
-            String album = Constants.DEFAULT;
-            String year = Constants.DEFAULT;
-            String genre = Constants.DEFAULT;
-            String comment = Constants.DEFAULT;
+            String track = DEFAULT;
+            String artist = DEFAULT;
+            String album = DEFAULT;
+            String year = DEFAULT;
+            String genre = DEFAULT;
+            String comment = DEFAULT;
             Mp3File song = new Mp3File(path);
             if (song.hasId3v2Tag()) {
                 ID3v2 id3v2tag = song.getId3v2Tag();

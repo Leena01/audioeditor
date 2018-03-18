@@ -15,16 +15,6 @@ import javax.swing.*;
  * Main menu
  */
 
-/*
- * open file
- * favorite/disfav
- * play file
- * pause file
- * fast, slow
- * volume
- * FFT, spectrogram
- * registered songs
- */
 public class MenuPanel extends JPanel {
     private static final String NO_MEDIA_LABEL = "No media found. Please choose a file.";
     private static final String INFO_LABEL = "Welcome! Please select a song and choose from the options on the left.";

@@ -1,4 +1,4 @@
-package view.element.playerpanel;
+package view.element.slider;
 
 import javax.swing.*;
 import java.util.*;
@@ -7,7 +7,7 @@ import java.util.Timer;
 import static util.Utils.formatDuration;
 
 public class SliderTimer extends Observable {
-    private static final int MIN = 0;
+    private static final int MIN = 1;
     private static int MAX;
 
     private Timer timer;
@@ -44,7 +44,6 @@ public class SliderTimer extends Observable {
     }
 
     public void resumeTimer() {
-        System.out.println("Hiiiiiii");
         if (refreshMillis != 0) {
             System.out.println(refreshMillis);
             timer = new Timer(isDaemon);

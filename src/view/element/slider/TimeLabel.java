@@ -1,4 +1,4 @@
-package view.element.playerpanel;
+package view.element.slider;
 
 import view.element.core.label.Label;
 
