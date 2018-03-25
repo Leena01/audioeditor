@@ -28,7 +28,7 @@ public final class Constants {
 
     public static final int BOTTOM_PANEL_HEIGHT = 30;
     public static final Dimension WIN_MIN_SIZE = new Dimension(800, 600);
-    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 300);
+    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 320);
     public static final Dimension COVER_SIZE = new Dimension(300, 300);
     public static final Dimension COVER_SIZE_MAX = new Dimension(480, 480);
     public static final Dimension BOTTOM_FIELD_SIZE = new Dimension(250, BOTTOM_PANEL_HEIGHT - 5);

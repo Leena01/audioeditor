@@ -122,12 +122,13 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, String imageName,
-         String imageName2) {
+    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, int windowIndex,
+         String imageName, String imageName2) {
         try {
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
             eng.putVariable(NFFT_VAR, nfft);
+            eng.putVariable(WINDOW_VAR, windowIndex);
             eng.putVariable(SPEC_IMG_VAR, imageName.toCharArray());
             eng.putVariable(SPEC_3D_IMG_VAR, imageName2.toCharArray());
             eng.eval(SHOW_SPECTROGRAM);

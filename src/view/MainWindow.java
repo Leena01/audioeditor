@@ -38,13 +38,16 @@ public class MainWindow extends Window {
     /**
      * Constants
      */
-    private static final String SUCCESSFUL_OPERATION = "Successful operation.";
+    private static final String WRONG_INPUT_ERROR = "Wrong input data.";
+    private static final String SONGS_DELETED_INFO = "Songs deleted.";
+    private static final String SUCCESSFUL_OPERATION_INFO = "Successful operation.";
     private static final String MENU_PANEL = "Menu Panel";
     private static final String VIEW_SONGS_PANEL = "View Songs Panel";
     private static final String DATA_PANEL = "Data Panel";
     private static final String ANALYSIS_PANEL = "Analysis Panel";
     private static final String SPECTROGRAM_PANEL = "Spectrogram Panel";
     private static final String CUT_SONG_PANEL = "Cut Song Panel";
+    private static final int INFO_LABEL_DELAY = 5000;
 
     /**
      * Private data members
@@ -316,19 +319,25 @@ public class MainWindow extends Window {
             String windowSizeString = spectrogramPanel.getWindowSize();
             String hopSizeString = spectrogramPanel.getHopSize();
             String nfftString = spectrogramPanel.getNfft();
+            int windowIndex = spectrogramPanel.getWindowIndex();
             double windowSize = (!windowSizeString.equals("") ? Double.parseDouble(windowSizeString) : 0.0);
             double hopSize = (!hopSizeString.equals("") ? Double.parseDouble(hopSizeString) : 0.0);
             double nfft = (!nfftString.equals("") ? Double.parseDouble(nfftString) : 0.0);
             if (windowSize < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
                     hopSize < Math.pow(10, DIGIT_SIZE_MIN - 2) ||
                     nfft < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
-                    windowSize <= hopSize)
-                spectrogramPanel.clearFields();
+                    windowSize <= hopSize) {
+                infoLabel.setText(WRONG_INPUT_ERROR);
+                Timer t = new Timer(INFO_LABEL_DELAY, e -> infoLabel.setText(null));
+                t.setRepeats(false);
+                t.start();
+            }
             else {
                 new Thread(() -> {
                     getGlassPane().setVisible(true);
                     setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                    matlabHandler.showSpectrogram(windowSize, hopSize, nfft, SPEC_IMAGE_NAME, SPEC_3D_IMAGE_NAME);
+                    matlabHandler.showSpectrogram(windowSize, hopSize, nfft, windowIndex,
+                        SPEC_IMAGE_NAME, SPEC_3D_IMAGE_NAME);
                     SwingUtilities.invokeLater(() -> {
                         getGlassPane().setVisible(false);
                         setCursor(Cursor.getDefaultCursor());
@@ -341,7 +350,6 @@ public class MainWindow extends Window {
                     });
                 }).start();
             }
-            spectrogramPanel.clearFields();
         };
 
         analyzeSongListener = ae -> cardLayout.show(mainPanel, ANALYSIS_PANEL);
@@ -358,7 +366,7 @@ public class MainWindow extends Window {
         deleteSongListener = ae -> {
             try {
                 databaseAccessModel.deleteSong(viewSongsPanel.getSelectedSongModel());
-                showDialog(SUCCESSFUL_OPERATION);
+                showDialog(SUCCESSFUL_OPERATION_INFO);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -371,7 +379,7 @@ public class MainWindow extends Window {
                 SongModel sm = editPanel.getSelectedSongModel();
                 setTags(sm);
                 databaseAccessModel.editSong(editPanel.getSelectedSongModel());
-                showDialog(SUCCESSFUL_OPERATION);
+                showDialog(SUCCESSFUL_OPERATION_INFO);
             } catch(InvalidOperationException | SQLConnectionException ex) {
                 showDialog(ex.getMessage());
             }
@@ -416,8 +424,8 @@ public class MainWindow extends Window {
         try {
             viewSongsPanel.setList(databaseAccessModel.getSongs());
             if (databaseAccessModel.hasInvalid()) {
-                infoLabel.setText("Some songs in the database were deleted.");
-                Timer t = new Timer(3000, e -> infoLabel.setText(null));
+                infoLabel.setText(SONGS_DELETED_INFO);
+                Timer t = new Timer(INFO_LABEL_DELAY, e -> infoLabel.setText(null));
                 t.setRepeats(false);
                 t.start();
             }

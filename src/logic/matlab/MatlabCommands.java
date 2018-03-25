@@ -23,6 +23,7 @@ final class MatlabCommands {
     static final String WINDOW_SIZE_VAR = "wlen";
     static final String HOP_SIZE_VAR = "hop";
     static final String NFFT_VAR = "nfft";
+    static final String WINDOW_VAR = "window";
     static final String FROM_VAR = "from";
     static final String TO_VAR = "to";
 
@@ -37,10 +38,10 @@ final class MatlabCommands {
             PLAYER_VAR, START_VAR, EMPTY_VAR, IS_PLAYING_VAR);
     static final String CHANGE_VOLUME = String.format("%s = changeVolume(%s, %s, %s, %s, %s);",
             PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, FREQ_VAR, LEVEL_VAR, IS_PLAYING_VAR);
-    static final String SHOW_SPECTROGRAM = String.format("length(x); showSpectrogram(%s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, FREQ_VAR, SPEC_IMG_VAR);
-    static final String SHOW_SPECTROGRAM_3D = String.format("length(x); showSpectrogram3d(%s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, FREQ_VAR, SPEC_3D_IMG_VAR);
+    static final String SHOW_SPECTROGRAM = String.format("length(x); showSpectrogram(%s, %s, %s, %s, %s, %s, %s);",
+        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_IMG_VAR);
+    static final String SHOW_SPECTROGRAM_3D = String.format("length(x); showSpectrogram3d(%s, %s, %s, %s, %s, %s, %s);",
+        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_3D_IMG_VAR);
     static final String CUT_SONG = String.format("[player, x, total, fs] = cutSong(player, x, from, to);",
             PLAYER_VAR, SAMPLE_VAR, TOTAL_VAR, FREQ_VAR, PLAYER_VAR, SAMPLE_VAR, FROM_VAR, TO_VAR);
     static final String SAVE_SONG = String.format("audiowrite(%s, %s, %s);", FILE_VAR, SAMPLE_VAR, FREQ_VAR);

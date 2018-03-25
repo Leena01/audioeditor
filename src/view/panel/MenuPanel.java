@@ -1,8 +1,8 @@
 package view.panel;
 
-import static javax.swing.BoxLayout.PAGE_AXIS;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
+import static javax.swing.BoxLayout.PAGE_AXIS;
 import view.element.core.label.Label;
 import java.awt.*;
 import java.awt.event.*;

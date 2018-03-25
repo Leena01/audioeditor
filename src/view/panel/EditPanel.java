@@ -16,7 +16,7 @@ import static view.util.Constants.GENRE_MIN;
  * Edit panel
  */
 public class EditPanel extends JPanel {
-
+    private static final String instrLabel = "Please enter the new data for the song with the following ID: %d.";
     private JLabel infoLabel;
     private JLabel titleLabel;
     private JLabel trackLabel;
@@ -150,6 +150,6 @@ public class EditPanel extends JPanel {
 
     public void setSelectedSong(SongModel sm) {
         this.selectedSongModel = new SongModel(sm);
-        infoLabel.setText("Please enter the new data for the song with the following ID: " + selectedSongModel.getId() + ".");
+        infoLabel.setText(String.format(instrLabel, selectedSongModel.getId()));
     }
 }
