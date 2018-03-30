@@ -1,4 +1,4 @@
-package view.element.core.button;
+package view.core.button;
 
 import javax.swing.*;
 import java.awt.*;
