@@ -1,8 +1,8 @@
 package view.panel;
 
 import logic.dbaccess.SongModel;
-import view.element.core.button.OptionButton;
-import view.element.core.label.Label;
+import view.core.button.OptionButton;
+import view.core.label.Label;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -63,11 +63,11 @@ public class EditPanel extends JPanel {
         mainPanel.setOpaque(false);
 
         infoLabel = new Label();
-        doneButton = new OptionButton("Done");
+        doneButton = new OptionButton("Done", al);
 
         titleLabel = new Label("Title:");
         trackLabel = new Label("Track:");
-        artistLabel = new Label("Artist: ");
+        artistLabel = new Label("Artist:");
         albumLabel = new Label("Album:");
         yearLabel = new Label("Year:");
         genreLabel = new Label("Genre:");
@@ -83,7 +83,6 @@ public class EditPanel extends JPanel {
         nf.setMaximum(GENRE_MAX);
         genreTextField = new JFormattedTextField(nf);
         commentTextField = new JTextField("", 20);
-        doneButton.addActionListener(al);
 
         infoPanel.add(infoLabel);
         formPanel.add(titleLabel);
@@ -149,7 +148,9 @@ public class EditPanel extends JPanel {
     }
 
     public void setSelectedSong(SongModel sm) {
-        this.selectedSongModel = new SongModel(sm);
-        infoLabel.setText(String.format(instrLabel, selectedSongModel.getId()));
+        if (sm != null) {
+            this.selectedSongModel = new SongModel(sm);
+            infoLabel.setText(String.format(instrLabel, selectedSongModel.getId()));
+        }
     }
 }

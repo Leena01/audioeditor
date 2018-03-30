@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-package view.element.slider;
+package view.core.slider;
 
-import view.element.slider.ui.RangeSliderUI;
+import view.core.slider.ui.RangeSliderUI;
 
 import javax.swing.JSlider;
 import java.awt.*;

@@ -5,15 +5,13 @@ import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
 import logic.dbaccess.tablemodel.TableModel;
 import org.jetbrains.annotations.NotNull;
-import view.element.core.button.Button;
+import view.core.button.TransparentButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
-import static view.util.Constants.*;
 
 /**
  * View list of songs
@@ -24,16 +22,17 @@ public class ViewSongsPanel extends JPanel {
     private SongModel selectedSongModel;
     private JTable table;
     private JScrollPane scrollPane;
-    private Button selectOptionButton;
-    private Button editOptionButton;
-    private Button deleteOptionButton;
-    private Button backOptionButton;
+    private TransparentButton selectOptionButton;
+    private TransparentButton addOptionButton;
+    private TransparentButton editOptionButton;
+    private TransparentButton deleteOptionButton;
+    private TransparentButton backOptionButton;
 
     /**
      * Constructor
      * @param tm Table logic
      */
-    public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener e, ActionListener d, ActionListener b) {
+    public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener a, ActionListener e, ActionListener d, ActionListener b) {
         super();
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -60,23 +59,14 @@ public class ViewSongsPanel extends JPanel {
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
         scrollPane.setOpaque(false);
-        selectOptionButton = new Button();
-        selectOptionButton.addMouseListener();
-        editOptionButton = new Button();
-        editOptionButton.addMouseListener();
-        deleteOptionButton = new Button();
-        deleteOptionButton.addMouseListener();
-        backOptionButton = new Button();
-        backOptionButton.addMouseListener();
-        selectOptionButton.setText("Load");
-        editOptionButton.setText("Edit");
-        backOptionButton.setText("Back to Main Menu");
-        selectOptionButton.addActionListener(l);
-        editOptionButton.addActionListener(e);
-        deleteOptionButton.addActionListener(d);
-        backOptionButton.addActionListener(b);
+        selectOptionButton = new TransparentButton("Load", l);
+        addOptionButton = new TransparentButton("Add", a);
+        editOptionButton = new TransparentButton("Edit", e);
+        deleteOptionButton = new TransparentButton("Delete", d);
+        backOptionButton = new TransparentButton("Back to Main Menu", b);
 
         buttonPanel.add(selectOptionButton);
+        buttonPanel.add(addOptionButton);
         buttonPanel.add(editOptionButton);
         buttonPanel.add(deleteOptionButton);
         buttonPanel.add(backOptionButton);

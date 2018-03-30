@@ -1,4 +1,4 @@
-package view.element.core.bar;
+package view.core.bar;
 
 import javax.swing.*;
 import java.awt.*;

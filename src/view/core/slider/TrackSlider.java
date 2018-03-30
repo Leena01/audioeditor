@@ -1,6 +1,6 @@
-package view.element.slider;
+package view.core.slider;
 
-import view.element.slider.ui.AudioSliderUI;
+import view.core.slider.ui.AudioSliderUI;
 
 import javax.swing.*;
 import java.awt.*;

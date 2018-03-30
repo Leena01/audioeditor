@@ -21,10 +21,11 @@
  * THE SOFTWARE.
  */
 
-package view.element.slider.ui;
+package view.core.slider.ui;
 
 import static view.util.Constants.RANGE_SLIDER_SIZE;
-import view.element.slider.RangeSlider;
+
+import view.core.slider.RangeSlider;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

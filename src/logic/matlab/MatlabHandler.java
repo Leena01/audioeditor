@@ -1,9 +1,10 @@
 package logic.matlab;
 
+import static util.Constants.WINDOW_NAMES;
 import static logic.matlab.MatlabCommands.*;
-import static util.Utils.showDialog;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
+import com.mathworks.matlab.types.CellStr;
 import logic.dbaccess.SongModel;
 import logic.exceptions.MatlabEngineException;
 
@@ -14,11 +15,11 @@ public class MatlabHandler {
     private static MatlabHandler instance = null;
 
     private final static String FILE_FORMAT_ERROR = "This file type is not supported.";
-    private final static String NO_SONG_ERROR = "No media found/selected.";
+    private final static String SPEC_ERROR = "Cannot generate image.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
 
     public static MatlabHandler getInstance(MatlabEngine eng) {
-        if(instance == null)
+        if (instance == null)
             instance = new MatlabHandler(eng);
         return instance;
     }
@@ -27,13 +28,17 @@ public class MatlabHandler {
         this.eng = eng;
         this.totalSamples = 0.0;
         this.freq = 0.0;
+    }
+
+    public void init() throws MatlabEngineException {
         try {
             eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
             eng.eval(ADD_PATH);
+            eng.putVariable(WINDOW_KEYS_VAR, new CellStr(WINDOW_NAMES));
+            eng.eval(CREATE_WINDOW_MAP);
         } catch (Exception e) {
-            showDialog(e.getMessage());
+            throw new MatlabEngineException(e.getMessage());
         }
-
     }
 
     public void passData(SongModel sm) {
@@ -41,15 +46,13 @@ public class MatlabHandler {
         sm.setFreq(freq);
     }
 
-    public void close() {
+    public void close() throws MatlabEngineException {
         if (eng != null){
             try {
                 eng.close();
                 instance = null;
             } catch(EngineException e) {
-                showDialog(CLOSE_ERROR);
-            } catch (Exception e) {
-                showDialog(e.getMessage());
+                throw new MatlabEngineException(CLOSE_ERROR);
             }
         }
     }
@@ -60,7 +63,7 @@ public class MatlabHandler {
             eng.eval(OPEN_SONG);
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
-        } catch (Exception ex) {
+        } catch (Exception e) {
             throw new MatlabEngineException(FILE_FORMAT_ERROR);
         }
     }
@@ -69,32 +72,32 @@ public class MatlabHandler {
         try {
             eng.putVariable(PLOT_IMG_VAR, imageName.toCharArray());
             eng.eval(PLOT_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public synchronized void pauseSong() {
         try {
             eng.eval(PAUSE_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public synchronized void resumeSong() {
         try {
             eng.eval(RESUME_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public synchronized void stopSong() {
         try {
             eng.eval(STOP_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,8 +110,8 @@ public class MatlabHandler {
                 eng.putVariable(EMPTY_VAR, 0);
             eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(RELOCATE_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -117,24 +120,24 @@ public class MatlabHandler {
             eng.putVariable(LEVEL_VAR, level);
             eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(CHANGE_VOLUME);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, int windowIndex,
-         String imageName, String imageName2) {
+    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, String window,
+         String imageName, String imageName2) throws MatlabEngineException {
         try {
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
             eng.putVariable(NFFT_VAR, nfft);
-            eng.putVariable(WINDOW_VAR, windowIndex);
+            eng.putVariable(WINDOW_VAR, window.toCharArray());
             eng.putVariable(SPEC_IMG_VAR, imageName.toCharArray());
             eng.putVariable(SPEC_3D_IMG_VAR, imageName2.toCharArray());
             eng.eval(SHOW_SPECTROGRAM);
             eng.eval(SHOW_SPECTROGRAM_3D);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new MatlabEngineException(SPEC_ERROR);
         }
     }
 
@@ -142,10 +145,18 @@ public class MatlabHandler {
         try {
             eng.putVariable(FROM_VAR, from);
             eng.putVariable(TO_VAR, to);
-            System.out.println(from + " " + to);
             eng.eval(CUT_SONG);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void changePitch(float level) {
+        try {
+            eng.putVariable(LEVEL_VAR, level);
+            eng.eval(CHANGE_PITCH);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -153,7 +164,7 @@ public class MatlabHandler {
         try {
             eng.putVariable(FILE_VAR, file.toCharArray());
             eng.eval(SAVE_SONG);
-        } catch (Exception ex) {
+        } catch (Exception e) {
             throw new MatlabEngineException(FILE_FORMAT_ERROR);
         }
     }

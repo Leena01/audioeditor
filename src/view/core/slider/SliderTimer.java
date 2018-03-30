@@ -1,10 +1,11 @@
-package view.element.slider;
+package view.core.slider;
+
+import static util.Utils.formatDuration;
+import static util.Utils.framesToMillis;
 
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;
-
-import static util.Utils.formatDuration;
 
 public class SliderTimer extends Observable {
     private static final int MIN = 1;
@@ -89,7 +90,7 @@ public class SliderTimer extends Observable {
 
     public void changeTime(int frame) {
         if (slider != null && !slider.getValueIsAdjusting()) {
-            timeElapsed = (long)((frame / freq) * 1000);
+            timeElapsed = framesToMillis(frame, freq);
             timeField.setText(formatDuration(timeElapsed));
             System.out.println(frame);
         }

@@ -1,6 +1,6 @@
-package view.element.slider.ui;
+package view.core.slider.ui;
 
-import view.element.slider.TrackSlider;
+import view.core.slider.TrackSlider;
 
 import static view.util.Constants.AUDIO_SLIDER_SIZE;
 import javax.swing.*;

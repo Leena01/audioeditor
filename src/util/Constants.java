@@ -8,4 +8,8 @@ public final class Constants {
     public static final int EMPTY_SONG_ID = -1;
     public static final String DEFAULT = "-";
     public static final int REFRESH_MILLIS = 2000;
+
+    public static String[] WINDOW_NAMES =
+            { "Triangular", "Hann", "Hamming", "Blackman", "Blackman-Harris", "Flat top" };
+
 }

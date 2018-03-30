@@ -1,9 +1,10 @@
 package logic.exceptions;
 
 public class InvalidOperationException extends Exception {
-    public InvalidOperationException() {}
-
-    // Constructor that accepts a message
+    /**
+     * Constructor that accepts a message
+     * @param message message to pass
+     */
     public InvalidOperationException(String message) {
         super(message);
     }

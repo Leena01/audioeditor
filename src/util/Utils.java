@@ -27,6 +27,14 @@ public final class Utils {
         return duration < 0 ? "-" + positive : positive;
     }
 
+    public static long framesToMillis(int frame, double freq){
+        return (long)(frame / freq) * 1000;
+    }
+
+    public static int millisToFrames(long seconds, double freq) {
+        return (int)(seconds * freq) / 1000;
+    }
+
     public static ImageIcon resizeImageIcon(ImageIcon ii, Dimension d) {
         Image img = ii.getImage() ;
         Image newimg = img.getScaledInstance((int)d.getWidth(), (int)d.getHeight(), java.awt.Image.SCALE_SMOOTH) ;

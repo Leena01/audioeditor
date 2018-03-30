@@ -6,23 +6,101 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/view/element/slider/RangeSlider.java" line="0" mnemonic="6" />
+    <bookmark url="file://$PROJECT_DIR$/src/view/core/slider/RangeSlider.java" line="0" mnemonic="6" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50a7f7a4-aa0d-4795-910f-5572edb6c5a6" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/mp3agic-master.zip" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/view/core/button/Button.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/view/core/listener/EmptyMouseListener.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/changeSpeed.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/MainWindow$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/bar/HorizontalBar.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/bar/SideBar.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/button/Button.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/button/OptionButton.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/label/Label.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/window/Window$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/window/Window$2.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/core/window/Window.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/RangeSlider.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/RangeSliderDemo$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/RangeSliderDemo.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/SliderTimer$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/SliderTimer.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/TimeLabel.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/TrackSlider.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/VolumeSlider.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/ui/AudioSliderUI$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/ui/AudioSliderUI.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/ui/RangeSliderUI$ChangeHandler.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/ui/RangeSliderUI$RangeTrackListener.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/element/slider/ui/RangeSliderUI.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/matlab/changeSpeed.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/element/slider/RangeSliderDemo.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/bar/HorizontalBar.java" afterPath="$PROJECT_DIR$/src/view/core/bar/HorizontalBar.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/bar/SideBar.java" afterPath="$PROJECT_DIR$/src/view/core/bar/SideBar.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/button/Button.java" afterPath="$PROJECT_DIR$/src/view/core/button/TransparentButton.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/button/OptionButton.java" afterPath="$PROJECT_DIR$/src/view/core/button/OptionButton.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/label/Label.java" afterPath="$PROJECT_DIR$/src/view/core/label/Label.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/core/window/Window.java" afterPath="$PROJECT_DIR$/src/view/core/window/Window.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/RangeSlider.java" afterPath="$PROJECT_DIR$/src/view/core/slider/RangeSlider.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/SliderTimer.java" afterPath="$PROJECT_DIR$/src/view/core/slider/SliderTimer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/TimeLabel.java" afterPath="$PROJECT_DIR$/src/view/core/slider/TimeLabel.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/TrackSlider.java" afterPath="$PROJECT_DIR$/src/view/core/slider/TrackSlider.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/VolumeSlider.java" afterPath="$PROJECT_DIR$/src/view/core/slider/VolumeSlider.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/ui/AudioSliderUI.java" afterPath="$PROJECT_DIR$/src/view/core/slider/ui/AudioSliderUI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/view/element/slider/ui/RangeSliderUI.java" afterPath="$PROJECT_DIR$/src/view/core/slider/ui/RangeSliderUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/AudioEditor$1.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/AudioEditor$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/AudioEditor.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/AudioEditor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/InvalidOperationException.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/InvalidOperationException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/MatlabEngineException.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/MatlabEngineException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/SQLConnectionException.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/logic/exceptions/SQLConnectionException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/logic/matlab/MatlabCommands.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/logic/matlab/MatlabCommands.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/logic/matlab/MatlabHandler.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/logic/matlab/MatlabHandler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/util/Constants.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/util/Constants.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/util/Utils.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/util/Utils.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/MainWindow.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/MainWindow.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/CutSongPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/CutSongPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/DataPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/DataPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/EditPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/EditPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/MenuPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/MenuPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/OptionPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/OptionPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/PlayerPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/PlayerPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/ViewSongsPanel$1.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/ViewSongsPanel$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/ViewSongsPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/ViewSongsPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/panel/analysis/SpectrogramPanel.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/panel/analysis/SpectrogramPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/view/util/Constants.class" afterPath="$PROJECT_DIR$/out/production/audioeditor/view/util/Constants.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/images/default-artwork.png" afterPath="$PROJECT_DIR$/resources/images/default-artwork.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp.png" afterPath="$PROJECT_DIR$/temp.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp2.png" afterPath="$PROJECT_DIR$/temp2.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp3.png" afterPath="$PROJECT_DIR$/temp3.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/changeVolume.m" afterPath="$PROJECT_DIR$/out/production/audioeditor/matlab/changeVolume.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/cutSong.m" afterPath="$PROJECT_DIR$/out/production/audioeditor/matlab/cutSong.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/saveSong.m" afterPath="$PROJECT_DIR$/out/production/audioeditor/matlab/saveSong.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/showSpectrogram.m" afterPath="$PROJECT_DIR$/out/production/audioeditor/matlab/showSpectrogram.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/audioeditor/matlab/showSpectrogram3d.m" afterPath="$PROJECT_DIR$/out/production/audioeditor/matlab/showSpectrogram3d.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/matlab/changeVolume.m" afterPath="$PROJECT_DIR$/resources/matlab/changeVolume.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/matlab/cutSong.m" afterPath="$PROJECT_DIR$/resources/matlab/cutSong.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/matlab/saveSong.m" afterPath="$PROJECT_DIR$/resources/matlab/saveSong.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/matlab/showSpectrogram.m" afterPath="$PROJECT_DIR$/resources/matlab/showSpectrogram.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/matlab/showSpectrogram3d.m" afterPath="$PROJECT_DIR$/resources/matlab/showSpectrogram3d.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AudioEditor.java" afterPath="$PROJECT_DIR$/src/AudioEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic/exceptions/InvalidOperationException.java" afterPath="$PROJECT_DIR$/src/logic/exceptions/InvalidOperationException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic/exceptions/MatlabEngineException.java" afterPath="$PROJECT_DIR$/src/logic/exceptions/MatlabEngineException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic/exceptions/SQLConnectionException.java" afterPath="$PROJECT_DIR$/src/logic/exceptions/SQLConnectionException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic/matlab/MatlabCommands.java" afterPath="$PROJECT_DIR$/src/logic/matlab/MatlabCommands.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java" afterPath="$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/Constants.java" afterPath="$PROJECT_DIR$/src/util/Constants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/Utils.java" afterPath="$PROJECT_DIR$/src/util/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/MainWindow.java" afterPath="$PROJECT_DIR$/src/view/MainWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/CutSongPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/CutSongPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/DataPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/DataPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/EditPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/EditPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/MenuPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/MenuPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/OptionPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/OptionPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/PlayerPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/PlayerPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/panel/analysis/SpectrogramPanel.java" afterPath="$PROJECT_DIR$/src/view/panel/analysis/SpectrogramPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/util/Constants.java" afterPath="$PROJECT_DIR$/src/view/util/Constants.java" />
     </list>
@@ -69,11 +147,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="345" column="50" lean-forward="false" selection-start-line="345" selection-start-column="50" selection-end-line="345" selection-end-column="50" />
+            <state relative-caret-position="175">
+              <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OptionPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/panel/OptionPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="19" column="42" lean-forward="false" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CutSongPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/panel/CutSongPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="104" column="74" lean-forward="true" selection-start-line="104" selection-start-column="74" selection-end-line="104" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4381#4382#0" expanded="true" />
+                <element signature="e#4426#4427#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RangeSliderUI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/core/slider/ui/RangeSliderUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1003">
+              <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,25 +193,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/panel/PlayerPanel.java">
+      <file leaf-file-name="RangeSlider.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/core/slider/RangeSlider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="191" column="35" lean-forward="false" selection-start-line="191" selection-start-column="8" selection-end-line="191" selection-end-column="35" />
+            <state relative-caret-position="353">
+              <caret line="137" column="30" lean-forward="false" selection-start-line="137" selection-start-column="30" selection-end-line="137" selection-end-column="30" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpectrogramPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/panel/analysis/SpectrogramPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="127" column="35" lean-forward="false" selection-start-line="127" selection-start-column="35" selection-end-line="127" selection-end-column="35" />
-              <folding>
-                <element signature="e#5066#5067#0" expanded="true" />
-                <element signature="e#5122#5123#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -107,28 +206,30 @@
       <file leaf-file-name="MenuPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/panel/MenuPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="46" lean-forward="false" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+            <state relative-caret-position="340">
+              <caret line="110" column="19" lean-forward="false" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PlayerPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/panel/PlayerPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-289">
+              <caret line="186" column="19" lean-forward="false" selection-start-line="186" selection-start-column="9" selection-end-line="186" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/util/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="16" column="90" lean-forward="true" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MatlabHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="140" column="31" lean-forward="true" selection-start-line="140" selection-start-column="31" selection-end-line="140" selection-end-column="31" />
+            <state relative-caret-position="-86">
+              <caret line="9" column="83" lean-forward="true" selection-start-line="9" selection-start-column="83" selection-end-line="9" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -145,36 +246,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>changeTime</find>
-      <find>totalsamples</find>
-      <find>currentso</find>
-      <find>totalSamples</find>
-      <find>setcurre</find>
-      <find>setid</find>
-      <find>isSongValid</find>
-      <find>freq</find>
-      <find>NEW</find>
-      <find>(matlabHan</find>
-      <find>final int MIN</find>
-      <find>setmax</find>
-      <find>paintfoc</find>
-      <find>createem</find>
-      <find>rangeSliderValue1</find>
-      <find>cutSong</find>
-      <find>clearfi</find>
-      <find>songs</find>
-      <find>\&quot;</find>
-      <find>com</find>
-      <find>addac</find>
-      <find>some songs</find>
-      <find>spectr</find>
-      <find>info</find>
-      <find>infolabel.set</find>
-      <find>addaction</find>
-      <find>3000</find>
-      <find>new timer</find>
-      <find>_max</find>
-      <find>addact</find>
+      <find>backward</find>
+      <find>BACKWARD</find>
+      <find>mp3write</find>
+      <find>save</find>
+      <find>frame</find>
+      <find>mp3</find>
+      <find>FAVORITE_ICON</find>
+      <find>addAc</find>
+      <find>maximizecover</find>
+      <find>add</find>
+      <find>COVER_SIZE_MAX</find>
+      <find>hide</find>
+      <find>maximize</find>
+      <find>setcurrentsong</find>
+      <find>ismaximize</find>
+      <find>cutsong</find>
+      <find>ismaximiz</find>
+      <find>range</find>
+      <find>setprefe</find>
+      <find>editso</find>
+      <find>loadSongListener</find>
+      <find>OPEN FI</find>
+      <find>EDIT SONG</find>
+      <find>backToMenuListener</find>
+      <find>pausesong</find>
+      <find>plot</find>
+      <find>setcurrent</find>
+      <find>-1</find>
+      <find>artwork</find>
+      <find>pauses</find>
     </findStrings>
     <replaceStrings>
       <replace>ex.printStackTrace();</replace>
@@ -199,33 +300,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/view/element/tablemodel/SongTableModel.java" />
-        <option value="$PROJECT_DIR$/src/logic/dbaccess/CurrentSongModel.java" />
-        <option value="$PROJECT_DIR$/src/logic/dbaccess/EverySongModel.java" />
-        <option value="$PROJECT_DIR$/src/logic/dbaccess/SongListModel.java" />
-        <option value="$PROJECT_DIR$/src/logic/dbaccess/tablemodel/TableModel.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/button/OptionButton.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/pane/GlassPane.java" />
-        <option value="$PROJECT_DIR$/src/view/element/playerpanel/SliderTimer.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/panel/ImagePanel.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/constant/Constants.java" />
-        <option value="$PROJECT_DIR$/src/view/element/playerpanel/TrackSlider.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/window/Window.java" />
-        <option value="$PROJECT_DIR$/src/view/element/core/label/Label.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/OptionPanel.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/AnalysisPanel.java" />
         <option value="$PROJECT_DIR$/src/view/panel/analysis/AnalysisPanel.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/DataPanel.java" />
         <option value="$PROJECT_DIR$/src/logic/exceptions/MatlabException.java" />
         <option value="$PROJECT_DIR$/src/database/entities/Song.java" />
         <option value="$PROJECT_DIR$/src/database/entities/SongList.java" />
         <option value="$PROJECT_DIR$/src/view/element/core/bar/HorizontalBar.java" />
-        <option value="$PROJECT_DIR$/src/util/Constants.java" />
         <option value="$PROJECT_DIR$/src/database/DatabaseDao.java" />
         <option value="$PROJECT_DIR$/src/database/Cache.java" />
         <option value="$PROJECT_DIR$/src/database/Persistence.java" />
         <option value="$PROJECT_DIR$/src/database/DatabaseDaoImpl.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java" />
         <option value="$PROJECT_DIR$/src/logic/dbaccess/DatabaseAccessModel.java" />
         <option value="$PROJECT_DIR$/src/RangeSliderDemo.java" />
         <option value="$PROJECT_DIR$/src/slider/RangeSliderDemo.java" />
@@ -235,21 +318,39 @@
         <option value="$PROJECT_DIR$/src/view/element/slider/AudioSliderUI.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/RangeSlider.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/RangeSliderUI.java" />
-        <option value="$PROJECT_DIR$/src/AudioEditor.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/TrackSlider.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/PlayerPanel.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/ui/AudioSliderUI.java" />
         <option value="$PROJECT_DIR$/src/logic/dbaccess/SongModel.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/SliderTimer.java" />
         <option value="$PROJECT_DIR$/src/view/element/slider/ui/RangeSliderUI.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/CutSongPanel.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/EditPanel.java" />
+        <option value="$PROJECT_DIR$/src/util/Constants.java" />
+        <option value="$PROJECT_DIR$/src/logic/exceptions/InvalidOperationException.java" />
+        <option value="$PROJECT_DIR$/src/logic/exceptions/MatlabEngineException.java" />
+        <option value="$PROJECT_DIR$/src/logic/exceptions/SQLConnectionException.java" />
+        <option value="$PROJECT_DIR$/src/AudioEditor.java" />
+        <option value="$PROJECT_DIR$/src/view/core/listener/EmptyMouseListener.java" />
+        <option value="$PROJECT_DIR$/src/view/core/slider/VolumeSlider.java" />
         <option value="$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java" />
         <option value="$PROJECT_DIR$/src/logic/matlab/MatlabCommands.java" />
-        <option value="$PROJECT_DIR$/src/view/panel/MenuPanel.java" />
-        <option value="$PROJECT_DIR$/src/view/util/Constants.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/DataPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/core/window/Window.java" />
+        <option value="$PROJECT_DIR$/src/view/core/button/OptionButton.java" />
+        <option value="$PROJECT_DIR$/src/view/core/button/TransparentButton.java" />
+        <option value="$PROJECT_DIR$/src/view/core/button/Button.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/EditPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/PlayerPanel.java" />
+        <option value="$PROJECT_DIR$/resources/matlab/mp3write.m" />
+        <option value="$PROJECT_DIR$/src/view/core/slider/SliderTimer.java" />
+        <option value="$PROJECT_DIR$/src/util/Utils.java" />
         <option value="$PROJECT_DIR$/src/view/panel/analysis/SpectrogramPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/MenuPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/core/slider/ui/RangeSliderUI.java" />
+        <option value="$PROJECT_DIR$/src/view/core/slider/RangeSlider.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/CutSongPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java" />
+        <option value="$PROJECT_DIR$/src/view/panel/OptionPanel.java" />
         <option value="$PROJECT_DIR$/src/view/MainWindow.java" />
+        <option value="$PROJECT_DIR$/src/view/util/Constants.java" />
       </list>
     </option>
   </component>
@@ -371,46 +472,7 @@
               <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="slider" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="slider" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="panel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="panel" type="462c0819:PsiDirectoryNode" />
-              <item name="analysis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
@@ -949,16 +1011,15 @@
       <workItem from="1521162489928" duration="64000" />
       <workItem from="1521162758082" duration="9365000" />
       <workItem from="1521213845309" duration="57789000" />
-      <workItem from="1521928288703" duration="8400000" />
+      <workItem from="1521928288703" duration="43122000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="679217000" />
+    <option name="totallyTimeSpent" value="713939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16611843" sideWeight="0.26701966" order="10" side_tool="true" content_ui="tabs" />
@@ -967,7 +1028,7 @@
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42927632" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19572368" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17434211" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1830161" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -978,12 +1039,12 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22861843" sideWeight="0.7329803" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10361842" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.08552632" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32753405" sideWeight="0.49107143" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30427632" sideWeight="0.7329803" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6299342" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40131578" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19969743" sideWeight="0.49107143" order="1" side_tool="false" content_ui="combo" />
       <window_info id="JRebel" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09210526" sideWeight="0.47510982" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38322368" sideWeight="0.47510982" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UML design tool window" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6530015" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25183016" sideWeight="0.5089286" order="7" side_tool="true" content_ui="tabs" />
@@ -1049,35 +1110,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/lib/mp3agic-0.9.2-SNAPSHOT-sources.jar!/com/mpatric/mp3agic/Mp3File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/PlayingTimer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LFrame.java" />
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/TimeLabel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/dbaccess/ListModel.java" />
     <entry file="file://$PROJECT_DIR$/src/logic/dbaccess/tablemodel/TableModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
@@ -1094,29 +1126,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/element/core/pane/GlassPane.java" />
     <entry file="file://$PROJECT_DIR$/src/view/element/core/panel/ImagePanel.java" />
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/button/OptionButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/button/Button.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/VolumeSlider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/bar/SideBar.java">
+    <entry file="file://$PROJECT_DIR$/src/view/core/bar/SideBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="9" column="50" lean-forward="true" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
@@ -1128,66 +1138,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="193" column="0" lean-forward="false" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/OptionPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="56" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/label/Label.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/MatlabEngineException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/InvalidOperationException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="8" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/analysis/AnalysisPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="43" lean-forward="false" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/SQLConnectionException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/DataPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="90" column="27" lean-forward="false" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1211,29 +1161,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/database/entities/SongList.java" />
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/bar/HorizontalBar.java">
+    <entry file="file://$PROJECT_DIR$/src/view/core/bar/HorizontalBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="25" lean-forward="false" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/core/window/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="85" column="58" lean-forward="false" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="31" column="69" lean-forward="false" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1266,14 +1200,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/database/DatabaseDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1288,33 +1214,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-91">
-          <caret line="80" column="44" lean-forward="true" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AudioEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/dbaccess/SongModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="110" column="27" lean-forward="true" selection-start-line="110" selection-start-column="27" selection-end-line="110" selection-end-column="27" />
-          <folding>
-            <element signature="e#2296#2297#0" expanded="false" />
-            <element signature="e#2330#2331#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/dbaccess/DatabaseAccessModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -1323,15 +1222,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/SliderTimer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/ui/AudioSliderUI.java">
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/ui/AudioSliderUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
           <caret line="54" column="4" lean-forward="false" selection-start-line="54" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
@@ -1339,45 +1230,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/ui/RangeSliderUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="535" column="5" lean-forward="true" selection-start-line="535" selection-start-column="5" selection-end-line="535" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#19200#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/RangeSlider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510">
-          <caret line="54" column="22" lean-forward="false" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#4276#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#1933#1934#0" expanded="false" />
-            <element signature="e#1961#1962#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/CutSongPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="76" column="5" lean-forward="true" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/element/slider/TrackSlider.java">
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/TrackSlider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding>
-            <element signature="e#274#275#0" expanded="false" />
-            <element signature="e#310#311#0" expanded="false" />
+            <element signature="e#268#269#0" expanded="false" />
+            <element signature="e#304#305#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1390,72 +1249,289 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/ImageIcon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="140" column="31" lean-forward="true" selection-start-line="140" selection-start-column="31" selection-end-line="140" selection-end-column="31" />
+        <state relative-caret-position="110">
+          <caret line="239" column="0" lean-forward="false" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/matlab/MatlabCommands.java">
+    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/SQLConnectionException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="34" column="83" lean-forward="true" selection-start-line="34" selection-start-column="83" selection-end-line="34" selection-end-column="83" />
+        <state relative-caret-position="102">
+          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/EditPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/MatlabEngineException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="123" column="33" lean-forward="true" selection-start-line="123" selection-start-column="33" selection-end-line="123" selection-end-column="33" />
+        <state relative-caret-position="136">
+          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/PlayerPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/logic/exceptions/InvalidOperationException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="191" column="35" lean-forward="false" selection-start-line="191" selection-start-column="8" selection-end-line="191" selection-end-column="35" />
+        <state relative-caret-position="51">
+          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/panel/MenuPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/AudioEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="48" column="55" lean-forward="false" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1613#2263#0" expanded="true" />
+            <element signature="e#2262#2263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/listener/EmptyMouseListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="46" lean-forward="false" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+          <caret line="5" column="47" lean-forward="false" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/label/Label.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/util/Constants.java">
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/VolumeSlider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="90" lean-forward="true" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
+        <state relative-caret-position="136">
+          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/dbaccess/SongModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/DataPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="77" column="62" lean-forward="true" selection-start-line="77" selection-start-column="62" selection-end-line="77" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/button/TransparentButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/button/Button.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="30" lean-forward="false" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/analysis/AnalysisPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="43" lean-forward="false" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/matlab/mp3write.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/mp3agic-0.9.2-SNAPSHOT-sources.jar!/com/mpatric/mp3agic/Mp3File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="464" column="29" lean-forward="true" selection-start-line="464" selection-start-column="29" selection-end-line="464" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/matlab/MatlabHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-325">
+          <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/SliderTimer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="36" column="66" lean-forward="false" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/window/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="161" column="28" lean-forward="false" selection-start-line="161" selection-start-column="28" selection-end-line="161" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/panel/analysis/SpectrogramPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="127" column="35" lean-forward="false" selection-start-line="127" selection-start-column="35" selection-end-line="127" selection-end-column="35" />
+        <state relative-caret-position="307">
+          <caret line="165" column="33" lean-forward="false" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="33" />
           <folding>
-            <element signature="e#5066#5067#0" expanded="true" />
-            <element signature="e#5122#5123#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-78">
+          <caret line="19" column="39" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/CutSongPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="104" column="74" lean-forward="true" selection-start-line="104" selection-start-column="74" selection-end-line="104" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4381#4382#0" expanded="true" />
+            <element signature="e#4426#4427#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/RangeSlider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="137" column="30" lean-forward="false" selection-start-line="137" selection-start-column="30" selection-end-line="137" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/slider/ui/RangeSliderUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1003">
+          <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logic/matlab/MatlabCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/ViewSongsPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/EditPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="65" column="50" lean-forward="true" selection-start-line="65" selection-start-column="50" selection-end-line="65" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/core/button/OptionButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="41">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/OptionPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="19" column="42" lean-forward="false" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/MenuPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="110" column="19" lean-forward="false" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/panel/PlayerPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="186" column="19" lean-forward="false" selection-start-line="186" selection-start-column="9" selection-end-line="186" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="345" column="50" lean-forward="false" selection-start-line="345" selection-start-column="50" selection-end-line="345" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="175">
+          <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/util/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-86">
+          <caret line="9" column="83" lean-forward="true" selection-start-line="9" selection-start-column="83" selection-end-line="9" selection-end-column="83" />
+          <folding />
         </state>
       </provider>
     </entry>

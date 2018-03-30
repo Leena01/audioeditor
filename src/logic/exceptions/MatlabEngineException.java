@@ -1,9 +1,10 @@
 package logic.exceptions;
 
 public class MatlabEngineException extends Exception {
-    public MatlabEngineException() {}
-
-    // Constructor that accepts a message
+    /**
+     * Constructor that accepts a message
+     * @param message message to pass
+     */
     public MatlabEngineException(String message) {
         super(message);
     }

@@ -3,8 +3,11 @@ package view.panel;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
-import view.element.slider.*;
-import view.element.core.button.Button;
+import view.core.button.TransparentButton;
+import view.core.slider.SliderTimer;
+import view.core.slider.TimeLabel;
+import view.core.slider.TrackSlider;
+import view.core.slider.VolumeSlider;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -18,6 +21,7 @@ import java.util.Observer;
 
 class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Observer {
     private static final long REFRESH_MILLIS = 50;
+    private static final int SKIP_FRAME = 500; // TODO
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
     private static final Dimension BUTTON_SIZE = new Dimension(36, 27);
     private static final Dimension BUTTON_SIZE_FAV = new Dimension(36, 36);
@@ -28,19 +32,20 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private static final ImageIcon PAUSE_ICON_HOVER = resizeImageIcon(new ImageIcon(PAUSE_ICON_HOVER_NAME), BUTTON_SIZE);
     private static final ImageIcon STOP_ICON = resizeImageIcon(new ImageIcon(STOP_ICON_NAME), BUTTON_SIZE);
     private static final ImageIcon STOP_ICON_HOVER = resizeImageIcon(new ImageIcon(STOP_ICON_HOVER_NAME), BUTTON_SIZE);
-    // private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon(BACKWARD_ICON_NAME), BUTTON_SIZE);
-    // private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon(BACKWARD_ICON_HOVER_NAME), BUTTON_SIZE);
+    private static final ImageIcon BACKWARD_ICON = resizeImageIcon(new ImageIcon(BACKWARD_ICON_NAME), BUTTON_SIZE);
+    private static final ImageIcon BACKWARD_ICON_HOVER = resizeImageIcon(new ImageIcon(BACKWARD_ICON_HOVER_NAME), BUTTON_SIZE);
     private static final ImageIcon FAVORITE_ICON = resizeImageIcon(new ImageIcon(FAVORITE_ICON_NAME), BUTTON_SIZE_FAV);
     private static final ImageIcon UNFAVORITE_ICON = resizeImageIcon(new ImageIcon(UNFAVORITE_ICON_NAME), BUTTON_SIZE_FAV);
 
     private JLabel timeField;
     private JLabel totalLengthField;
     private TrackSlider trackSlider;
-    private Button playButton;
-    private Button pauseButton;
-    private Button stopButton;
-    private Button favoriteButton;
-    private Button unfavoriteButton;
+    private TransparentButton playButton;
+    private TransparentButton pauseButton;
+    private TransparentButton stopButton;
+    private TransparentButton backwardButton;
+    private TransparentButton favoriteButton;
+    private TransparentButton unfavoriteButton;
     private JPanel buttonPanel;
     private Component glassPane;
     private VolumeSlider volumeSlider;
@@ -76,20 +81,13 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         c.gridx = 2;
         add(totalLengthField, c);
 
-        playButton = new Button(PLAY_ICON, PLAY_ICON_HOVER, BUTTON_SIZE);
-        playButton.addMouseListener();
-
-        pauseButton = new Button(PAUSE_ICON, PAUSE_ICON_HOVER, BUTTON_SIZE);
-        pauseButton.addMouseListener();
-
-        stopButton = new Button(STOP_ICON, STOP_ICON_HOVER, BUTTON_SIZE);
-        stopButton.addMouseListener();
-
-        favoriteButton = new Button(FAVORITE_ICON, BUTTON_SIZE);
-        favoriteButton.addMouseListener();
-
-        unfavoriteButton = new Button(UNFAVORITE_ICON, BUTTON_SIZE);
-        unfavoriteButton.addMouseListener();
+        playButton = new TransparentButton(PLAY_ICON, PLAY_ICON_HOVER, BUTTON_SIZE);
+        pauseButton = new TransparentButton(PAUSE_ICON, PAUSE_ICON_HOVER, BUTTON_SIZE);
+        stopButton = new TransparentButton(STOP_ICON, STOP_ICON_HOVER, BUTTON_SIZE);
+        backwardButton = new TransparentButton(BACKWARD_ICON, BACKWARD_ICON_HOVER, BUTTON_SIZE);
+        // forwardButton = new TransparentButton(FORWARD, STOP_ICON_HOVER, BUTTON_SIZE);
+        favoriteButton = new TransparentButton(FAVORITE_ICON, BUTTON_SIZE, fb);
+        unfavoriteButton = new TransparentButton(UNFAVORITE_ICON, BUTTON_SIZE, ufb);
 
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setOpaque(false);
@@ -100,6 +98,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
 
         pauseButton.setVisible(false);
         setFavorite(false);
+        buttonPanel.add(backwardButton);
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(stopButton);
@@ -112,10 +111,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         add(buttonPanel, c);
 
         sliderTimer = new SliderTimer(trackSlider, timeField, totalLengthField, true);
-
         initInnerListeners();
-        favoriteButton.addActionListener(fb);
-        unfavoriteButton.addActionListener(ufb);
     }
 
     @Override
@@ -130,17 +126,19 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         else if (source == stopButton) {
             stopSong();
         }
+        else if (source == backwardButton) {
+            moveBackward();
+        }
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         Object source = e.getSource();
         if (source == trackSlider) {
-            TrackSlider s = (TrackSlider) source;
             // if (!s.getValueIsAdjusting()) {
                 // sliderTimer.pauseTimer();
                 // trackSlider.removeListeners();
-                int frame = s.getValue();
+                int frame = trackSlider.getValue();
                 new Thread(() -> {
                     glassPane.setVisible(true);
                     sliderTimer.changeTime(frame);
@@ -218,7 +216,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         }).start();
     }
 
-    private void pauseSong() {
+    void pauseSong() {
         new Thread(() -> {
             glassPane.setVisible(true);
             matlabHandler.pauseSong();
@@ -246,10 +244,33 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         }).start();
     }
 
+    private void moveBackward() {
+        // TODO
+        new Thread(() -> {
+            int frame = trackSlider.getValue();
+            glassPane.setVisible(true);
+            sliderTimer.changeTime(frame - SKIP_FRAME);
+            matlabHandler.relocateSong(frame, isPlaying);
+            SwingUtilities.invokeLater(() -> glassPane.setVisible(false));
+        }).start();
+    }
+
+    private void moveForward() {
+        // TODO
+        new Thread(() -> {
+            int frame = trackSlider.getValue();
+            glassPane.setVisible(true);
+            sliderTimer.changeTime(frame + SKIP_FRAME);
+            matlabHandler.relocateSong(frame, isPlaying);
+            SwingUtilities.invokeLater(() -> glassPane.setVisible(false));
+        }).start();
+    }
+
     private void initInnerListeners() {
         sliderTimer.addObserver(this);
         trackSlider.addChangeListener(this);
         volumeSlider.addChangeListener(this);
+        backwardButton.addChangeListener(this);
         playButton.addActionListener(this);
         pauseButton.addActionListener(this);
         stopButton.addActionListener(this);

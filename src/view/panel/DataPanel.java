@@ -3,7 +3,8 @@ package view.panel;
 import logic.dbaccess.SongModel;
 
 import static view.util.Constants.*;
-import view.element.core.label.Label;
+import view.core.label.Label;
+import view.core.button.Button;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,7 @@ public class DataPanel extends JPanel {
     public DataPanel(SongModel currentSongModel, ActionListener b) {
         setBackground(Color.BLACK);
         mainPanel = new JPanel(new BorderLayout());
-        buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel = new JPanel(new BorderLayout());
         labelPanel = new JPanel(new GridLayout(9,2));
         idLabel = new Label("ID:", DATA_LABEL_SIZE);
         titleLabel = new Label("Title:", DATA_LABEL_SIZE);
@@ -74,10 +75,7 @@ public class DataPanel extends JPanel {
         labelPanel.add(comment);
         labelPanel.add(pathLabel);
         labelPanel.add(path);
-        backOptionButton = new JButton();
-        backOptionButton.setText("Back to Main Menu");
-        backOptionButton.addActionListener(b);
-        backOptionButton.setFocusPainted(false);
+        backOptionButton = new Button("Back to Main Menu", b);
         buttonPanel.add(backOptionButton, BorderLayout.NORTH);
         mainPanel.add(labelPanel, BorderLayout.WEST);
         mainPanel.add(buttonPanel, BorderLayout.EAST);

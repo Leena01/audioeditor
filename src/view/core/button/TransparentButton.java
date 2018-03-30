@@ -2,35 +2,55 @@ package view.core.button;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Button extends JButton implements MouseListener {
+public class TransparentButton extends JButton implements MouseListener {
     private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
     private static final Color HOVER_COLOR = Color.WHITE;
     private static final Color PRESSED_COLOR = Color.GRAY;
 
-    public Button() {
+    public TransparentButton() {
         super();
         setAttributes();
+        addMouseListener();
     }
 
-    public Button(Icon image) {
+    public TransparentButton(String text, ActionListener al) {
+        super(text);
+        addActionListener(al);
+        setAttributes();
+        addMouseListener();
+    }
+
+    public TransparentButton(Icon image) {
         super(image);
         setAttributes();
+        addMouseListener();
     }
 
-    public Button(Icon image, Dimension d) {
+    public TransparentButton(Icon image, Dimension d) {
         super(image);
         setPreferredSize(d);
         setAttributes();
+        addMouseListener();
     }
 
-    public Button(Icon image, Icon rollOverImage, Dimension d) {
+    public TransparentButton(Icon image, Dimension d, ActionListener al) {
+        super(image);
+        setPreferredSize(d);
+        addActionListener(al);
+        setAttributes();
+        addMouseListener();
+    }
+
+    public TransparentButton(Icon image, Icon rollOverImage, Dimension d) {
         super(image);
         setRolloverIcon(rollOverImage);
         setPreferredSize(d);
         setAttributes();
+        addMouseListener();
     }
 
 
@@ -55,7 +75,7 @@ public class Button extends JButton implements MouseListener {
         setForeground(DEFAULT_COLOR);
     }
 
-    public void addMouseListener() {
+    private void addMouseListener() {
         this.addMouseListener(this);
     }
 

@@ -1,8 +1,8 @@
-package view.element.core.window;
+package view.core.window;
 
-import view.element.core.bar.HorizontalBar;
-import view.element.core.button.Button;
-import view.element.core.label.Label;
+import view.core.button.TransparentButton;
+import view.core.label.Label;
+import view.core.bar.HorizontalBar;
 
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
@@ -28,10 +28,10 @@ public abstract class Window extends JFrame {
     private JLabel titleLabel;
     private JPanel titlePanel;
     private JPanel menuPanel;
-    private Button hideButton;
-    private Button minimizeButton;
-    private Button maximizeButton;
-    private Button exitButton;
+    private TransparentButton hideButton;
+    private TransparentButton minimizeButton;
+    private TransparentButton maximizeButton;
+    private TransparentButton exitButton;
     private MouseListener maximizeMouseListener = new MouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {
@@ -93,18 +93,10 @@ public abstract class Window extends JFrame {
         menuPanelLayout.setHgap(0);
         menuPanelLayout.setVgap(0);
 
-        hideButton = new Button(UP_ICON, BUTTON_SIZE);
-        hideButton.addMouseListener();
-        hideButton.addActionListener(ae -> changeSize());
-        minimizeButton = new Button(MINIMIZE_ICON, BUTTON_SIZE);
-        minimizeButton.addMouseListener();
-        minimizeButton.addActionListener(ae -> minimize());
-        maximizeButton = new Button(MAXIMIZE_ICON, BUTTON_SIZE);
-        maximizeButton.addMouseListener();
-        maximizeButton.addActionListener(ae -> maximize());
-        exitButton = new Button(CLOSE_ICON, BUTTON_SIZE);
-        exitButton.addMouseListener();
-        exitButton.addActionListener(e -> close());
+        hideButton = new TransparentButton(UP_ICON, BUTTON_SIZE, ae -> changeSize());
+        minimizeButton = new TransparentButton(MINIMIZE_ICON, BUTTON_SIZE, ae -> minimize());
+        maximizeButton = new TransparentButton(MAXIMIZE_ICON, BUTTON_SIZE, ae -> maximize());
+        exitButton = new TransparentButton(CLOSE_ICON, BUTTON_SIZE, e -> close());
 
         titlePanel.setOpaque(false);
         menuPanel.setOpaque(false);
@@ -125,11 +117,11 @@ public abstract class Window extends JFrame {
 
     private void changeSize() {
         if (getExtendedState() == MAXIMIZED_BOTH) {
-            maximizeCover(false);
+            maximizeImage(false);
             setExtendedState(NORMAL);
             maximizeButton.setIcon(MAXIMIZE_ICON);
         }
-        hideCover(isNormal);
+        hideImage(isNormal);
         isNormal = !isNormal;
         if (isNormal) {
             hideButton.setIcon(UP_ICON);
@@ -149,14 +141,14 @@ public abstract class Window extends JFrame {
 
     private void maximize() {
         if (getExtendedState() == NORMAL) {
-            maximizeCover(true);
-            hideCover(false);
+            maximizeImage(true);
+            hideImage(false);
             setExtendedState(MAXIMIZED_BOTH);
             maximizeButton.setIcon(NORMALIZE_ICON);
         }
         else {
-            maximizeCover(false);
-            hideCover(!isNormal);
+            maximizeImage(false);
+            hideImage(!isNormal);
             setExtendedState(NORMAL);
             maximizeButton.setIcon(MAXIMIZE_ICON);
         }
@@ -166,6 +158,6 @@ public abstract class Window extends JFrame {
         System.exit(0);
     }
 
-    protected abstract void hideCover(boolean isHidden);
-    protected abstract void maximizeCover(boolean isMaximized);
+    protected abstract void hideImage(boolean isHidden);
+    protected abstract void maximizeImage(boolean isMaximized);
 }

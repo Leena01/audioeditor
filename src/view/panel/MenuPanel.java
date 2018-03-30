@@ -3,7 +3,7 @@ package view.panel;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.*;
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import view.element.core.label.Label;
+import view.core.label.Label;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -82,21 +82,21 @@ public class MenuPanel extends JPanel {
         coverIcon = new ImageIcon(cover);
         coverIconMax = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
         coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);
-        maximizeCover(isMaximized);
+        maximizeImage(isMaximized);
         if (isNormal)
             imagePanel.setVisible(true);
         playerPanel.setVisible(true);
         playerPanel.setCurrentSong(totalSamples, freq, plot);
     }
 
-    public void hideCover(boolean isHidden) {
+    public void hideImage(boolean isHidden) {
         if (isHidden)
             imagePanel.setVisible(false);
         else
             imagePanel.setVisible(true);
     }
 
-    public void maximizeCover(boolean isMaximized) {
+    public void maximizeImage(boolean isMaximized) {
         if (isMaximized)
             imageLabel.setIcon(coverIconMax);
         else
@@ -105,5 +105,9 @@ public class MenuPanel extends JPanel {
 
     public void setFavorite(boolean isFavorite) {
         playerPanel.setFavorite(isFavorite);
+    }
+
+    public void pauseSong() {
+        playerPanel.pauseSong();
     }
 }

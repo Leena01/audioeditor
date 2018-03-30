@@ -9,6 +9,8 @@ final class MatlabCommands {
      */
     static final String FILE_VAR = "file";
     static final String FOLDER_PATH_VAR = "folderpath";
+    static final String WINDOW_MAP_VAR = "windowmap";
+    static final String WINDOW_KEYS_VAR = "windowkeys";
     static final String TOTAL_VAR = "total";
     static final String FREQ_VAR = "fs";
     static final String PLOT_IMG_VAR = "imgname";
@@ -28,6 +30,7 @@ final class MatlabCommands {
     static final String TO_VAR = "to";
 
     static final String ADD_PATH = String.format("addpath(genpath(%s));", FOLDER_PATH_VAR);
+    static final String CREATE_WINDOW_MAP = String.format("%s = createWindowMap(%s);", WINDOW_MAP_VAR, WINDOW_KEYS_VAR);
     static final String OPEN_SONG = String.format("[%s, %s, %s, %s] = openSong(%s);",
             PLAYER_VAR, SAMPLE_VAR, TOTAL_VAR, FREQ_VAR, FILE_VAR);
     static final String PLOT_SONG = String.format("plotSong(%s, %s, %s);", SAMPLE_VAR, FREQ_VAR, PLOT_IMG_VAR);
@@ -38,11 +41,12 @@ final class MatlabCommands {
             PLAYER_VAR, START_VAR, EMPTY_VAR, IS_PLAYING_VAR);
     static final String CHANGE_VOLUME = String.format("%s = changeVolume(%s, %s, %s, %s, %s);",
             PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, FREQ_VAR, LEVEL_VAR, IS_PLAYING_VAR);
-    static final String SHOW_SPECTROGRAM = String.format("length(x); showSpectrogram(%s, %s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_IMG_VAR);
-    static final String SHOW_SPECTROGRAM_3D = String.format("length(x); showSpectrogram3d(%s, %s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_3D_IMG_VAR);
+    static final String SHOW_SPECTROGRAM = String.format("length(x); showSpectrogram(%s, %s, %s, %s, %s, %s, %s, %s);",
+        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_IMG_VAR, WINDOW_MAP_VAR);
+    static final String SHOW_SPECTROGRAM_3D = String.format("length(x); showSpectrogram3d(%s, %s, %s, %s, %s, %s, %s, %s);",
+        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR, WINDOW_VAR, FREQ_VAR, SPEC_3D_IMG_VAR, WINDOW_MAP_VAR);
     static final String CUT_SONG = String.format("[player, x, total, fs] = cutSong(player, x, from, to);",
             PLAYER_VAR, SAMPLE_VAR, TOTAL_VAR, FREQ_VAR, PLAYER_VAR, SAMPLE_VAR, FROM_VAR, TO_VAR);
-    static final String SAVE_SONG = String.format("audiowrite(%s, %s, %s);", FILE_VAR, SAMPLE_VAR, FREQ_VAR);
+    static final String SAVE_SONG = String.format("saveSong(%s, %s, %s);", FILE_VAR, SAMPLE_VAR, FREQ_VAR);
+    static final String CHANGE_PITCH = String.format("%s = changePitch(%s);", PLAYER_VAR, LEVEL_VAR);
 }

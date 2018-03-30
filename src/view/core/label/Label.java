@@ -1,4 +1,4 @@
-package view.element.core.label;
+package view.core.label;
 
 import javax.swing.*;
 import java.awt.*;

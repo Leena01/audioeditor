@@ -1,7 +1,8 @@
-package view.element.core.button;
+package view.core.button;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -13,34 +14,47 @@ public class OptionButton extends JButton implements MouseListener {
     public OptionButton(String text) {
         super(text);
         setAttributes();
+        addMouseListener();
+    }
+
+    public OptionButton(String text, ActionListener al) {
+        super(text);
+        addActionListener(al);
+        setAttributes();
+        addMouseListener();
     }
 
     public OptionButton(String text, Dimension d) {
         this(text);
         setPreferredSize(d);
         setAttributes();
+        addMouseListener();
     }
 
     public OptionButton(Icon image) {
         super(image);
         setAttributes();
+        addMouseListener();
     }
 
     public OptionButton(Dimension d) {
         super();
         setPreferredSize(d);
+        addMouseListener();
     }
 
     public OptionButton(Icon image, Dimension d) {
         super(image);
         setPreferredSize(d);
         setAttributes();
+        addMouseListener();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         setContentAreaFilled(true);
         setContentAreaFilled(false);
+        addMouseListener();
     }
 
     @Override
@@ -63,7 +77,7 @@ public class OptionButton extends JButton implements MouseListener {
         setForeground(DEFAULT_COLOR);
     }
 
-    public void addMouseListener() {
+    private void addMouseListener() {
         this.addMouseListener(this);
     }
 

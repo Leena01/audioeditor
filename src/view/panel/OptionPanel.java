@@ -1,12 +1,13 @@
 package view.panel;
 
-import view.element.core.button.OptionButton;
+import view.core.button.OptionButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class OptionPanel extends JPanel {
+    private OptionButton mainMenuOptionButton;
     private OptionButton openFileOptionButton;
     private OptionButton viewSongsOptionButton;
     private OptionButton showDataButton;
@@ -15,8 +16,8 @@ public class OptionPanel extends JPanel {
     private OptionButton fftOptionButton;
     private OptionButton analyzeOptionButton;
 
-    public OptionPanel(ActionListener of, ActionListener vs, ActionListener sd, ActionListener cp, ActionListener cf,
-                       ActionListener fft, ActionListener as) {
+    public OptionPanel(ActionListener mm, ActionListener of, ActionListener vs, ActionListener sd, ActionListener cp,
+                       ActionListener cf, ActionListener fft, ActionListener as) {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = GridBagConstraints.RELATIVE;
@@ -26,27 +27,15 @@ public class OptionPanel extends JPanel {
         c.weighty = 1.0;
         c.anchor = GridBagConstraints.NORTH;
 
-        openFileOptionButton = new OptionButton("Open file");
-        openFileOptionButton.addActionListener(of);
-        openFileOptionButton.addMouseListener();
-        viewSongsOptionButton = new OptionButton("View favorite songs");
-        viewSongsOptionButton.addActionListener(vs);
-        viewSongsOptionButton.addMouseListener();
-        showDataButton = new OptionButton("View song data");
-        showDataButton.addActionListener(sd);
-        showDataButton.addMouseListener();
-        changePitchOptionButton = new OptionButton("Change pitch");
-        changePitchOptionButton.addActionListener(cp);
-        changePitchOptionButton.addMouseListener();
-        cutOptionButton = new OptionButton("Cut file");
-        cutOptionButton.addActionListener(cf);
-        cutOptionButton.addMouseListener();
-        fftOptionButton = new OptionButton("View spectrogram");
-        fftOptionButton.addActionListener(fft);
-        fftOptionButton.addMouseListener();
-        analyzeOptionButton = new OptionButton("Analyze song");
-        analyzeOptionButton.addActionListener(as);
-        analyzeOptionButton.addMouseListener();
+        mainMenuOptionButton = new OptionButton("Main menu", mm);
+        openFileOptionButton = new OptionButton("Open file", of);
+        viewSongsOptionButton = new OptionButton("View favorite songs", vs);
+        showDataButton = new OptionButton("View song data", sd);
+        changePitchOptionButton = new OptionButton("Change pitch", cp);
+        cutOptionButton = new OptionButton("Cut file", cf);
+        fftOptionButton = new OptionButton("View spectrogram", fft);
+        analyzeOptionButton = new OptionButton("Analyze song", as);
+        add(mainMenuOptionButton, c);
         add(openFileOptionButton, c);
         add(viewSongsOptionButton, c);
         add(showDataButton, c);

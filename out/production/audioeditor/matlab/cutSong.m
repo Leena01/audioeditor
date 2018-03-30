@@ -1,5 +1,4 @@
 function [player, x, total, fs] = cutSong(player, x, from, to)
-    stop(player);
 	xlen = size(x);
 	if xlen(2) == 2
 		x = x(from:to);

@@ -1,6 +1,6 @@
-package view.element.slider;
+package view.core.slider;
 
-import view.element.core.label.Label;
+import view.core.label.Label;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,9 @@
 package view.panel.analysis;
 
-import view.element.core.label.Label;
+import view.core.label.Label;
+import view.core.button.Button;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
@@ -11,14 +11,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import static javax.swing.BoxLayout.PAGE_AXIS;
+import static util.Constants.WINDOW_NAMES;
 import static util.Utils.resizeImageIcon;
 import static view.util.Constants.SPEC_IMAGE_SIZE;
 import static view.util.Constants.SPEC_IMAGE_SIZE_MAX;
 
 public class SpectrogramPanel extends JPanel implements ItemListener {
-    private static String[] windowNames =
-            { "Triangular", "Hann", "Hamming", "Blackman", "Blackman-Harris", "Flat top" };
-    public static int DIGIT_SIZE_MIN = 2;
+    private static String[] windowNames = WINDOW_NAMES;
+    public static int DIGIT_SIZE_MIN = 1;
     private static int DIGIT_SIZE_MAX = 5;
 
     private JButton doneButton;
@@ -56,18 +56,9 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
         outerFormPanel = new JPanel();
         outerFormPanel.setOpaque(false);
 
-        doneButton = new JButton("Done");
-        doneButton.setFocusPainted(false);
-        doneButton.addActionListener(s);
-
-        backOptionButton = new JButton();
-        backOptionButton.setText("Back to Main Menu");
-        backOptionButton.setFocusPainted(false);
-        backOptionButton.addActionListener(b);
-
-        clearFieldsButton = new JButton("Clear fields");
-        clearFieldsButton.setFocusPainted(false);
-        clearFieldsButton.addActionListener(e -> clearFields());
+        doneButton = new Button("Done", s);
+        backOptionButton = new Button("Back to Main Menu", b);
+        clearFieldsButton = new Button("Clear fields", e -> clearFields());
 
         windowSizeLabel = new Label("Window size:");
         NumberFormat nf = NumberFormat.getIntegerInstance();
@@ -93,8 +84,8 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
         toggleButton.setFocusPainted(false);
         toggleButton.addItemListener(this);
 
-        imageLabel = new JLabel();
-        image3dLabel = new JLabel();
+        imageLabel = new Label();
+        image3dLabel = new Label();
         imagePanel = new JPanel();
         imagePanel.add(imageLabel);
         imagePanel.add(image3dLabel);
@@ -145,11 +136,11 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
         return nfftTextField.getText();
     }
 
-    public int getWindowIndex() {
-        return windowComboBox.getSelectedIndex();
+    public String getWindow() {
+        return (String) windowComboBox.getSelectedItem();
     }
 
-    public void clearFields() {
+    private void clearFields() {
         windowSizeTextField.setValue(null);
         hopSizeTextField.setValue(null);
         nfftTextField.setValue(null);

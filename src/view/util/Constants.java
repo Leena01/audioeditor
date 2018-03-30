@@ -12,8 +12,8 @@ public final class Constants {
     public static final String PAUSE_ICON_HOVER_NAME = "resources/images/pause2.png";
     public static final String STOP_ICON_NAME = "resources/images/stop.png";
     public static final String STOP_ICON_HOVER_NAME = "resources/images/stop2.png";
-    // public static final ImageIcon BACKWARD_ICON_NAME = "resources/images/backward.png";
-    // public static final ImageIcon BACKWARD_ICON_HOVER_NAME = "resources/images/backward2.png";
+    public static final String BACKWARD_ICON_NAME = "resources/images/backward.png";
+    public static final String BACKWARD_ICON_HOVER_NAME = "resources/images/backward2.png";
     public static final String FAVORITE_ICON_NAME = "resources/images/heart_inactive.png";
     public static final String UNFAVORITE_ICON_NAME = "resources/images/heart_active.png";
     public static final String MINIMIZE_ICON_NAME = "resources/images/minimize.png";
@@ -35,6 +35,7 @@ public final class Constants {
     public static final Dimension DATA_LABEL_SIZE = new Dimension(250, 20);
     public static final Dimension AUDIO_SLIDER_SIZE = new Dimension(500, 50);
     public static final Dimension RANGE_SLIDER_SIZE = new Dimension(600, 100);
+    public static final Dimension RANGE_SLIDER_SIZE_MAX = new Dimension(900, 150);
     public static final Dimension SPEC_IMAGE_SIZE = new Dimension(360, 270);
     public static final Dimension SPEC_IMAGE_SIZE_MAX = new Dimension(560, 420);
 }
