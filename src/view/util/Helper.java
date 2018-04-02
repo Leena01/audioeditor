@@ -3,10 +3,18 @@ package util;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
-public final class Utils {
+public final class Helper {
     public static void showDialog(String message) {
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    public static void showInfo(JLabel infoLabel, String message, int delay) {
+        infoLabel.setText(message);
+        Timer t = new Timer(delay, e -> infoLabel.setText(null));
+        t.setRepeats(false);
+        t.start();
     }
 
     public static void fillColor(Graphics g, Color color1, Color color2, int w, int h) {
@@ -31,13 +39,22 @@ public final class Utils {
         return (long)(frame / freq) * 1000;
     }
 
-    public static int millisToFrames(long seconds, double freq) {
-        return (int)(seconds * freq) / 1000;
-    }
-
     public static ImageIcon resizeImageIcon(ImageIcon ii, Dimension d) {
         Image img = ii.getImage() ;
         Image newimg = img.getScaledInstance((int)d.getWidth(), (int)d.getHeight(), java.awt.Image.SCALE_SMOOTH) ;
         return new ImageIcon(newimg);
+    }
+
+    public static Image resizeImage(Image ii, Dimension d) {
+        return ii.getScaledInstance((int)d.getWidth(), (int)d.getHeight(), java.awt.Image.SCALE_SMOOTH);
+    }
+
+    public static String getFileExtension(File file) {
+        String name = file.getName();
+        try {
+            return name.substring(name.lastIndexOf(".") + 1);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

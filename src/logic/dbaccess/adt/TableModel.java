@@ -1,13 +1,15 @@
-package logic.dbaccess.tablemodel;
-import java.util.*;
+package logic.dbaccess.model;
+
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 /**
  * General Table Model
  */
-public abstract class TableModel<T> extends AbstractTableModel {
-    List<T> entries = new ArrayList<>();
-    final List<String> columnNames = new ArrayList<>();
+public abstract class TableModel<E> extends AbstractTableModel {
+    protected List<E> entries = new ArrayList<>();
+    final protected List<String> columnNames = new ArrayList<>();
 
     @Override
     public String getColumnName(int column) {
@@ -40,15 +42,16 @@ public abstract class TableModel<T> extends AbstractTableModel {
      * @param rowIndex Index of row selected
      * @return the item selected
      */
-    public T getRow(int rowIndex) {
+    public E getRow(int rowIndex) {
         return entries.get(rowIndex);
     }
 
     /**
      * Add items to list
-     * @param items rows to add
+     * @param listModel List model
      */
-    public void addAll(List<T> items) {
+    public void addAll(ListModel<E> listModel) {
+        List<E> items = listModel.getItems();
         int firstRow = entries.size();
         entries.addAll(items);
         int lastRow = entries.size() - 1;

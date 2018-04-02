@@ -10,6 +10,8 @@ public final class Constants {
     public static final int REFRESH_MILLIS = 2000;
 
     public static String[] WINDOW_NAMES =
-            { "Triangular", "Hann", "Hamming", "Blackman", "Blackman-Harris", "Flat top" };
+            {"Triangular", "Hann", "Hamming", "Blackman", "Blackman-Harris", "Flat top"};
+    public static String[] EXTENSION_NAMES =
+            {"wav", "ogg", "flac", "au", "aiff", "aif", "aifc", "mp3", "m4a", "mp4"};
 
 }
