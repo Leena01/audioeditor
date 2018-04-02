@@ -10,9 +10,9 @@ import java.text.NumberFormat;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import static view.util.Helper.resizeImage;
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import static util.Constants.WINDOW_NAMES;
-import static util.Utils.resizeImageIcon;
+import static logic.util.Constants.WINDOW_NAMES;
 import static view.util.Constants.SPEC_IMAGE_SIZE;
 import static view.util.Constants.SPEC_IMAGE_SIZE_MAX;
 
@@ -156,12 +156,10 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
         if (specIcon3dMax.getImage() != null)
             specIcon3dMax.getImage().flush();
 
-        specIcon = new ImageIcon(image);
-        specIconMax = resizeImageIcon(specIcon, SPEC_IMAGE_SIZE_MAX);
-        specIcon = resizeImageIcon(specIcon, SPEC_IMAGE_SIZE);
-        specIcon3d = new ImageIcon(image3d);
-        specIcon3dMax = resizeImageIcon(specIcon3d, SPEC_IMAGE_SIZE_MAX);
-        specIcon3d = resizeImageIcon(specIcon3d, SPEC_IMAGE_SIZE);
+        specIconMax = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE_MAX));
+        specIcon = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE));
+        specIcon3dMax = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE_MAX));
+        specIcon3d = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE));
 
         maximizeImage(isMaximized);
         if (isNormal)

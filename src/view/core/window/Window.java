@@ -4,7 +4,7 @@ import view.core.button.TransparentButton;
 import view.core.label.Label;
 import view.core.bar.HorizontalBar;
 
-import static util.Utils.resizeImageIcon;
+import static view.util.Helper.resizeImageIcon;
 import static view.util.Constants.*;
 
 import java.awt.*;
@@ -28,10 +28,10 @@ public abstract class Window extends JFrame {
     private JLabel titleLabel;
     private JPanel titlePanel;
     private JPanel menuPanel;
-    private TransparentButton hideButton;
-    private TransparentButton minimizeButton;
-    private TransparentButton maximizeButton;
-    private TransparentButton exitButton;
+    private JButton hideButton;
+    private JButton minimizeButton;
+    private JButton maximizeButton;
+    private JButton exitButton;
     private MouseListener maximizeMouseListener = new MouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {

@@ -199,7 +199,7 @@ public class RangeSliderUI extends BasicSliderUI {
     public void paintTrack(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         Image img = ((RangeSlider)slider).getImage();
-        g2d.drawImage(img, focusRect.x,focusRect.y, focusRect.width, focusRect.height, slider);
+        g2d.drawImage(img, focusRect.x, focusRect.y, focusRect.width, focusRect.height, slider);
     }
 
     /**

@@ -1,8 +1,8 @@
 package database.entities;
 
-import static util.Constants.DEFAULT;
-import static util.Constants.DEFAULT_SONG_ID;
-import static util.Constants.EMPTY_SONG_ID;
+import static logic.util.Constants.DEFAULT;
+import static logic.util.Constants.DEFAULT_SONG_ID;
+import static logic.util.Constants.EMPTY_SONG_ID;
 
 import java.util.Objects;
 

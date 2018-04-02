@@ -1,6 +1,6 @@
 package view.panel;
 
-import static util.Utils.resizeImageIcon;
+import static view.util.Helper.resizeImageIcon;
 import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
 import view.core.button.TransparentButton;
@@ -25,7 +25,6 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private static Dimension FIELD_DIMENSION = new Dimension(70, 10);
     private static final Dimension BUTTON_SIZE = new Dimension(36, 27);
     private static final Dimension BUTTON_SIZE_FAV = new Dimension(36, 36);
-    private static final Dimension VOLUME_SLIDER_SIZE = new Dimension(80, 30);
     private static final ImageIcon PLAY_ICON = resizeImageIcon(new ImageIcon(PLAY_ICON_NAME), BUTTON_SIZE);
     private static final ImageIcon PLAY_ICON_HOVER = resizeImageIcon(new ImageIcon(PLAY_ICON_HOVER_NAME), BUTTON_SIZE);
     private static final ImageIcon PAUSE_ICON = resizeImageIcon(new ImageIcon(PAUSE_ICON_NAME), BUTTON_SIZE);
@@ -40,12 +39,12 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private JLabel timeField;
     private JLabel totalLengthField;
     private TrackSlider trackSlider;
-    private TransparentButton playButton;
-    private TransparentButton pauseButton;
-    private TransparentButton stopButton;
-    private TransparentButton backwardButton;
-    private TransparentButton favoriteButton;
-    private TransparentButton unfavoriteButton;
+    private JButton playButton;
+    private JButton pauseButton;
+    private JButton stopButton;
+    private JButton backwardButton;
+    private JButton favoriteButton;
+    private JButton unfavoriteButton;
     private JPanel buttonPanel;
     private Component glassPane;
     private VolumeSlider volumeSlider;
@@ -53,17 +52,17 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     private boolean isPlaying;
     private SliderTimer sliderTimer;
     private GridBagConstraints c;
-    private GridBagLayout gridbag;
+    private GridBagLayout gridBag;
 
     PlayerPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
         super();
         this.glassPane = glassPane;
-        gridbag = new GridBagLayout();
-        setLayout(gridbag);
+        gridBag = new GridBagLayout();
+        setLayout(gridBag);
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.NONE;
-        gridbag.setConstraints(this, c);
+        gridBag.setConstraints(this, c);
         this.matlabHandler = matlabHandler;
         this.isPlaying = false;
 
@@ -94,7 +93,6 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE);
-        volumeSlider.setForeground(Color.BLUE);
 
         pauseButton.setVisible(false);
         setFavorite(false);
@@ -119,14 +117,11 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         Object source = e.getSource();
         if (source == playButton) {
             playSong();
-        }
-        else if (source == pauseButton) {
+        } else if (source == pauseButton) {
             pauseSong();
-        }
-        else if (source == stopButton) {
+        } else if (source == stopButton) {
             stopSong();
-        }
-        else if (source == backwardButton) {
+        } else if (source == backwardButton) {
             moveBackward();
         }
     }
@@ -136,17 +131,17 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         Object source = e.getSource();
         if (source == trackSlider) {
             // if (!s.getValueIsAdjusting()) {
-                // sliderTimer.pauseTimer();
-                // trackSlider.removeListeners();
-                int frame = trackSlider.getValue();
-                new Thread(() -> {
-                    glassPane.setVisible(true);
-                    sliderTimer.changeTime(frame);
-                    matlabHandler.relocateSong(frame, isPlaying);
-                    SwingUtilities.invokeLater(() -> {
-                        glassPane.setVisible(false);
-                    });
-                }).start();
+            // sliderTimer.pauseTimer();
+            // trackSlider.removeListeners();
+            int frame = trackSlider.getValue();
+            new Thread(() -> {
+                glassPane.setVisible(true);
+                sliderTimer.changeTime(frame);
+                matlabHandler.relocateSong(frame, isPlaying);
+                SwingUtilities.invokeLater(() -> {
+                    glassPane.setVisible(false);
+                });
+            }).start();
             // }
             /* else {
                 new Thread(() -> {
@@ -155,8 +150,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
                     isPlaying = false;
                 }).start();
             } */
-        }
-        else if (source == volumeSlider) {
+        } else if (source == volumeSlider) {
             JSlider vs = (JSlider) source;
             float level = vs.getValue() / 50.0f;
             if (!vs.getValueIsAdjusting()) {
@@ -177,8 +171,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
     }
 
     @Override
-    public void update(Observable obs, Object obj)
-    {
+    public void update(Observable obs, Object obj) {
         isPlaying = !isPlaying;
         pauseButton.setVisible(false);
         playButton.setVisible(true);
@@ -194,8 +187,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         if (isFavorite) {
             favoriteButton.setVisible(false);
             unfavoriteButton.setVisible(true);
-        }
-        else {
+        } else {
             unfavoriteButton.setVisible(false);
             favoriteButton.setVisible(true);
         }

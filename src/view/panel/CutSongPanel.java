@@ -1,8 +1,7 @@
 package view.panel;
 
-import static util.Utils.formatDuration;
-import static util.Utils.framesToMillis;
-import static util.Utils.resizeImageIcon;
+import static view.util.Helper.formatDuration;
+import static view.util.Helper.framesToMillis;
 import static view.util.Constants.RANGE_SLIDER_SIZE;
 import static view.util.Constants.RANGE_SLIDER_SIZE_MAX;
 
@@ -39,8 +38,6 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
     private JPanel formPanel;
     private JPanel mainPanel;
     private JPanel buttonPanel;
-    private ImageIcon cutPlotIcon;
-    private ImageIcon cutPlotIconMax;
     private double freq;
 
     public CutSongPanel(ActionListener cutDoneListener, ActionListener b) {
@@ -106,8 +103,7 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
         MAX = (int)totalSamples;
         rangeSlider.setMinimum(MIN);
         rangeSlider.setMaximum(MAX);
-        rangeSlider.setValue(MIN);
-        rangeSlider.setUpperValue(MAX);
+        setDefaultValues();
         rangeSlider.setImage(plot);
         this.freq = freq;
         changeFieldValues();
@@ -151,7 +147,7 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
                 int upperValue = Integer.parseInt(toValue.getText());
                 if (upperValue >= MIN && upperValue <= MAX) {
                     rangeSlider.setUpperValue(upperValue);
-                    int newUpperValue = Integer.parseInt(fromValue.getText());
+                    int newUpperValue = Integer.parseInt(toValue.getText());
                     toSecValue.setText(formatDuration(framesToMillis(newUpperValue, freq)));
                 }
                 else {
@@ -165,10 +161,14 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
     }
 
     public void maximizeImage(boolean isMaximized) {
-        if (isMaximized)
+        if (isMaximized) {
             rangeSlider.setPreferredSize(RANGE_SLIDER_SIZE_MAX);
-        else
+            rangeSlider.setSize(RANGE_SLIDER_SIZE_MAX);
+        }
+        else {
             rangeSlider.setPreferredSize(RANGE_SLIDER_SIZE);
+            rangeSlider.setSize(RANGE_SLIDER_SIZE);
+        }
     }
 
     private void changeFieldValues() {
@@ -178,5 +178,10 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
         toValue.setText(String.valueOf(upperValue));
         fromSecValue.setText(formatDuration(framesToMillis(lowerValue, freq)));
         toSecValue.setText(formatDuration(framesToMillis(upperValue, freq)));
+    }
+
+    public void setDefaultValues() {
+        rangeSlider.setValue(MIN);
+        rangeSlider.setUpperValue(MAX);
     }
 }

@@ -1,4 +1,4 @@
-package util;
+package view.util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,5 +56,14 @@ public final class Helper {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static String getDir(String path) {
+        File file = new File(path);
+        File parent = file.getParentFile();
+        if (parent != null)
+            return parent.getAbsolutePath();
+        else
+            return path;
     }
 }

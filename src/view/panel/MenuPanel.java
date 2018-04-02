@@ -1,6 +1,6 @@
 package view.panel;
 
-import static util.Utils.resizeImageIcon;
+import static view.util.Helper.resizeImageIcon;
 import static view.util.Constants.*;
 import static javax.swing.BoxLayout.PAGE_AXIS;
 import view.core.label.Label;

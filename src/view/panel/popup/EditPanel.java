@@ -1,4 +1,4 @@
-package view.panel;
+package view.panel.popup;
 
 import logic.dbaccess.SongModel;
 import view.core.button.OptionButton;
@@ -16,7 +16,7 @@ import static view.util.Constants.GENRE_MIN;
  * Edit panel
  */
 public class EditPanel extends JPanel {
-    private static final String instrLabel = "Please enter the new data for the song with the following ID: %d.";
+    private static final String INSTR_TEXT = "Please enter the new data for the song with the following ID: %d.";
     private JLabel infoLabel;
     private JLabel titleLabel;
     private JLabel trackLabel;
@@ -47,7 +47,6 @@ public class EditPanel extends JPanel {
      */
     public EditPanel(ActionListener al) {
         super();
-
         selectedSongModel = new SongModel();
         infoPanel = new JPanel(new FlowLayout());
         formPanel = new JPanel(new GridLayout(7, 2));
@@ -137,20 +136,17 @@ public class EditPanel extends JPanel {
         return selectedSongModel;
     }
 
-    public void clearFields() {
-        titleTextField.setText("");
-        trackTextField.setText("");
-        artistTextField.setText("");
-        albumTextField.setText("");
-        yearTextField.setText("");
-        genreTextField.setText("");
-        commentTextField.setText("");
-    }
-
     public void setSelectedSong(SongModel sm) {
         if (sm != null) {
             this.selectedSongModel = new SongModel(sm);
-            infoLabel.setText(String.format(instrLabel, selectedSongModel.getId()));
+            infoLabel.setText(String.format(INSTR_TEXT, selectedSongModel.getId()));
+            titleTextField.setText(selectedSongModel.getTitle());
+            trackTextField.setText(selectedSongModel.getTrack());
+            artistTextField.setText(selectedSongModel.getArtist());
+            albumTextField.setText(selectedSongModel.getAlbum());
+            yearTextField.setText(selectedSongModel.getYear());
+            genreTextField.setText(selectedSongModel.getGenre().split("\\s+")[0]);
+            commentTextField.setText(selectedSongModel.getComment());
         }
     }
 }

@@ -1,4 +1,4 @@
-package logic.dbaccess.model;
+package logic.dbaccess.adt;
 
 import java.util.List;
 import java.util.ArrayList;

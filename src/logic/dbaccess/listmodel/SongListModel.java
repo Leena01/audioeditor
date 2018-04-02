@@ -1,4 +1,4 @@
-package logic.dbaccess;
+package logic.dbaccess.listmodel;
 
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.Mp3File;
@@ -8,7 +8,7 @@ import logic.dbaccess.adt.ListModel;
 import java.io.File;
 import java.util.List;
 
-import static util.Constants.DEFAULT;
+import static logic.util.Constants.DEFAULT;
 
 public class SongListModel extends ListModel<Song> {
 

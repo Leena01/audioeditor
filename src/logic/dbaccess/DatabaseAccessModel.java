@@ -1,12 +1,16 @@
 package logic.dbaccess;
 import database.*;
 import database.entities.*;
+import logic.dbaccess.listmodel.SongListModel;
 import logic.exceptions.*;
 
 import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.lang.*;
+
+import static logic.util.Constants.DEFAULT_SONG_ID;
+import static logic.util.Constants.EMPTY_SONG_ID;
 
 /**
  * DatabaseAccessModel
@@ -16,6 +20,7 @@ public class DatabaseAccessModel {
     /**
      * Constants
      */
+    private static final String ONE_OF_THE_SONGS_ERROR = "One of the songs has the following error: ";
     private static final String SQL_ERROR = "There was a problem connecting to the database.";
     private static final String NO_SONG_LOADED_ERROR = "No song is loaded.";
     private static final String NO_SUCH_SONG_ERROR = "There is no such song in the database.";
@@ -41,11 +46,16 @@ public class DatabaseAccessModel {
             throw new SQLConnectionException(SQL_ERROR);
     }
 
+    public SongListModel getSongList() throws SQLConnectionException {
+        SongListModel slm = new SongListModel();
+        slm.setSongs(getSongs());
+        return slm;
+    }
     /**
      * Getter
      * @return all songs in the database if logged in
      */
-    public List<Song> getSongs() throws SQLConnectionException {
+    private List<Song> getSongs() throws SQLConnectionException {
         List<Song> songs = persistence.getSongs();
         List<Song> validSongs = new ArrayList<>();
         if (songs == null)
@@ -101,39 +111,86 @@ public class DatabaseAccessModel {
 
     public void addSong(SongModel sm) throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
-        if (s.getId() == -1)
+        try {
+            addSong(s);
+        } catch(SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
+        }
+    }
+
+    private void addSong(Song song) throws InvalidOperationException, SQLConnectionException {
+        if (song.getId() == EMPTY_SONG_ID)
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
-        if (getId(sm) != 0)
+        else if (getId(song) != DEFAULT_SONG_ID) {
+            System.out.println("HHHHHHHHHHHHH" + getId(song));
             throw new InvalidOperationException(ALREADY_EXISTS_ERROR);
+        }
         else {
-            if (!persistence.addSong(s))
+            if (!persistence.addSong(song))
                 throw new SQLConnectionException(SQL_ERROR);
             try {
-                Song newSong = getSong(sm.getPath());
+                Song newSong = getSong(song.getPath());
+                System.out.println(song.getPath());
                 if (newSong == null) {
                     throw new InvalidOperationException(PATH_ERROR);
                 }
-                sm.setId(newSong.getId());
-            } catch(SQLConnectionException e) {
+                song.setId(newSong.getId());
+            } catch (SQLConnectionException e) {
                 throw new SQLConnectionException(SQL_ERROR);
             }
         }
     }
 
+    public void addSongs(SongListModel slm) throws InvalidOperationException, SQLConnectionException {
+        List<Song> songs = slm.getItems();
+        try {
+            for (Song s: songs) {
+                addSong(s);
+            }
+        }
+        catch (InvalidOperationException e) {
+            throw new InvalidOperationException(ONE_OF_THE_SONGS_ERROR + e.getMessage());
+        }
+        catch (SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
+        }
+    }
+
     public void deleteSong(SongModel sm) throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
-        if (s.getId() == -1)
+        try {
+            deleteSong(s);
+        } catch(SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
+        }
+    }
+
+    private void deleteSong(Song song) throws InvalidOperationException, SQLConnectionException {
+        if (song.getId() == -1)
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
         try {
-            int id = s.getId();
+            int id = song.getId();
             if (getSong(id) == null)
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
-            else if (!persistence.deleteSong(s))
+            else if (!persistence.deleteSong(song))
                     throw new SQLConnectionException(SQL_ERROR);
-        } catch(InvalidOperationException e) {
-            throw new InvalidOperationException(e.getMessage());
-        } catch(SQLConnectionException e) {
-            throw new SQLConnectionException(e.getMessage());
+        } catch (SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
+        }
+    }
+
+    public void deleteSongs(SongListModel slm) throws InvalidOperationException, SQLConnectionException {
+        List<Song> songs = slm.getItems();
+        try {
+            for (Song s: songs) {
+                deleteSong(s);
+            }
+        }
+        catch (InvalidOperationException e) {
+            throw new InvalidOperationException(ONE_OF_THE_SONGS_ERROR + e.getMessage());
+        }
+        catch (SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
         }
     }
 
@@ -147,24 +204,26 @@ public class DatabaseAccessModel {
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
             else if (!persistence.editSong(s))
                 throw new SQLConnectionException(SQL_ERROR);
-        } catch(InvalidOperationException e) {
-            throw new InvalidOperationException(e.getMessage());
-        } catch(SQLConnectionException e) {
-            throw new SQLConnectionException(e.getMessage());
+        } catch (SQLConnectionException e) {
+            throw new SQLConnectionException(SQL_ERROR);
         }
     }
 
     public int getId(SongModel sm) throws SQLConnectionException {
         try {
-            String path = sm.getPath();
-            Song s = getSong(path);
-            if (s != null)
-                return s.getId();
-            else
-                return 0;
+            return getId(sm.getSong());
         } catch(SQLConnectionException e) {
-            throw new SQLConnectionException(e.getMessage());
+            throw new SQLConnectionException(SQL_ERROR);
         }
+    }
+
+    private int getId(Song song) throws SQLConnectionException {
+        String path = song.getPath();
+        Song s = getSong(path);
+        if (s != null)
+            return s.getId();
+        else
+            return DEFAULT_SONG_ID;
     }
 
     public boolean isConnected() {

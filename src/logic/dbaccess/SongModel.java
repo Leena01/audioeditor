@@ -1,8 +1,13 @@
 package logic.dbaccess;
 
-import static util.Constants.LAST_OPEN_SONG;
+import static logic.util.Constants.*;
+
+import com.mpatric.mp3agic.*;
 import database.entities.Song;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SongModel {
     @NotNull
@@ -14,9 +19,10 @@ public class SongModel {
         this.song = LAST_OPEN_SONG;
     }
 
-    public SongModel(String title, String track, String artist, String album, String year,
-                               String genre, String comment, String path) {
-        this.song = new Song(title, track, artist, album, year, genre, comment, path);
+    public SongModel(File f) {
+        String path = f.getPath();
+        String title = f.getName();
+        getTags(title, path);
     }
 
     public SongModel(Song song) {
@@ -77,6 +83,14 @@ public class SongModel {
         return freq;
     }
 
+    public boolean isEmpty() {
+        return getId() == EMPTY_SONG_ID;
+    }
+
+    public boolean isDefault() {
+        return getId() == DEFAULT_SONG_ID;
+    }
+
     public void setId(int id) { song.setId(id); }
 
     public void setTitle(String title) {
@@ -117,5 +131,52 @@ public class SongModel {
 
     public void setFreq(double freq) {
         this.freq = freq;
+    }
+
+    public void setDefault() {
+        song.setId(DEFAULT_SONG_ID);
+    }
+
+    private void getTags(String title, String path) {
+        String track = DEFAULT;
+        String artist = DEFAULT;
+        String album = DEFAULT;
+        String year = DEFAULT;
+        String genre = DEFAULT;
+        String comment = DEFAULT;
+        try {
+            Mp3File song = new Mp3File(path);
+            if (song.hasId3v1Tag()) {
+                ID3v1 id3v1Tag = song.getId3v1Tag();
+                title = id3v1Tag.getTitle();
+                track = id3v1Tag.getTrack();
+                artist = id3v1Tag.getArtist();
+                album = id3v1Tag.getAlbum();
+                year = id3v1Tag.getYear();
+                genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
+                comment = id3v1Tag.getComment();
+            }
+        } catch (Exception ignored) { }
+        this.song = new Song(title, track, artist, album, year, genre, comment, path);
+    }
+
+    public void setTags() throws UnsupportedTagException, NotSupportedException, InvalidDataException, IOException {
+        Mp3File song = new Mp3File(getPath());
+        ID3v1 id3v1Tag;
+        if (song.hasId3v1Tag())
+            id3v1Tag = song.getId3v1Tag();
+        else {
+            id3v1Tag = new ID3v1Tag();
+            song.setId3v1Tag(id3v1Tag);
+        }
+        id3v1Tag.setTitle(getTitle());
+        id3v1Tag.setTrack(getTrack());
+        id3v1Tag.setArtist(getArtist());
+        id3v1Tag.setAlbum(getAlbum());
+        id3v1Tag.setYear(getYear());
+        id3v1Tag.setGenre(Integer.parseInt(getGenre()));
+        id3v1Tag.setComment(getComment());
+        song.save(getPath());
+        setGenre(id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
     }
 }

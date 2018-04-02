@@ -1,77 +1,75 @@
 package view.panel;
 
-import database.entities.Song;
+import logic.dbaccess.listmodel.SongListModel;
 import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
-import logic.dbaccess.tablemodel.TableModel;
-import org.jetbrains.annotations.NotNull;
 import view.core.button.TransparentButton;
+import view.core.table.SongTable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.List;
 
 /**
  * View list of songs
  */
 public class ViewSongsPanel extends JPanel {
     private JPanel buttonPanel;
-    private TableModel<Song> tableModel;
-    private SongModel selectedSongModel;
-    private JTable table;
-    private JScrollPane scrollPane;
-    private TransparentButton selectOptionButton;
-    private TransparentButton addOptionButton;
-    private TransparentButton editOptionButton;
-    private TransparentButton deleteOptionButton;
-    private TransparentButton backOptionButton;
+    private JPanel songButtonPanel;
+    private JPanel importButtonPanel;
+    private SongModel selected;
+    private JButton selectOptionButton;
+    private JButton addOptionButton;
+    private JButton editOptionButton;
+    private JButton deleteOptionButton;
+    private JButton backOptionButton;
+    public JTable table;
+    protected JScrollPane scrollPane;
+    protected SongTableModel tableModel;
+
+    /**
+     * Default constructor
+     */
+    protected ViewSongsPanel() {
+        super();
+        setBackground(Color.BLACK);
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+    }
 
     /**
      * Constructor
      * @param tm Table logic
      */
     public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener a, ActionListener e, ActionListener d, ActionListener b) {
-        super();
-        setBackground(Color.BLACK);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        buttonPanel = new JPanel(new FlowLayout());
+        this();
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+        buttonPanel.setOpaque(false);
+        songButtonPanel = new JPanel(new FlowLayout());
+        importButtonPanel = new JPanel(new FlowLayout());
 
         tableModel = tm;
-        selectedSongModel = new SongModel();
-        table = new JTable(tableModel) {
-            /**
-             * Table cell tooltips
-             */
-            public String getToolTipText(@NotNull MouseEvent e) {
-                String tip = null;
-                java.awt.Point p = e.getPoint();
-                int rowIndex = rowAtPoint(p);
-                int colIndex = columnAtPoint(p);
-                try {
-                    tip = getValueAt(rowIndex, colIndex).toString();
-                } catch (Exception ignored) { }
-                return tip;
-            }
-        };
-        table.setFillsViewportHeight(true);
+        selected = new SongModel();
+        table = new SongTable(tableModel);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
         scrollPane.setOpaque(false);
         selectOptionButton = new TransparentButton("Load", l);
-        addOptionButton = new TransparentButton("Add", a);
         editOptionButton = new TransparentButton("Edit", e);
-        deleteOptionButton = new TransparentButton("Delete", d);
+        addOptionButton = new TransparentButton("Add songs", a);
+        deleteOptionButton = new TransparentButton("Delete songs", d);
         backOptionButton = new TransparentButton("Back to Main Menu", b);
 
-        buttonPanel.add(selectOptionButton);
-        buttonPanel.add(addOptionButton);
-        buttonPanel.add(editOptionButton);
-        buttonPanel.add(deleteOptionButton);
-        buttonPanel.add(backOptionButton);
-        buttonPanel.setOpaque(false);
+        songButtonPanel.add(selectOptionButton);
+        songButtonPanel.add(editOptionButton);
+        importButtonPanel.add(addOptionButton);
+        importButtonPanel.add(deleteOptionButton);
+        importButtonPanel.add(backOptionButton);
+        songButtonPanel.setOpaque(false);
+        importButtonPanel.setOpaque(false);
 
+        buttonPanel.add(songButtonPanel);
+        buttonPanel.add(importButtonPanel);
         add(scrollPane);
         add(buttonPanel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -79,11 +77,11 @@ public class ViewSongsPanel extends JPanel {
 
     /**
      * Set list
-     * @param items Items to set
+     * @param slm Song list model
      */
-    public void setList(List<Song> items) {
+    public void setList(SongListModel slm) {
         int selectedRow = this.table.getSelectedRow();
-        initTable(items);
+        initTable(slm);
         this.table.setModel(this.tableModel);
         if (this.table.getRowCount() <= 0)
             return;
@@ -95,21 +93,21 @@ public class ViewSongsPanel extends JPanel {
 
     /**
      * Initialize table
-     * @param l List to add
+     * @param slm Song list model
      */
-    private void initTable(List<Song> l) {
+    private void initTable(SongListModel slm) {
         this.tableModel.clear();
-        this.tableModel.addAll(l);
+        this.tableModel.addAll(slm);
     }
 
     /**
      * Getter
      * @return selected items
      */
-    public SongModel getSelectedSongModel() {
+    public SongModel getSelectedRow() {
         if (table.getSelectedRow() == -1)
             return null;
-        selectedSongModel = new SongModel(tableModel.getRow(table.getSelectedRow()));
-        return selectedSongModel;
+        selected = new SongModel(tableModel.getRow(table.getSelectedRow()));
+        return selected;
     }
 }

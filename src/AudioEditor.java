@@ -5,22 +5,22 @@ import logic.dbaccess.DatabaseAccessModel;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
 
-import static util.Constants.REFRESH_MILLIS;
-import static util.Utils.showDialog;
+import static view.util.Constants.REFRESH_MILLIS;
+import static view.util.Helper.showDialog;
 
 import logic.matlab.MatlabHandler;
 import view.*;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 public class AudioEditor {
+    private static final String DRIVER = "org.sqlite.JDBC";
+    private static final String URL = "jdbc:sqlite:music.sqlite";
+    private static final String MATLAB_INIT_ERROR = "Matlab initialization error.";
+    private static final String DATABASE_ERROR = "Database error.";
+    private static final String MATLAB_CONNECTION_ERROR = "Matlab connection error.";
 
     public static void main(String s[]) throws ClassNotFoundException
     {
         MatlabEngine eng;
-        final String DRIVER = "org.sqlite.JDBC";
-        final String URL = "jdbc:sqlite:music.sqlite";
         final DatabaseDao database = new DatabaseDaoImpl(DRIVER, URL);
         // DatabaseDao database = new MockDatabase();
         final Cache cache = new Cache(database, REFRESH_MILLIS);
@@ -39,30 +39,14 @@ public class AudioEditor {
                 matlabHandler.init();
                 mainWindow = new MainWindow(databaseAccessModel, matlabHandler);
                 mainWindow.run();
-
-                mainWindow.addWindowListener(new WindowAdapter() {
-                    public void windowClosing(WindowEvent we) {
-                        mainWindow.getGlassPane().setVisible(true);
-                        try {
-                            matlabHandler.close();
-                        } catch (MatlabEngineException mee) {
-                            showDialog(mee.getMessage());
-                        }
-                        databaseAccessModel.close();
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ignored) { }
-                        // TODO
-                    }
-                });
             } catch (MatlabEngineException mee) {
-                showDialog("Matlab initialization error.");
+                showDialog(MATLAB_INIT_ERROR);
             } catch (SQLConnectionException sce) {
-                showDialog("DatabaseDao error.");
+                showDialog(DATABASE_ERROR);
             } catch (EngineException ee) {
-                showDialog("Matlab connection error.");
+                showDialog(MATLAB_CONNECTION_ERROR);
             } catch (Exception e) {
-                showDialog(e.getMessage());
+                e.printStackTrace();
             }
         }
     }

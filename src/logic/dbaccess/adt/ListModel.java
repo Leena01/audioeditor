@@ -1,4 +1,4 @@
-package logic.dbaccess.model;
+package logic.dbaccess.adt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +13,7 @@ public abstract class ListModel<T> {
         this.items = new ArrayList<>();
     }
 
-    @NotNull List<T> getItems() {
+    @NotNull public List<T> getItems() {
         return items;
     }
 

@@ -1,3 +1,3 @@
-function [player] = changePitch(player, level)
-    set(player, 'SampleRate', get(player, 'SampleRate') * level);
+function [player] = changePitch(player, fs)
+    set(player, 'SampleRate', fs);
 end

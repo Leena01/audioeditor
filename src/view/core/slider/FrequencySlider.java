@@ -3,9 +3,11 @@ package view.core.slider;
 import javax.swing.*;
 import java.awt.*;
 
-public class Slider extends JSlider {
-    public Slider(Dimension d, int min, int max, int value, int majorTick, int minorTick) {
-        super(JSlider.HORIZONTAL, min, max, value);
+import static view.util.Constants.DEFAULT_INIT_VAL;
+
+public class FrequencySlider extends JSlider {
+    public FrequencySlider(Dimension d, int min, int max, int majorTick, int minorTick) {
+        super(JSlider.HORIZONTAL, min, max, DEFAULT_INIT_VAL);
         setPreferredSize(d);
         setMinimumSize(d);
         setMajorTickSpacing(majorTick);

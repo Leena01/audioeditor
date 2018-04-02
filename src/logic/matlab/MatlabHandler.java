@@ -1,6 +1,6 @@
 package logic.matlab;
 
-import static util.Constants.WINDOW_NAMES;
+import static logic.util.Constants.WINDOW_NAMES;
 import static logic.matlab.MatlabCommands.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
@@ -15,7 +15,8 @@ public class MatlabHandler {
     private static MatlabHandler instance = null;
 
     private final static String FILE_FORMAT_ERROR = "This file type is not supported.";
-    private final static String SPEC_ERROR = "Cannot generate image.";
+    private final static String IMAGE_ERROR = "Cannot generate image.";
+    private final static String CANNOT_CUT_ERROR = "Cannot cut song.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
 
     public static MatlabHandler getInstance(MatlabEngine eng) {
@@ -68,12 +69,12 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void plotSong(String imageName) {
+    public synchronized void plotSong(String imageName) throws MatlabEngineException {
         try {
             eng.putVariable(PLOT_IMG_VAR, imageName.toCharArray());
             eng.eval(PLOT_SONG);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new MatlabEngineException(IMAGE_ERROR);
         }
     }
 
@@ -137,23 +138,23 @@ public class MatlabHandler {
             eng.eval(SHOW_SPECTROGRAM);
             eng.eval(SHOW_SPECTROGRAM_3D);
         } catch (Exception e) {
-            throw new MatlabEngineException(SPEC_ERROR);
+            throw new MatlabEngineException(IMAGE_ERROR);
         }
     }
 
-    public synchronized void cutSong(int from, int to) {
+    public synchronized void cutSong(int from, int to) throws MatlabEngineException {
         try {
             eng.putVariable(FROM_VAR, from);
             eng.putVariable(TO_VAR, to);
             eng.eval(CUT_SONG);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new MatlabEngineException(CANNOT_CUT_ERROR);
         }
     }
 
-    public synchronized void changePitch(float level) {
+    public synchronized void changePitch(double freq) {
         try {
-            eng.putVariable(LEVEL_VAR, level);
+            eng.putVariable(FREQ_VAR_2, freq);
             eng.eval(CHANGE_PITCH);
         } catch (Exception e) {
             e.printStackTrace();

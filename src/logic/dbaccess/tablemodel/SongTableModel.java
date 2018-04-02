@@ -1,5 +1,6 @@
 package logic.dbaccess.tablemodel;
 import database.entities.Song;
+import logic.dbaccess.adt.TableModel;
 
 /**
  * Book Table DatabaseAccessModel

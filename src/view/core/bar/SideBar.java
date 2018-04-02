@@ -3,7 +3,7 @@ package view.core.bar;
 import javax.swing.*;
 import java.awt.*;
 
-import static util.Utils.fillColor;
+import static view.util.Helper.fillColor;
 
 public class SideBar extends JPanel {
     public SideBar() {
