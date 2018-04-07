@@ -1,12 +1,12 @@
 package logic.matlab;
 
-import static logic.util.Constants.WINDOW_NAMES;
 import static logic.matlab.MatlabCommands.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import com.mathworks.matlab.types.CellStr;
 import logic.dbaccess.SongModel;
 import logic.exceptions.MatlabEngineException;
+import properties.SongPropertiesLoader;
 
 public class MatlabHandler {
     private MatlabEngine eng;
@@ -35,7 +35,7 @@ public class MatlabHandler {
         try {
             eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
             eng.eval(ADD_PATH);
-            eng.putVariable(WINDOW_KEYS_VAR, new CellStr(WINDOW_NAMES));
+            eng.putVariable(WINDOW_KEYS_VAR, new CellStr(SongPropertiesLoader.getWindowNames()));
             eng.eval(CREATE_WINDOW_MAP);
         } catch (Exception e) {
             throw new MatlabEngineException(e.getMessage());

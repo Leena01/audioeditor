@@ -23,9 +23,6 @@ public final class Constants {
     public static final String DOWN_ICON_NAME = "resources/images/down.png";
     public static final String CLOSE_ICON_NAME = "resources/images/close.png";
 
-    public static final int GENRE_MIN = -1;
-    public static final int GENRE_MAX = 191;
-
     public static final int BOTTOM_PANEL_HEIGHT = 30;
     public static final Dimension WIN_MIN_SIZE = new Dimension(800, 600);
     public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 320);
@@ -36,14 +33,10 @@ public final class Constants {
     public static final Dimension AUDIO_SLIDER_SIZE = new Dimension(500, 50);
     public static final Dimension RANGE_SLIDER_SIZE = new Dimension(600, 100);
     public static final Dimension RANGE_SLIDER_SIZE_MAX = new Dimension(900, 100);
-    public static final Dimension VOLUME_SLIDER_SIZE = new Dimension(80, 30);
+    public static final Dimension VOLUME_SLIDER_SIZE = new Dimension(100, 30);
     public static final Dimension LEVEL_SLIDER_SIZE = new Dimension(200, 30);
     public static final Dimension SPEC_IMAGE_SIZE = new Dimension(360, 270);
     public static final Dimension SPEC_IMAGE_SIZE_MAX = new Dimension(560, 420);
 
     public static final Object[] OPTIONS = {"Save as...", "Save", "Cancel"};
-    public static String[] EXTENSION_NAMES =
-            {"wav", "ogg", "flac", "au", "aiff", "aif", "aifc", "mp3", "m4a", "mp4"};
-    public static final int DEFAULT_INIT_VAL = 0;
-    public static final int REFRESH_MILLIS = 2000;
 }

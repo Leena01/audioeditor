@@ -4,11 +4,9 @@ import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.Mp3File;
 import database.entities.Song;
 import logic.dbaccess.adt.ListModel;
-
+import properties.SongPropertiesLoader;
 import java.io.File;
 import java.util.List;
-
-import static logic.util.Constants.DEFAULT;
 
 public class SongListModel extends ListModel<Song> {
 
@@ -21,12 +19,12 @@ public class SongListModel extends ListModel<Song> {
         for (File f: files) {
             String path = f.getPath();
             String title = f.getName();
-            String track = DEFAULT;
-            String artist = DEFAULT;
-            String album = DEFAULT;
-            String year = DEFAULT;
-            String genre = DEFAULT;
-            String comment = DEFAULT;
+            String track = SongPropertiesLoader.getDefaultTrack();
+            String artist = SongPropertiesLoader.getDefaultArtist();
+            String album = SongPropertiesLoader.getDefaultAlbum();
+            String year = SongPropertiesLoader.getDefaultYear();
+            String genre = SongPropertiesLoader.getDefaultGenre();
+            String comment = SongPropertiesLoader.getDefaultComment();
 
             try {
                 Mp3File song = new Mp3File(path);

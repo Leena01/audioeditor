@@ -1,6 +1,7 @@
 package view.panel.popup;
 
 import logic.dbaccess.SongModel;
+import properties.SongPropertiesLoader;
 import view.core.button.OptionButton;
 import view.core.label.Label;
 
@@ -8,9 +9,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
-
-import static view.util.Constants.GENRE_MAX;
-import static view.util.Constants.GENRE_MIN;
 
 /**
  * Edit panel
@@ -78,8 +76,8 @@ public class EditPanel extends JPanel {
         yearTextField = new JTextField("", 20);
 
         NumberFormatter nf = new NumberFormatter();
-        nf.setMinimum(GENRE_MIN);
-        nf.setMaximum(GENRE_MAX);
+        nf.setMinimum(SongPropertiesLoader.getGenreMin());
+        nf.setMaximum(SongPropertiesLoader.getGenreMax());
         genreTextField = new JFormattedTextField(nf);
         commentTextField = new JTextField("", 20);
 

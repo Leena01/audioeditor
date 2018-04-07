@@ -3,14 +3,12 @@ import database.*;
 import database.entities.*;
 import logic.dbaccess.listmodel.SongListModel;
 import logic.exceptions.*;
+import properties.SongPropertiesLoader;
 
 import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.lang.*;
-
-import static logic.util.Constants.DEFAULT_SONG_ID;
-import static logic.util.Constants.EMPTY_SONG_ID;
 
 /**
  * DatabaseAccessModel
@@ -119,10 +117,9 @@ public class DatabaseAccessModel {
     }
 
     private void addSong(Song song) throws InvalidOperationException, SQLConnectionException {
-        if (song.getId() == EMPTY_SONG_ID)
+        if (song.getId() == SongPropertiesLoader.getEmptySongId())
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
-        else if (getId(song) != DEFAULT_SONG_ID) {
-            System.out.println("HHHHHHHHHHHHH" + getId(song));
+        else if (getId(song) != SongPropertiesLoader.getDefaultSongId()) {
             throw new InvalidOperationException(ALREADY_EXISTS_ERROR);
         }
         else {
@@ -223,7 +220,7 @@ public class DatabaseAccessModel {
         if (s != null)
             return s.getId();
         else
-            return DEFAULT_SONG_ID;
+            return SongPropertiesLoader.getDefaultSongId();
     }
 
     public boolean isConnected() {

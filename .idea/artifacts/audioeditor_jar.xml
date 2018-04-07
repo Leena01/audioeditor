@@ -1,10 +1,16 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="audioeditor:jar">
+  <artifact type="jar" build-on-make="true" name="audioeditor:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/audioeditor_jar</output-path>
     <root id="archive" name="audioeditor.jar">
       <element id="module-output" name="audioeditor" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../szakdolgozat/matlabcontrol-4.1.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../szakdolgozat/mysql-connector-java-3.1.6-bin.jar" path-in-jar="/" />
+      <element id="file-copy" path="$APPLICATION_HOME_DIR$/redist/annotations-java8.jar" />
+      <element id="library" level="project" name="sqlite-jdbc-3.16.1" />
+      <element id="library" level="project" name="engine" />
+      <element id="library" level="project" name="JTattoo-1.6.11" />
+      <element id="library" level="project" name="mp3agic-0.9.2" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>

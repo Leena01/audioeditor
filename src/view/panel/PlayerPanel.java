@@ -3,6 +3,7 @@ package view.panel;
 import static view.util.Helper.resizeImageIcon;
 import static view.util.Constants.*;
 import logic.matlab.MatlabHandler;
+import properties.SongPropertiesLoader;
 import view.core.button.TransparentButton;
 import view.core.slider.SliderTimer;
 import view.core.slider.TimeLabel;
@@ -92,7 +93,7 @@ class PlayerPanel extends JPanel implements ActionListener, ChangeListener, Obse
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE);
+        volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE, SongPropertiesLoader.getVolumeMin(), SongPropertiesLoader.getVolumeMax());
 
         pauseButton.setVisible(false);
         setFavorite(false);

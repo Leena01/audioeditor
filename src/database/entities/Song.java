@@ -1,12 +1,10 @@
 package database.entities;
 
-import static logic.util.Constants.DEFAULT;
-import static logic.util.Constants.DEFAULT_SONG_ID;
-import static logic.util.Constants.EMPTY_SONG_ID;
-
+import properties.SongPropertiesLoader;
 import java.util.Objects;
 
 public class Song {
+
     private int id;
     private String title;
     private String track;
@@ -32,12 +30,20 @@ public class Song {
 
     public Song(String title, String track, String artist, String album, String year,
                 String genre, String comment, String path) {
-        this(DEFAULT_SONG_ID, title, track, artist, album, year, genre, comment, path);
+        this(SongPropertiesLoader.getDefaultSongId(), title, track, artist, album, year, genre, comment, path);
     }
 
-
     public Song() {
-        this(EMPTY_SONG_ID, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+        this(SongPropertiesLoader.getEmptySongId(),
+                SongPropertiesLoader.getDefaultTitle(),
+                SongPropertiesLoader.getDefaultTrack(),
+                SongPropertiesLoader.getDefaultArtist(),
+                SongPropertiesLoader.getDefaultAlbum(),
+                SongPropertiesLoader.getDefaultYear(),
+                SongPropertiesLoader.getDefaultGenre(),
+                SongPropertiesLoader.getDefaultComment(),
+                SongPropertiesLoader.getDefaultPath());
+        System.out.println("Ime: " + SongPropertiesLoader.getDefaultGenre());
     }
 
     public Song(Song other) {

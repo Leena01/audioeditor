@@ -17,6 +17,7 @@ public class SongTable extends JTable {
     /**
      * Table cell tooltips
      */
+    @Override
     public String getToolTipText(@NotNull MouseEvent e) {
         String tip = null;
         java.awt.Point p = e.getPoint();

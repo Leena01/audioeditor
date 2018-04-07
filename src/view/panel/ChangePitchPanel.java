@@ -1,7 +1,7 @@
 package view.panel;
 
+import properties.SongPropertiesLoader;
 import view.core.button.Button;
-import view.core.button.OptionButton;
 import view.core.slider.FrequencySlider;
 
 import static view.util.Constants.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class ChangePitchPanel extends JPanel {
     private static final String INSTR_TEXT = "Please set the level of the new current frequency. The current frequency is %.0f Hz.";
-    private FrequencySlider levelSlider;
+    private FrequencySlider frequencySlider;
     private JPanel buttonPanel;
     private JPanel infoPanel;
     private JLabel infoLabel;
@@ -26,22 +26,24 @@ public class ChangePitchPanel extends JPanel {
         infoPanel.setOpaque(false);
         infoLabel = new JLabel(INSTR_TEXT);
         infoPanel.add(infoLabel);
-        levelSlider = new FrequencySlider(LEVEL_SLIDER_SIZE, 0, 50000, 1000, 500);
+        infoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        frequencySlider = new FrequencySlider(LEVEL_SLIDER_SIZE,
+                SongPropertiesLoader.getFrequencyMin(), SongPropertiesLoader.getFrequencyMax(), 1000, 500);
         previewButton = new Button("Preview", p);
         saveButton = new Button("Save modified file", s);
         buttonPanel.add(previewButton);
         buttonPanel.add(saveButton);
         add(infoPanel);
-        add(levelSlider);
+        add(frequencySlider);
         add(buttonPanel);
     }
 
     public void setFreq(double freq) {
-        levelSlider.setValue((int)freq);
+        frequencySlider.setValue((int)freq);
         infoLabel.setText(String.format(INSTR_TEXT, freq));
     }
 
     public double getFreq() {
-        return levelSlider.getValue();
+        return frequencySlider.getValue();
     }
 }

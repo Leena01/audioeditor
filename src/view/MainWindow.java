@@ -1,6 +1,5 @@
 package view;
 
-import static logic.util.Constants.*;
 import static view.panel.analysis.SpectrogramPanel.DIGIT_SIZE_MIN;
 import static view.util.Constants.*;
 import static view.util.Helper.*;
@@ -14,6 +13,8 @@ import logic.exceptions.InvalidOperationException;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
+import properties.ConfigPropertiesLoader;
+import properties.SongPropertiesLoader;
 import view.core.bar.HorizontalBar;
 import view.core.dialog.PopupDialog;
 import view.core.listener.EmptyMouseListener;
@@ -86,7 +87,7 @@ public class MainWindow extends Window {
     private CardLayout cardLayout;
     private JLabel currentSongTitle;
     private JLabel infoLabel;
-    private String lastOpenDir;
+    private String defaultOpenDir;
     private BufferedImage plot;
     private Component glassPane;
 
@@ -129,7 +130,6 @@ public class MainWindow extends Window {
         this.currentSongModel = new SongModel();
         this.cardLayout = new CardLayout();
         this.glassPane = getGlassPane();
-        this.glassPane.addMouseListener(emptyMouseListener);
         getRootPane().setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
         initializeListeners();
@@ -137,7 +137,7 @@ public class MainWindow extends Window {
         initializeLabels();
         initializePanels();
         addPanels();
-        getLastSong();
+        getDefaultSong();
         setTimer();
     }
 
@@ -152,6 +152,7 @@ public class MainWindow extends Window {
 
     public void run() {
         cardLayout.show(mainPanel, MENU_PANEL);
+        System.out.println(currentSongModel.getId());
         if (currentSongModel.isEmpty()) {
             optionPanel.showOptions(false);
             menuPanel.hideImage(true);
@@ -186,29 +187,29 @@ public class MainWindow extends Window {
                     showDialog(mee.getMessage());
                 }
                 databaseAccessModel.close();
-                // TODO
             }
         });
+        this.glassPane.addMouseListener(emptyMouseListener);
     }
 
-    private void getLastSong() {
-        // TODO test
-        lastOpenDir = getDir(currentSongModel.getPath());
+    private void getDefaultSong() {
+        defaultOpenDir = getDir(currentSongModel.getPath());
         getSavedInstance();
     }
 
     private void getSavedInstance() {
-        try {
-            int id = databaseAccessModel.getId(currentSongModel);
-            if (currentSongModel.isEmpty() || currentSongModel.isDefault())
-                menuPanel.setFavorite(false);
-            else {
-                menuPanel.setFavorite(true);
+        if (!currentSongModel.isEmpty()) {
+            try {
+                int id = databaseAccessModel.getId(currentSongModel);
                 currentSongModel.setId(id);
+                if (currentSongModel.isDefault())
+                    menuPanel.setFavorite(false);
+                else
+                    menuPanel.setFavorite(true);
+            } catch (SQLConnectionException e) {
+                showDialog(e.getMessage());
+                menuPanel.setFavorite(false);
             }
-        } catch (SQLConnectionException e) {
-            showDialog(e.getMessage());
-            menuPanel.setFavorite(false);
         }
     }
 
@@ -225,26 +226,24 @@ public class MainWindow extends Window {
     }
 
     private void refreshCache() {
-        dataPanel.setSongData(currentSongModel);
         try {
             viewSongsPanel.setList(databaseAccessModel.getSongList());
             deleteSongsPanel.setList(databaseAccessModel.getSongList());
             if (databaseAccessModel.hasInvalid()) {
                 showInfo(infoLabel, SONGS_DELETED_INFO, INFO_LABEL_DELAY);
+                if (!databaseAccessModel.isSongValid(currentSongModel)) {
+                    setFavorite(false);
+                    currentSongModel.setPath(SongPropertiesLoader.getDefaultPath());
+                }
             }
-            if (!currentSongModel.isEmpty() && !databaseAccessModel.isSongValid(currentSongModel)) {
-                setFavorite(false);
-            }
-            File file = new File(currentSongModel.getPath());
-            if (!file.isFile())
-                currentSongModel.setPath(DEFAULT);
+            dataPanel.setSongData(currentSongModel);
         } catch (SQLConnectionException sqe) {
-            showDialog(sqe.getMessage());
+            showInfo(infoLabel, sqe.getMessage(), INFO_LABEL_DELAY);
         }
     }
 
     private void setTimer() {
-        Timer t = new Timer(REFRESH_MILLIS, e -> refreshCache());
+        Timer t = new Timer(ConfigPropertiesLoader.getRefreshMillis(), e -> refreshCache());
         t.setRepeats(true);
         t.start();
     }
@@ -252,8 +251,8 @@ public class MainWindow extends Window {
     private File openFile() {
         JFileChooser fileChooser;
 
-        if (lastOpenDir != null && !lastOpenDir.equals(""))
-            fileChooser = new JFileChooser(lastOpenDir);
+        if (defaultOpenDir != null && !defaultOpenDir.equals(""))
+            fileChooser = new JFileChooser(defaultOpenDir);
         else
             fileChooser = new JFileChooser();
 
@@ -384,7 +383,7 @@ public class MainWindow extends Window {
         openFileListener = ae -> {
             File f = openFile();
             if (f != null) {
-                lastOpenDir = f.getParent();
+                defaultOpenDir = f.getParent();
                 currentSongModel = new SongModel(f);
                 openSong();
             }
@@ -423,8 +422,9 @@ public class MainWindow extends Window {
             }
         };
 
-        changePitchListener = ae -> {
-            changePitchDialog.setVisible(true);
+        changePitchListener = ae -> changePitchDialog.setVisible(true);
+
+        cpPreviewListener = ae -> {
             new Thread(() -> {
                 glassPane.setVisible(true);
                 setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -434,10 +434,6 @@ public class MainWindow extends Window {
                     setCursor(Cursor.getDefaultCursor());
                 });
             }).start();
-        };
-
-        cpPreviewListener = ae -> {
-
         };
 
         cpSaveListener = ae -> {
@@ -511,9 +507,9 @@ public class MainWindow extends Window {
             String hopSizeString = spectrogramPanel.getHopSize();
             String nfftString = spectrogramPanel.getNfft();
             String window = spectrogramPanel.getWindow();
-            double windowSize = (!windowSizeString.equals("") ? Double.parseDouble(windowSizeString) : 0.0);
-            double hopSize = (!hopSizeString.equals("") ? Double.parseDouble(hopSizeString) : 0.0);
-            double nfft = (!nfftString.equals("") ? Double.parseDouble(nfftString) : 0.0);
+            int windowSize = (!windowSizeString.equals("") ? Integer.parseInt(windowSizeString) : 0);
+            int hopSize = (!hopSizeString.equals("") ? Integer.parseInt(hopSizeString) : 0);
+            int nfft = (!nfftString.equals("") ? Integer.parseInt(nfftString) : 0);
             if (windowSize < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
                     hopSize < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
                     nfft < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
@@ -558,7 +554,7 @@ public class MainWindow extends Window {
             SongModel sm = viewSongsPanel.getSelectedRow();
             if (sm != null) {
                 currentSongModel = new SongModel(sm);
-                lastOpenDir = getDir(currentSongModel.getPath());
+                defaultOpenDir = getDir(currentSongModel.getPath());
                 openSong();
             }
         };
@@ -590,18 +586,18 @@ public class MainWindow extends Window {
             File[] files = openFiles();
             List<File> validFiles = new ArrayList<>();
             for (File f: files) {
-                if (!Arrays.asList(EXTENSION_NAMES).contains(getFileExtension(f)))
+                if (!Arrays.asList(SongPropertiesLoader.getExtensionNames()).contains(getFileExtension(f)))
                     showInfo(infoLabel, FILE_TYPE_ERROR, INFO_LABEL_DELAY);
                 else {
                     validFiles.add(f);
-                    SongListModel songListModel = new SongListModel(validFiles);
-                    try {
-                        databaseAccessModel.addSongs(songListModel);
-                        showDialog(SUCCESSFUL_OPERATION_INFO);
-                    } catch (InvalidOperationException | SQLConnectionException e) {
-                        showDialog(e.getMessage());
-                    }
                 }
+            }
+            SongListModel songListModel = new SongListModel(validFiles);
+            try {
+                databaseAccessModel.addSongs(songListModel);
+                showDialog(SUCCESSFUL_OPERATION_INFO);
+            } catch (InvalidOperationException | SQLConnectionException e) {
+                showDialog(e.getMessage());
             }
         };
 

@@ -35,7 +35,7 @@ public final class Helper {
         return duration < 0 ? "-" + positive : positive;
     }
 
-    public static long framesToMillis(int frame, double freq){
+    public static long framesToMillis(double frame, double freq){
         return (long)(frame / freq) * 1000;
     }
 

@@ -1,22 +1,20 @@
 package logic.dbaccess;
 
-import static logic.util.Constants.*;
-
 import com.mpatric.mp3agic.*;
 import database.entities.Song;
-import org.jetbrains.annotations.NotNull;
+import properties.SongPropertiesLoader;
 
 import java.io.File;
 import java.io.IOException;
 
 public class SongModel {
-    @NotNull
+    private static final Song DEFAULT_SONG = new Song();
     private Song song;
     private double totalSamples = 0.0;
     private double freq = 0.0;
 
     public SongModel() {
-        this.song = LAST_OPEN_SONG;
+        this.song = DEFAULT_SONG;
     }
 
     public SongModel(File f) {
@@ -35,7 +33,7 @@ public class SongModel {
         this.freq = other.freq;
     }
 
-    @NotNull Song getSong() {
+    Song getSong() {
         return song;
     }
 
@@ -84,11 +82,11 @@ public class SongModel {
     }
 
     public boolean isEmpty() {
-        return getId() == EMPTY_SONG_ID;
+        return getId() == SongPropertiesLoader.getEmptySongId();
     }
 
     public boolean isDefault() {
-        return getId() == DEFAULT_SONG_ID;
+        return getId() == SongPropertiesLoader.getDefaultSongId();
     }
 
     public void setId(int id) { song.setId(id); }
@@ -134,16 +132,16 @@ public class SongModel {
     }
 
     public void setDefault() {
-        song.setId(DEFAULT_SONG_ID);
+        song.setId(SongPropertiesLoader.getDefaultSongId());
     }
 
     private void getTags(String title, String path) {
-        String track = DEFAULT;
-        String artist = DEFAULT;
-        String album = DEFAULT;
-        String year = DEFAULT;
-        String genre = DEFAULT;
-        String comment = DEFAULT;
+        String track = SongPropertiesLoader.getDefaultTrack();
+        String artist = SongPropertiesLoader.getDefaultArtist();
+        String album = SongPropertiesLoader.getDefaultAlbum();
+        String year = SongPropertiesLoader.getDefaultYear();
+        String genre = SongPropertiesLoader.getDefaultGenre();
+        String comment = SongPropertiesLoader.getDefaultComment();
         try {
             Mp3File song = new Mp3File(path);
             if (song.hasId3v1Tag()) {

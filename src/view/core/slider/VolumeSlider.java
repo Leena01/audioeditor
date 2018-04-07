@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VolumeSlider extends JSlider {
-    public VolumeSlider(Dimension d) {
+    public VolumeSlider(Dimension d, int min, int max) {
         super(JSlider.HORIZONTAL);
         setPreferredSize(d);
         setMinimumSize(d);
@@ -15,6 +15,8 @@ public class VolumeSlider extends JSlider {
         setPaintTrack(true);
         setFocusable(false);
         setOpaque(false);
-        setValue(50);
+        setMaximum(max);
+        setMinimum(min);
+        setValue((max + min) / 2);
     }
 }

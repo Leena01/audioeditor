@@ -20,13 +20,13 @@ public class DeleteSongsPanel extends ViewSongsPanel {
 
     public DeleteSongsPanel(SongTableModel tm, ActionListener d) {
         super();
-        setBackground(Color.BLACK);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         buttonPanel = new JPanel(new FlowLayout());
 
         tableModel = tm;
         selectedSongs = new SongListModel();
         table = new SongTable(tableModel);
+        sorter.setModel(tableModel);
+        table.setRowSorter(sorter);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
         scrollPane.setOpaque(false);
@@ -35,8 +35,9 @@ public class DeleteSongsPanel extends ViewSongsPanel {
         buttonPanel.add(doneButton);
         buttonPanel.setOpaque(false);
 
-        add(scrollPane);
-        add(buttonPanel);
+        add(outerSearchPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 

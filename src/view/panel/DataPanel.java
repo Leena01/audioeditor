@@ -57,6 +57,7 @@ public class DataPanel extends JPanel {
         genre = new Label(currentSongModel.getGenre(), DATA_LABEL_SIZE);
         comment = new Label(currentSongModel.getComment(), DATA_LABEL_SIZE);
         path = new Label(currentSongModel.getPath(), DATA_LABEL_SIZE);
+        setToolTipTexts();
         labelPanel.add(idLabel);
         labelPanel.add(id);
         labelPanel.add(titleLabel);
@@ -96,5 +97,18 @@ public class DataPanel extends JPanel {
         genre.setText(currentSongModel.getGenre());
         comment.setText(currentSongModel.getComment());
         path.setText(currentSongModel.getPath());
+        setToolTipTexts();
+    }
+
+    private void setToolTipTexts() {
+        id.setToolTipText(id.getText());
+        title.setToolTipText(title.getText());
+        track.setToolTipText(track.getText());
+        artist.setToolTipText(artist.getText());
+        album.setToolTipText(album.getText());
+        year.setToolTipText(year.getText());
+        genre.setToolTipText(genre.getText());
+        comment.setToolTipText(comment.getText());
+        path.setToolTipText(path.getText());
     }
 }

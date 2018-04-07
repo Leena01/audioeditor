@@ -1,5 +1,6 @@
 package view.panel.analysis;
 
+import properties.SongPropertiesLoader;
 import view.core.label.Label;
 import view.core.button.Button;
 
@@ -12,12 +13,11 @@ import java.awt.event.ActionListener;
 
 import static view.util.Helper.resizeImage;
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import static logic.util.Constants.WINDOW_NAMES;
 import static view.util.Constants.SPEC_IMAGE_SIZE;
 import static view.util.Constants.SPEC_IMAGE_SIZE_MAX;
 
 public class SpectrogramPanel extends JPanel implements ItemListener {
-    private static String[] windowNames = WINDOW_NAMES;
+    private static String[] windowNames = SongPropertiesLoader.getWindowNames();
     public static int DIGIT_SIZE_MIN = 1;
     private static int DIGIT_SIZE_MAX = 5;
 

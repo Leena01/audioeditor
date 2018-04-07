@@ -4,9 +4,13 @@ import logic.dbaccess.listmodel.SongListModel;
 import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
 import view.core.button.TransparentButton;
+import view.core.label.Label;
 import view.core.table.SongTable;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -23,7 +27,12 @@ public class ViewSongsPanel extends JPanel {
     private JButton editOptionButton;
     private JButton deleteOptionButton;
     private JButton backOptionButton;
-    public JTable table;
+    private JLabel searchLabel;
+    private JTextField searchTextField;
+    private JPanel innerSearchPanel;
+    protected TableRowSorter<SongTableModel> sorter;
+    protected JTable table;
+    protected JPanel outerSearchPanel;
     protected JScrollPane scrollPane;
     protected SongTableModel tableModel;
 
@@ -31,9 +40,50 @@ public class ViewSongsPanel extends JPanel {
      * Default constructor
      */
     protected ViewSongsPanel() {
-        super();
+        super(new BorderLayout());
         setBackground(Color.BLACK);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        sorter = new TableRowSorter<>();
+        searchLabel = new Label("Search: ");
+        searchTextField = new JTextField();
+        searchTextField.setPreferredSize(new Dimension(240, 20));
+        searchTextField.setMinimumSize(new Dimension(240, 20));
+        searchTextField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = searchTextField.getText();
+
+                if (text.trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = searchTextField.getText();
+
+                if (text.trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+
+        innerSearchPanel = new JPanel(new FlowLayout());
+        innerSearchPanel.setOpaque(false);
+        innerSearchPanel.add(searchLabel);
+        innerSearchPanel.add(searchTextField);
+        outerSearchPanel = new JPanel(new BorderLayout());
+        outerSearchPanel.setBorder(BorderFactory.createEmptyBorder(3, 20, 0, 20));
+        outerSearchPanel.setOpaque(false);
+        outerSearchPanel.add(innerSearchPanel, BorderLayout.WEST);
     }
 
     /**
@@ -51,9 +101,12 @@ public class ViewSongsPanel extends JPanel {
         tableModel = tm;
         selected = new SongModel();
         table = new SongTable(tableModel);
+        sorter.setModel(tableModel);
+        table.setRowSorter(sorter);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(6, 20, 10, 20));
         scrollPane.setOpaque(false);
+
         selectOptionButton = new TransparentButton("Load", l);
         editOptionButton = new TransparentButton("Edit", e);
         addOptionButton = new TransparentButton("Add songs", a);
@@ -70,8 +123,9 @@ public class ViewSongsPanel extends JPanel {
 
         buttonPanel.add(songButtonPanel);
         buttonPanel.add(importButtonPanel);
-        add(scrollPane);
-        add(buttonPanel);
+        add(outerSearchPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
