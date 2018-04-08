@@ -3,7 +3,7 @@ import database.*;
 import database.entities.*;
 import logic.dbaccess.listmodel.SongListModel;
 import logic.exceptions.*;
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 
 import java.io.File;
 import java.util.*;

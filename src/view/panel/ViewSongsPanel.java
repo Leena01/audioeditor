@@ -5,6 +5,7 @@ import logic.dbaccess.SongModel;
 import logic.dbaccess.tablemodel.SongTableModel;
 import view.core.button.TransparentButton;
 import view.core.label.Label;
+import view.core.panel.BasicPanel;
 import view.core.table.SongTable;
 
 import javax.swing.*;
@@ -17,7 +18,8 @@ import java.awt.event.ActionListener;
 /**
  * View list of songs
  */
-public class ViewSongsPanel extends JPanel {
+public class ViewSongsPanel extends BasicPanel {
+    private static final Dimension SEARCH_TEXT_FIELD_SIZE = new Dimension(240, 20);
     private JPanel buttonPanel;
     private JPanel songButtonPanel;
     private JPanel importButtonPanel;
@@ -40,13 +42,14 @@ public class ViewSongsPanel extends JPanel {
      * Default constructor
      */
     protected ViewSongsPanel() {
-        super(new BorderLayout());
+        super();
+        setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         sorter = new TableRowSorter<>();
         searchLabel = new Label("Search: ");
         searchTextField = new JTextField();
-        searchTextField.setPreferredSize(new Dimension(240, 20));
-        searchTextField.setMinimumSize(new Dimension(240, 20));
+        searchTextField.setPreferredSize(SEARCH_TEXT_FIELD_SIZE);
+        searchTextField.setMinimumSize(SEARCH_TEXT_FIELD_SIZE);
         searchTextField.getDocument().addDocumentListener(new DocumentListener(){
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -94,18 +97,16 @@ public class ViewSongsPanel extends JPanel {
         this();
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
-        buttonPanel.setOpaque(false);
         songButtonPanel = new JPanel(new FlowLayout());
         importButtonPanel = new JPanel(new FlowLayout());
 
         tableModel = tm;
         selected = new SongModel();
         table = new SongTable(tableModel);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         sorter.setModel(tableModel);
         table.setRowSorter(sorter);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(6, 20, 10, 20));
-        scrollPane.setOpaque(false);
 
         selectOptionButton = new TransparentButton("Load", l);
         editOptionButton = new TransparentButton("Edit", e);
@@ -113,20 +114,8 @@ public class ViewSongsPanel extends JPanel {
         deleteOptionButton = new TransparentButton("Delete songs", d);
         backOptionButton = new TransparentButton("Back to Main Menu", b);
 
-        songButtonPanel.add(selectOptionButton);
-        songButtonPanel.add(editOptionButton);
-        importButtonPanel.add(addOptionButton);
-        importButtonPanel.add(deleteOptionButton);
-        importButtonPanel.add(backOptionButton);
-        songButtonPanel.setOpaque(false);
-        importButtonPanel.setOpaque(false);
-
-        buttonPanel.add(songButtonPanel);
-        buttonPanel.add(importButtonPanel);
-        add(outerSearchPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setStyle();
+        addPanels();
     }
 
     /**
@@ -163,5 +152,28 @@ public class ViewSongsPanel extends JPanel {
             return null;
         selected = new SongModel(tableModel.getRow(table.getSelectedRow()));
         return selected;
+    }
+
+    @Override
+    protected void setStyle() {
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(6, 20, 10, 20));
+        buttonPanel.setOpaque(false);
+        scrollPane.setOpaque(false);
+        songButtonPanel.setOpaque(false);
+        importButtonPanel.setOpaque(false);
+    }
+
+    @Override
+    protected void addPanels() {
+        songButtonPanel.add(selectOptionButton);
+        songButtonPanel.add(editOptionButton);
+        importButtonPanel.add(addOptionButton);
+        importButtonPanel.add(deleteOptionButton);
+        importButtonPanel.add(backOptionButton);
+        buttonPanel.add(songButtonPanel);
+        buttonPanel.add(importButtonPanel);
+        add(outerSearchPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 }

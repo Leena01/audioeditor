@@ -1,8 +1,7 @@
 package view;
 
-import static view.panel.analysis.SpectrogramPanel.DIGIT_SIZE_MIN;
-import static view.util.Constants.*;
-import static view.util.Helper.*;
+import static view.param.Constants.*;
+import static common.util.Helper.*;
 
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
@@ -13,8 +12,9 @@ import logic.exceptions.InvalidOperationException;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
 import logic.matlab.MatlabHandler;
-import properties.ConfigPropertiesLoader;
-import properties.SongPropertiesLoader;
+import common.properties.ConfigPropertiesLoader;
+import common.properties.ImageLoader;
+import common.properties.SongPropertiesLoader;
 import view.core.bar.HorizontalBar;
 import view.core.dialog.PopupDialog;
 import view.core.listener.EmptyMouseListener;
@@ -111,7 +111,7 @@ public class MainWindow extends Window {
     private ActionListener analyzeSongListener;
     private ActionListener loadSongListener;
     private ActionListener editSongListener;
-    private ActionListener addSongListener;
+    private ActionListener addSongsListener;
     private ActionListener deleteSongListener;
     private ActionListener editDoneListener;
     private ActionListener deleteDoneListener;
@@ -131,7 +131,6 @@ public class MainWindow extends Window {
         this.cardLayout = new CardLayout();
         this.glassPane = getGlassPane();
         getRootPane().setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-
         initializeListeners();
         addListeners();
         initializeLabels();
@@ -271,7 +270,7 @@ public class MainWindow extends Window {
 
     private Image getCover() {
         try {
-            Image cover = ImageIO.read(new File(COVER_NAME));
+            Image cover = ImageIO.read(ImageLoader.getCoverURL());
             try {
                 Mp3File song = new Mp3File(currentSongModel.getPath());
                 if (song.hasId3v2Tag()) {
@@ -305,12 +304,12 @@ public class MainWindow extends Window {
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             try {
                 matlabHandler.openSong(currentSongModel.getPath());
-                matlabHandler.plotSong(PLOT_IMAGE_NAME);
+                matlabHandler.plotSong(getAbsolutePath(ImageLoader.getPlotImageURL()));
                 SwingUtilities.invokeLater(() -> {
                     matlabHandler.passData(currentSongModel);
                     changePitchPanel.setFreq(currentSongModel.getFreq());
                     try {
-                        plot = ImageIO.read(new File(PLOT_IMAGE_NAME));
+                        plot = ImageIO.read(ImageLoader.getPlotImageURL());
                         menuPanel.setCurrentSong(currentSongModel.getTotalSamples(), currentSongModel.getFreq(), plot, cover,
                                 isNormal, getExtendedState() == MAXIMIZED_BOTH);
                     } catch (IOException ignored) { }
@@ -324,6 +323,141 @@ public class MainWindow extends Window {
                 glassPane.setVisible(false);
             }
         }).start();
+    }
+
+    private void showSpec() {
+        String windowSizeString = spectrogramPanel.getWindowSize();
+        String hopSizeString = spectrogramPanel.getHopSize();
+        String nfftString = spectrogramPanel.getNfft();
+        String window = spectrogramPanel.getWindow();
+        int windowSize = (!windowSizeString.equals("") ? Integer.parseInt(windowSizeString) : 0);
+        int hopSize = (!hopSizeString.equals("") ? Integer.parseInt(hopSizeString) : 0);
+        int nfft = (!nfftString.equals("") ? Integer.parseInt(nfftString) : 0);
+        if (windowSize < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
+                hopSize < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
+                nfft < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
+                windowSize <= hopSize) {
+            showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
+        }
+        else {
+            new Thread(() -> {
+                glassPane.setVisible(true);
+                setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                try {
+                    matlabHandler.showSpectrogram(windowSize, hopSize, nfft, window,
+                            getAbsolutePath(ImageLoader.getSpecImageURL()),
+                            getAbsolutePath(ImageLoader.getSpec3dImageURL()));
+                    SwingUtilities.invokeLater(() -> {
+                        glassPane.setVisible(false);
+                        setCursor(Cursor.getDefaultCursor());
+                        try {
+                            Image spec = ImageIO.read(ImageLoader.getSpecImageURL());
+                            Image spec3d = ImageIO.read(ImageLoader.getSpec3dImageURL());
+                            spectrogramPanel.changeImage(spec, spec3d, isNormal,
+                                    getExtendedState() == MAXIMIZED_BOTH);
+                        } catch (IOException ignored) {
+                        }
+                    });
+                } catch (MatlabEngineException mee) {
+                    showDialog(mee.getMessage());
+                } finally {
+                    setCursor(Cursor.getDefaultCursor());
+                    glassPane.setVisible(false);
+                }
+            }).start();
+        }
+    }
+
+    private void cutSong() {
+        new Thread(() -> {
+            glassPane.setVisible(true);
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            try {
+                matlabHandler.cutSong(cutSongPanel.getFrom(), cutSongPanel.getTo());
+            } catch (MatlabEngineException e) {
+                showDialog(e.getMessage());
+                cutSongPanel.setDefaultValues();
+            }
+
+            int result = JOptionPane.showOptionDialog(this,
+                    SAVE_QUESTION, null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, OPTIONS, OPTIONS[0]);
+
+            switch (result) {
+                case JOptionPane.YES_OPTION:
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle(FILE_BROWSER_INFO);
+                    int userSelection = fileChooser.showSaveDialog(this);
+                    try {
+                        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                            File fileToSave = fileChooser.getSelectedFile();
+                            if (fileToSave.exists())
+                                showDialog(FILE_ALREADY_EXISTS_ERROR);
+                            else
+                                matlabHandler.saveSong(fileToSave.getAbsolutePath());
+                        }
+                    } catch (MatlabEngineException mee) {
+                        showDialog(mee.getMessage());
+                    }
+                    break;
+                case JOptionPane.NO_OPTION:
+                    try {
+                        matlabHandler.saveSong(currentSongModel.getPath());
+                        openSong();
+                    } catch (MatlabEngineException mee) {
+                        showDialog(mee.getMessage());
+                    }
+            }
+
+            SwingUtilities.invokeLater(() -> {
+                glassPane.setVisible(false);
+                setCursor(Cursor.getDefaultCursor());
+            });
+        }).start();
+    }
+
+    private void editSongsDone() {
+        try {
+            editPanel.setNewData();
+            SongModel sm = editPanel.getSelectedSongModel();
+            if (sm.getId() == currentSongModel.getId())
+                currentSongModel = sm;
+            sm.setTags();
+            databaseAccessModel.editSong(editPanel.getSelectedSongModel());
+            showDialog(SUCCESSFUL_OPERATION_INFO);
+        } catch (Exception e) {
+            showDialog(e.getMessage());
+        }
+        editDialog.setVisible(false);
+    }
+
+    private void addSongs() {
+        File[] files = openFiles();
+        List<File> validFiles = new ArrayList<>();
+        for (File f: files) {
+            if (!Arrays.asList(SongPropertiesLoader.getExtensionNames()).contains(getFileExtension(f)))
+                showInfo(infoLabel, FILE_TYPE_ERROR, INFO_LABEL_DELAY);
+            else {
+                validFiles.add(f);
+            }
+        }
+        SongListModel songListModel = new SongListModel(validFiles);
+        try {
+            databaseAccessModel.addSongs(songListModel);
+            showDialog(SUCCESSFUL_OPERATION_INFO);
+        } catch (InvalidOperationException | SQLConnectionException e) {
+            showDialog(e.getMessage());
+        }
+    }
+
+    private void deleteSongsDone() {
+        deleteSongsDialog.setVisible(false);
+        try {
+            databaseAccessModel.deleteSongs(deleteSongsPanel.getSelectedRows());
+            showDialog(SUCCESSFUL_OPERATION_INFO);
+        } catch(InvalidOperationException | SQLConnectionException e) {
+            showDialog(e.getMessage());
+        }
     }
 
     private void initializeLabels() {
@@ -342,7 +476,7 @@ public class MainWindow extends Window {
         mainPanel.setVisible(true);
 
         menuPanel = new MenuPanel(matlabHandler, glassPane, favoriteButtonListener, unfavoriteButtonListener);
-        viewSongsPanel = new ViewSongsPanel(viewSongTableModel, loadSongListener, addSongListener, editSongListener,
+        viewSongsPanel = new ViewSongsPanel(viewSongTableModel, loadSongListener, addSongsListener, editSongListener,
                 deleteSongListener, backToMenuListener);
 
         editPanel = new EditPanel(editDoneListener);
@@ -362,7 +496,6 @@ public class MainWindow extends Window {
         sideBar.add(optionPanel);
 
         analysisPanel = new AnalysisPanel(matlabHandler);
-
         spectrogramPanel = new SpectrogramPanel(showSpecListener, backToMenuListener);
 
         changePitchPanel = new ChangePitchPanel(cpPreviewListener, cpSaveListener);
@@ -450,51 +583,7 @@ public class MainWindow extends Window {
             cardLayout.show(mainPanel, CUT_SONG_PANEL);
         };
 
-        cutDoneListener = ae -> new Thread(() -> {
-            glassPane.setVisible(true);
-            setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            try {
-                matlabHandler.cutSong(cutSongPanel.getFrom(), cutSongPanel.getTo());
-            } catch (MatlabEngineException e) {
-                showDialog(e.getMessage());
-                cutSongPanel.setDefaultValues();
-            }
-
-            int result = JOptionPane.showOptionDialog(this,
-                    SAVE_QUESTION, null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, OPTIONS, OPTIONS[0]);
-
-            switch (result) {
-                case JOptionPane.YES_OPTION:
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle(FILE_BROWSER_INFO);
-                    int userSelection = fileChooser.showSaveDialog(this);
-                    try {
-                        if (userSelection == JFileChooser.APPROVE_OPTION) {
-                            File fileToSave = fileChooser.getSelectedFile();
-                            if (fileToSave.exists())
-                                showDialog(FILE_ALREADY_EXISTS_ERROR);
-                            else
-                                matlabHandler.saveSong(fileToSave.getAbsolutePath());
-                        }
-                    } catch (MatlabEngineException mee) {
-                        showDialog(mee.getMessage());
-                    }
-                    break;
-                case JOptionPane.NO_OPTION:
-                    try {
-                        matlabHandler.saveSong(currentSongModel.getPath());
-                        openSong();
-                    } catch (MatlabEngineException mee) {
-                        showDialog(mee.getMessage());
-                    }
-            }
-
-            SwingUtilities.invokeLater(() -> {
-                glassPane.setVisible(false);
-                setCursor(Cursor.getDefaultCursor());
-            });
-        }).start();
+        cutDoneListener = ae -> cutSong();
 
         viewSpecListener = ae -> {
             if (!currentSongModel.isEmpty())
@@ -502,46 +591,7 @@ public class MainWindow extends Window {
             cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
         };
 
-        showSpecListener = ae -> {
-            String windowSizeString = spectrogramPanel.getWindowSize();
-            String hopSizeString = spectrogramPanel.getHopSize();
-            String nfftString = spectrogramPanel.getNfft();
-            String window = spectrogramPanel.getWindow();
-            int windowSize = (!windowSizeString.equals("") ? Integer.parseInt(windowSizeString) : 0);
-            int hopSize = (!hopSizeString.equals("") ? Integer.parseInt(hopSizeString) : 0);
-            int nfft = (!nfftString.equals("") ? Integer.parseInt(nfftString) : 0);
-            if (windowSize < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
-                    hopSize < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
-                    nfft < Math.pow(10, DIGIT_SIZE_MIN - 1) ||
-                    windowSize <= hopSize) {
-                showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
-            }
-            else {
-                new Thread(() -> {
-                    glassPane.setVisible(true);
-                    setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                    try {
-                        matlabHandler.showSpectrogram(windowSize, hopSize, nfft, window,
-                                SPEC_IMAGE_NAME, SPEC_3D_IMAGE_NAME);
-                        SwingUtilities.invokeLater(() -> {
-                            glassPane.setVisible(false);
-                            setCursor(Cursor.getDefaultCursor());
-                            try {
-                                Image spec = ImageIO.read(new File(SPEC_IMAGE_NAME));
-                                Image spec3d = ImageIO.read(new File(SPEC_3D_IMAGE_NAME));
-                                spectrogramPanel.changeImage(spec, spec3d, isNormal,
-                                        getExtendedState() == MAXIMIZED_BOTH);
-                            } catch (IOException ignored) { }
-                        });
-                    } catch (MatlabEngineException mee) {
-                        showDialog(mee.getMessage());
-                    } finally {
-                        setCursor(Cursor.getDefaultCursor());
-                        glassPane.setVisible(false);
-                    }
-                }).start();
-            }
-        };
+        showSpecListener = ae -> showSpec();
 
         analyzeSongListener = ae -> {
             if (!currentSongModel.isEmpty())
@@ -567,50 +617,12 @@ public class MainWindow extends Window {
             }
         };
 
-        editDoneListener = ae -> {
-            try {
-                editPanel.setNewData();
-                SongModel sm = editPanel.getSelectedSongModel();
-                if (sm.getId() == currentSongModel.getId())
-                    currentSongModel = sm;
-                sm.setTags();
-                databaseAccessModel.editSong(editPanel.getSelectedSongModel());
-                showDialog(SUCCESSFUL_OPERATION_INFO);
-            } catch (Exception e) {
-                showDialog(e.getMessage());
-            }
-            editDialog.setVisible(false);
-        };
+        editDoneListener = ae -> editSongsDone();
 
-        addSongListener = ae -> {
-            File[] files = openFiles();
-            List<File> validFiles = new ArrayList<>();
-            for (File f: files) {
-                if (!Arrays.asList(SongPropertiesLoader.getExtensionNames()).contains(getFileExtension(f)))
-                    showInfo(infoLabel, FILE_TYPE_ERROR, INFO_LABEL_DELAY);
-                else {
-                    validFiles.add(f);
-                }
-            }
-            SongListModel songListModel = new SongListModel(validFiles);
-            try {
-                databaseAccessModel.addSongs(songListModel);
-                showDialog(SUCCESSFUL_OPERATION_INFO);
-            } catch (InvalidOperationException | SQLConnectionException e) {
-                showDialog(e.getMessage());
-            }
-        };
+        addSongsListener = ae -> addSongs();
 
         deleteSongListener = ae -> deleteSongsDialog.setVisible(true);
 
-        deleteDoneListener = ae -> {
-            deleteSongsDialog.setVisible(false);
-            try {
-                databaseAccessModel.deleteSongs(deleteSongsPanel.getSelectedRows());
-                showDialog(SUCCESSFUL_OPERATION_INFO);
-            } catch(InvalidOperationException | SQLConnectionException e) {
-                showDialog(e.getMessage());
-            }
-        };
+        deleteDoneListener = ae -> deleteSongsDone();
     }
 }

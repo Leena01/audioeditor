@@ -58,7 +58,7 @@ public class RangeSlider extends JSlider {
     }
 
     /**
-     * Initializes the slider by setting default properties.
+     * Initializes the slider by setting default common.properties.
      */
     private void initSlider() {
         setOrientation(HORIZONTAL);

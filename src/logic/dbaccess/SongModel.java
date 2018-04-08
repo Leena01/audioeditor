@@ -2,7 +2,7 @@ package logic.dbaccess;
 
 import com.mpatric.mp3agic.*;
 import database.entities.Song;
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 
 import java.io.File;
 import java.io.IOException;

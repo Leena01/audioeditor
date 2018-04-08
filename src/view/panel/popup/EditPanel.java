@@ -1,9 +1,10 @@
 package view.panel.popup;
 
 import logic.dbaccess.SongModel;
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 import view.core.button.OptionButton;
 import view.core.label.Label;
+import view.core.panel.BasicPanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +14,7 @@ import javax.swing.text.NumberFormatter;
 /**
  * Edit panel
  */
-public class EditPanel extends JPanel {
+public final class EditPanel extends BasicPanel {
     private static final String INSTR_TEXT = "Please enter the new data for the song with the following ID: %d.";
     private JLabel infoLabel;
     private JLabel titleLabel;
@@ -52,13 +53,6 @@ public class EditPanel extends JPanel {
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-
-        infoPanel.setOpaque(false);
-        formPanel.setOpaque(false);
-        bottomPanel.setOpaque(false);
-        bodyPanel.setOpaque(false);
-        mainPanel.setOpaque(false);
-
         infoLabel = new Label();
         doneButton = new OptionButton("Done", al);
 
@@ -81,31 +75,8 @@ public class EditPanel extends JPanel {
         genreTextField = new JFormattedTextField(nf);
         commentTextField = new JTextField("", 20);
 
-        infoPanel.add(infoLabel);
-        formPanel.add(titleLabel);
-        formPanel.add(titleTextField);
-        formPanel.add(trackLabel);
-        formPanel.add(trackTextField);
-        formPanel.add(artistLabel);
-        formPanel.add(artistTextField);
-        formPanel.add(albumLabel);
-        formPanel.add(albumTextField);
-        formPanel.add(yearLabel);
-        formPanel.add(yearTextField);
-        formPanel.add(genreLabel);
-        formPanel.add(genreTextField);
-        formPanel.add(commentLabel);
-        formPanel.add(commentTextField);
-        bottomPanel.add(doneButton);
-
-        mainPanel.add(infoPanel);
-        mainPanel.add(formPanel);
-        mainPanel.add(bottomPanel);
-        bodyPanel.add(mainPanel);
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 30, 30));
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
-        add(bodyPanel, BorderLayout.CENTER);
+        setStyle();
+        addPanels();
     }
 
     @Override
@@ -146,5 +117,42 @@ public class EditPanel extends JPanel {
             genreTextField.setText(selectedSongModel.getGenre().split("\\s+")[0]);
             commentTextField.setText(selectedSongModel.getComment());
         }
+    }
+
+    @Override
+    protected void setStyle() {
+        infoPanel.setOpaque(false);
+        formPanel.setOpaque(false);
+        bottomPanel.setOpaque(false);
+        bodyPanel.setOpaque(false);
+        mainPanel.setOpaque(false);
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
+        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 30, 30));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+    }
+
+    @Override
+    protected void addPanels() {
+        infoPanel.add(infoLabel);
+        formPanel.add(titleLabel);
+        formPanel.add(titleTextField);
+        formPanel.add(trackLabel);
+        formPanel.add(trackTextField);
+        formPanel.add(artistLabel);
+        formPanel.add(artistTextField);
+        formPanel.add(albumLabel);
+        formPanel.add(albumTextField);
+        formPanel.add(yearLabel);
+        formPanel.add(yearTextField);
+        formPanel.add(genreLabel);
+        formPanel.add(genreTextField);
+        formPanel.add(commentLabel);
+        formPanel.add(commentTextField);
+        bottomPanel.add(doneButton);
+        mainPanel.add(infoPanel);
+        mainPanel.add(formPanel);
+        mainPanel.add(bottomPanel);
+        bodyPanel.add(mainPanel);
+        add(bodyPanel, BorderLayout.CENTER);
     }
 }

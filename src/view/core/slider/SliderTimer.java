@@ -1,7 +1,7 @@
 package view.core.slider;
 
-import static view.util.Helper.formatDuration;
-import static view.util.Helper.framesToMillis;
+import static common.util.Helper.formatDuration;
+import static common.util.Helper.framesToMillis;
 
 import javax.swing.*;
 import java.util.*;

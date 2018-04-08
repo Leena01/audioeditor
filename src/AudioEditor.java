@@ -4,12 +4,12 @@ import database.*;
 import logic.dbaccess.DatabaseAccessModel;
 import logic.exceptions.MatlabEngineException;
 import logic.exceptions.SQLConnectionException;
-import static view.util.Helper.showDialog;
+import static common.util.Helper.showDialog;
 
 import logic.matlab.MatlabHandler;
-import properties.ConfigPropertiesLoader;
-import properties.ImageLoader;
-import properties.SongPropertiesLoader;
+import common.properties.ConfigPropertiesLoader;
+import common.properties.ImageLoader;
+import common.properties.SongPropertiesLoader;
 import view.*;
 
 import java.io.IOException;
@@ -18,8 +18,6 @@ public class AudioEditor {
     private static final String CONFIG_PROPERTIES_FILE = "/config/config.properties";
     private static final String SONG_PROPERTIES_FILE = "/config/song.properties";
     private static final String IMAGES_PROPERTIES_FILE = "/config/images.properties";
-    private static final String MATLAB_INIT_ERROR = "Matlab initialization error.";
-    private static final String DATABASE_ERROR = "Database error.";
     private static final String MATLAB_CONNECTION_ERROR = "Matlab connection error.";
     private static final String CANNOT_READ_PROPERIES_ERROR = "Properties file not found.";
 

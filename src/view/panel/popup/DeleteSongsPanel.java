@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteSongsPanel extends ViewSongsPanel {
+public final class DeleteSongsPanel extends ViewSongsPanel {
     private SongListModel selectedSongs;
     private JPanel buttonPanel;
     private JButton doneButton;
@@ -21,24 +21,16 @@ public class DeleteSongsPanel extends ViewSongsPanel {
     public DeleteSongsPanel(SongTableModel tm, ActionListener d) {
         super();
         buttonPanel = new JPanel(new FlowLayout());
-
         tableModel = tm;
         selectedSongs = new SongListModel();
         table = new SongTable(tableModel);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         sorter.setModel(tableModel);
         table.setRowSorter(sorter);
         scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
-        scrollPane.setOpaque(false);
-
         doneButton = new TransparentButton("Delete", d);
-        buttonPanel.add(doneButton);
-        buttonPanel.setOpaque(false);
-
-        add(outerSearchPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        setStyle();
+        addPanels();
     }
 
     public SongListModel getSelectedRows() {
@@ -51,5 +43,20 @@ public class DeleteSongsPanel extends ViewSongsPanel {
         }
         selectedSongs.setSongs(songs);
         return selectedSongs;
+    }
+
+    @Override
+    protected void setStyle() {
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
+        scrollPane.setOpaque(false);
+        buttonPanel.setOpaque(false);
+    }
+
+    @Override
+    protected void addPanels() {
+        buttonPanel.add(doneButton);
+        add(outerSearchPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 }

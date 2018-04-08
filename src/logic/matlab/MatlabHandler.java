@@ -6,7 +6,7 @@ import com.mathworks.engine.MatlabEngine;
 import com.mathworks.matlab.types.CellStr;
 import logic.dbaccess.SongModel;
 import logic.exceptions.MatlabEngineException;
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 
 public class MatlabHandler {
     private MatlabEngine eng;

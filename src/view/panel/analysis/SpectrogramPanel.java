@@ -1,8 +1,10 @@
 package view.panel.analysis;
 
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 import view.core.label.Label;
 import view.core.button.Button;
+import view.core.panel.BasicPanel;
+import view.param.Constants;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -11,15 +13,13 @@ import java.text.NumberFormat;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static view.util.Helper.resizeImage;
+import static common.util.Helper.resizeImage;
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import static view.util.Constants.SPEC_IMAGE_SIZE;
-import static view.util.Constants.SPEC_IMAGE_SIZE_MAX;
+import static view.param.Constants.SPEC_IMAGE_SIZE;
+import static view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
-public class SpectrogramPanel extends JPanel implements ItemListener {
+public class SpectrogramPanel extends BasicPanel implements ItemListener {
     private static String[] windowNames = SongPropertiesLoader.getWindowNames();
-    public static int DIGIT_SIZE_MIN = 1;
-    private static int DIGIT_SIZE_MAX = 5;
 
     private JButton doneButton;
     private JButton backOptionButton;
@@ -47,14 +47,11 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
 
     public SpectrogramPanel(ActionListener s, ActionListener b) {
         super();
-        setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(6,2, 10, 10));
-        formPanel.setOpaque(false);
         outerFormPanel = new JPanel();
-        outerFormPanel.setOpaque(false);
 
         doneButton = new Button("Done", s);
         backOptionButton = new Button("Back to Main Menu", b);
@@ -62,14 +59,14 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
 
         windowSizeLabel = new Label("Window size:");
         NumberFormat nf = NumberFormat.getIntegerInstance();
-        nf.setMinimumIntegerDigits(DIGIT_SIZE_MIN);
-        nf.setMaximumIntegerDigits(DIGIT_SIZE_MAX);
+        nf.setMinimumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MIN);
+        nf.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX);
         nf.setGroupingUsed(false);
         windowSizeTextField = new JFormattedTextField(nf);
 
         NumberFormat nf2 = NumberFormat.getIntegerInstance();
-        nf2.setMinimumIntegerDigits(DIGIT_SIZE_MIN);
-        nf2.setMaximumIntegerDigits(DIGIT_SIZE_MAX - 1);
+        nf2.setMinimumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MIN);
+        nf2.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX - 1);
         nf2.setGroupingUsed(false);
         hopSizeLabel = new Label("Hop size:");
         hopSizeTextField = new JFormattedTextField(nf2);
@@ -81,47 +78,23 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
         windowComboBox = new JComboBox<>(windowNames);
 
         toggleButton = new JToggleButton("3D");
-        toggleButton.setFocusPainted(false);
         toggleButton.addItemListener(this);
 
         imageLabel = new Label();
         image3dLabel = new Label();
         imagePanel = new JPanel();
-        imagePanel.add(imageLabel);
-        imagePanel.add(image3dLabel);
-        image3dLabel.setVisible(false);
-
-        formPanel.add(windowSizeLabel);
-        formPanel.add(windowSizeTextField);
-        formPanel.add(hopSizeLabel);
-        formPanel.add(hopSizeTextField);
-        formPanel.add(nfftLabel);
-        formPanel.add(nfftTextField);
-        formPanel.add(windowLabel);
-        formPanel.add(windowComboBox);
-        formPanel.add(doneButton);
-        formPanel.add(clearFieldsButton);
-        formPanel.add(toggleButton);
-        formPanel.add(backOptionButton);
-        outerFormPanel.add(formPanel);
 
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, PAGE_AXIS));
-        mainPanel.setBackground(Color.BLACK);
-        mainPanel.add(outerFormPanel);
-        mainPanel.add(imagePanel);
-        bodyPanel.add(mainPanel);
-        add(bodyPanel);
-
-        imagePanel.setOpaque(false);
-        bodyPanel.setOpaque(false);
-        mainPanel.setOpaque(false);
 
         specIcon = new ImageIcon();
         specIconMax = new ImageIcon();
         specIcon3d = new ImageIcon();
         specIcon3dMax = new ImageIcon();
+
+        setStyle();
+        addPanels();
     }
 
     public String getWindowSize() {
@@ -193,5 +166,40 @@ public class SpectrogramPanel extends JPanel implements ItemListener {
             image3dLabel.setVisible(false);
             imageLabel.setVisible(true);
         }
+    }
+
+    @Override
+    protected void setStyle() {
+        setBackground(Color.BLACK);
+        formPanel.setOpaque(false);
+        outerFormPanel.setOpaque(false);
+        toggleButton.setFocusPainted(false);
+        imagePanel.setOpaque(false);
+        image3dLabel.setVisible(false);
+        bodyPanel.setOpaque(false);
+        mainPanel.setOpaque(false);
+    }
+
+    @Override
+    protected void addPanels() {
+        imagePanel.add(imageLabel);
+        imagePanel.add(image3dLabel);
+        formPanel.add(windowSizeLabel);
+        formPanel.add(windowSizeTextField);
+        formPanel.add(hopSizeLabel);
+        formPanel.add(hopSizeTextField);
+        formPanel.add(nfftLabel);
+        formPanel.add(nfftTextField);
+        formPanel.add(windowLabel);
+        formPanel.add(windowComboBox);
+        formPanel.add(doneButton);
+        formPanel.add(clearFieldsButton);
+        formPanel.add(toggleButton);
+        formPanel.add(backOptionButton);
+        outerFormPanel.add(formPanel);
+        mainPanel.add(outerFormPanel);
+        mainPanel.add(imagePanel);
+        bodyPanel.add(mainPanel);
+        add(bodyPanel);
     }
 }

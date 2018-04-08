@@ -1,9 +1,10 @@
-package view.util;
+package common.util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public final class Helper {
     public static void showDialog(String message) {
@@ -65,5 +66,15 @@ public final class Helper {
             return parent.getAbsolutePath();
         else
             return path;
+    }
+
+    public static String getAbsolutePath(URL url) {
+        File f;
+        try {
+            f = new File(url.toURI());
+        } catch(URISyntaxException e) {
+            f = new File(url.getPath());
+        }
+        return f.getAbsolutePath();
     }
 }

@@ -30,4 +30,10 @@ public class Label extends JLabel {
         super(text, horizontalAlignment);
         setForeground(FONT_COLOR);
     }
+
+    public Label(String text, Dimension d, int horizontalAlignment) {
+        super(text, horizontalAlignment);
+        setForeground(FONT_COLOR);
+        setPreferredSize(d);
+    }
 }

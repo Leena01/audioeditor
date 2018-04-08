@@ -23,7 +23,7 @@
 
 package view.core.slider.ui;
 
-import static view.util.Constants.RANGE_SLIDER_SIZE;
+import static view.param.Constants.RANGE_SLIDER_SIZE;
 
 import view.core.slider.RangeSlider;
 

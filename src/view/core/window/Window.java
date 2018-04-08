@@ -1,11 +1,12 @@
 package view.core.window;
 
+import common.properties.ImageLoader;
 import view.core.button.TransparentButton;
 import view.core.label.Label;
 import view.core.bar.HorizontalBar;
 
-import static view.util.Helper.resizeImageIcon;
-import static view.util.Constants.*;
+import static common.util.Helper.resizeImageIcon;
+import static view.param.Constants.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -16,12 +17,12 @@ public abstract class Window extends JFrame {
     private static Point COMP_COORDS = null;
     private static final Dimension IMAGE_SIZE = new Dimension(20, 20);
     private static final Dimension BUTTON_SIZE = new Dimension(30, 20);
-    private static final ImageIcon UP_ICON = resizeImageIcon(new ImageIcon(UP_ICON_NAME), IMAGE_SIZE);
-    private static final ImageIcon DOWN_ICON = resizeImageIcon(new ImageIcon(DOWN_ICON_NAME), IMAGE_SIZE);
-    private static final ImageIcon MINIMIZE_ICON = resizeImageIcon(new ImageIcon(MINIMIZE_ICON_NAME), IMAGE_SIZE);
-    private static final ImageIcon MAXIMIZE_ICON = resizeImageIcon(new ImageIcon(MAXIMIZE_ICON_NAME), IMAGE_SIZE);
-    private static final ImageIcon NORMALIZE_ICON = resizeImageIcon(new ImageIcon(NORMALIZE_ICON_NAME), IMAGE_SIZE);
-    private static final ImageIcon CLOSE_ICON = resizeImageIcon(new ImageIcon(CLOSE_ICON_NAME), IMAGE_SIZE);
+    private static final ImageIcon UPWARD_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getUpwardIconURL()), IMAGE_SIZE);
+    private static final ImageIcon DOWNWARD_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getDownwardIconURL()), IMAGE_SIZE);
+    private static final ImageIcon MINIMIZE_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getMinimizeIconURL()), IMAGE_SIZE);
+    private static final ImageIcon MAXIMIZE_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getMaximizeIconURL()), IMAGE_SIZE);
+    private static final ImageIcon NORMALIZE_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getNormalizeIconURL()), IMAGE_SIZE);
+    private static final ImageIcon CLOSE_ICON = resizeImageIcon(new ImageIcon(ImageLoader.getCloseIconURL()), IMAGE_SIZE);
 
     protected boolean isNormal;
     private HorizontalBar titleBar;
@@ -93,7 +94,7 @@ public abstract class Window extends JFrame {
         menuPanelLayout.setHgap(0);
         menuPanelLayout.setVgap(0);
 
-        hideButton = new TransparentButton(UP_ICON, BUTTON_SIZE, ae -> changeSize());
+        hideButton = new TransparentButton(UPWARD_ICON, BUTTON_SIZE, ae -> changeSize());
         minimizeButton = new TransparentButton(MINIMIZE_ICON, BUTTON_SIZE, ae -> minimize());
         maximizeButton = new TransparentButton(MAXIMIZE_ICON, BUTTON_SIZE, ae -> maximize());
         exitButton = new TransparentButton(CLOSE_ICON, BUTTON_SIZE, e -> close());
@@ -124,12 +125,12 @@ public abstract class Window extends JFrame {
         hideImage(isNormal);
         isNormal = !isNormal;
         if (isNormal) {
-            hideButton.setIcon(UP_ICON);
+            hideButton.setIcon(UPWARD_ICON);
             setMinimumSize(WIN_MIN_SIZE);
             setSize(WIN_MIN_SIZE);
         }
         else {
-            hideButton.setIcon(DOWN_ICON);
+            hideButton.setIcon(DOWNWARD_ICON);
             setMinimumSize(WIN_MIN_SIZE_HIDDEN);
             setSize(WIN_MIN_SIZE_HIDDEN);
         }

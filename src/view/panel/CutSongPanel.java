@@ -1,13 +1,15 @@
 package view.panel;
 
-import static view.util.Helper.formatDuration;
-import static view.util.Helper.framesToMillis;
-import static view.util.Constants.RANGE_SLIDER_SIZE;
-import static view.util.Constants.RANGE_SLIDER_SIZE_MAX;
+import static common.util.Helper.formatDuration;
+import static common.util.Helper.framesToMillis;
+import static view.param.Constants.RANGE_SLIDER_SIZE;
+import static view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
+import view.core.panel.BasicPanel;
 import view.core.slider.RangeSlider;
 import view.core.label.Label;
 import view.core.button.Button;
+import view.core.textfield.TextField;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -17,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class CutSongPanel extends JPanel implements ChangeListener, ActionListener {
+public final class CutSongPanel extends BasicPanel implements ChangeListener, ActionListener {
     private static final int MIN = 1;
     private static int MAX;
     private static final Dimension FIELD_SIZE = new Dimension(120, 20);
@@ -41,62 +43,25 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
     private double freq;
 
     public CutSongPanel(ActionListener cutDoneListener, ActionListener b) {
-        setBackground(Color.BLACK);
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new FlowLayout());
         formPanel = new JPanel(new GridLayout(3, 3));
-
         rangeSlider = new RangeSlider();
-        rangeSlider.addChangeListener(this);
-        rangeSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 15, 0));
-        mainPanel.add(rangeSlider, BorderLayout.NORTH);
-
         cutLabel = new Label("Cut song");
         framesLabel = new Label("Frames: ");
         secondsLabel = new Label("Time: ");
-        secondsLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-        fromLabel = new Label("From:", SwingConstants.LEFT);
-        toLabel = new Label("To:", SwingConstants.LEFT);
-        fromValue = new JTextField("", SwingConstants.LEFT);
-        toValue = new JTextField("", SwingConstants.LEFT);
-        fromSecValue = new JLabel("", SwingConstants.LEFT);
-        fromSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-        toSecValue = new JLabel("", SwingConstants.LEFT);
-        toSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-
-        fromLabel.setPreferredSize(FIELD_SIZE);
-        toLabel.setPreferredSize(FIELD_SIZE);
-        fromSecValue.setPreferredSize(FIELD_SIZE);
-        fromValue.setPreferredSize(FIELD_SIZE);
-        toValue.setPreferredSize(FIELD_SIZE);
-        toSecValue.setPreferredSize(FIELD_SIZE);
-        fromValue.addActionListener(this);
-        toValue.addActionListener(this);
-
-        formPanel.add(cutLabel);
-        formPanel.add(framesLabel);
-        formPanel.add(secondsLabel);
-        formPanel.add(fromLabel);
-        formPanel.add(fromValue);
-        formPanel.add(fromSecValue);
-        formPanel.add(toLabel);
-        formPanel.add(toValue);
-        formPanel.add(toSecValue);
-        mainPanel.add(formPanel, BorderLayout.WEST);
-
+        fromLabel = new Label("From:", FIELD_SIZE, SwingConstants.LEFT);
+        toLabel = new Label("To:", FIELD_SIZE, SwingConstants.LEFT);
+        fromValue = new TextField("", FIELD_SIZE, SwingConstants.LEFT);
+        toValue = new TextField("", FIELD_SIZE, SwingConstants.LEFT);
+        fromSecValue = new Label("", FIELD_SIZE, SwingConstants.LEFT);
+        toSecValue = new Label("", FIELD_SIZE, SwingConstants.LEFT);
         setButton = new Button("Set values", this);
         doneButton = new Button("Done", cutDoneListener);
         backOptionButton = new Button("Back to Main Menu", b);
-        buttonPanel.add(setButton);
-        buttonPanel.add(doneButton);
-        buttonPanel.add(backOptionButton);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        add(mainPanel);
-
-        formPanel.setOpaque(false);
-        mainPanel.setOpaque(false);
-        buttonPanel.setOpaque(false);
+        initInnerListeners();
+        setStyle();
+        addPanels();
     }
 
     public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, boolean isMaximized) {
@@ -183,5 +148,44 @@ public class CutSongPanel extends JPanel implements ChangeListener, ActionListen
     public void setDefaultValues() {
         rangeSlider.setValue(MIN);
         rangeSlider.setUpperValue(MAX);
+    }
+
+    private void initInnerListeners() {
+        rangeSlider.addChangeListener(this);
+        fromValue.addActionListener(this);
+        toValue.addActionListener(this);
+    }
+
+    @Override
+    protected void setStyle() {
+        setBackground(Color.BLACK);
+        rangeSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 15, 0));
+        secondsLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        fromSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        toSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        formPanel.setOpaque(false);
+        mainPanel.setOpaque(false);
+        buttonPanel.setOpaque(false);
+    }
+
+    @Override
+    protected void addPanels() {
+        mainPanel.add(rangeSlider, BorderLayout.NORTH);
+        formPanel.add(cutLabel);
+        formPanel.add(framesLabel);
+        formPanel.add(secondsLabel);
+        formPanel.add(fromLabel);
+        formPanel.add(fromValue);
+        formPanel.add(fromSecValue);
+        formPanel.add(toLabel);
+        formPanel.add(toValue);
+        formPanel.add(toSecValue);
+        mainPanel.add(formPanel, BorderLayout.WEST);
+        buttonPanel.add(setButton);
+        buttonPanel.add(doneButton);
+        buttonPanel.add(backOptionButton);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        add(mainPanel);
     }
 }

@@ -1,6 +1,6 @@
 package database.entities;
 
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 import java.util.Objects;
 
 public class Song {
@@ -43,7 +43,6 @@ public class Song {
                 SongPropertiesLoader.getDefaultGenre(),
                 SongPropertiesLoader.getDefaultComment(),
                 SongPropertiesLoader.getDefaultPath());
-        System.out.println("Ime: " + SongPropertiesLoader.getDefaultGenre());
     }
 
     public Song(Song other) {

@@ -4,7 +4,7 @@ import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.Mp3File;
 import database.entities.Song;
 import logic.dbaccess.adt.ListModel;
-import properties.SongPropertiesLoader;
+import common.properties.SongPropertiesLoader;
 import java.io.File;
 import java.util.List;
 

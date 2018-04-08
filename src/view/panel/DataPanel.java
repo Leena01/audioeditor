@@ -2,15 +2,16 @@ package view.panel;
 
 import logic.dbaccess.SongModel;
 
-import static view.util.Constants.*;
+import static view.param.Constants.*;
 import view.core.label.Label;
 import view.core.button.Button;
+import view.core.panel.BasicPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class DataPanel extends JPanel {
+public final class DataPanel extends BasicPanel {
     private JLabel idLabel;
     private JLabel titleLabel;
     private JLabel trackLabel;
@@ -35,7 +36,6 @@ public class DataPanel extends JPanel {
     private JPanel mainPanel;
 
     public DataPanel(SongModel currentSongModel, ActionListener b) {
-        setBackground(Color.BLACK);
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new BorderLayout());
         labelPanel = new JPanel(new GridLayout(9,2));
@@ -57,34 +57,10 @@ public class DataPanel extends JPanel {
         genre = new Label(currentSongModel.getGenre(), DATA_LABEL_SIZE);
         comment = new Label(currentSongModel.getComment(), DATA_LABEL_SIZE);
         path = new Label(currentSongModel.getPath(), DATA_LABEL_SIZE);
-        setToolTipTexts();
-        labelPanel.add(idLabel);
-        labelPanel.add(id);
-        labelPanel.add(titleLabel);
-        labelPanel.add(title);
-        labelPanel.add(trackLabel);
-        labelPanel.add(track);
-        labelPanel.add(artistLabel);
-        labelPanel.add(artist);
-        labelPanel.add(albumLabel);
-        labelPanel.add(album);
-        labelPanel.add(yearLabel);
-        labelPanel.add(year);
-        labelPanel.add(genreLabel);
-        labelPanel.add(genre);
-        labelPanel.add(commentLabel);
-        labelPanel.add(comment);
-        labelPanel.add(pathLabel);
-        labelPanel.add(path);
         backOptionButton = new Button("Back to Main Menu", b);
-        buttonPanel.add(backOptionButton, BorderLayout.NORTH);
-        mainPanel.add(labelPanel, BorderLayout.WEST);
-        mainPanel.add(buttonPanel, BorderLayout.EAST);
-        add(mainPanel);
-        mainPanel.setOpaque(false);
-        labelPanel.setOpaque(false);
-        buttonPanel.setOpaque(false);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+        setToolTipTexts();
+        setStyle();
+        addPanels();
     }
 
     public void setSongData(SongModel currentSongModel) {
@@ -110,5 +86,40 @@ public class DataPanel extends JPanel {
         genre.setToolTipText(genre.getText());
         comment.setToolTipText(comment.getText());
         path.setToolTipText(path.getText());
+    }
+
+    @Override
+    protected void setStyle() {
+        setBackground(Color.BLACK);
+        mainPanel.setOpaque(false);
+        labelPanel.setOpaque(false);
+        buttonPanel.setOpaque(false);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+    }
+
+    @Override
+    protected void addPanels() {
+        labelPanel.add(idLabel);
+        labelPanel.add(id);
+        labelPanel.add(titleLabel);
+        labelPanel.add(title);
+        labelPanel.add(trackLabel);
+        labelPanel.add(track);
+        labelPanel.add(artistLabel);
+        labelPanel.add(artist);
+        labelPanel.add(albumLabel);
+        labelPanel.add(album);
+        labelPanel.add(yearLabel);
+        labelPanel.add(year);
+        labelPanel.add(genreLabel);
+        labelPanel.add(genre);
+        labelPanel.add(commentLabel);
+        labelPanel.add(comment);
+        labelPanel.add(pathLabel);
+        labelPanel.add(path);
+        buttonPanel.add(backOptionButton, BorderLayout.NORTH);
+        mainPanel.add(labelPanel, BorderLayout.WEST);
+        mainPanel.add(buttonPanel, BorderLayout.EAST);
+        add(mainPanel);
     }
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import static view.util.Helper.fillColor;
+import static common.util.Helper.fillColor;
 
 public class HorizontalBar extends JPanel {
     public HorizontalBar(MouseListener ml, MouseMotionListener mml) {

@@ -2,7 +2,7 @@ package view.core.slider.ui;
 
 import view.core.slider.TrackSlider;
 
-import static view.util.Constants.AUDIO_SLIDER_SIZE;
+import static view.param.Constants.AUDIO_SLIDER_SIZE;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;
