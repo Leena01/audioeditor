@@ -102,24 +102,42 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void relocateSong(int frame, boolean isPlaying) {
+    public synchronized double getCurrentFrame() {
+        try {
+            eng.eval(GET_CURRENT_FRAME);
+            return eng.getVariable(CURRENT_FRAME_VAR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    public synchronized boolean isPlaying() {
+        try {
+            eng.eval(IS_PLAYING);
+            return eng.getVariable(IS_PLAYING_VAR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public synchronized void relocateSong(int frame) {
         try {
             eng.putVariable(START_VAR, frame);
             if (frame <= 0 || frame >= totalSamples)
                 eng.putVariable(EMPTY_VAR, 1);
             else
                 eng.putVariable(EMPTY_VAR, 0);
-            eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(RELOCATE_SONG);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public synchronized void changeVolume(float level, boolean isPlaying) {
+    public synchronized void changeVolume(float level) {
         try {
             eng.putVariable(LEVEL_VAR, level);
-            eng.putVariable(IS_PLAYING_VAR, isPlaying);
             eng.eval(CHANGE_VOLUME);
         } catch (Exception e) {
             e.printStackTrace();

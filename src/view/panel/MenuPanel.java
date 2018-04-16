@@ -5,6 +5,7 @@ import static view.param.Constants.*;
 import static javax.swing.BoxLayout.PAGE_AXIS;
 
 import common.properties.ImageLoader;
+import view.core.bar.HorizontalBar;
 import view.core.label.Label;
 import java.awt.*;
 import java.awt.event.*;
@@ -35,7 +36,7 @@ public final class MenuPanel extends BasicPanel {
     private ImageIcon coverIcon;
     private ImageIcon coverIconMax;
 
-    public MenuPanel(MatlabHandler matlabHandler, Component glassPane, ActionListener fb, ActionListener ufb) {
+    public MenuPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel, ActionListener fb, ActionListener ufb) {
         super();
         infoLabel = new Label(INFO_LABEL);
         infoPanel = new JPanel();
@@ -44,7 +45,7 @@ public final class MenuPanel extends BasicPanel {
         coverIconMax = COVER_IMAGE_MAX;
         imageLabel = new JLabel(coverIcon);
         imagePanel = new JPanel();
-        playerPanel = new PlayerPanel(matlabHandler, glassPane, fb, ufb);
+        playerPanel = new PlayerPanel(matlabHandler, mediaControlPanel, fb, ufb);
         noMediaFoundLabel = new Label(NO_MEDIA_LABEL);
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();

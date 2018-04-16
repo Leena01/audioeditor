@@ -36,8 +36,12 @@ public final class Helper {
         return duration < 0 ? "-" + positive : positive;
     }
 
-    public static long framesToMillis(double frame, double freq){
-        return (long)(frame / freq) * 1000;
+    public static int framesToMillis(double frame, double freq) {
+        return (int)(frame / freq) * 1000;
+    }
+
+    public static int secondsToFrames(int seconds, double freq) {
+        return (int)(seconds * freq);
     }
 
     public static ImageIcon resizeImageIcon(ImageIcon ii, Dimension d) {

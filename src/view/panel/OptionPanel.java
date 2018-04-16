@@ -3,7 +3,6 @@ package view.panel;
 import view.core.button.OptionButton;
 import view.core.panel.BasicPanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -15,11 +14,12 @@ public final class OptionPanel extends BasicPanel {
     private OptionButton changePitchOptionButton;
     private OptionButton cutOptionButton;
     private OptionButton fftOptionButton;
+    private OptionButton chromaOptionButton;
     private OptionButton analyzeOptionButton;
     private GridBagConstraints c;
 
     public OptionPanel(ActionListener mm, ActionListener of, ActionListener vs, ActionListener sd, ActionListener cp,
-                       ActionListener cf, ActionListener fft, ActionListener as) {
+                       ActionListener cf, ActionListener fft, ActionListener cg, ActionListener as) {
         mainMenuOptionButton = new OptionButton("Main menu", mm);
         openFileOptionButton = new OptionButton("Open file", of);
         viewSongsOptionButton = new OptionButton("View favorite songs", vs);
@@ -27,6 +27,7 @@ public final class OptionPanel extends BasicPanel {
         changePitchOptionButton = new OptionButton("Change pitch", cp);
         cutOptionButton = new OptionButton("Cut file", cf);
         fftOptionButton = new OptionButton("View spectrogram", fft);
+        chromaOptionButton = new OptionButton("View chromagram", cg);
         analyzeOptionButton = new OptionButton("Analyze song", as);
         setStyle();
         addPanels();
@@ -37,6 +38,7 @@ public final class OptionPanel extends BasicPanel {
         changePitchOptionButton.setVisible(l);
         cutOptionButton.setVisible(l);
         fftOptionButton.setVisible(l);
+        chromaOptionButton.setVisible(l);
         analyzeOptionButton.setVisible(l);
     }
 
@@ -62,6 +64,7 @@ public final class OptionPanel extends BasicPanel {
         add(changePitchOptionButton, c);
         add(cutOptionButton, c);
         add(fftOptionButton, c);
+        add(chromaOptionButton, c);
         add(analyzeOptionButton, c);
     }
 }

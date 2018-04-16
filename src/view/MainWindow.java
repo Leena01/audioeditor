@@ -16,6 +16,7 @@ import common.properties.ConfigPropertiesLoader;
 import common.properties.ImageLoader;
 import common.properties.SongPropertiesLoader;
 import view.core.bar.HorizontalBar;
+import view.core.bar.InverseHorizontalBar;
 import view.core.dialog.PopupDialog;
 import view.core.listener.EmptyMouseListener;
 import view.panel.*;
@@ -69,6 +70,8 @@ public class MainWindow extends Window {
     private SongTableModel deleteSongTableModel;
     private SongModel currentSongModel;
     private JPanel mainPanel;
+    private JPanel innerMainPanel;
+    private HorizontalBar mediaControlPanel;
     private MenuPanel menuPanel;
     private ViewSongsPanel viewSongsPanel;
     private AnalysisPanel analysisPanel;
@@ -99,6 +102,7 @@ public class MainWindow extends Window {
     private ActionListener openFileListener;
     private ActionListener viewSongsListener;
     private ActionListener showDataListener;
+    private ActionListener showSimilarSongsListener;
     private ActionListener favoriteButtonListener;
     private ActionListener unfavoriteButtonListener;
     private ActionListener changePitchListener;
@@ -107,7 +111,9 @@ public class MainWindow extends Window {
     private ActionListener cutFileListener;
     private ActionListener cutDoneListener;
     private ActionListener viewSpecListener;
+    private ActionListener viewChromaListener;
     private ActionListener showSpecListener;
+    private ActionListener showChromaListener;
     private ActionListener analyzeSongListener;
     private ActionListener loadSongListener;
     private ActionListener editSongListener;
@@ -150,13 +156,12 @@ public class MainWindow extends Window {
     }
 
     public void run() {
-        cardLayout.show(mainPanel, MENU_PANEL);
-        System.out.println(currentSongModel.getId());
+        changePanel(MENU_PANEL);
         if (currentSongModel.isEmpty()) {
             optionPanel.showOptions(false);
             menuPanel.hideImage(true);
+            mediaControlPanel.setVisible(false);
         }
-        // pack();
         setMinimumSize(WIN_MIN_SIZE);
         setSize(WIN_MIN_SIZE);
         setLocationRelativeTo(null);
@@ -213,15 +218,18 @@ public class MainWindow extends Window {
     }
 
     private void addPanels() {
-        mainPanel.add(menuPanel, MENU_PANEL);
-        mainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
-        mainPanel.add(dataPanel, DATA_PANEL);
-        mainPanel.add(analysisPanel, ANALYSIS_PANEL);
-        mainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL);
-        mainPanel.add(cutSongPanel, CUT_SONG_PANEL);
         add(mainPanel, BorderLayout.CENTER);
+        mainPanel.setPreferredSize(mainPanel.getSize());
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
+        mainPanel.add(innerMainPanel, BorderLayout.CENTER);
+        mainPanel.add(mediaControlPanel, BorderLayout.SOUTH);
+        innerMainPanel.add(menuPanel, MENU_PANEL);
+        innerMainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
+        innerMainPanel.add(dataPanel, DATA_PANEL);
+        innerMainPanel.add(analysisPanel, ANALYSIS_PANEL);
+        innerMainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL);
+        innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL);
     }
 
     private void refreshCache() {
@@ -310,15 +318,19 @@ public class MainWindow extends Window {
                     changePitchPanel.setFreq(currentSongModel.getFreq());
                     try {
                         plot = ImageIO.read(ImageLoader.getPlotImageURL());
-                        menuPanel.setCurrentSong(currentSongModel.getTotalSamples(), currentSongModel.getFreq(), plot, cover,
-                                isNormal, getExtendedState() == MAXIMIZED_BOTH);
+                        menuPanel.setCurrentSong(currentSongModel.getTotalSamples(),
+                                currentSongModel.getFreq(),
+                                plot, cover, isNormal, getExtendedState() == MAXIMIZED_BOTH);
+                        optionPanel.showOptions(true);
+                        changePanel(MENU_PANEL);
                     } catch (IOException ignored) { }
-                    optionPanel.showOptions(true);
-                    cardLayout.show(mainPanel, MENU_PANEL);
                 });
             } catch (MatlabEngineException mee) {
                 showDialog(mee.getMessage());
-            } finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
                 setCursor(Cursor.getDefaultCursor());
                 glassPane.setVisible(false);
             }
@@ -472,10 +484,14 @@ public class MainWindow extends Window {
     }
 
     private void initializePanels() {
-        mainPanel = new JPanel(cardLayout);
-        mainPanel.setVisible(true);
+        mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.BLACK);
+        innerMainPanel = new JPanel(cardLayout);
+        innerMainPanel.setVisible(true);
+        mediaControlPanel = new InverseHorizontalBar(new FlowLayout(FlowLayout.CENTER));
+        mediaControlPanel.setHeight(MEDIA_CONTROL_PANEL_HEIGHT);
 
-        menuPanel = new MenuPanel(matlabHandler, glassPane, favoriteButtonListener, unfavoriteButtonListener);
+        menuPanel = new MenuPanel(matlabHandler, mediaControlPanel, favoriteButtonListener, unfavoriteButtonListener);
         viewSongsPanel = new ViewSongsPanel(viewSongTableModel, loadSongListener, addSongsListener, editSongListener,
                 deleteSongListener, backToMenuListener);
 
@@ -491,7 +507,7 @@ public class MainWindow extends Window {
         cutSongPanel = new CutSongPanel(cutDoneListener, backToMenuListener);
 
         optionPanel = new OptionPanel(backToMenuListener, openFileListener, viewSongsListener, showDataListener,
-                changePitchListener, cutFileListener, viewSpecListener, analyzeSongListener);
+                changePitchListener, cutFileListener, viewSpecListener, viewChromaListener, analyzeSongListener);
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
@@ -508,10 +524,18 @@ public class MainWindow extends Window {
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
     }
 
+    private void changePanel(String name) {
+        cardLayout.show(innerMainPanel, name);
+        if (name.equals(MENU_PANEL) && !currentSongModel.isEmpty())
+            mediaControlPanel.setVisible(true);
+        else
+            mediaControlPanel.setVisible(false);
+    }
+
     private void initializeListeners() {
         emptyMouseListener = new EmptyMouseListener();
 
-        backToMenuListener = ae -> cardLayout.show(mainPanel, MENU_PANEL);
+        backToMenuListener = ae -> changePanel(MENU_PANEL);
 
         openFileListener = ae -> {
             File f = openFile();
@@ -525,14 +549,14 @@ public class MainWindow extends Window {
         viewSongsListener = ae -> {
             if (!currentSongModel.isEmpty())
                 menuPanel.pauseSong();
-            cardLayout.show(mainPanel, VIEW_SONGS_PANEL);
+            changePanel(VIEW_SONGS_PANEL);
         };
 
         showDataListener = ae -> {
             refreshCache();
             if (!currentSongModel.isEmpty())
                 menuPanel.pauseSong();
-            cardLayout.show(mainPanel, DATA_PANEL);
+            changePanel(DATA_PANEL);
         };
 
         favoriteButtonListener = ae -> {
@@ -580,7 +604,7 @@ public class MainWindow extends Window {
                 menuPanel.pauseSong();
             cutSongPanel.setCurrentSong(currentSongModel.getTotalSamples(), currentSongModel.getFreq(),
                     plot, getExtendedState() == MAXIMIZED_BOTH);
-            cardLayout.show(mainPanel, CUT_SONG_PANEL);
+            changePanel(CUT_SONG_PANEL);
         };
 
         cutDoneListener = ae -> cutSong();
@@ -588,7 +612,7 @@ public class MainWindow extends Window {
         viewSpecListener = ae -> {
             if (!currentSongModel.isEmpty())
                 menuPanel.pauseSong();
-            cardLayout.show(mainPanel, SPECTROGRAM_PANEL);
+            changePanel(SPECTROGRAM_PANEL);
         };
 
         showSpecListener = ae -> showSpec();
@@ -596,7 +620,7 @@ public class MainWindow extends Window {
         analyzeSongListener = ae -> {
             if (!currentSongModel.isEmpty())
                 menuPanel.pauseSong();
-            cardLayout.show(mainPanel, ANALYSIS_PANEL);
+            changePanel(ANALYSIS_PANEL);
             // TODO
         };
 

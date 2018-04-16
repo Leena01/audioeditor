@@ -8,6 +8,11 @@ import java.awt.event.MouseMotionListener;
 import static common.util.Helper.fillColor;
 
 public class HorizontalBar extends JPanel {
+    public HorizontalBar() {
+        super(new BorderLayout());
+        setOpaque(false);
+    }
+
     public HorizontalBar(MouseListener ml, MouseMotionListener mml) {
         super(new BorderLayout());
         addMouseListener(ml);
@@ -15,8 +20,8 @@ public class HorizontalBar extends JPanel {
         setOpaque(false);
     }
 
-    public HorizontalBar() {
-        super(new BorderLayout());
+    public HorizontalBar(FlowLayout fl) {
+        super(fl);
         setOpaque(false);
     }
 
@@ -24,6 +29,7 @@ public class HorizontalBar extends JPanel {
         int w = this.getWidth();
         setPreferredSize(new Dimension(w, h));
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -1,4 +1,5 @@
-function relocateSong(player, start, empty, isplaying)
+function relocateSong(player, start, empty)
+	running = strcmp(get(player, 'Running'), 'on');
     stop(player);
 	if (empty == 1)
 		play(player);
@@ -6,7 +7,7 @@ function relocateSong(player, start, empty, isplaying)
 		play(player, start);
 	end
 	
-	if (isplaying == 0)
+	if (~running)
 		pause(player);
 	end
 end

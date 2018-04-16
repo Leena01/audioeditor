@@ -42,6 +42,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="basicplayer3.0" level="project" />
+    <orderEntry type="library" exported="" name="basicplayer3.0" level="project" />
+    <orderEntry type="library" name="basicplayer" level="project" />
   </component>
 </module>

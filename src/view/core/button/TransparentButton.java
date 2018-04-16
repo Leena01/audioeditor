@@ -11,21 +11,9 @@ public class TransparentButton extends JButton implements MouseListener {
     private static final Color HOVER_COLOR = Color.WHITE;
     private static final Color PRESSED_COLOR = Color.GRAY;
 
-    public TransparentButton() {
-        super();
-        setAttributes();
-        addMouseListener();
-    }
-
     public TransparentButton(String text, ActionListener al) {
         super(text);
         addActionListener(al);
-        setAttributes();
-        addMouseListener();
-    }
-
-    public TransparentButton(Icon image) {
-        super(image);
         setAttributes();
         addMouseListener();
     }
@@ -44,15 +32,6 @@ public class TransparentButton extends JButton implements MouseListener {
         setAttributes();
         addMouseListener();
     }
-
-    public TransparentButton(Icon image, Icon rollOverImage, Dimension d) {
-        super(image);
-        setRolloverIcon(rollOverImage);
-        setPreferredSize(d);
-        setAttributes();
-        addMouseListener();
-    }
-
 
     public void mouseClicked(MouseEvent e) {
         setForeground(PRESSED_COLOR);

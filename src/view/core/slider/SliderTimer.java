@@ -1,9 +1,14 @@
 package view.core.slider;
 
+import logic.matlab.MatlabHandler;
+
 import static common.util.Helper.formatDuration;
 import static common.util.Helper.framesToMillis;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.Timer;
 
@@ -13,47 +18,68 @@ public class SliderTimer extends Observable {
 
     private Timer timer;
     private JSlider slider;
+    private MatlabHandler matlabHandler;
     private JLabel timeField;
     private JLabel totalLengthField;
     private boolean isDaemon;
-    private long refreshMillis;
+    private int refreshMillis;
     private double freq;
-    private long timeElapsed;
-    private long totalLength;
+    private int totalLength;
 
-    public SliderTimer(JSlider slider, JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
+    public SliderTimer(JSlider slider, MatlabHandler matlabHandler, JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
         this.timer = null;
         this.slider = slider;
+        this.matlabHandler = matlabHandler;
         this.timeField = timeField;
         this.totalLengthField = totalLengthField;
         this.isDaemon = isDaemon;
         this.refreshMillis = 0;
         this.freq = 0.0;
-        this.timeElapsed = 0;
         this.totalLength = 0;
         MAX = 0;
+        slider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point p = e.getPoint();
+                double percent = p.x / ((double) slider.getWidth());
+                int range = slider.getMaximum() - slider.getMinimum();
+                double newVal = range * percent;
+                int frame = (int)(slider.getMinimum() + newVal);
+                slider.setValue(frame);
+                new Thread(() -> {
+                    changeTime(frame);
+                    matlabHandler.relocateSong(frame);
+                }).start();
+            }
+        });
     }
 
-    public void schedule(long refreshMillis, double totalSamples, double freq) {
+    public void schedule(int refreshMillis, double totalSamples, double freq) {
         this.refreshMillis = refreshMillis;
         MAX = (int)totalSamples;
         this.freq = freq;
-        this.totalLength = (long)((MAX / freq) * 1000);
+        this.totalLength = (int)((MAX / freq) * 1000);
         this.totalLengthField.setText(formatDuration(totalLength));
         this.slider.setMinimum(MIN);
         this.slider.setMaximum(MAX);
+        timeField.setText(formatDuration(framesToMillis(MIN, freq)));
     }
 
     public void resumeTimer() {
         if (refreshMillis != 0) {
-            System.out.println(refreshMillis);
             timer = new Timer(isDaemon);
             timer.scheduleAtFixedRate(new TimerTask(){
                 @Override
                 public void run() {
-                    autoMove();
+                    if (matlabHandler.isPlaying())
+                        autoMove();
+                    else {
+                        setChanged();
+                        notifyObservers();
+                        stopTimer();
+                    }
                 }
-            }, timeElapsed % refreshMillis, refreshMillis);
+            }, refreshMillis, refreshMillis);
         }
     }
 
@@ -67,38 +93,24 @@ public class SliderTimer extends Observable {
             timer.cancel();
         }
         if (slider != null) {
-            setTime(MIN);
+            setCurrentTime(MIN);
         }
     }
 
     private void autoMove() {
         if (slider != null && !slider.getValueIsAdjusting()) {
-            long next = timeElapsed + refreshMillis;
-            System.out.println(next);
-            System.out.println(formatDuration(next));
-            if (next < totalLength) {
-                setTime(next);
-            }
-            else {
-                setTime(MAX);
-                stopTimer();
-                setChanged();
-                notifyObservers();
-            }
+            setCurrentTime((int)matlabHandler.getCurrentFrame());
         }
     }
 
     public void changeTime(int frame) {
-        if (slider != null && !slider.getValueIsAdjusting()) {
-            timeElapsed = framesToMillis(frame, freq);
-            timeField.setText(formatDuration(timeElapsed));
-            System.out.println(frame);
-        }
+        System.out.println("WWoooooo");
+        if (slider != null)
+            timeField.setText(formatDuration(framesToMillis(frame, freq)));
     }
 
-    private void setTime(long timeElapsed) {
-        this.timeElapsed = timeElapsed;
-        timeField.setText(formatDuration(timeElapsed));
-        slider.setValue((int)((timeElapsed / 1000.0) * freq));
+    private void setCurrentTime(int currentFrame) {
+        timeField.setText(formatDuration(framesToMillis(currentFrame, freq)));
+        slider.setValue(currentFrame);
     }
 }

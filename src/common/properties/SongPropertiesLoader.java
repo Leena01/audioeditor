@@ -27,6 +27,9 @@ public final class SongPropertiesLoader {
     private static int genreMax;
     private static int frequencyMin;
     private static int frequencyMax;
+    private static int songRefreshMillis;
+    private static float volumeConversionRate;
+    private static int secondsToSkip;
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
@@ -55,6 +58,9 @@ public final class SongPropertiesLoader {
         genreMax = Integer.parseInt(properties.getProperty("genre.max"));
         frequencyMin = Integer.parseInt(properties.getProperty("frequency.min"));
         frequencyMax = Integer.parseInt(properties.getProperty("frequency.max"));
+        songRefreshMillis = Integer.parseInt(properties.getProperty("song.refresh.millis"));
+        volumeConversionRate = Float.parseFloat(properties.getProperty("volume.conversion.rate"));
+        secondsToSkip = Integer.parseInt(properties.getProperty("seconds.to.skip"));
     }
 
     public static int getDefaultSongId() {
@@ -131,6 +137,18 @@ public final class SongPropertiesLoader {
 
     public static int getFrequencyMax() {
         return frequencyMax;
+    }
+
+    public static int getSongRefreshMillis() {
+        return songRefreshMillis;
+    }
+
+    public static float getVolumeConversionRate() {
+        return volumeConversionRate;
+    }
+
+    public static int getSecondsToSkip() {
+        return secondsToSkip;
     }
 
     public static void close() throws IOException {

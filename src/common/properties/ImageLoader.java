@@ -15,13 +15,10 @@ public final class ImageLoader {
     private static URL chromImageURL;
     private static URL coverURL;
     private static URL playIconURL;
-    private static URL playHoverIconURL;
     private static URL pauseIconURL;
-    private static URL pauseHoverIconURL;
     private static URL stopIconURL;
-    private static URL stopHoverIconURL;
     private static URL backwardIconURL;
-    private static URL backwardHoverIconURL;
+    private static URL forwardIconURL;
     private static URL favoriteIconURL;
     private static URL unfavoriteIconURL;
     private static URL minimizeIconURL;
@@ -45,13 +42,10 @@ public final class ImageLoader {
         chromImageURL = ImageLoader.class.getResource(properties.getProperty("chrom.image.name"));
         coverURL = ImageLoader.class.getResource(properties.getProperty("cover.name"));
         playIconURL = ImageLoader.class.getResource(properties.getProperty("play.icon.name"));
-        playHoverIconURL = ImageLoader.class.getResource(properties.getProperty("play.icon.hover.name"));
         pauseIconURL = ImageLoader.class.getResource(properties.getProperty("pause.icon.name"));
-        pauseHoverIconURL = ImageLoader.class.getResource(properties.getProperty("pause.icon.hover.name"));
         stopIconURL = ImageLoader.class.getResource(properties.getProperty("stop.icon.name"));
-        stopHoverIconURL = ImageLoader.class.getResource(properties.getProperty("stop.icon.hover.name"));
         backwardIconURL = ImageLoader.class.getResource(properties.getProperty("backward.icon.name"));
-        backwardHoverIconURL = ImageLoader.class.getResource(properties.getProperty("backward.icon.hover.name"));
+        forwardIconURL = ImageLoader.class.getResource(properties.getProperty("forward.icon.name"));
         favoriteIconURL = ImageLoader.class.getResource(properties.getProperty("favorite.icon.name"));
         unfavoriteIconURL = ImageLoader.class.getResource(properties.getProperty("unfavorite.icon.name"));
         minimizeIconURL = ImageLoader.class.getResource(properties.getProperty("minimize.icon.name"));
@@ -86,32 +80,20 @@ public final class ImageLoader {
         return playIconURL;
     }
 
-    public static URL getPlayHoverIconURL() {
-        return playHoverIconURL;
-    }
-
     public static URL getPauseIconURL() {
         return pauseIconURL;
-    }
-
-    public static URL getPauseHoverIconURL() {
-        return pauseHoverIconURL;
     }
 
     public static URL getStopIconURL() {
         return stopIconURL;
     }
 
-    public static URL getStopHoverIconURL() {
-        return stopHoverIconURL;
-    }
-
     public static URL getBackwardIconURL() {
         return backwardIconURL;
     }
 
-    public static URL getBackwardHoverIconURL() {
-        return backwardHoverIconURL;
+    public static URL getForwardIconURL() {
+        return forwardIconURL;
     }
 
     public static URL getFavoriteIconURL() {
