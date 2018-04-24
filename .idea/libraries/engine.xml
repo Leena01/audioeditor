@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="engine">
-    <CLASSES>
-      <root url="jar://C:/Program Files/MATLAB/R2017a/extern/engines/java/jar/engine.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

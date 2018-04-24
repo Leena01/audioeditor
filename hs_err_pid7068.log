@@ -85,8 +85,8 @@ Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  org.sqlite.core.NativeDB.column_int(JI)I+0
 j  org.sqlite.jdbc3.JDBC3ResultSet.getInt(I)I+16
 j  org.sqlite.jdbc3.JDBC3ResultSet.getInt(Ljava/lang/String;)I+6
-J 2629 C1 database.DatabaseDaoImpl.getSongs()Ljava/util/List; (156 bytes) @ 0x0000000005a86c04 [0x0000000005a867e0+0x424]
-J 2678 C1 database.Cache$1.run()V (8 bytes) @ 0x00000000056336dc [0x0000000005633540+0x19c]
+J 2629 C1 org.ql.audioeditor.org.ql.audioeditor.database.DatabaseDaoImpl.getSongs()Ljava/util/List; (156 bytes) @ 0x0000000005a86c04 [0x0000000005a867e0+0x424]
+J 2678 C1 org.ql.audioeditor.org.ql.audioeditor.database.Cache$1.run()V (8 bytes) @ 0x00000000056336dc [0x0000000005633540+0x19c]
 j  java.util.TimerThread.mainLoop()V+221
 j  java.util.TimerThread.run()V+1
 v  ~StubRoutines::call_stub
@@ -316,7 +316,7 @@ Dynamic libraries:
 0x00007ffbb8920000 - 0x00007ffbb8ab3000 	C:\WINDOWS\System32\gdi32full.dll
 0x00007ffbb8030000 - 0x00007ffbb80cb000 	C:\WINDOWS\System32\msvcp_win.dll
 0x00007ffbb8820000 - 0x00007ffbb8916000 	C:\WINDOWS\System32\ucrtbase.dll
-0x00007ffbae300000 - 0x00007ffbae569000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.16299.125_none_15cbcf8893620c09\COMCTL32.dll
+0x00007ffbae300000 - 0x00007ffbae569000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.org.ql.audioeditor.org.ql.audioeditor.common-controls_6595b64144ccf1df_6.0.16299.125_none_15cbcf8893620c09\COMCTL32.dll
 0x00007ffbb9a70000 - 0x00007ffbb9d78000 	C:\WINDOWS\System32\combase.dll
 0x00007ffbb7a40000 - 0x00007ffbb7ab2000 	C:\WINDOWS\System32\bcryptPrimitives.dll
 0x00007ffbb9330000 - 0x00007ffbb935d000 	C:\WINDOWS\System32\IMM32.DLL
@@ -433,7 +433,7 @@ Dynamic libraries:
 
 VM Arguments:
 jvm_args: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.3\lib\idea_rt.jar=58373:C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.3\bin -Dfile.encoding=UTF-8 
-java_command: AudioEditor
+java_command: org.ql.audioeditor.AudioEditor
 java_class_path (initial): C:\Program Files\Java\jdk1.8.0_144\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\rt.jar;C:\Users\livix\Desktop\audioeditor\out\production\audioeditor;C:\Users\livix\Desktop\szakdolgozat\matlabcontrol-4.1.0.jar;C:\Users\livix\Desktop\szakdolgozat\mysql-connector-java-3.1.6-bin.jar;C:\Program Files\MATLAB\R2017a\extern\engines\java\jar\engine.jar;C:\Users\livix\Desktop\audioeditor\lib\sqlite-jdbc-3.16.1.jar;C:\Users\livix\Desktop\audioeditor\lib\JTattoo-1.6.11.jar;C:\Users\livix\Desktop\audioeditor\lib\mp3agic-0.9.2-SNAPSHOT.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.3\redist\annotations-java8.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.3\lib\idea_rt.jar
 Launcher Type: SUN_STANDARD
 
