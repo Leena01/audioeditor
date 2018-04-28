@@ -1,29 +1,42 @@
 package org.ql.audioeditor.view.panel;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
-import static org.ql.audioeditor.view.param.Constants.*;
-import static javax.swing.BoxLayout.PAGE_AXIS;
-
 import org.ql.audioeditor.common.properties.ImageLoader;
+import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.label.Label;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+
+import static javax.swing.BoxLayout.PAGE_AXIS;
+import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
+import static org.ql.audioeditor.view.param.Constants.COVER_SIZE;
+import static org.ql.audioeditor.view.param.Constants.COVER_SIZE_MAX;
 
 /**
  * Main menu
  */
 
 public final class MenuPanel extends BasicPanel {
-    private static final String NO_MEDIA_LABEL = "No media found. Please choose a file.";
-    private static final String INFO_LABEL = "Welcome! Please select a song and choose from the options on the left.";
-    private static final ImageIcon COVER_IMAGE = resizeImageIcon(new ImageIcon(ImageLoader.getCoverURL()), COVER_SIZE);
-    private static final ImageIcon COVER_IMAGE_MAX = resizeImageIcon(new ImageIcon(ImageLoader.getCoverURL()), COVER_SIZE_MAX);
+    private static final String NO_MEDIA_LABEL =
+        "No media found. Please choose a file.";
+    private static final String INFO_LABEL = "Welcome! Please select a song " +
+        "and choose from the options on the left.";
+    private static final ImageIcon COVER_IMAGE =
+        resizeImageIcon(new ImageIcon(ImageLoader.getCoverURL()), COVER_SIZE);
+    private static final ImageIcon COVER_IMAGE_MAX =
+        resizeImageIcon(new ImageIcon(ImageLoader.getCoverURL()),
+            COVER_SIZE_MAX);
+    private static final Border INFO_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(0, 0, 15, 0);
+    private static final Border BODY_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(15, 30, 30, 30);
+    private static final Border PLAYER_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(15, 15, 15, 15);
 
     private JLabel infoLabel;
     private PlayerPanel playerPanel;
@@ -36,7 +49,9 @@ public final class MenuPanel extends BasicPanel {
     private ImageIcon coverIcon;
     private ImageIcon coverIconMax;
 
-    public MenuPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel, ActionListener fb, ActionListener ufb) {
+    public MenuPanel(MatlabHandler matlabHandler, HorizontalBar
+        mediaControlPanel, InputMap inputMap, ActionMap
+        actionMap, ActionListener fb, ActionListener ufb) {
         super();
         infoLabel = new Label(INFO_LABEL);
         infoPanel = new JPanel();
@@ -45,7 +60,9 @@ public final class MenuPanel extends BasicPanel {
         coverIconMax = COVER_IMAGE_MAX;
         imageLabel = new JLabel(coverIcon);
         imagePanel = new JPanel();
-        playerPanel = new PlayerPanel(matlabHandler, mediaControlPanel, fb, ufb);
+        playerPanel =
+            new PlayerPanel(matlabHandler, mediaControlPanel, inputMap,
+                actionMap, fb, ufb);
         noMediaFoundLabel = new Label(NO_MEDIA_LABEL);
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
@@ -55,8 +72,9 @@ public final class MenuPanel extends BasicPanel {
         init();
     }
 
-    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, Image cover,
-               boolean isNormal, boolean isMaximized) {
+    public void setCurrentSong(double totalSamples, double freq,
+        BufferedImage plot, Image cover,
+        boolean isNormal, boolean isMaximized) {
         infoPanel.setVisible(false);
         coverIcon.getImage().flush();
         coverIconMax.getImage().flush();
@@ -106,15 +124,15 @@ public final class MenuPanel extends BasicPanel {
         playerPanel.setOpaque(false);
         bodyPanel.setOpaque(false);
         mainPanel.setOpaque(false);
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        bodyPanel.setBorder(BorderFactory.createEmptyBorder(15, 30, 30, 30));
-        playerPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        infoPanel.setBorder(INFO_PANEL_BORDER);
+        bodyPanel.setBorder(BODY_PANEL_BORDER);
+        playerPanel.setBorder(PLAYER_PANEL_BORDER);
     }
 
     @Override
     protected void addPanels() {
         infoPanel.add(infoLabel);
-        infoPanel.add(Box.createRigidArea(new Dimension(0,30)));
+        infoPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         infoPanel.add(noMediaFoundLabel);
         imagePanel.add(imageLabel);
         mainPanel.add(infoPanel);

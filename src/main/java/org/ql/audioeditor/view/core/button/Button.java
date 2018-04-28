@@ -1,6 +1,6 @@
 package org.ql.audioeditor.view.core.button;
 
-import javax.swing.*;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
 public class Button extends JButton {

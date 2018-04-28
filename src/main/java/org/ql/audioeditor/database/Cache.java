@@ -1,6 +1,10 @@
 package org.ql.audioeditor.database;
-import org.ql.audioeditor.database.entities.*;
-import java.util.*;
+
+import org.ql.audioeditor.database.entities.Song;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Cache for refreshing data
@@ -13,6 +17,7 @@ public class Cache implements DatabaseDao {
 
     /**
      * Constructor
+     *
      * @param database DatabaseDao class
      */
     public Cache(DatabaseDao database, int millis) {
@@ -77,8 +82,8 @@ public class Cache implements DatabaseDao {
     }
 
     /**
-     * Set refresh interval
-     * Default: 5 mins
+     * Set refresh interval Default: 5 mins
+     *
      * @param millis to be set
      */
     private void setRefreshInterval(int millis) {
@@ -93,7 +98,7 @@ public class Cache implements DatabaseDao {
         if (timer != null)
             timer.cancel();
         timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TimerTask(){
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 refreshCache();

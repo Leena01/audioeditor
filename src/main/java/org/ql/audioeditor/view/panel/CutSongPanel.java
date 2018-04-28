@@ -1,17 +1,13 @@
 package org.ql.audioeditor.view.panel;
 
-import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToMillis;
-import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
-import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
-
+import org.ql.audioeditor.view.core.button.Button;
+import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.slider.RangeSlider;
-import org.ql.audioeditor.view.core.label.Label;
-import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.textfield.TextField;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -19,11 +15,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public final class CutSongPanel extends BasicPanel implements ChangeListener, ActionListener {
-    private static final int MIN = 1;
-    private static int MAX;
-    private static final Dimension FIELD_SIZE = new Dimension(120, 20);
+import static org.ql.audioeditor.common.util.Helper.formatDuration;
+import static org.ql.audioeditor.common.util.Helper.framesToMillis;
+import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
+import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
+public final class CutSongPanel extends BasicPanel
+    implements ChangeListener, ActionListener {
+    private static final int MIN = 1;
+    private static final Dimension FIELD_SIZE = new Dimension(120, 20);
+    private static final Border RANGE_SLIDER_BORDER =
+        BorderFactory.createEmptyBorder(10, 0, 15, 0);
+    private static final Border SECONDS_LABEL_BORDER =
+        BorderFactory.createEmptyBorder(0, 6, 0, 6);
+    private static final Border FROM_SEC_VALUE_BORDER =
+        BorderFactory.createEmptyBorder(0, 6, 0, 6);
+    private static final Border TO_SEC_VALUE_BORDER =
+        BorderFactory.createEmptyBorder(0, 6, 0, 6);
+    private static final Border BUTTON_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(10, 0, 0, 0);
+    private static int MAX;
     private RangeSlider rangeSlider;
     private JLabel cutLabel;
     private JLabel framesLabel;
@@ -64,8 +75,9 @@ public final class CutSongPanel extends BasicPanel implements ChangeListener, Ac
         addPanels();
     }
 
-    public void setCurrentSong(double totalSamples, double freq, BufferedImage plot, boolean isMaximized) {
-        MAX = (int)totalSamples;
+    public void setCurrentSong(double totalSamples, double freq,
+        BufferedImage plot, boolean isMaximized) {
+        MAX = (int) totalSamples;
         rangeSlider.setMinimum(MIN);
         rangeSlider.setMaximum(MAX);
         setDefaultValues();
@@ -99,7 +111,8 @@ public final class CutSongPanel extends BasicPanel implements ChangeListener, Ac
                 if (value >= MIN && value <= MAX) {
                     rangeSlider.setValue(value);
                     int newValue = Integer.parseInt(fromValue.getText());
-                    fromSecValue.setText(formatDuration(framesToMillis(newValue, freq)));
+                    fromSecValue.setText(
+                        formatDuration(framesToMillis(newValue, freq)));
                 }
                 else {
                     int oldValue = rangeSlider.getValue();
@@ -113,7 +126,8 @@ public final class CutSongPanel extends BasicPanel implements ChangeListener, Ac
                 if (upperValue >= MIN && upperValue <= MAX) {
                     rangeSlider.setUpperValue(upperValue);
                     int newUpperValue = Integer.parseInt(toValue.getText());
-                    toSecValue.setText(formatDuration(framesToMillis(newUpperValue, freq)));
+                    toSecValue.setText(
+                        formatDuration(framesToMillis(newUpperValue, freq)));
                 }
                 else {
                     int oldUpperValue = rangeSlider.getUpperValue();
@@ -159,10 +173,11 @@ public final class CutSongPanel extends BasicPanel implements ChangeListener, Ac
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
-        rangeSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 15, 0));
-        secondsLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-        fromSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-        toSecValue.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        rangeSlider.setBorder(RANGE_SLIDER_BORDER);
+        secondsLabel.setBorder(SECONDS_LABEL_BORDER);
+        fromSecValue.setBorder(FROM_SEC_VALUE_BORDER);
+        toSecValue.setBorder(TO_SEC_VALUE_BORDER);
+        buttonPanel.setBorder(BUTTON_PANEL_BORDER);
         formPanel.setOpaque(false);
         mainPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
@@ -184,7 +199,6 @@ public final class CutSongPanel extends BasicPanel implements ChangeListener, Ac
         buttonPanel.add(setButton);
         buttonPanel.add(doneButton);
         buttonPanel.add(backOptionButton);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel);
     }

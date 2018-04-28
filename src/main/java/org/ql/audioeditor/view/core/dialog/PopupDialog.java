@@ -1,7 +1,8 @@
 package org.ql.audioeditor.view.core.dialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import java.awt.Frame;
 
 public class PopupDialog extends JDialog {
     public PopupDialog(Frame owner, String title, JPanel panel) {

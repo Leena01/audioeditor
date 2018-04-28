@@ -1,6 +1,9 @@
 package org.ql.audioeditor.common.util;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import java.awt.*;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -18,9 +21,11 @@ public final class Helper {
         t.start();
     }
 
-    public static void fillColor(Graphics g, Color color1, Color color2, int w, int h) {
+    public static void fillColor(Graphics g, Color color1, Color color2, int w,
+        int h) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+            RenderingHints.VALUE_RENDER_QUALITY);
         GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
@@ -29,29 +34,32 @@ public final class Helper {
     public static String formatDuration(long duration) {
         long absSeconds = Math.abs(duration / 1000);
         String positive = String.format(
-                "%d:%02d:%02d",
-                absSeconds / 3600,
-                (absSeconds % 3600) / 60,
-                absSeconds % 60);
+            "%d:%02d:%02d",
+            absSeconds / 3600,
+            (absSeconds % 3600) / 60,
+            absSeconds % 60);
         return duration < 0 ? "-" + positive : positive;
     }
 
     public static int framesToMillis(double frame, double freq) {
-        return (int)(frame / freq) * 1000;
+        return (int) (frame / freq) * 1000;
     }
 
     public static int secondsToFrames(int seconds, double freq) {
-        return (int)(seconds * freq);
+        return (int) (seconds * freq);
     }
 
     public static ImageIcon resizeImageIcon(ImageIcon ii, Dimension d) {
-        Image img = ii.getImage() ;
-        Image newimg = img.getScaledInstance((int)d.getWidth(), (int)d.getHeight(), java.awt.Image.SCALE_SMOOTH) ;
+        Image img = ii.getImage();
+        Image newimg =
+            img.getScaledInstance((int) d.getWidth(), (int) d.getHeight(),
+                java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
 
     public static Image resizeImage(Image ii, Dimension d) {
-        return ii.getScaledInstance((int)d.getWidth(), (int)d.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        return ii.getScaledInstance((int) d.getWidth(), (int) d.getHeight(),
+            java.awt.Image.SCALE_SMOOTH);
     }
 
     public static String getFileExtension(File file) {
@@ -76,7 +84,7 @@ public final class Helper {
         File f;
         try {
             f = new File(url.toURI());
-        } catch(URISyntaxException e) {
+        } catch (URISyntaxException e) {
             f = new File(url.getPath());
         }
         return f.getAbsolutePath();

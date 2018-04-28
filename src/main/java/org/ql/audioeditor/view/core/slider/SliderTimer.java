@@ -7,7 +7,6 @@ import static org.ql.audioeditor.common.util.Helper.framesToMillis;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -50,10 +49,6 @@ public class SliderTimer extends Observable {
                 new Thread(() -> matlabHandler.relocateSong(frame)).start();
             }
         });
-    }
-
-    public void setKeyListener(KeyListener keyListener) {
-        slider.addKeyListener(keyListener);
     }
 
     public void schedule(int refreshMillis, double totalSamples, double freq) {

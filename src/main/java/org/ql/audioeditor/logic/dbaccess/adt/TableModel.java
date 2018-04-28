@@ -1,15 +1,15 @@
 package org.ql.audioeditor.logic.dbaccess.adt;
 
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * General Table Model
  */
 public abstract class TableModel<E> extends AbstractTableModel {
-    protected List<E> entries = new ArrayList<>();
     final protected List<String> columnNames = new ArrayList<>();
+    protected List<E> entries = new ArrayList<>();
 
     @Override
     public String getColumnName(int column) {
@@ -39,6 +39,7 @@ public abstract class TableModel<E> extends AbstractTableModel {
 
     /**
      * Return the item selected
+     *
      * @param rowIndex Index of row selected
      * @return the item selected
      */
@@ -48,6 +49,7 @@ public abstract class TableModel<E> extends AbstractTableModel {
 
     /**
      * Add items to list
+     *
      * @param listModel List model
      */
     public void addAll(ListModel<E> listModel) {

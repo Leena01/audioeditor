@@ -2,9 +2,10 @@ package org.ql.audioeditor.logic.dbaccess.listmodel;
 
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.Mp3File;
+import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.database.entities.Song;
 import org.ql.audioeditor.logic.dbaccess.adt.ListModel;
-import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+
 import java.io.File;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SongListModel extends ListModel<Song> {
 
     public SongListModel(List<File> files) {
         super();
-        for (File f: files) {
+        for (File f : files) {
             String path = f.getPath();
             String title = f.getName();
             String track = SongPropertiesLoader.getDefaultTrack();
@@ -35,11 +36,15 @@ public class SongListModel extends ListModel<Song> {
                     artist = id3v1Tag.getArtist();
                     album = id3v1Tag.getAlbum();
                     year = id3v1Tag.getYear();
-                    genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
+                    genre = id3v1Tag.getGenre() + " (" +
+                        id3v1Tag.getGenreDescription() + ")";
                     comment = id3v1Tag.getComment();
                 }
-            } catch (Exception ignored) { }
-            items.add(new Song(title, track, artist, album, year, genre, comment, path));
+            } catch (Exception ignored) {
+            }
+            items.add(
+                new Song(title, track, artist, album, year, genre, comment,
+                    path));
         }
     }
 }

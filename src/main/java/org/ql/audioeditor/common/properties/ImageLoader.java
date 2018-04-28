@@ -32,52 +32,53 @@ public final class ImageLoader {
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
-        inputStream = ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
+        inputStream =
+            ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null)
             properties.load(inputStream);
         else
             throw new FileNotFoundException();
 
         plotImageURL = ImageLoader.class.getResource(
-                properties.getProperty("plot.image.name"));
+            properties.getProperty("plot.image.name"));
         specImageURL = ImageLoader.class.getResource(
-                properties.getProperty("spec.image.name"));
+            properties.getProperty("spec.image.name"));
         spec3dImageURL = ImageLoader.class.getResource(
-                properties.getProperty("spec.3d.image.name"));
+            properties.getProperty("spec.3d.image.name"));
         chromImageURL = ImageLoader.class.getResource(
-                properties.getProperty("chrom.image.name"));
+            properties.getProperty("chrom.image.name"));
         coverURL = ImageLoader.class.getResource(
-                properties.getProperty("cover.name"));
+            properties.getProperty("cover.name"));
         playIconURL = ImageLoader.class.getResource(
-                properties.getProperty("play.icon.name"));
+            properties.getProperty("play.icon.name"));
         pauseIconURL = ImageLoader.class.getResource(
-                properties.getProperty("pause.icon.name"));
+            properties.getProperty("pause.icon.name"));
         stopIconURL = ImageLoader.class.getResource(
-                properties.getProperty("stop.icon.name"));
+            properties.getProperty("stop.icon.name"));
         backwardIconURL = ImageLoader.class.getResource(
-                properties.getProperty("backward.icon.name"));
+            properties.getProperty("backward.icon.name"));
         forwardIconURL = ImageLoader.class.getResource(
-                properties.getProperty("forward.icon.name"));
+            properties.getProperty("forward.icon.name"));
         favoriteIconURL = ImageLoader.class.getResource(
-                properties.getProperty("favorite.icon.name"));
+            properties.getProperty("favorite.icon.name"));
         unfavoriteIconURL = ImageLoader.class.getResource(
-                properties.getProperty("unfavorite.icon.name"));
+            properties.getProperty("unfavorite.icon.name"));
         soundOnIconURL = ImageLoader.class.getResource(
-                properties.getProperty("sound.on.icon.name"));
+            properties.getProperty("sound.on.icon.name"));
         soundOffIconURL = ImageLoader.class.getResource(
-                properties.getProperty("sound.off.icon.name"));
+            properties.getProperty("sound.off.icon.name"));
         minimizeIconURL = ImageLoader.class.getResource(
-                properties.getProperty("minimize.icon.name"));
+            properties.getProperty("minimize.icon.name"));
         maximizeIconURL = ImageLoader.class.getResource(
-                properties.getProperty("maximize.icon.name"));
+            properties.getProperty("maximize.icon.name"));
         normalizeIconURL = ImageLoader.class.getResource(
-                properties.getProperty("normalize.icon.name"));
+            properties.getProperty("normalize.icon.name"));
         upwardIconURL = ImageLoader.class.getResource(
-                properties.getProperty("upward.icon.name"));
+            properties.getProperty("upward.icon.name"));
         downwardIconURL = ImageLoader.class.getResource(
-                properties.getProperty("downward.icon.name"));
+            properties.getProperty("downward.icon.name"));
         closeIconURL = ImageLoader.class.getResource(
-                properties.getProperty("close.icon.name"));
+            properties.getProperty("close.icon.name"));
     }
 
     public static URL getPlotImageURL() {

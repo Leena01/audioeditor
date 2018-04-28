@@ -1,6 +1,7 @@
 package org.ql.audioeditor.database.entities;
 
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+
 import java.util.Objects;
 
 public class Song {
@@ -15,8 +16,8 @@ public class Song {
     private String comment;
     private String path;
 
-    public Song(int id, String title, String track, String artist, String album, String year,
-                String genre, String comment, String path) {
+    public Song(int id, String title, String track, String artist, String album,
+        String year, String genre, String comment, String path) {
         this.id = id;
         this.title = title;
         this.track = track;
@@ -28,21 +29,22 @@ public class Song {
         this.path = path;
     }
 
-    public Song(String title, String track, String artist, String album, String year,
-                String genre, String comment, String path) {
-        this(SongPropertiesLoader.getDefaultSongId(), title, track, artist, album, year, genre, comment, path);
+    public Song(String title, String track, String artist, String album,
+        String year, String genre, String comment, String path) {
+        this(SongPropertiesLoader.getDefaultSongId(), title, track, artist,
+            album, year, genre, comment, path);
     }
 
     public Song() {
         this(SongPropertiesLoader.getEmptySongId(),
-                SongPropertiesLoader.getDefaultTitle(),
-                SongPropertiesLoader.getDefaultTrack(),
-                SongPropertiesLoader.getDefaultArtist(),
-                SongPropertiesLoader.getDefaultAlbum(),
-                SongPropertiesLoader.getDefaultYear(),
-                SongPropertiesLoader.getDefaultGenre(),
-                SongPropertiesLoader.getDefaultComment(),
-                SongPropertiesLoader.getDefaultPath());
+            SongPropertiesLoader.getDefaultTitle(),
+            SongPropertiesLoader.getDefaultTrack(),
+            SongPropertiesLoader.getDefaultArtist(),
+            SongPropertiesLoader.getDefaultAlbum(),
+            SongPropertiesLoader.getDefaultYear(),
+            SongPropertiesLoader.getDefaultGenre(),
+            SongPropertiesLoader.getDefaultComment(),
+            SongPropertiesLoader.getDefaultPath());
     }
 
     public Song(Song other) {
@@ -61,68 +63,68 @@ public class Song {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getTrack() {
-        return track;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getTrack() {
+        return track;
+    }
+
     public void setTrack(String track) {
         this.track = track;
+    }
+
+    public String getArtist() {
+        return artist;
     }
 
     public void setArtist(String artist) {
         this.artist = artist;
     }
 
+    public String getAlbum() {
+        return album;
+    }
+
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public void setYear(String year) {
         this.year = year;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void setPath(String path) {
@@ -132,16 +134,16 @@ public class Song {
     @Override
     public String toString() {
         return "Song{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", track='" + track + '\'' +
-                ", artist='" + artist + '\'' +
-                ", album='" + album + '\'' +
-                ", year='" + year + '\'' +
-                ", genre='" + genre + '\'' +
-                ", comment='" + comment + '\'' +
-                ", path='" + path + '\'' +
-                '}';
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", track='" + track + '\'' +
+            ", artist='" + artist + '\'' +
+            ", album='" + album + '\'' +
+            ", year='" + year + '\'' +
+            ", genre='" + genre + '\'' +
+            ", comment='" + comment + '\'' +
+            ", path='" + path + '\'' +
+            '}';
     }
 
     @Override

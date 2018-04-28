@@ -1,29 +1,24 @@
 package org.ql.audioeditor.logic.matlab;
 
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import com.mathworks.matlab.types.CellStr;
+import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.logic.exceptions.MatlabEngineException;
-import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.*;
 
 public class MatlabHandler {
-    private MatlabEngine eng;
-    private double totalSamples;
-    private double freq;
-    private static MatlabHandler instance = null;
-
-    private final static String FILE_FORMAT_ERROR = "This file type is not supported.";
+    private final static String FILE_FORMAT_ERROR =
+        "This file type is not supported.";
     private final static String IMAGE_ERROR = "Cannot generate image.";
     private final static String CANNOT_CUT_ERROR = "Cannot cut song.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
-
-    public static MatlabHandler getInstance(MatlabEngine eng) {
-        if (instance == null)
-            instance = new MatlabHandler(eng);
-        return instance;
-    }
+    private static MatlabHandler instance = null;
+    private MatlabEngine eng;
+    private double totalSamples;
+    private double freq;
 
     private MatlabHandler(MatlabEngine eng) {
         this.eng = eng;
@@ -31,11 +26,18 @@ public class MatlabHandler {
         this.freq = 0.0;
     }
 
+    public static MatlabHandler getInstance(MatlabEngine eng) {
+        if (instance == null)
+            instance = new MatlabHandler(eng);
+        return instance;
+    }
+
     public void init() throws MatlabEngineException {
         try {
             eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
             eng.eval(ADD_PATH);
-            eng.putVariable(WINDOW_KEYS_VAR, new CellStr(SongPropertiesLoader.getWindowNames()));
+            eng.putVariable(WINDOW_KEYS_VAR,
+                new CellStr(SongPropertiesLoader.getWindowNames()));
             eng.eval(CREATE_WINDOW_MAP);
         } catch (Exception e) {
             throw new MatlabEngineException(e.getMessage());
@@ -48,17 +50,18 @@ public class MatlabHandler {
     }
 
     public void close() throws MatlabEngineException {
-        if (eng != null){
+        if (eng != null) {
             try {
                 eng.close();
                 instance = null;
-            } catch(EngineException e) {
+            } catch (EngineException e) {
                 throw new MatlabEngineException(CLOSE_ERROR);
             }
         }
     }
 
-    public synchronized void openSong(String file) throws MatlabEngineException {
+    public synchronized void openSong(String file)
+        throws MatlabEngineException {
         try {
             eng.putVariable(FILE_VAR, file.toCharArray());
             eng.eval(OPEN_SONG);
@@ -69,7 +72,8 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void plotSong(String imageName) throws MatlabEngineException {
+    public synchronized void plotSong(String imageName)
+        throws MatlabEngineException {
         try {
             eng.putVariable(PLOT_IMG_VAR, imageName.toCharArray());
             eng.eval(PLOT_SONG);
@@ -144,8 +148,9 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void showSpectrogram(double windowSize, double hopSize, double nfft, String window,
-         String imageName, String imageName2) throws MatlabEngineException {
+    public synchronized void showSpectrogram(double windowSize, double hopSize,
+        double nfft, String window,
+        String imageName, String imageName2) throws MatlabEngineException {
         try {
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
@@ -160,7 +165,8 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void cutSong(int from, int to) throws MatlabEngineException {
+    public synchronized void cutSong(int from, int to)
+        throws MatlabEngineException {
         try {
             eng.putVariable(FROM_VAR, from);
             eng.putVariable(TO_VAR, to);
@@ -179,7 +185,8 @@ public class MatlabHandler {
         }
     }
 
-    public synchronized void saveSong(String file) throws MatlabEngineException {
+    public synchronized void saveSong(String file)
+        throws MatlabEngineException {
         try {
             eng.putVariable(FILE_VAR, file.toCharArray());
             eng.eval(SAVE_SONG);

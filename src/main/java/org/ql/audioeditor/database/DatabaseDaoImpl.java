@@ -1,6 +1,6 @@
 package org.ql.audioeditor.database;
 
-import org.ql.audioeditor.database.entities.*;
+import org.ql.audioeditor.database.entities.Song;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -14,8 +14,9 @@ public class DatabaseDaoImpl implements DatabaseDao {
 
     /**
      * Constructor
+     *
      * @param driver Drivers
-     * @param url URL
+     * @param url    URL
      */
     public DatabaseDaoImpl(String driver, String url) {
         connection = null;
@@ -33,7 +34,8 @@ public class DatabaseDaoImpl implements DatabaseDao {
     @Override
     public boolean createTable() {
         try {
-            String query = "create table if not exists fav(song_id INTEGER PRIMARY KEY, " +
+            String query =
+                "create table if not exists fav(song_id INTEGER PRIMARY KEY, " +
                     "song_title VARCHAR(255) NOT NULL, " +
                     "song_track VARCHAR(255) NOT NULL, " +
                     "song_artist VARCHAR(255) NOT NULL, " +
@@ -48,7 +50,8 @@ public class DatabaseDaoImpl implements DatabaseDao {
         } catch (SQLException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             return false;
         }
     }
@@ -58,18 +61,17 @@ public class DatabaseDaoImpl implements DatabaseDao {
         try {
             List<Song> result = new LinkedList<>();
             rs = stat.executeQuery("select * from fav;");
-            while(rs.next())
-            {
+            while (rs.next()) {
                 result.add(new Song(
-                        rs.getInt("song_id"),
-                        rs.getString("song_title"),
-                        rs.getString("song_track"),
-                        rs.getString("song_artist"),
-                        rs.getString("song_album"),
-                        rs.getString("song_year"),
-                        rs.getString("song_genre"),
-                        rs.getString("song_comment"),
-                        rs.getString("song_path")));
+                    rs.getInt("song_id"),
+                    rs.getString("song_title"),
+                    rs.getString("song_track"),
+                    rs.getString("song_artist"),
+                    rs.getString("song_album"),
+                    rs.getString("song_year"),
+                    rs.getString("song_genre"),
+                    rs.getString("song_comment"),
+                    rs.getString("song_path")));
             }
             return result;
         } catch (SQLException e) {
@@ -80,7 +82,9 @@ public class DatabaseDaoImpl implements DatabaseDao {
     @Override
     public boolean addSong(Song s) {
         try {
-            String query = "insert into fav(song_title, song_track, song_artist, song_album, song_year, " +
+            String query =
+                "insert into fav(song_title, song_track, song_artist, " +
+                    "song_album, song_year, " +
                     "song_genre, song_comment, song_path) values (\"" +
                     s.getTitle() + "\", \"" +
                     s.getTrack() + "\", \"" +
@@ -96,7 +100,8 @@ public class DatabaseDaoImpl implements DatabaseDao {
         } catch (SQLException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             return false;
         }
     }
@@ -104,14 +109,16 @@ public class DatabaseDaoImpl implements DatabaseDao {
     @Override
     public boolean deleteSong(Song s) {
         try {
-            String query = "delete from fav where song_id = \"" + s.getId() + "\";";
+            String query =
+                "delete from fav where song_id = \"" + s.getId() + "\";";
             stat.executeUpdate(query);
             connection.commit();
             return true;
         } catch (SQLException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             return false;
         }
     }
@@ -120,27 +127,29 @@ public class DatabaseDaoImpl implements DatabaseDao {
     public boolean editSong(Song s) {
         try {
             String query = "update fav set song_title = \"" + s.getTitle() +
-                    "\", song_track = \"" + s.getTrack() +
-                    "\", song_artist = \"" + s.getArtist() +
-                    "\", song_album = \"" + s.getAlbum() +
-                    "\", song_year = \"" + s.getYear() +
-                    "\", song_genre = \"" + s.getGenre() +
-                    "\", song_comment = \"" + s.getComment() +
-                    "\", song_path = \"" + s.getPath() +
-                    "\" where `id` = \"" + s.getId() + "\";";
+                "\", song_track = \"" + s.getTrack() +
+                "\", song_artist = \"" + s.getArtist() +
+                "\", song_album = \"" + s.getAlbum() +
+                "\", song_year = \"" + s.getYear() +
+                "\", song_genre = \"" + s.getGenre() +
+                "\", song_comment = \"" + s.getComment() +
+                "\", song_path = \"" + s.getPath() +
+                "\" where `id` = \"" + s.getId() + "\";";
             stat.executeUpdate(query);
             connection.commit();
             return true;
         } catch (SQLException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
             return false;
         }
     }
 
     /**
      * Is connected
+     *
      * @return true if connected
      */
     @Override
@@ -155,7 +164,8 @@ public class DatabaseDaoImpl implements DatabaseDao {
     public void commit() {
         try {
             connection.commit();
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
     }
 
     /**
@@ -165,7 +175,8 @@ public class DatabaseDaoImpl implements DatabaseDao {
     public void rollback() {
         try {
             connection.rollback();
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
     }
 
     /**
@@ -185,6 +196,7 @@ public class DatabaseDaoImpl implements DatabaseDao {
             if (connection != null) {
                 connection.close();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

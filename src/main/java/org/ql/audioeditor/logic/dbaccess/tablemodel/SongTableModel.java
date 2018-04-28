@@ -1,4 +1,5 @@
 package org.ql.audioeditor.logic.dbaccess.tablemodel;
+
 import org.ql.audioeditor.database.entities.Song;
 import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
 

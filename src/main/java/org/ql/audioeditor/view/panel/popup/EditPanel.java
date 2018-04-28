@@ -1,21 +1,29 @@
 package org.ql.audioeditor.view.panel.popup;
 
-import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.view.core.button.OptionButton;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.NumberFormatter;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Edit panel
  */
 public final class EditPanel extends BasicPanel {
-    private static final String INSTR_TEXT = "Please enter the new data for the song with the following ID: %d.";
+    private static final String INSTR_TEXT =
+        "Please enter the new data for the song with the following ID: %d.";
+    private static final Border INFO_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(0, 0, 15, 0);
+    private static final Border BODY_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(20, 30, 30, 30);
+    private static final Border BOTTOM_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(15, 0, 0, 0);
     private JLabel infoLabel;
     private JLabel titleLabel;
     private JLabel trackLabel;
@@ -42,6 +50,7 @@ public final class EditPanel extends BasicPanel {
 
     /**
      * Constructor
+     *
      * @param al action listener
      */
     public EditPanel(ActionListener al) {
@@ -85,8 +94,10 @@ public final class EditPanel extends BasicPanel {
         int w = getWidth();
         int h = getHeight();
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        GradientPaint gp = new GradientPaint(0, 0, Color.DARK_GRAY, 0, h, Color.BLACK);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+            RenderingHints.VALUE_RENDER_QUALITY);
+        GradientPaint gp =
+            new GradientPaint(0, 0, Color.DARK_GRAY, 0, h, Color.BLACK);
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
     }
@@ -108,13 +119,15 @@ public final class EditPanel extends BasicPanel {
     public void setSelectedSong(SongModel sm) {
         if (sm != null) {
             this.selectedSongModel = new SongModel(sm);
-            infoLabel.setText(String.format(INSTR_TEXT, selectedSongModel.getId()));
+            infoLabel
+                .setText(String.format(INSTR_TEXT, selectedSongModel.getId()));
             titleTextField.setText(selectedSongModel.getTitle());
             trackTextField.setText(selectedSongModel.getTrack());
             artistTextField.setText(selectedSongModel.getArtist());
             albumTextField.setText(selectedSongModel.getAlbum());
             yearTextField.setText(selectedSongModel.getYear());
-            genreTextField.setText(selectedSongModel.getGenre().split("\\s+")[0]);
+            genreTextField
+                .setText(selectedSongModel.getGenre().split("\\s+")[0]);
             commentTextField.setText(selectedSongModel.getComment());
         }
     }
@@ -126,9 +139,9 @@ public final class EditPanel extends BasicPanel {
         bottomPanel.setOpaque(false);
         bodyPanel.setOpaque(false);
         mainPanel.setOpaque(false);
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 30, 30));
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+        infoPanel.setBorder(INFO_PANEL_BORDER);
+        bodyPanel.setBorder(BODY_PANEL_BORDER);
+        bottomPanel.setBorder(BOTTOM_PANEL_BORDER);
     }
 
     @Override

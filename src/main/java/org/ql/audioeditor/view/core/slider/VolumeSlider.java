@@ -1,9 +1,7 @@
 package org.ql.audioeditor.view.core.slider;
 
-import org.ql.audioeditor.common.properties.SongPropertiesLoader;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JSlider;
+import java.awt.Dimension;
 
 public class VolumeSlider extends JSlider {
     public VolumeSlider(Dimension d, int min, int max, int value) {

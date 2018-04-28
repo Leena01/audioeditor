@@ -13,7 +13,8 @@ public abstract class ListModel<T> {
         this.items = new ArrayList<>();
     }
 
-    @NotNull public List<T> getItems() {
+    @NotNull
+    public List<T> getItems() {
         return items;
     }
 

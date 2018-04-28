@@ -3,7 +3,8 @@ package org.ql.audioeditor.view.panel;
 import org.ql.audioeditor.view.core.button.OptionButton;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
 public final class OptionPanel extends BasicPanel {

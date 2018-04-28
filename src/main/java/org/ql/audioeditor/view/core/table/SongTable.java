@@ -1,9 +1,9 @@
 package org.ql.audioeditor.view.core.table;
 
-import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
 import org.jetbrains.annotations.NotNull;
+import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import java.awt.event.MouseEvent;
 
 public class SongTable extends JTable {
@@ -25,7 +25,8 @@ public class SongTable extends JTable {
         int colIndex = columnAtPoint(p);
         try {
             tip = getValueAt(rowIndex, colIndex).toString();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return tip;
     }
 }

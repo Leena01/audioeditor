@@ -2,7 +2,7 @@ function plotSong(x, fs, imgname)
 	figure('visible', 'off');
 	xsize = size(x);
 	xlen = length(x);
-	tlen = xlen/fs; tper = 1/fs;
+	tper = 1/fs;
 	t = 0:tper:(xlen/fs) - tper;
 
 	if (xsize(2) == 2)

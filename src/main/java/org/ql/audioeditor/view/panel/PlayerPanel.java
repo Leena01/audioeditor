@@ -1,12 +1,8 @@
 package org.ql.audioeditor.view.panel;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
-import static org.ql.audioeditor.common.util.Helper.secondsToFrames;
-import static org.ql.audioeditor.view.param.Constants.*;
-
-import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
@@ -16,6 +12,7 @@ import org.ql.audioeditor.view.core.slider.TrackSlider;
 import org.ql.audioeditor.view.core.slider.VolumeSlider;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -24,32 +21,68 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
-class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, Observer {
+import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
+import static org.ql.audioeditor.common.util.Helper.secondsToFrames;
+import static org.ql.audioeditor.view.param.Constants.VOLUME_SLIDER_SIZE;
+
+class PlayerPanel extends BasicPanel
+    implements MouseListener, ChangeListener, Observer {
+    private static final String MOVE_BACKWARD = "moveBackwardAction";
+    private static final String MOVE_FORWARD = "moveForwardAction";
+    private static final String VOLUME_UP = "volumeUpAction";
+    private static final String VOLUME_DOWN = "volumeDownAction";
+    private static final String PAUSE = "pauseAction";
     private static final int NULL_VOLUME = 0;
-    private static final int REFRESH_MILLIS = SongPropertiesLoader.getSongRefreshMillis();
-    private static final float CONVERSION_RATE = SongPropertiesLoader.getVolumeConversionRate();
-    private static final int SECONDS_TO_SKIP = SongPropertiesLoader.getSecondsToSkip();
-    private static Dimension FIELD_DIMENSION = new Dimension(80, 10);
+    private static final int VOLUME_MIN = SongPropertiesLoader.getVolumeMin();
+    private static final int VOLUME_MAX = SongPropertiesLoader.getVolumeMax();
+    private static final int VOLUME_INIT = SongPropertiesLoader.getVolumeInit();
+    private static final float CONVERSION_RATE =
+        SongPropertiesLoader.getVolumeConversionRate();
+    private static final int REFRESH_MILLIS =
+        SongPropertiesLoader.getSongRefreshMillis();
+    private static final int SECONDS_TO_SKIP =
+        SongPropertiesLoader.getSecondsToSkip();
+    private static final int LEVELS_TO_SKIP = (VOLUME_MAX - VOLUME_MIN) / 10;
     private static final Dimension BUTTON_SIZE = new Dimension(36, 36);
     private static final Dimension SOUND_BUTTON_SIZE = new Dimension(20, 20);
+
     private static final ImageIcon PLAY_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getPlayIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getPlayIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon PAUSE_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getPauseIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getPauseIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon STOP_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getStopIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getStopIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon BACKWARD_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getBackwardIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getBackwardIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon FORWARD_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getForwardIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getForwardIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon FAVORITE_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getFavoriteIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getFavoriteIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon UNFAVORITE_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getUnfavoriteIconURL()), BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getUnfavoriteIconURL()),
+            BUTTON_SIZE);
     private static final ImageIcon SOUND_ON_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIconURL()), SOUND_BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIconURL()),
+            SOUND_BUTTON_SIZE);
     private static final ImageIcon SOUND_OFF_ICON =
-            resizeImageIcon(new ImageIcon(ImageLoader.getSoundOffIconURL()), SOUND_BUTTON_SIZE);
+        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOffIconURL()),
+            SOUND_BUTTON_SIZE);
+
+    private static final Border MEDIA_CONTROL_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(40, 10, 10, 10);
+    private static final Border TRACK_SLIDER_BORDER =
+        BorderFactory.createEmptyBorder(0, 0, 10, 0);
+    private static final Border TIME_FIELD_BORDER =
+        BorderFactory.createEmptyBorder(0, 0, 0, 10);
+    private static final Border TOTAL_LENGTH_FIELD_BORDER =
+        BorderFactory.createEmptyBorder(0, 10, 0, 0);
+    private static Dimension FIELD_DIMENSION = new Dimension(80, 10);
 
     private JLabel timeField;
     private JLabel totalLengthField;
@@ -72,10 +105,14 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
     private GridBagConstraints c;
     private GridBagLayout gridBag;
     private Thread playbackThread;
+    private InputMap inputMap;
+    private ActionMap actionMap;
     private int framesToSkip;
     private int recentVolumeLevel;
 
-    PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel, ActionListener fb, ActionListener ufb) {
+    PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel,
+        InputMap inputMap, ActionMap actionMap, ActionListener fb,
+        ActionListener ufb) {
         super();
         this.playbackThread = new Thread();
         playbackThread.start();
@@ -87,8 +124,10 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
         setLayout(gridBag);
         this.matlabHandler = matlabHandler;
         this.mediaControlPanel = mediaControlPanel;
+        this.inputMap = inputMap;
+        this.actionMap = actionMap;
         framesToSkip = 0;
-        recentVolumeLevel = SongPropertiesLoader.getVolumeInit();
+        recentVolumeLevel = VOLUME_INIT;
 
         timeField = new TimeLabel(FIELD_DIMENSION, SwingConstants.RIGHT);
         trackSlider = new TrackSlider(JSlider.HORIZONTAL);
@@ -101,14 +140,16 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
         backwardButton = new TransparentButton(BACKWARD_ICON, BUTTON_SIZE);
         forwardButton = new TransparentButton(FORWARD_ICON, BUTTON_SIZE);
         favoriteButton = new TransparentButton(FAVORITE_ICON, BUTTON_SIZE, fb);
-        unfavoriteButton = new TransparentButton(UNFAVORITE_ICON, BUTTON_SIZE, ufb);
+        unfavoriteButton =
+            new TransparentButton(UNFAVORITE_ICON, BUTTON_SIZE, ufb);
         soundOnButton = new TransparentButton(SOUND_ON_ICON, BUTTON_SIZE);
         soundOffButton = new TransparentButton(SOUND_OFF_ICON, BUTTON_SIZE);
 
         volumePanel = new JPanel(new FlowLayout());
-        volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE, SongPropertiesLoader.getVolumeMin(),
-                SongPropertiesLoader.getVolumeMax(), recentVolumeLevel);
-        sliderTimer = new SliderTimer(trackSlider, matlabHandler, timeField, totalLengthField, true);
+        volumeSlider = new VolumeSlider(VOLUME_SLIDER_SIZE, VOLUME_MIN,
+            VOLUME_MAX, VOLUME_INIT);
+        sliderTimer = new SliderTimer(trackSlider, matlabHandler, timeField,
+            totalLengthField, true);
 
         setStyle();
         addPanels();
@@ -122,34 +163,43 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
         if (e.getClickCount() == 1) {
             if (source == playButton) {
                 playSong();
-            } else if (source == pauseButton) {
+            }
+            else if (source == pauseButton) {
                 pauseSong();
-            } else if (source == stopButton) {
+            }
+            else if (source == stopButton) {
                 stopSong();
-            } else if (source == soundOnButton) {
-                turnOff();
-            } else if (source == soundOffButton) {
-                turnOn();
+            }
+            else if (source == soundOnButton) {
+                turnVolumeOff();
+            }
+            else if (source == soundOffButton) {
+                turnVolumeOn();
             }
         }
         if (source == backwardButton) {
             moveBackward();
-        } else if (source == forwardButton) {
+        }
+        else if (source == forwardButton) {
             moveForward();
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
@@ -159,7 +209,8 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
             float level = vs.getValue() / CONVERSION_RATE;
             if (!vs.getValueIsAdjusting()) {
                 playbackThread.interrupt();
-                playbackThread = new Thread(() -> matlabHandler.changeVolume(level));
+                playbackThread =
+                    new Thread(() -> matlabHandler.changeVolume(level));
                 playbackThread.start();
             }
         }
@@ -177,13 +228,15 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
         framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
         trackSlider.setImage(plot);
+        initKeyBindings();
     }
 
     void setFavorite(boolean isFavorite) {
         if (isFavorite) {
             favoriteButton.setVisible(false);
             unfavoriteButton.setVisible(true);
-        } else {
+        }
+        else {
             unfavoriteButton.setVisible(false);
             favoriteButton.setVisible(true);
         }
@@ -232,16 +285,24 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
         playbackThread.start();
     }
 
-    private void turnOff() {
-        playbackThread.interrupt();
+    private void volumeUp() {
+        recentVolumeLevel = volumeSlider.getValue() + LEVELS_TO_SKIP;
+        volumeSlider.setValue(recentVolumeLevel);
+    }
+
+    private void volumeDown() {
+        recentVolumeLevel = volumeSlider.getValue() - LEVELS_TO_SKIP;
+        volumeSlider.setValue(recentVolumeLevel);
+    }
+
+    private void turnVolumeOff() {
         recentVolumeLevel = volumeSlider.getValue();
         soundOnButton.setVisible(false);
         soundOffButton.setVisible(true);
         volumeSlider.setValue(NULL_VOLUME);
     }
 
-    private void turnOn() {
-        playbackThread.interrupt();
+    private void turnVolumeOn() {
         soundOffButton.setVisible(false);
         soundOnButton.setVisible(true);
         volumeSlider.setValue(recentVolumeLevel);
@@ -258,27 +319,43 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
                 moveForward();
             }
         };
-        Action pauseAction = new AbstractAction() {
+        Action volumeUpAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                pauseSong();
+                volumeUp();
             }
         };
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
-                        "moveBackwardAction");
-        getActionMap().put("moveBackwardAction", moveBackwardAction);
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
-                        "moveForwardAction");
-        getActionMap().put("moveForwardAction", moveForwardAction);
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
-                put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
-                        "pauseAction");
-        getActionMap().put("pauseAction", pauseAction);
+        Action volumeDownAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                volumeDown();
+            }
+        };
+        Action pauseAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (matlabHandler.isPlaying())
+                    pauseSong();
+                else
+                    playSong();
+            }
+        };
+
+        KeyStroke leftKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0);
+        KeyStroke rightKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
+        KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+        KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
+        KeyStroke spaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
+        inputMap.put(leftKeyStroke, MOVE_BACKWARD);
+        actionMap.put(MOVE_BACKWARD, moveBackwardAction);
+        inputMap.put(rightKeyStroke, MOVE_FORWARD);
+        actionMap.put(MOVE_FORWARD, moveForwardAction);
+        inputMap.put(upKeyStroke, VOLUME_UP);
+        actionMap.put(VOLUME_UP, volumeUpAction);
+        inputMap.put(downKeyStroke, VOLUME_DOWN);
+        actionMap.put(VOLUME_DOWN, volumeDownAction);
+        inputMap.put(spaceKeyStroke, PAUSE);
+        actionMap.put(PAUSE, pauseAction);
     }
 
     private void initInnerListeners() {
-        initKeyBindings();
         sliderTimer.addObserver(this);
         volumeSlider.addChangeListener(this);
         backwardButton.addMouseListener(this);
@@ -300,10 +377,10 @@ class PlayerPanel extends BasicPanel implements MouseListener, ChangeListener, O
     protected void setStyle() {
         buttonPanel.setOpaque(false);
         volumePanel.setOpaque(false);
-        mediaControlPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
-        trackSlider.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        timeField.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-        totalLengthField.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        mediaControlPanel.setBorder(MEDIA_CONTROL_PANEL_BORDER);
+        trackSlider.setBorder(TRACK_SLIDER_BORDER);
+        timeField.setBorder(TIME_FIELD_BORDER);
+        totalLengthField.setBorder(TOTAL_LENGTH_FIELD_BORDER);
     }
 
     @Override

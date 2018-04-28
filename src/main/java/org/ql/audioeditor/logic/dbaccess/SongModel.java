@@ -1,8 +1,8 @@
 package org.ql.audioeditor.logic.dbaccess;
 
 import com.mpatric.mp3agic.*;
-import org.ql.audioeditor.database.entities.Song;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+import org.ql.audioeditor.database.entities.Song;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,44 +41,88 @@ public class SongModel {
         return song.getId();
     }
 
+    public void setId(int id) {
+        song.setId(id);
+    }
+
     public String getTitle() {
         return song.getTitle();
+    }
+
+    public void setTitle(String title) {
+        song.setTitle(title);
     }
 
     public String getTrack() {
         return song.getTrack();
     }
 
+    public void setTrack(String track) {
+        song.setTrack(track);
+    }
+
     public String getArtist() {
         return song.getArtist();
+    }
+
+    public void setArtist(String artist) {
+        song.setArtist(artist);
     }
 
     public String getAlbum() {
         return song.getAlbum();
     }
 
+    public void setAlbum(String album) {
+        song.setAlbum(album);
+    }
+
     public String getYear() {
         return song.getYear();
+    }
+
+    public void setYear(String year) {
+        song.setYear(year);
     }
 
     public String getGenre() {
         return song.getGenre();
     }
 
+    public void setGenre(String genre) {
+        song.setGenre(genre);
+    }
+
     public String getComment() {
         return song.getComment();
+    }
+
+    public void setComment(String comment) {
+        song.setComment(comment);
     }
 
     public String getPath() {
         return song.getPath();
     }
 
+    public void setPath(String path) {
+        song.setPath(path);
+    }
+
     public double getTotalSamples() {
         return totalSamples;
     }
 
+    public void setTotalSamples(double totalSamples) {
+        this.totalSamples = totalSamples;
+    }
+
     public double getFreq() {
         return freq;
+    }
+
+    public void setFreq(double freq) {
+        this.freq = freq;
     }
 
     public boolean isEmpty() {
@@ -87,48 +131,6 @@ public class SongModel {
 
     public boolean isDefault() {
         return getId() == SongPropertiesLoader.getDefaultSongId();
-    }
-
-    public void setId(int id) { song.setId(id); }
-
-    public void setTitle(String title) {
-        song.setTitle(title);
-    }
-
-    public void setTrack(String track) {
-        song.setTrack(track);
-    }
-
-    public void setArtist(String artist) {
-        song.setArtist(artist);
-    }
-
-    public void setAlbum(String album) {
-        song.setAlbum(album);
-    }
-
-    public void setYear(String year) {
-        song.setYear(year);
-    }
-
-    public void setGenre(String genre) {
-        song.setGenre(genre);
-    }
-
-    public void setComment(String comment) {
-        song.setComment(comment);
-    }
-
-    public void setPath(String path) {
-        song.setPath(path);
-    }
-
-    public void setTotalSamples(double totalSamples) {
-        this.totalSamples = totalSamples;
-    }
-
-    public void setFreq(double freq) {
-        this.freq = freq;
     }
 
     public void setDefault() {
@@ -151,14 +153,19 @@ public class SongModel {
                 artist = id3v1Tag.getArtist();
                 album = id3v1Tag.getAlbum();
                 year = id3v1Tag.getYear();
-                genre = id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")";
+                genre = id3v1Tag.getGenre() + " (" +
+                    id3v1Tag.getGenreDescription() + ")";
                 comment = id3v1Tag.getComment();
             }
-        } catch (Exception ignored) { }
-        this.song = new Song(title, track, artist, album, year, genre, comment, path);
+        } catch (Exception ignored) {
+        }
+        this.song =
+            new Song(title, track, artist, album, year, genre, comment, path);
     }
 
-    public void setTags() throws UnsupportedTagException, NotSupportedException, InvalidDataException, IOException {
+    public void setTags()
+        throws UnsupportedTagException, NotSupportedException,
+        InvalidDataException, IOException {
         Mp3File song = new Mp3File(getPath());
         ID3v1 id3v1Tag;
         if (song.hasId3v1Tag())
@@ -175,6 +182,7 @@ public class SongModel {
         id3v1Tag.setGenre(Integer.parseInt(getGenre()));
         id3v1Tag.setComment(getComment());
         song.save(getPath());
-        setGenre(id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
+        setGenre(
+            id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
     }
 }

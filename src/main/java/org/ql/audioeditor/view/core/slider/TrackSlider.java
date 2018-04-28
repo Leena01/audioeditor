@@ -2,8 +2,9 @@ package org.ql.audioeditor.view.core.slider;
 
 import org.ql.audioeditor.view.core.slider.ui.AudioSliderUI;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BoundedRangeModel;
+import javax.swing.JSlider;
+import java.awt.Image;
 
 public class TrackSlider extends JSlider {
     private static final Object lock = new Object();
@@ -38,7 +39,9 @@ public class TrackSlider extends JSlider {
             }
             model.setValue(value);
             if (this.accessibleContext != null) {
-                this.accessibleContext.firePropertyChange("AccessibleValue", value2, model.getValue());
+                this.accessibleContext
+                    .firePropertyChange("AccessibleValue", value2,
+                        model.getValue());
             }
             model.addChangeListener(this.changeListener);
         }

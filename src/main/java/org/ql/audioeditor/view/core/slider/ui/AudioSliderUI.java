@@ -2,12 +2,12 @@ package org.ql.audioeditor.view.core.slider.ui;
 
 import org.ql.audioeditor.view.core.slider.TrackSlider;
 
-import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;
 
 public class AudioSliderUI extends BasicSliderUI {
 
@@ -24,7 +24,8 @@ public class AudioSliderUI extends BasicSliderUI {
     @Override
     public void paint(Graphics g, JComponent c) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
         super.paint(g, c);
     }
 
@@ -36,8 +37,9 @@ public class AudioSliderUI extends BasicSliderUI {
     @Override
     public void paintTrack(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        Image img = ((TrackSlider)slider).getImage();
-        g2d.drawImage(img, focusRect.x,focusRect.y, focusRect.width, focusRect.height, slider);
+        Image img = ((TrackSlider) slider).getImage();
+        g2d.drawImage(img, focusRect.x, focusRect.y, focusRect.width,
+            focusRect.height, slider);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class AudioSliderUI extends BasicSliderUI {
         int h = thumbRect.height;
         g2d.translate(thumbRect.x, thumbRect.y);
         GradientPaint bgPaint = new GradientPaint(0, 0, Color.DARK_GRAY,
-                w, 0, Color.LIGHT_GRAY);
+            w, 0, Color.LIGHT_GRAY);
         g2d.setPaint(bgPaint);
         g2d.fillRect(0, 0, w, h);
     }
@@ -63,7 +65,7 @@ public class AudioSliderUI extends BasicSliderUI {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (UIManager.getBoolean("TrackSlider.onlyLeftMouseButtonDrag")
-                        && SwingUtilities.isLeftMouseButton(e)) {
+                    && SwingUtilities.isLeftMouseButton(e)) {
                     JSlider slider = (JSlider) e.getComponent();
                     switch (slider.getOrientation()) {
                         case SwingConstants.VERTICAL:
@@ -74,11 +76,13 @@ public class AudioSliderUI extends BasicSliderUI {
                             break;
                         default:
                             throw new IllegalArgumentException(
-                                    "orientation must be one of: VERTICAL, HORIZONTAL");
+                                "orientation must be one of: VERTICAL, " +
+                                    "HORIZONTAL");
                     }
                     super.mousePressed(e); // isDragging = true;
                     super.mouseDragged(e);
-                } else {
+                }
+                else {
                     super.mousePressed(e);
                 }
             }

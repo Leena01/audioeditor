@@ -1,17 +1,25 @@
 package org.ql.audioeditor.view.panel;
 
 import org.ql.audioeditor.logic.dbaccess.SongModel;
-
-import static org.ql.audioeditor.view.param.Constants.*;
-import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.button.Button;
+import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import static org.ql.audioeditor.view.param.Constants.DATA_LABEL_SIZE;
+
 public final class DataPanel extends BasicPanel {
+    private static final Border BUTTON_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(15, 0, 0, 0);
     private JLabel idLabel;
     private JLabel titleLabel;
     private JLabel trackLabel;
@@ -38,7 +46,7 @@ public final class DataPanel extends BasicPanel {
     public DataPanel(SongModel currentSongModel, ActionListener b) {
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new BorderLayout());
-        labelPanel = new JPanel(new GridLayout(9,2));
+        labelPanel = new JPanel(new GridLayout(9, 2));
         idLabel = new Label("ID:", DATA_LABEL_SIZE);
         titleLabel = new Label("Title:", DATA_LABEL_SIZE);
         trackLabel = new Label("Track:", DATA_LABEL_SIZE);
@@ -48,7 +56,8 @@ public final class DataPanel extends BasicPanel {
         genreLabel = new Label("Genre:", DATA_LABEL_SIZE);
         commentLabel = new Label("Comment:", DATA_LABEL_SIZE);
         pathLabel = new Label("Path:", DATA_LABEL_SIZE);
-        id = new Label(Integer.toString(currentSongModel.getId()), DATA_LABEL_SIZE);
+        id = new Label(Integer.toString(currentSongModel.getId()),
+            DATA_LABEL_SIZE);
         title = new Label(currentSongModel.getTitle(), DATA_LABEL_SIZE);
         track = new Label(currentSongModel.getTrack(), DATA_LABEL_SIZE);
         artist = new Label(currentSongModel.getArtist(), DATA_LABEL_SIZE);
@@ -94,7 +103,7 @@ public final class DataPanel extends BasicPanel {
         mainPanel.setOpaque(false);
         labelPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+        buttonPanel.setBorder(BUTTON_PANEL_BORDER);
     }
 
     @Override

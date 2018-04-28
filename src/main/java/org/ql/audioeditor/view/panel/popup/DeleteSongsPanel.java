@@ -8,12 +8,16 @@ import org.ql.audioeditor.view.core.table.SongTable;
 import org.ql.audioeditor.view.panel.ViewSongsPanel;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.border.Border;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class DeleteSongsPanel extends ViewSongsPanel {
+    private static final Border SCROLL_PANE_BORDER =
+        BorderFactory.createEmptyBorder(15, 20, 10, 20);
     private SongListModel selectedSongs;
     private JPanel buttonPanel;
     private JButton doneButton;
@@ -27,7 +31,9 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         sorter.setModel(tableModel);
         table.setRowSorter(sorter);
-        scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane = new JScrollPane(this.table,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         doneButton = new TransparentButton("Delete", d);
         setStyle();
         addPanels();
@@ -38,7 +44,7 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
             return null;
         List<Song> songs = new ArrayList<>();
         int[] selected = this.table.getSelectedRows();
-        for (int i: selected) {
+        for (int i : selected) {
             songs.add(this.tableModel.getRow(i));
         }
         selectedSongs.setSongs(songs);
@@ -47,7 +53,7 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
 
     @Override
     protected void setStyle() {
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
+        scrollPane.setBorder(SCROLL_PANE_BORDER);
         scrollPane.setOpaque(false);
         buttonPanel.setOpaque(false);
     }

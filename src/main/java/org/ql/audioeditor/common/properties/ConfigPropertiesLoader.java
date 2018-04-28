@@ -1,7 +1,5 @@
 package org.ql.audioeditor.common.properties;
 
-import sun.security.krb5.Config;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +16,8 @@ public final class ConfigPropertiesLoader {
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
-        inputStream = ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
+        inputStream =
+            ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null)
             properties.load(inputStream);
         else
@@ -26,8 +25,10 @@ public final class ConfigPropertiesLoader {
 
         driver = properties.getProperty("driver");
         jdbc = properties.getProperty("jdbc");
-        url = ConfigPropertiesLoader.class.getResource(properties.getProperty("url"));
-        refreshMillis = Integer.parseInt(properties.getProperty("refresh.millis"));
+        url = ConfigPropertiesLoader.class
+            .getResource(properties.getProperty("url"));
+        refreshMillis =
+            Integer.parseInt(properties.getProperty("refresh.millis"));
     }
 
     public static String getDriver() {

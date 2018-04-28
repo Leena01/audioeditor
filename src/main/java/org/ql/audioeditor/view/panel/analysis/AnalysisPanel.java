@@ -3,10 +3,11 @@ package org.ql.audioeditor.view.panel.analysis;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class AnalysisPanel extends BasicPanel {
     private MatlabHandler matlabHandler;
+
     public AnalysisPanel(MatlabHandler matlabHandler) {
         super();
         this.matlabHandler = matlabHandler;

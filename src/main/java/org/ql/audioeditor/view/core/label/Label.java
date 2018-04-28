@@ -1,10 +1,13 @@
 package org.ql.audioeditor.view.core.label;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Dimension;
 
 public class Label extends JLabel {
     private static final Color FONT_COLOR = Color.LIGHT_GRAY;
+
     public Label() {
         super();
         setForeground(FONT_COLOR);

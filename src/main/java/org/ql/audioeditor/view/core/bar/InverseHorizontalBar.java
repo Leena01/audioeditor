@@ -1,6 +1,8 @@
 package org.ql.audioeditor.view.core.bar;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 
 import static org.ql.audioeditor.common.util.Helper.fillColor;
 

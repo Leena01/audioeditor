@@ -5,12 +5,17 @@ import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.slider.FrequencySlider;
 
-import static org.ql.audioeditor.view.param.Constants.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.event.ActionListener;
 
+import static org.ql.audioeditor.view.param.Constants.LEVEL_SLIDER_SIZE;
+
 public final class ChangePitchPanel extends BasicPanel {
-    private static final String INSTR_TEXT = "Please set the level of the new current frequency. The current frequency is %.0f Hz.";
+    private static final Border INFO_LABEL_BORDER =
+        BorderFactory.createEmptyBorder(10, 10, 0, 10);
+    private static final String INSTR_TEXT = "Please set the level of the new" +
+        " current frequency. The current frequency is %.0f Hz.";
     private FrequencySlider frequencySlider;
     private JPanel buttonPanel;
     private JPanel infoPanel;
@@ -25,27 +30,29 @@ public final class ChangePitchPanel extends BasicPanel {
         infoPanel = new JPanel();
         infoLabel = new JLabel(INSTR_TEXT);
         frequencySlider = new FrequencySlider(LEVEL_SLIDER_SIZE,
-                SongPropertiesLoader.getFrequencyMin(), SongPropertiesLoader.getFrequencyMax(), 1000, 500);
+            SongPropertiesLoader.getFrequencyMin(),
+            SongPropertiesLoader.getFrequencyMax(),
+            1000, 500);
         previewButton = new Button("Preview", p);
         saveButton = new Button("Save modified file", s);
         setStyle();
         addPanels();
     }
 
-    public void setFreq(double freq) {
-        frequencySlider.setValue((int)freq);
-        infoLabel.setText(String.format(INSTR_TEXT, freq));
-    }
-
     public double getFreq() {
         return frequencySlider.getValue();
+    }
+
+    public void setFreq(double freq) {
+        frequencySlider.setValue((int) freq);
+        infoLabel.setText(String.format(INSTR_TEXT, freq));
     }
 
     @Override
     protected void setStyle() {
         buttonPanel.setOpaque(false);
         infoPanel.setOpaque(false);
-        infoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        infoLabel.setBorder(INFO_LABEL_BORDER);
     }
 
     @Override

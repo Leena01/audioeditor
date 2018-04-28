@@ -24,23 +24,25 @@ public final class SongPropertiesLoader {
     private static int volumeMin;
     private static int volumeMax;
     private static int volumeInit;
+    private static float volumeConversionRate;
     private static int genreMin;
     private static int genreMax;
     private static int frequencyMin;
     private static int frequencyMax;
     private static int songRefreshMillis;
-    private static float volumeConversionRate;
     private static int secondsToSkip;
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
-        inputStream = ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
+        inputStream =
+            ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null)
             properties.load(inputStream);
         else
             throw new FileNotFoundException();
 
-        defaultSongId = Integer.parseInt(properties.getProperty("default.song.id"));
+        defaultSongId =
+            Integer.parseInt(properties.getProperty("default.song.id"));
         emptySongId = Integer.parseInt(properties.getProperty("empty.song.id"));
         defaultTitle = properties.getProperty("default.title");
         defaultTrack = properties.getProperty("default.track");
@@ -56,13 +58,18 @@ public final class SongPropertiesLoader {
         volumeMin = Integer.parseInt(properties.getProperty("volume.min"));
         volumeMax = Integer.parseInt(properties.getProperty("volume.max"));
         volumeInit = Integer.parseInt(properties.getProperty("volume.init"));
+        volumeConversionRate =
+            Float.parseFloat(properties.getProperty("volume.conversion.rate"));
         genreMin = Integer.parseInt(properties.getProperty("genre.min"));
         genreMax = Integer.parseInt(properties.getProperty("genre.max"));
-        frequencyMin = Integer.parseInt(properties.getProperty("frequency.min"));
-        frequencyMax = Integer.parseInt(properties.getProperty("frequency.max"));
-        songRefreshMillis = Integer.parseInt(properties.getProperty("song.refresh.millis"));
-        volumeConversionRate = Float.parseFloat(properties.getProperty("volume.conversion.rate"));
-        secondsToSkip = Integer.parseInt(properties.getProperty("seconds.to.skip"));
+        frequencyMin =
+            Integer.parseInt(properties.getProperty("frequency.min"));
+        frequencyMax =
+            Integer.parseInt(properties.getProperty("frequency.max"));
+        songRefreshMillis =
+            Integer.parseInt(properties.getProperty("song.refresh.millis"));
+        secondsToSkip =
+            Integer.parseInt(properties.getProperty("seconds.to.skip"));
     }
 
     public static int getDefaultSongId() {
@@ -129,6 +136,10 @@ public final class SongPropertiesLoader {
         return volumeInit;
     }
 
+    public static float getVolumeConversionRate() {
+        return volumeConversionRate;
+    }
+
     public static int getGenreMin() {
         return genreMin;
     }
@@ -147,10 +158,6 @@ public final class SongPropertiesLoader {
 
     public static int getSongRefreshMillis() {
         return songRefreshMillis;
-    }
-
-    public static float getVolumeConversionRate() {
-        return volumeConversionRate;
     }
 
     public static int getSecondsToSkip() {

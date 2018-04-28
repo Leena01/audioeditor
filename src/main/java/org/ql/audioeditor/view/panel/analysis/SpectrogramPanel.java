@@ -1,20 +1,23 @@
 package org.ql.audioeditor.view.panel.analysis;
 
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
-import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.button.Button;
+import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.param.Constants;
 
 import javax.swing.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
-import java.awt.*;
-import java.awt.event.ActionListener;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImage;
 import static javax.swing.BoxLayout.PAGE_AXIS;
+import static org.ql.audioeditor.common.util.Helper.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
@@ -50,7 +53,7 @@ public class SpectrogramPanel extends BasicPanel implements ItemListener {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(6,2, 10, 10));
+        formPanel.setLayout(new GridLayout(6, 2, 10, 10));
         outerFormPanel = new JPanel();
 
         doneButton = new Button("Done", s);
@@ -119,7 +122,8 @@ public class SpectrogramPanel extends BasicPanel implements ItemListener {
         nfftTextField.setValue(null);
     }
 
-    public void changeImage(Image image, Image image3d, boolean isNormal, boolean isMaximized) {
+    public void changeImage(Image image, Image image3d, boolean isNormal,
+        boolean isMaximized) {
         if (specIcon.getImage() != null)
             specIcon.getImage().flush();
         if (specIconMax.getImage() != null)
@@ -131,7 +135,8 @@ public class SpectrogramPanel extends BasicPanel implements ItemListener {
 
         specIconMax = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE_MAX));
         specIcon = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE));
-        specIcon3dMax = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE_MAX));
+        specIcon3dMax =
+            new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE_MAX));
         specIcon3d = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE));
 
         maximizeImage(isMaximized);
@@ -162,7 +167,8 @@ public class SpectrogramPanel extends BasicPanel implements ItemListener {
         if (ie.getStateChange() == ItemEvent.SELECTED) {
             image3dLabel.setVisible(true);
             imageLabel.setVisible(false);
-        } else if (ie.getStateChange() == ItemEvent.DESELECTED) {
+        }
+        else if (ie.getStateChange() == ItemEvent.DESELECTED) {
             image3dLabel.setVisible(false);
             imageLabel.setVisible(true);
         }
