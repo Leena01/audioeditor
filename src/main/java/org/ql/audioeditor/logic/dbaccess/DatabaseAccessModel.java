@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * DatabaseAccessModel Backend: controls data acquired from the
- * org.ql.audioeditor.org.ql.audioeditor.database
+ * DatabaseAccessModel Backend: controls data acquired from the database
  */
 public class DatabaseAccessModel {
     /**
@@ -23,12 +22,10 @@ public class DatabaseAccessModel {
     private static final String ONE_OF_THE_SONGS_ERROR =
         "One of the songs has the following error: ";
     private static final String SQL_ERROR =
-        "There was a problem connecting to the org.ql.audioeditor.org.ql" +
-            ".audioeditor.database.";
+        "There was a problem connecting to the database.";
     private static final String NO_SONG_LOADED_ERROR = "No song is loaded.";
     private static final String NO_SUCH_SONG_ERROR =
-        "There is no such song in the org.ql.audioeditor.org.ql.audioeditor" +
-            ".database.";
+        "There is no such song in the database.";
     private static final String ALREADY_EXISTS_ERROR =
         "There is already a song with this path.";
     private static final String PATH_ERROR =
@@ -37,7 +34,7 @@ public class DatabaseAccessModel {
     /**
      * Private data members
      */
-    private Persistence persistence;
+    private final Persistence persistence;
     private boolean invalid;
 
     /**
@@ -50,8 +47,9 @@ public class DatabaseAccessModel {
     }
 
     public void createTable() throws SQLConnectionException {
-        if (!persistence.createTable())
+        if (!persistence.createTable()) {
             throw new SQLConnectionException(SQL_ERROR);
+        }
     }
 
     public SongListModel getSongList() throws SQLConnectionException {
@@ -63,20 +61,22 @@ public class DatabaseAccessModel {
     /**
      * Getter
      *
-     * @return all songs in the org.ql.audioeditor.org.ql.audioeditor.database
-     * if logged in
+     * @return all songs in the database if logged in
      */
     private List<Song> getSongs() throws SQLConnectionException {
         List<Song> songs = persistence.getSongs();
         List<Song> validSongs = new ArrayList<>();
-        if (songs == null)
+        if (songs == null) {
             throw new SQLConnectionException(SQL_ERROR);
+        }
         for (Song s : songs) {
             File f = new File(s.getPath());
-            if (f.exists() && !f.isDirectory())
+            if (f.exists() && !f.isDirectory()) {
                 validSongs.add(s);
-            else
+            }
+            else {
                 persistence.deleteSong(s);
+            }
         }
         invalid = (validSongs.size() < songs.size());
         return validSongs;
@@ -134,14 +134,16 @@ public class DatabaseAccessModel {
 
     private void addSong(Song song)
         throws InvalidOperationException, SQLConnectionException {
-        if (song.getId() == SongPropertiesLoader.getEmptySongId())
+        if (song.getId() == SongPropertiesLoader.getEmptySongId()) {
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
+        }
         else if (getId(song) != SongPropertiesLoader.getDefaultSongId()) {
             throw new InvalidOperationException(ALREADY_EXISTS_ERROR);
         }
         else {
-            if (!persistence.addSong(song))
+            if (!persistence.addSong(song)) {
                 throw new SQLConnectionException(SQL_ERROR);
+            }
             try {
                 Song newSong = getSong(song.getPath());
                 if (newSong == null) {
@@ -181,14 +183,17 @@ public class DatabaseAccessModel {
 
     private void deleteSong(Song song)
         throws InvalidOperationException, SQLConnectionException {
-        if (song.getId() == -1)
+        if (song.getId() == -1) {
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
+        }
         try {
             int id = song.getId();
-            if (getSong(id) == null)
+            if (getSong(id) == null) {
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
-            else if (!persistence.deleteSong(song))
+            }
+            else if (!persistence.deleteSong(song)) {
                 throw new SQLConnectionException(SQL_ERROR);
+            }
         } catch (SQLConnectionException e) {
             throw new SQLConnectionException(SQL_ERROR);
         }
@@ -212,14 +217,17 @@ public class DatabaseAccessModel {
     public void editSong(SongModel sm)
         throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
-        if (s.getId() == -1)
+        if (s.getId() == -1) {
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
+        }
         try {
             int id = s.getId();
-            if (getSong(id) == null)
+            if (getSong(id) == null) {
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
-            else if (!persistence.editSong(s))
+            }
+            else if (!persistence.editSong(s)) {
                 throw new SQLConnectionException(SQL_ERROR);
+            }
         } catch (SQLConnectionException e) {
             throw new SQLConnectionException(SQL_ERROR);
         }
@@ -236,14 +244,12 @@ public class DatabaseAccessModel {
     private int getId(Song song) throws SQLConnectionException {
         String path = song.getPath();
         Song s = getSong(path);
-        if (s != null)
+        if (s != null) {
             return s.getId();
-        else
+        }
+        else {
             return SongPropertiesLoader.getDefaultSongId();
-    }
-
-    public boolean isConnected() {
-        return persistence.isConnected();
+        }
     }
 
     public boolean hasInvalid() {

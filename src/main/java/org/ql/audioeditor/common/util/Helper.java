@@ -4,10 +4,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public final class Helper {
     public static void showDialog(String message) {
@@ -74,19 +78,16 @@ public final class Helper {
     public static String getDir(String path) {
         File file = new File(path);
         File parent = file.getParentFile();
-        if (parent != null)
+        if (parent != null) {
             return parent.getAbsolutePath();
-        else
+        }
+        else {
             return path;
+        }
     }
 
-    public static String getAbsolutePath(URL url) {
-        File f;
-        try {
-            f = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            f = new File(url.getPath());
-        }
-        return f.getAbsolutePath();
+    public static int convertToNumber(String numberString) {
+        return (!numberString.equals("") ?
+            Integer.parseInt(numberString) : 0);
     }
 }

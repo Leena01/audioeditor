@@ -9,14 +9,14 @@ import org.ql.audioeditor.logic.exceptions.MatlabEngineException;
 
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.*;
 
-public class MatlabHandler {
+public final class MatlabHandler {
     private final static String FILE_FORMAT_ERROR =
         "This file type is not supported.";
     private final static String IMAGE_ERROR = "Cannot generate image.";
     private final static String CANNOT_CUT_ERROR = "Cannot cut song.";
     private final static String CLOSE_ERROR = "Error closing Matlab Engine.";
     private static MatlabHandler instance = null;
-    private MatlabEngine eng;
+    private final MatlabEngine eng;
     private double totalSamples;
     private double freq;
 
@@ -27,8 +27,9 @@ public class MatlabHandler {
     }
 
     public static MatlabHandler getInstance(MatlabEngine eng) {
-        if (instance == null)
+        if (instance == null) {
             instance = new MatlabHandler(eng);
+        }
         return instance;
     }
 
@@ -129,10 +130,12 @@ public class MatlabHandler {
     public synchronized void relocateSong(int frame) {
         try {
             eng.putVariable(START_VAR, frame);
-            if (frame <= 0 || frame >= totalSamples)
+            if (frame <= 0 || frame >= totalSamples) {
                 eng.putVariable(EMPTY_VAR, 1);
-            else
+            }
+            else {
                 eng.putVariable(EMPTY_VAR, 0);
+            }
             eng.eval(RELOCATE_SONG);
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,8 +152,8 @@ public class MatlabHandler {
     }
 
     public synchronized void showSpectrogram(double windowSize, double hopSize,
-        double nfft, String window,
-        String imageName, String imageName2) throws MatlabEngineException {
+        double nfft, String window, String imageName, String imageName2)
+        throws MatlabEngineException {
         try {
             eng.putVariable(WINDOW_SIZE_VAR, windowSize);
             eng.putVariable(HOP_SIZE_VAR, hopSize);
@@ -160,6 +163,21 @@ public class MatlabHandler {
             eng.putVariable(SPEC_3D_IMG_VAR, imageName2.toCharArray());
             eng.eval(SHOW_SPECTROGRAM);
             eng.eval(SHOW_SPECTROGRAM_3D);
+        } catch (Exception e) {
+            throw new MatlabEngineException(IMAGE_ERROR);
+        }
+    }
+
+    public synchronized void showChromagram(double windowSize, double hopSize,
+        double nfft, String window, String imageName)
+        throws MatlabEngineException {
+        try {
+            eng.putVariable(WINDOW_SIZE_VAR, windowSize);
+            eng.putVariable(HOP_SIZE_VAR, hopSize);
+            eng.putVariable(NFFT_VAR, nfft);
+            eng.putVariable(WINDOW_VAR, window.toCharArray());
+            eng.putVariable(CHROM_IMG_VAR, imageName.toCharArray());
+            eng.eval(SHOW_CHROMAGRAM);
         } catch (Exception e) {
             throw new MatlabEngineException(IMAGE_ERROR);
         }

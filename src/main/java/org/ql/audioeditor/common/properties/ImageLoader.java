@@ -1,168 +1,170 @@
 package org.ql.audioeditor.common.properties;
 
+import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 public final class ImageLoader {
+    private static final String PATH = new File("").getAbsolutePath();
     private static Properties properties;
     private static InputStream inputStream;
-    private static URL plotImageURL;
-    private static URL specImageURL;
-    private static URL spec3dImageURL;
-    private static URL chromImageURL;
-    private static URL coverURL;
-    private static URL playIconURL;
-    private static URL pauseIconURL;
-    private static URL stopIconURL;
-    private static URL backwardIconURL;
-    private static URL forwardIconURL;
-    private static URL favoriteIconURL;
-    private static URL unfavoriteIconURL;
-    private static URL soundOnIconURL;
-    private static URL soundOffIconURL;
-    private static URL minimizeIconURL;
-    private static URL maximizeIconURL;
-    private static URL normalizeIconURL;
-    private static URL upwardIconURL;
-    private static URL downwardIconURL;
-    private static URL closeIconURL;
+    private static String plotImagePath;
+    private static String specImagePath;
+    private static String spec3dImagePath;
+    private static String chromImagePath;
+    private static Image cover;
+    private static Image playIcon;
+    private static Image pauseIcon;
+    private static Image stopIcon;
+    private static Image backwardIcon;
+    private static Image forwardIcon;
+    private static Image soundOnIcon;
+    private static Image soundOffIcon;
+    private static Image favoriteIcon;
+    private static Image unfavoriteIcon;
+    private static Image minimizeIcon;
+    private static Image maximizeIcon;
+    private static Image normalizeIcon;
+    private static Image upwardIcon;
+    private static Image downwardIcon;
+    private static Image closeIcon;
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
         inputStream =
             ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
-        if (inputStream != null)
+        if (inputStream != null) {
             properties.load(inputStream);
-        else
+        }
+        else {
             throw new FileNotFoundException();
+        }
 
-        plotImageURL = ImageLoader.class.getResource(
-            properties.getProperty("plot.image.name"));
-        specImageURL = ImageLoader.class.getResource(
-            properties.getProperty("spec.image.name"));
-        spec3dImageURL = ImageLoader.class.getResource(
-            properties.getProperty("spec.3d.image.name"));
-        chromImageURL = ImageLoader.class.getResource(
-            properties.getProperty("chrom.image.name"));
-        coverURL = ImageLoader.class.getResource(
-            properties.getProperty("cover.name"));
-        playIconURL = ImageLoader.class.getResource(
-            properties.getProperty("play.icon.name"));
-        pauseIconURL = ImageLoader.class.getResource(
-            properties.getProperty("pause.icon.name"));
-        stopIconURL = ImageLoader.class.getResource(
-            properties.getProperty("stop.icon.name"));
-        backwardIconURL = ImageLoader.class.getResource(
-            properties.getProperty("backward.icon.name"));
-        forwardIconURL = ImageLoader.class.getResource(
-            properties.getProperty("forward.icon.name"));
-        favoriteIconURL = ImageLoader.class.getResource(
-            properties.getProperty("favorite.icon.name"));
-        unfavoriteIconURL = ImageLoader.class.getResource(
-            properties.getProperty("unfavorite.icon.name"));
-        soundOnIconURL = ImageLoader.class.getResource(
-            properties.getProperty("sound.on.icon.name"));
-        soundOffIconURL = ImageLoader.class.getResource(
-            properties.getProperty("sound.off.icon.name"));
-        minimizeIconURL = ImageLoader.class.getResource(
-            properties.getProperty("minimize.icon.name"));
-        maximizeIconURL = ImageLoader.class.getResource(
-            properties.getProperty("maximize.icon.name"));
-        normalizeIconURL = ImageLoader.class.getResource(
-            properties.getProperty("normalize.icon.name"));
-        upwardIconURL = ImageLoader.class.getResource(
-            properties.getProperty("upward.icon.name"));
-        downwardIconURL = ImageLoader.class.getResource(
-            properties.getProperty("downward.icon.name"));
-        closeIconURL = ImageLoader.class.getResource(
-            properties.getProperty("close.icon.name"));
+        plotImagePath = PATH + properties.getProperty("plot.image.name");
+        specImagePath = PATH + properties.getProperty("spec.image.name");
+        spec3dImagePath = PATH + properties.getProperty("spec.3d.image.name");
+        chromImagePath = PATH + properties.getProperty("chrom.image.name");
+        cover = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("cover.name")));
+        playIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("play.icon.name")));
+        pauseIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("pause.icon.name")));
+        stopIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("stop.icon.name")));
+        backwardIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("backward.icon.name")));
+        forwardIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("forward.icon.name")));
+        favoriteIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("favorite.icon.name")));
+        soundOnIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("sound.on.icon.name")));
+        soundOffIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("sound.off.icon.name")));
+        unfavoriteIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("unfavorite.icon.name")));
+        minimizeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("minimize.icon.name")));
+        maximizeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("maximize.icon.name")));
+        normalizeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("normalize.icon.name")));
+        upwardIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("upward.icon.name")));
+        downwardIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("downward.icon.name")));
+        closeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("close.icon.name")));
     }
 
-    public static URL getPlotImageURL() {
-        return plotImageURL;
+    public static String getPlotImagePath() {
+        return plotImagePath;
     }
 
-    public static URL getSpecImageURL() {
-        return specImageURL;
+    public static String getSpecImagePath() {
+        return specImagePath;
     }
 
-    public static URL getSpec3dImageURL() {
-        return spec3dImageURL;
+    public static String getSpec3dImagePath() {
+        return spec3dImagePath;
     }
 
-    public static URL getChromImageURL() {
-        return chromImageURL;
+    public static String getChromImagePath() {
+        return chromImagePath;
     }
 
-    public static URL getCoverURL() {
-        return coverURL;
+    public static Image getCover() {
+        return cover;
     }
 
-    public static URL getPlayIconURL() {
-        return playIconURL;
+    public static Image getPlayIcon() {
+        return playIcon;
     }
 
-    public static URL getPauseIconURL() {
-        return pauseIconURL;
+    public static Image getPauseIcon() {
+        return pauseIcon;
     }
 
-    public static URL getStopIconURL() {
-        return stopIconURL;
+    public static Image getStopIcon() {
+        return stopIcon;
     }
 
-    public static URL getBackwardIconURL() {
-        return backwardIconURL;
+    public static Image getBackwardIcon() {
+        return backwardIcon;
     }
 
-    public static URL getForwardIconURL() {
-        return forwardIconURL;
+    public static Image getForwardIcon() {
+        return forwardIcon;
     }
 
-    public static URL getFavoriteIconURL() {
-        return favoriteIconURL;
+    public static Image getSoundOnIcon() {
+        return soundOnIcon;
     }
 
-    public static URL getUnfavoriteIconURL() {
-        return unfavoriteIconURL;
+    public static Image getSoundOffIcon() {
+        return soundOffIcon;
     }
 
-    public static URL getSoundOnIconURL() {
-        return soundOnIconURL;
+    public static Image getFavoriteIcon() {
+        return favoriteIcon;
     }
 
-    public static URL getSoundOffIconURL() {
-        return soundOffIconURL;
+    public static Image getUnfavoriteIcon() {
+        return unfavoriteIcon;
     }
 
-    public static URL getMinimizeIconURL() {
-        return minimizeIconURL;
+    public static Image getMinimizeIcon() {
+        return minimizeIcon;
     }
 
-    public static URL getMaximizeIconURL() {
-        return maximizeIconURL;
+    public static Image getMaximizeIcon() {
+        return maximizeIcon;
     }
 
-    public static URL getNormalizeIconURL() {
-        return normalizeIconURL;
+    public static Image getNormalizeIcon() {
+        return normalizeIcon;
     }
 
-    public static URL getUpwardIconURL() {
-        return upwardIconURL;
+    public static Image getUpwardIcon() {
+        return upwardIcon;
     }
 
-    public static URL getDownwardIconURL() {
-        return downwardIconURL;
+    public static Image getDownwardIcon() {
+        return downwardIcon;
     }
 
-    public static URL getCloseIconURL() {
-        return closeIconURL;
+    public static Image getCloseIcon() {
+        return closeIcon;
     }
 
     public static void close() throws IOException {
-        if (inputStream != null)
+        if (inputStream != null) {
             inputStream.close();
+        }
     }
 }

@@ -15,8 +15,6 @@ public interface DatabaseDao {
 
     boolean editSong(Song s);
 
-    boolean isConnected();
-
     void commit();
 
     void rollback();

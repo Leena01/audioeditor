@@ -5,10 +5,31 @@ import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.label.Label;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.Border;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import static javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
 import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
@@ -25,47 +46,59 @@ public abstract class Window extends JFrame {
     private static final Dimension IMAGE_SIZE = new Dimension(20, 20);
     private static final Dimension BUTTON_SIZE = new Dimension(30, 20);
     private static final ImageIcon UPWARD_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getUpwardIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getUpwardIcon()),
             IMAGE_SIZE);
     private static final ImageIcon DOWNWARD_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getDownwardIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getDownwardIcon()),
             IMAGE_SIZE);
     private static final ImageIcon MINIMIZE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getMinimizeIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getMinimizeIcon()),
             IMAGE_SIZE);
     private static final ImageIcon MAXIMIZE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getMaximizeIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getMaximizeIcon()),
             IMAGE_SIZE);
     private static final ImageIcon NORMALIZE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getNormalizeIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getNormalizeIcon()),
             IMAGE_SIZE);
     private static final ImageIcon CLOSE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getCloseIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getCloseIcon()),
             IMAGE_SIZE);
     private static final Border MENU_PANEL_BORDER =
         BorderFactory.createEmptyBorder(5, 5, 5, 5);
-    private static Point COMP_COORDS = null;
+    private static Point COMP_COORDINATES = null;
+    private final HorizontalBar titleBar;
+    private final JLabel titleLabel;
+    private final JPanel titlePanel;
+    private final JPanel menuPanel;
+    private final JButton hideButton;
+    private final JButton minimizeButton;
+    private final JButton maximizeButton;
+    private final JButton exitButton;
+    private final MouseMotionListener dragListener = new MouseMotionListener() {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // Do nothing.
+        }
 
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if (getExtendedState() == NORMAL) {
+                Point currCoordinates = e.getLocationOnScreen();
+                setLocation(currCoordinates.x - COMP_COORDINATES.x,
+                    currCoordinates.y - COMP_COORDINATES.y);
+            }
+        }
+    };
     protected boolean isNormal;
-    protected InputMap inputMap;
-    protected ActionMap actionMap;
-    private HorizontalBar titleBar;
-    private JLabel titleLabel;
-    private JPanel titlePanel;
-    private JPanel menuPanel;
-    private JButton hideButton;
-    private JButton minimizeButton;
-    private JButton maximizeButton;
-    private JButton exitButton;
-    private MouseListener maximizeMouseListener = new MouseListener() {
+    private final MouseListener maximizeMouseListener = new MouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {
-            COMP_COORDS = null;
+            COMP_COORDINATES = null;
         }
 
         @Override
         public void mousePressed(MouseEvent me) {
-            COMP_COORDS = me.getPoint();
+            COMP_COORDINATES = me.getPoint();
         }
 
         @Override
@@ -84,21 +117,8 @@ public abstract class Window extends JFrame {
             }
         }
     };
-    private MouseMotionListener dragListener = new MouseMotionListener() {
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // Do nothing.
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            if (getExtendedState() == NORMAL) {
-                Point currCoords = e.getLocationOnScreen();
-                setLocation(currCoords.x - COMP_COORDS.x,
-                    currCoords.y - COMP_COORDS.y);
-            }
-        }
-    };
+    protected InputMap inputMap;
+    protected ActionMap actionMap;
 
     public Window() {
         super();

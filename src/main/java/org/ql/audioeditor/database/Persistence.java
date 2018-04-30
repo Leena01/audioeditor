@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Persistence {
 
-    private DatabaseDao database;
+    private final DatabaseDao database;
 
     public Persistence(DatabaseDao cache) {
         this.database = cache;
@@ -30,10 +30,6 @@ public class Persistence {
 
     public boolean editSong(Song s) {
         return database.editSong(new Song(s));
-    }
-
-    public boolean isConnected() {
-        return database.isConnected();
     }
 
     public void close() {

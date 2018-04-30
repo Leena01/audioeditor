@@ -6,11 +6,20 @@ import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.slider.RangeSlider;
 import org.ql.audioeditor.view.core.textfield.TextField;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -23,6 +32,7 @@ import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 public final class CutSongPanel extends BasicPanel
     implements ChangeListener, ActionListener {
     private static final int MIN = 1;
+    private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(3, 3);
     private static final Dimension FIELD_SIZE = new Dimension(120, 20);
     private static final Border RANGE_SLIDER_BORDER =
         BorderFactory.createEmptyBorder(10, 0, 15, 0);
@@ -35,28 +45,28 @@ public final class CutSongPanel extends BasicPanel
     private static final Border BUTTON_PANEL_BORDER =
         BorderFactory.createEmptyBorder(10, 0, 0, 0);
     private static int MAX;
-    private RangeSlider rangeSlider;
-    private JLabel cutLabel;
-    private JLabel framesLabel;
-    private JLabel secondsLabel;
-    private JLabel fromLabel;
-    private JLabel toLabel;
-    private JTextField fromValue;
-    private JTextField toValue;
-    private JLabel fromSecValue;
-    private JLabel toSecValue;
-    private JButton setButton;
-    private JButton doneButton;
-    private JButton backOptionButton;
-    private JPanel formPanel;
-    private JPanel mainPanel;
-    private JPanel buttonPanel;
+    private final RangeSlider rangeSlider;
+    private final JLabel cutLabel;
+    private final JLabel framesLabel;
+    private final JLabel secondsLabel;
+    private final JLabel fromLabel;
+    private final JLabel toLabel;
+    private final JTextField fromValue;
+    private final JTextField toValue;
+    private final JLabel fromSecValue;
+    private final JLabel toSecValue;
+    private final JButton setButton;
+    private final JButton doneButton;
+    private final JButton backOptionButton;
+    private final JPanel formPanel;
+    private final JPanel mainPanel;
+    private final JPanel buttonPanel;
     private double freq;
 
     public CutSongPanel(ActionListener cutDoneListener, ActionListener b) {
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new FlowLayout());
-        formPanel = new JPanel(new GridLayout(3, 3));
+        formPanel = new JPanel(FORM_PANEL_LAYOUT);
         rangeSlider = new RangeSlider();
         cutLabel = new Label("Cut song");
         framesLabel = new Label("Frames: ");
@@ -98,8 +108,9 @@ public final class CutSongPanel extends BasicPanel
     @Override
     public void stateChanged(ChangeEvent e) {
         Object source = e.getSource();
-        if (source == rangeSlider)
+        if (source == rangeSlider) {
             changeFieldValues();
+        }
     }
 
     @Override

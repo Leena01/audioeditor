@@ -6,7 +6,7 @@ import org.ql.audioeditor.view.core.panel.BasicPanel;
 import java.awt.Color;
 
 public class AnalysisPanel extends BasicPanel {
-    private MatlabHandler matlabHandler;
+    private final MatlabHandler matlabHandler;
 
     public AnalysisPanel(MatlabHandler matlabHandler) {
         super();

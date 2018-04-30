@@ -2,9 +2,19 @@ package org.ql.audioeditor.view.core.slider.ui;
 
 import org.ql.audioeditor.view.core.slider.TrackSlider;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicSliderUI;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 
 import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;

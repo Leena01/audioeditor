@@ -6,16 +6,30 @@ import org.ql.audioeditor.view.core.button.OptionButton;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.text.NumberFormatter;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 
 /**
  * Edit panel
  */
 public final class EditPanel extends BasicPanel {
+    private static final int FIELD_LENGTH = 20;
     private static final String INSTR_TEXT =
         "Please enter the new data for the song with the following ID: %d.";
     private static final Border INFO_PANEL_BORDER =
@@ -24,27 +38,27 @@ public final class EditPanel extends BasicPanel {
         BorderFactory.createEmptyBorder(20, 30, 30, 30);
     private static final Border BOTTOM_PANEL_BORDER =
         BorderFactory.createEmptyBorder(15, 0, 0, 0);
-    private JLabel infoLabel;
-    private JLabel titleLabel;
-    private JLabel trackLabel;
-    private JLabel artistLabel;
-    private JLabel albumLabel;
-    private JLabel yearLabel;
-    private JLabel genreLabel;
-    private JLabel commentLabel;
-    private JTextField titleTextField;
-    private JTextField trackTextField;
-    private JTextField artistTextField;
-    private JTextField albumTextField;
-    private JTextField yearTextField;
-    private JFormattedTextField genreTextField;
-    private JTextField commentTextField;
-    private JButton doneButton;
-    private JPanel formPanel;
-    private JPanel infoPanel;
-    private JPanel mainPanel;
-    private JPanel bottomPanel;
-    private JPanel bodyPanel;
+    private final JLabel infoLabel;
+    private final JLabel titleLabel;
+    private final JLabel trackLabel;
+    private final JLabel artistLabel;
+    private final JLabel albumLabel;
+    private final JLabel yearLabel;
+    private final JLabel genreLabel;
+    private final JLabel commentLabel;
+    private final JTextField titleTextField;
+    private final JTextField trackTextField;
+    private final JTextField artistTextField;
+    private final JTextField albumTextField;
+    private final JTextField yearTextField;
+    private final JFormattedTextField genreTextField;
+    private final JTextField commentTextField;
+    private final JButton doneButton;
+    private final JPanel formPanel;
+    private final JPanel infoPanel;
+    private final JPanel mainPanel;
+    private final JPanel bottomPanel;
+    private final JPanel bodyPanel;
 
     private SongModel selectedSongModel;
 
@@ -72,11 +86,11 @@ public final class EditPanel extends BasicPanel {
         yearLabel = new Label("Year:");
         genreLabel = new Label("Genre:");
         commentLabel = new Label("Comment:");
-        titleTextField = new JTextField("", 20);
-        trackTextField = new JTextField("", 20);
-        artistTextField = new JTextField("", 20);
-        albumTextField = new JTextField("", 20);
-        yearTextField = new JTextField("", 20);
+        titleTextField = new JTextField("", FIELD_LENGTH);
+        trackTextField = new JTextField("", FIELD_LENGTH);
+        artistTextField = new JTextField("", FIELD_LENGTH);
+        albumTextField = new JTextField("", FIELD_LENGTH);
+        yearTextField = new JTextField("", FIELD_LENGTH);
 
         NumberFormatter nf = new NumberFormatter();
         nf.setMinimum(SongPropertiesLoader.getGenreMin());

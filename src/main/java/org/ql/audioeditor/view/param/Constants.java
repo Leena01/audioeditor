@@ -21,6 +21,6 @@ public final class Constants {
     public static final Dimension SPEC_IMAGE_SIZE = new Dimension(360, 270);
     public static final Dimension SPEC_IMAGE_SIZE_MAX = new Dimension(560, 420);
     public static final Object[] OPTIONS = {"Save as...", "Save", "Cancel"};
-    public static int TEXT_FIELD_DIGIT_SIZE_MIN = 1;
-    public static int TEXT_FIELD_DIGIT_SIZE_MAX = 5;
+    public static final int TEXT_FIELD_DIGIT_SIZE_MIN = 1;
+    public static final int TEXT_FIELD_DIGIT_SIZE_MAX = 5;
 }

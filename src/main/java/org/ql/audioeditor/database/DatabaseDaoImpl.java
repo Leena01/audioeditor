@@ -8,9 +8,8 @@ import java.util.List;
 
 public class DatabaseDaoImpl implements DatabaseDao {
     private Connection connection;
-    private Statement stat;
+    private final Statement stat;
     private ResultSet rs;
-    private boolean connected;
 
     /**
      * Constructor
@@ -18,17 +17,13 @@ public class DatabaseDaoImpl implements DatabaseDao {
      * @param driver Drivers
      * @param url    URL
      */
-    public DatabaseDaoImpl(String driver, String url) {
+    public DatabaseDaoImpl(String driver, String url)
+        throws SQLException, ClassNotFoundException {
         connection = null;
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url);
-            connection.setAutoCommit(false);
-            stat = connection.createStatement();
-            connected = true;
-        } catch (ClassNotFoundException | SQLException e) {
-            connected = false;
-        }
+        Class.forName(driver);
+        connection = DriverManager.getConnection(url);
+        connection.setAutoCommit(false);
+        stat = connection.createStatement();
     }
 
     @Override
@@ -145,16 +140,6 @@ public class DatabaseDaoImpl implements DatabaseDao {
             }
             return false;
         }
-    }
-
-    /**
-     * Is connected
-     *
-     * @return true if connected
-     */
-    @Override
-    public boolean isConnected() {
-        return connected;
     }
 
     /**

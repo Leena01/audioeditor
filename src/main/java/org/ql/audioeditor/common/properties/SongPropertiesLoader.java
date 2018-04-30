@@ -36,10 +36,12 @@ public final class SongPropertiesLoader {
         properties = new Properties();
         inputStream =
             ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
-        if (inputStream != null)
+        if (inputStream != null) {
             properties.load(inputStream);
-        else
+        }
+        else {
             throw new FileNotFoundException();
+        }
 
         defaultSongId =
             Integer.parseInt(properties.getProperty("default.song.id"));
@@ -165,7 +167,8 @@ public final class SongPropertiesLoader {
     }
 
     public static void close() throws IOException {
-        if (inputStream != null)
+        if (inputStream != null) {
             inputStream.close();
+        }
     }
 }

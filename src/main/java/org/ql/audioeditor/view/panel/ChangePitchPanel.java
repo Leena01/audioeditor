@@ -5,23 +5,29 @@ import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.slider.FrequencySlider;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 import java.awt.event.ActionListener;
 
 import static org.ql.audioeditor.view.param.Constants.LEVEL_SLIDER_SIZE;
 
 public final class ChangePitchPanel extends BasicPanel {
+    private static final int MAJOR_TICK = 1000;
+    private static final int MINOR_TICK = 500;
     private static final Border INFO_LABEL_BORDER =
         BorderFactory.createEmptyBorder(10, 10, 0, 10);
     private static final String INSTR_TEXT = "Please set the level of the new" +
         " current frequency. The current frequency is %.0f Hz.";
-    private FrequencySlider frequencySlider;
-    private JPanel buttonPanel;
-    private JPanel infoPanel;
-    private JLabel infoLabel;
-    private JButton previewButton;
-    private JButton saveButton;
+    private final FrequencySlider frequencySlider;
+    private final JPanel buttonPanel;
+    private final JPanel infoPanel;
+    private final JLabel infoLabel;
+    private final JButton previewButton;
+    private final JButton saveButton;
 
     public ChangePitchPanel(ActionListener p, ActionListener s) {
         super();
@@ -32,7 +38,7 @@ public final class ChangePitchPanel extends BasicPanel {
         frequencySlider = new FrequencySlider(LEVEL_SLIDER_SIZE,
             SongPropertiesLoader.getFrequencyMin(),
             SongPropertiesLoader.getFrequencyMax(),
-            1000, 500);
+            MAJOR_TICK, MINOR_TICK);
         previewButton = new Button("Preview", p);
         saveButton = new Button("Save modified file", s);
         setStyle();

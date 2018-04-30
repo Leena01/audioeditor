@@ -2,15 +2,17 @@ package org.ql.audioeditor.view.core.slider;
 
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 
-import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToMillis;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.Observable;
 import java.util.Timer;
+import java.util.TimerTask;
+
+import static org.ql.audioeditor.common.util.Helper.formatDuration;
+import static org.ql.audioeditor.common.util.Helper.framesToMillis;
 
 public class SliderTimer extends Observable {
     private static final int MIN = 1;
@@ -26,7 +28,8 @@ public class SliderTimer extends Observable {
     private double freq;
     private int totalLength;
 
-    public SliderTimer(JSlider slider, MatlabHandler matlabHandler, JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
+    public SliderTimer(JSlider slider, MatlabHandler matlabHandler,
+        JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
         this.timer = null;
         this.slider = slider;
         this.matlabHandler = matlabHandler;
@@ -44,7 +47,7 @@ public class SliderTimer extends Observable {
                 double percent = p.x / ((double) slider.getWidth());
                 int range = slider.getMaximum() - slider.getMinimum();
                 double newVal = range * percent;
-                int frame = (int)(slider.getMinimum() + newVal);
+                int frame = (int) (slider.getMinimum() + newVal);
                 changeTime(frame);
                 new Thread(() -> matlabHandler.relocateSong(frame)).start();
             }
@@ -53,9 +56,9 @@ public class SliderTimer extends Observable {
 
     public void schedule(int refreshMillis, double totalSamples, double freq) {
         this.refreshMillis = refreshMillis;
-        MAX = (int)totalSamples;
+        MAX = (int) totalSamples;
         this.freq = freq;
-        this.totalLength = (int)((MAX / freq) * 1000);
+        this.totalLength = (int) ((MAX / freq) * 1000);
         this.totalLengthField.setText(formatDuration(totalLength));
         this.slider.setMinimum(MIN);
         this.slider.setMaximum(MAX);
@@ -65,11 +68,12 @@ public class SliderTimer extends Observable {
     public void resumeTimer() {
         if (refreshMillis != 0) {
             timer = new Timer(isDaemon);
-            timer.scheduleAtFixedRate(new TimerTask(){
+            timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    if (matlabHandler.isPlaying())
+                    if (matlabHandler.isPlaying()) {
                         autoMove();
+                    }
                     else {
                         setChanged();
                         notifyObservers();
@@ -81,8 +85,9 @@ public class SliderTimer extends Observable {
     }
 
     public void pauseTimer() {
-        if (timer != null)
+        if (timer != null) {
             timer.cancel();
+        }
     }
 
     public void stopTimer() {
@@ -96,18 +101,19 @@ public class SliderTimer extends Observable {
 
     private void autoMove() {
         if (slider != null && !slider.getValueIsAdjusting()) {
-            setCurrentTime((int)matlabHandler.getCurrentFrame());
+            setCurrentTime((int) matlabHandler.getCurrentFrame());
         }
     }
 
     public void changeTime(int frame) {
         if (slider != null) {
-            if (frame < MIN)
+            if (frame < MIN) {
                 setCurrentTime(MIN);
-            else if (frame > MAX)
+            } else if (frame > MAX) {
                 setCurrentTime(MAX);
-            else
+            } else {
                 setCurrentTime(frame);
+            }
         }
     }
 

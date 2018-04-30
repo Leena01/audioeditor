@@ -7,7 +7,11 @@ import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.table.SongTable;
 import org.ql.audioeditor.view.panel.ViewSongsPanel;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,9 +22,9 @@ import java.util.List;
 public final class DeleteSongsPanel extends ViewSongsPanel {
     private static final Border SCROLL_PANE_BORDER =
         BorderFactory.createEmptyBorder(15, 20, 10, 20);
-    private SongListModel selectedSongs;
-    private JPanel buttonPanel;
-    private JButton doneButton;
+    private final SongListModel selectedSongs;
+    private final JPanel buttonPanel;
+    private final JButton doneButton;
 
     public DeleteSongsPanel(SongTableModel tm, ActionListener d) {
         super();
@@ -40,8 +44,9 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
     }
 
     public SongListModel getSelectedRows() {
-        if (this.table.getSelectedRow() == -1)
+        if (this.table.getSelectedRow() == -1) {
             return null;
+        }
         List<Song> songs = new ArrayList<>();
         int[] selected = this.table.getSelectedRows();
         for (int i : selected) {

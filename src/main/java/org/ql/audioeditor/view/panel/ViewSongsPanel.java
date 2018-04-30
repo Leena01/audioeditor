@@ -8,7 +8,16 @@ import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.table.SongTable;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -29,6 +38,9 @@ public class ViewSongsPanel extends BasicPanel {
         BorderFactory.createEmptyBorder(3, 20, 0, 20);
     private static final Border SCROLL_PANE_BORDER =
         BorderFactory.createEmptyBorder(6, 20, 10, 20);
+    private final JLabel searchLabel;
+    private final JTextField searchTextField;
+    private final JPanel innerSearchPanel;
     protected TableRowSorter<SongTableModel> sorter;
     protected JTable table;
     protected JPanel outerSearchPanel;
@@ -43,9 +55,6 @@ public class ViewSongsPanel extends BasicPanel {
     private JButton editOptionButton;
     private JButton deleteOptionButton;
     private JButton backOptionButton;
-    private JLabel searchLabel;
-    private JTextField searchTextField;
-    private JPanel innerSearchPanel;
 
     /**
      * Default constructor
@@ -144,12 +153,15 @@ public class ViewSongsPanel extends BasicPanel {
         int selectedRow = this.table.getSelectedRow();
         initTable(slm);
         this.table.setModel(this.tableModel);
-        if (this.table.getRowCount() <= 0)
+        if (this.table.getRowCount() <= 0) {
             return;
-        if (selectedRow >= 0 && selectedRow < this.table.getRowCount())
+        }
+        if (selectedRow >= 0 && selectedRow < this.table.getRowCount()) {
             this.table.setRowSelectionInterval(selectedRow, selectedRow);
-        else
+        }
+        else {
             this.table.setRowSelectionInterval(0, 0);
+        }
     }
 
     /**
@@ -168,8 +180,9 @@ public class ViewSongsPanel extends BasicPanel {
      * @return selected items
      */
     public SongModel getSelectedRow() {
-        if (table.getSelectedRow() == -1)
+        if (table.getSelectedRow() == -1) {
             return null;
+        }
         selected = new SongModel(tableModel.getRow(table.getSelectedRow()));
         return selected;
     }

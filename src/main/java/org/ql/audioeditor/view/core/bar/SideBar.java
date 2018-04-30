@@ -1,16 +1,20 @@
 package org.ql.audioeditor.view.core.bar;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 
 import static org.ql.audioeditor.common.util.Helper.fillColor;
 
 public class SideBar extends JPanel {
     private static final Border BORDER =
-            BorderFactory.createMatteBorder(0, 0, 0, 3, Color.DARK_GRAY);
+        BorderFactory.createMatteBorder(0, 0, 0, 3, Color.DARK_GRAY);
+
     public SideBar() {
-        FlowLayout layout = (FlowLayout)getLayout();
+        FlowLayout layout = (FlowLayout) getLayout();
         layout.setVgap(0);
         layout.setHgap(0);
         setBorder(BORDER);

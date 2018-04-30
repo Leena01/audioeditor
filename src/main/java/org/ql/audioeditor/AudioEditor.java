@@ -15,12 +15,16 @@ import org.ql.audioeditor.logic.exceptions.SQLConnectionException;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.MainWindow;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
-import static org.ql.audioeditor.common.util.Helper.getAbsolutePath;
 import static org.ql.audioeditor.common.util.Helper.showDialog;
 
 public class AudioEditor {
+    // private static final String PATH = "C:\\Users\\livix\\Desktop" +
+    //     "\\audioeditor\\src\\main\\resources";
+    private static final String PATH = new File("").getAbsolutePath();
     private static final String CONFIG_PROPERTIES_FILE =
         "/config/config.properties";
     private static final String SONG_PROPERTIES_FILE =
@@ -31,50 +35,47 @@ public class AudioEditor {
         "Matlab connection error.";
     private static final String CANNOT_READ_PROPERIES_ERROR =
         "Properties file not found.";
+    private static final String DATABASE_CONNECTION_FAILED =
+        "Database connection failed.";
 
     public static void main(String s[]) {
         try {
             ConfigPropertiesLoader.init(CONFIG_PROPERTIES_FILE);
             SongPropertiesLoader.init(SONG_PROPERTIES_FILE);
             ImageLoader.init(IMAGES_PROPERTIES_FILE);
-            MatlabEngine eng;
             final DatabaseDao database =
                 new DatabaseDaoImpl(ConfigPropertiesLoader.getDriver(),
-                    ConfigPropertiesLoader.getJdbc() +
-                        getAbsolutePath(ConfigPropertiesLoader.getUrl()));
+                    ConfigPropertiesLoader.getJdbc() + PATH +
+                        ConfigPropertiesLoader.getUrl());
             // DatabaseDao database = new MockDatabase();
             final Cache cache = new Cache(database,
                 ConfigPropertiesLoader.getRefreshMillis());
             final Persistence persistence = new Persistence(cache);
             final DatabaseAccessModel databaseAccessModel =
                 new DatabaseAccessModel(persistence);
-            MatlabHandler matlabHandler;
-            MainWindow mainWindow;
-
-            if (!databaseAccessModel.isConnected())
-                showDialog("Error: DatabaseDao connection failed.");
-            else {
-                try {
-                    databaseAccessModel.createTable();
-                    eng = MatlabEngine.startMatlab();
-                    matlabHandler = MatlabHandler.getInstance(eng);
-                    matlabHandler.init();
-                    mainWindow =
-                        new MainWindow(databaseAccessModel, matlabHandler);
-                    mainWindow.run();
-                } catch (MatlabEngineException | SQLConnectionException mee) {
-                    showDialog(mee.getMessage());
-                } catch (EngineException ee) {
-                    showDialog(MATLAB_CONNECTION_ERROR);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            MatlabEngine eng;
+            try {
+                databaseAccessModel.createTable();
+                eng = MatlabEngine.startMatlab();
+                MatlabHandler matlabHandler = MatlabHandler.getInstance(eng);
+                matlabHandler.init();
+                MainWindow mainWindow =
+                    new MainWindow(databaseAccessModel, matlabHandler);
+                mainWindow.run();
+            } catch (MatlabEngineException | SQLConnectionException mee) {
+                showDialog(mee.getMessage());
+            } catch (EngineException ee) {
+                showDialog(MATLAB_CONNECTION_ERROR);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             ConfigPropertiesLoader.close();
             SongPropertiesLoader.close();
             ImageLoader.close();
         } catch (IOException ioe) {
             showDialog(CANNOT_READ_PROPERIES_ERROR);
+        } catch (ClassNotFoundException | SQLException e) {
+            showDialog(DATABASE_CONNECTION_FAILED);
         }
     }
 }

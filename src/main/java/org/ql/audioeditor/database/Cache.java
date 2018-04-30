@@ -10,7 +10,7 @@ import java.util.TimerTask;
  * Cache for refreshing data
  */
 public class Cache implements DatabaseDao {
-    private DatabaseDao database;
+    private final DatabaseDao database;
     private Timer timer;
     private int interval;
     private List<Song> songs;
@@ -55,11 +55,6 @@ public class Cache implements DatabaseDao {
         boolean success = database.editSong(s);
         refreshCache();
         return success;
-    }
-
-    @Override
-    public boolean isConnected() {
-        return database.isConnected();
     }
 
     @Override

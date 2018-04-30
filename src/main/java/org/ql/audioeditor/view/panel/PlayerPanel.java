@@ -11,12 +11,31 @@ import org.ql.audioeditor.view.core.slider.TimeLabel;
 import org.ql.audioeditor.view.core.slider.TrackSlider;
 import org.ql.audioeditor.view.core.slider.VolumeSlider;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
@@ -47,31 +66,31 @@ class PlayerPanel extends BasicPanel
     private static final Dimension SOUND_BUTTON_SIZE = new Dimension(20, 20);
 
     private static final ImageIcon PLAY_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getPlayIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getPlayIcon()),
             BUTTON_SIZE);
     private static final ImageIcon PAUSE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getPauseIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getPauseIcon()),
             BUTTON_SIZE);
     private static final ImageIcon STOP_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getStopIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getStopIcon()),
             BUTTON_SIZE);
     private static final ImageIcon BACKWARD_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getBackwardIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getBackwardIcon()),
             BUTTON_SIZE);
     private static final ImageIcon FORWARD_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getForwardIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getForwardIcon()),
             BUTTON_SIZE);
     private static final ImageIcon FAVORITE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getFavoriteIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getFavoriteIcon()),
             BUTTON_SIZE);
     private static final ImageIcon UNFAVORITE_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getUnfavoriteIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getUnfavoriteIcon()),
             BUTTON_SIZE);
     private static final ImageIcon SOUND_ON_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIcon()),
             SOUND_BUTTON_SIZE);
     private static final ImageIcon SOUND_OFF_ICON =
-        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOffIconURL()),
+        resizeImageIcon(new ImageIcon(ImageLoader.getSoundOffIcon()),
             SOUND_BUTTON_SIZE);
 
     private static final Border MEDIA_CONTROL_PANEL_BORDER =
@@ -82,31 +101,31 @@ class PlayerPanel extends BasicPanel
         BorderFactory.createEmptyBorder(0, 0, 0, 10);
     private static final Border TOTAL_LENGTH_FIELD_BORDER =
         BorderFactory.createEmptyBorder(0, 10, 0, 0);
-    private static Dimension FIELD_DIMENSION = new Dimension(80, 10);
+    private static final Dimension FIELD_DIMENSION = new Dimension(80, 10);
 
-    private JLabel timeField;
-    private JLabel totalLengthField;
-    private TrackSlider trackSlider;
-    private JButton playButton;
-    private JButton pauseButton;
-    private JButton stopButton;
-    private JButton backwardButton;
-    private JButton forwardButton;
-    private JButton favoriteButton;
-    private JButton unfavoriteButton;
-    private JButton soundOnButton;
-    private JButton soundOffButton;
-    private JPanel volumePanel;
-    private JPanel buttonPanel;
-    private HorizontalBar mediaControlPanel;
-    private VolumeSlider volumeSlider;
-    private MatlabHandler matlabHandler;
-    private SliderTimer sliderTimer;
-    private GridBagConstraints c;
-    private GridBagLayout gridBag;
+    private final JLabel timeField;
+    private final JLabel totalLengthField;
+    private final TrackSlider trackSlider;
+    private final JButton playButton;
+    private final JButton pauseButton;
+    private final JButton stopButton;
+    private final JButton backwardButton;
+    private final JButton forwardButton;
+    private final JButton favoriteButton;
+    private final JButton unfavoriteButton;
+    private final JButton soundOnButton;
+    private final JButton soundOffButton;
+    private final JPanel volumePanel;
+    private final JPanel buttonPanel;
+    private final HorizontalBar mediaControlPanel;
+    private final VolumeSlider volumeSlider;
+    private final MatlabHandler matlabHandler;
+    private final SliderTimer sliderTimer;
+    private final GridBagConstraints c;
+    private final GridBagLayout gridBag;
+    private final InputMap inputMap;
+    private final ActionMap actionMap;
     private Thread playbackThread;
-    private InputMap inputMap;
-    private ActionMap actionMap;
     private int framesToSkip;
     private int recentVolumeLevel;
 
@@ -331,10 +350,12 @@ class PlayerPanel extends BasicPanel
         };
         Action pauseAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (matlabHandler.isPlaying())
+                if (matlabHandler.isPlaying()) {
                     pauseSong();
-                else
+                }
+                else {
                     playSong();
+                }
             }
         };
 
@@ -353,6 +374,11 @@ class PlayerPanel extends BasicPanel
         actionMap.put(VOLUME_DOWN, volumeDownAction);
         inputMap.put(spaceKeyStroke, PAUSE);
         actionMap.put(PAUSE, pauseAction);
+        /* registerKeyboardAction(
+            pauseAction,
+            KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
+        ); */
     }
 
     private void initInnerListeners() {

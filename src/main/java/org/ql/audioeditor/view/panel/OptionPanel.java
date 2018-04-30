@@ -8,19 +8,21 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
 public final class OptionPanel extends BasicPanel {
-    private OptionButton mainMenuOptionButton;
-    private OptionButton openFileOptionButton;
-    private OptionButton viewSongsOptionButton;
-    private OptionButton showDataButton;
-    private OptionButton changePitchOptionButton;
-    private OptionButton cutOptionButton;
-    private OptionButton fftOptionButton;
-    private OptionButton chromaOptionButton;
-    private OptionButton analyzeOptionButton;
+    private final OptionButton mainMenuOptionButton;
+    private final OptionButton openFileOptionButton;
+    private final OptionButton viewSongsOptionButton;
+    private final OptionButton showDataButton;
+    private final OptionButton changePitchOptionButton;
+    private final OptionButton cutOptionButton;
+    private final OptionButton fftOptionButton;
+    private final OptionButton chromaOptionButton;
+    private final OptionButton analyzeOptionButton;
     private GridBagConstraints c;
 
-    public OptionPanel(ActionListener mm, ActionListener of, ActionListener vs, ActionListener sd, ActionListener cp,
-                       ActionListener cf, ActionListener fft, ActionListener cg, ActionListener as) {
+    public OptionPanel(ActionListener mm, ActionListener of, ActionListener vs,
+        ActionListener sd, ActionListener cp,
+        ActionListener cf, ActionListener fft, ActionListener cg,
+        ActionListener as) {
         mainMenuOptionButton = new OptionButton("Main menu", mm);
         openFileOptionButton = new OptionButton("Open file", of);
         viewSongsOptionButton = new OptionButton("View favorite songs", vs);
