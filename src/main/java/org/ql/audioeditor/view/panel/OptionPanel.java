@@ -7,6 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
+/**
+ * Menu.
+ */
 public final class OptionPanel extends BasicPanel {
     private final OptionButton mainMenuOptionButton;
     private final OptionButton openFileOptionButton;

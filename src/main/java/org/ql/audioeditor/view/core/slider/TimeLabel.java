@@ -5,6 +5,9 @@ import org.ql.audioeditor.view.core.label.Label;
 import java.awt.Color;
 import java.awt.Dimension;
 
+/**
+ * Time label.
+ */
 public class TimeLabel extends Label {
     public TimeLabel(Dimension d, int horizontalAlignment) {
         super("", horizontalAlignment);

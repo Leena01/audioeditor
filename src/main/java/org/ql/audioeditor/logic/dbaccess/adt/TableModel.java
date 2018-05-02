@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * General Table Model
+ * General table model.
+ *
+ * @param <E> Row type
  */
 public abstract class TableModel<E> extends AbstractTableModel {
-    final protected List<String> columnNames = new ArrayList<>();
+    protected final List<String> columnNames = new ArrayList<>();
     protected List<E> entries = new ArrayList<>();
 
     @Override
@@ -38,17 +40,17 @@ public abstract class TableModel<E> extends AbstractTableModel {
     public abstract Object getValueAt(int rowIndex, int columnIndex);
 
     /**
-     * Return the item selected
+     * Return the item selected.
      *
      * @param rowIndex Index of row selected
-     * @return the item selected
+     * @return The item selected
      */
     public E getRow(int rowIndex) {
         return entries.get(rowIndex);
     }
 
     /**
-     * Add items to list
+     * Add items to list.
      *
      * @param listModel List model
      */
@@ -57,17 +59,21 @@ public abstract class TableModel<E> extends AbstractTableModel {
         int firstRow = entries.size();
         entries.addAll(items);
         int lastRow = entries.size() - 1;
-        fireTableRowsInserted(firstRow, lastRow);
+        if (firstRow <= lastRow) {
+            fireTableRowsInserted(firstRow, lastRow);
+        }
     }
 
     /**
-     * Clear rows
+     * Clear rows.
      */
     public void clear() {
-        if (entries.size() == 0)
+        if (entries.size() == 0) {
             return;
+        }
         int lastRow = entries.size() - 1;
         entries.clear();
         fireTableRowsDeleted(0, lastRow);
     }
 }
+

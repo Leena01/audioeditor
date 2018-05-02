@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
 
+/**
+ * Label.
+ */
 public class Label extends JLabel {
     private static final Color FONT_COLOR = Color.LIGHT_GRAY;
 

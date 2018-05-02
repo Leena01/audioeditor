@@ -15,13 +15,16 @@ import java.awt.event.ActionListener;
 
 import static org.ql.audioeditor.view.param.Constants.LEVEL_SLIDER_SIZE;
 
+/**
+ * Panel for making changes in pitch/speed.
+ */
 public final class ChangePitchPanel extends BasicPanel {
     private static final int MAJOR_TICK = 1000;
     private static final int MINOR_TICK = 500;
     private static final Border INFO_LABEL_BORDER =
         BorderFactory.createEmptyBorder(10, 10, 0, 10);
-    private static final String INSTR_TEXT = "Please set the level of the new" +
-        " current frequency. The current frequency is %.0f Hz.";
+    private static final String INSTR_TEXT = "Please set the level of the new"
+        + " current frequency. The current frequency is %.0f Hz.";
     private final FrequencySlider frequencySlider;
     private final JPanel buttonPanel;
     private final JPanel infoPanel;

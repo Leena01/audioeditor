@@ -29,7 +29,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 /**
- * View list of songs
+ * View the list of songs stored in the database.
  */
 public class ViewSongsPanel extends BasicPanel {
     private static final Dimension SEARCH_TEXT_FIELD_SIZE =
@@ -57,7 +57,7 @@ public class ViewSongsPanel extends BasicPanel {
     private JButton backOptionButton;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     protected ViewSongsPanel() {
         super();
@@ -112,7 +112,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param tm Table model
      */
@@ -145,7 +145,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Set list
+     * Set list.
      *
      * @param slm Song list model
      */
@@ -165,7 +165,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Initialize table
+     * Initialize table.
      *
      * @param slm Song list model
      */
@@ -175,7 +175,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Getter
+     * Getter.
      *
      * @return selected items
      */

@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Transparent button.
+ */
 public class TransparentButton extends JButton implements MouseListener {
     private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
     private static final Color HOVER_COLOR = Color.WHITE;

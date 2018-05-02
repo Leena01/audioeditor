@@ -9,12 +9,23 @@ import org.ql.audioeditor.logic.dbaccess.adt.ListModel;
 import java.io.File;
 import java.util.List;
 
-public class SongListModel extends ListModel<Song> {
+/**
+ * Model class to encapsulate a list of songs.
+ */
+public final class SongListModel extends ListModel<Song> {
 
+    /**
+     * Constructor.
+     */
     public SongListModel() {
         super();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param files List of files to save as songs
+     */
     public SongListModel(List<File> files) {
         super();
         for (File f : files) {
@@ -36,8 +47,8 @@ public class SongListModel extends ListModel<Song> {
                     artist = id3v1Tag.getArtist();
                     album = id3v1Tag.getAlbum();
                     year = id3v1Tag.getYear();
-                    genre = id3v1Tag.getGenre() + " (" +
-                        id3v1Tag.getGenreDescription() + ")";
+                    genre = id3v1Tag.getGenre() + " ("
+                        + id3v1Tag.getGenreDescription() + ")";
                     comment = id3v1Tag.getComment();
                 }
             } catch (Exception ignored) {

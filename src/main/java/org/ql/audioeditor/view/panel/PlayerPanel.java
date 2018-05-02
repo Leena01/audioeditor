@@ -2,6 +2,7 @@ package org.ql.audioeditor.view.panel;
 
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+import org.ql.audioeditor.common.util.DoubleActionTool;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
@@ -44,6 +45,9 @@ import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
 import static org.ql.audioeditor.common.util.Helper.secondsToFrames;
 import static org.ql.audioeditor.view.param.Constants.VOLUME_SLIDER_SIZE;
 
+/**
+ * Panel for playing media.
+ */
 class PlayerPanel extends BasicPanel
     implements MouseListener, ChangeListener, Observer {
     private static final String MOVE_BACKWARD = "moveBackwardAction";
@@ -51,6 +55,8 @@ class PlayerPanel extends BasicPanel
     private static final String VOLUME_UP = "volumeUpAction";
     private static final String VOLUME_DOWN = "volumeDownAction";
     private static final String PAUSE = "pauseAction";
+    private static final String STOP = "stopAction";
+    private static final String MUTE = "muteAction";
     private static final int NULL_VOLUME = 0;
     private static final int VOLUME_MIN = SongPropertiesLoader.getVolumeMin();
     private static final int VOLUME_MAX = SongPropertiesLoader.getVolumeMax();
@@ -128,6 +134,7 @@ class PlayerPanel extends BasicPanel
     private Thread playbackThread;
     private int framesToSkip;
     private int recentVolumeLevel;
+    private boolean isPlaying;
 
     PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel,
         InputMap inputMap, ActionMap actionMap, ActionListener fb,
@@ -147,6 +154,7 @@ class PlayerPanel extends BasicPanel
         this.actionMap = actionMap;
         framesToSkip = 0;
         recentVolumeLevel = VOLUME_INIT;
+        isPlaying = false;
 
         timeField = new TimeLabel(FIELD_DIMENSION, SwingConstants.RIGHT);
         trackSlider = new TrackSlider(JSlider.HORIZONTAL);
@@ -227,7 +235,6 @@ class PlayerPanel extends BasicPanel
             JSlider vs = (JSlider) source;
             float level = vs.getValue() / CONVERSION_RATE;
             if (!vs.getValueIsAdjusting()) {
-                playbackThread.interrupt();
                 playbackThread =
                     new Thread(() -> matlabHandler.changeVolume(level));
                 playbackThread.start();
@@ -239,164 +246,6 @@ class PlayerPanel extends BasicPanel
     public void update(Observable obs, Object obj) {
         pauseButton.setVisible(false);
         playButton.setVisible(true);
-    }
-
-    void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
-        stopSong();
-        mediaControlPanel.setVisible(true);
-        framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
-        sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
-        trackSlider.setImage(plot);
-        initKeyBindings();
-    }
-
-    void setFavorite(boolean isFavorite) {
-        if (isFavorite) {
-            favoriteButton.setVisible(false);
-            unfavoriteButton.setVisible(true);
-        }
-        else {
-            unfavoriteButton.setVisible(false);
-            favoriteButton.setVisible(true);
-        }
-    }
-
-    private void playSong() {
-        playbackThread.interrupt();
-        playButton.setVisible(false);
-        pauseButton.setVisible(true);
-        sliderTimer.resumeTimer();
-        playbackThread = new Thread(() -> matlabHandler.resumeSong());
-        playbackThread.start();
-    }
-
-    void pauseSong() {
-        playbackThread.interrupt();
-        pauseButton.setVisible(false);
-        playButton.setVisible(true);
-        sliderTimer.pauseTimer();
-        playbackThread = new Thread(() -> matlabHandler.pauseSong());
-        playbackThread.start();
-    }
-
-    private void stopSong() {
-        playbackThread.interrupt();
-        pauseButton.setVisible(false);
-        playButton.setVisible(true);
-        sliderTimer.stopTimer();
-        playbackThread = new Thread(() -> matlabHandler.stopSong());
-        playbackThread.start();
-    }
-
-    private void moveBackward() {
-        playbackThread.interrupt();
-        int newValue = trackSlider.getValue() - framesToSkip;
-        sliderTimer.changeTime(newValue);
-        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
-        playbackThread.start();
-    }
-
-    private void moveForward() {
-        playbackThread.interrupt();
-        int newValue = trackSlider.getValue() + framesToSkip;
-        sliderTimer.changeTime(newValue);
-        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
-        playbackThread.start();
-    }
-
-    private void volumeUp() {
-        recentVolumeLevel = volumeSlider.getValue() + LEVELS_TO_SKIP;
-        volumeSlider.setValue(recentVolumeLevel);
-    }
-
-    private void volumeDown() {
-        recentVolumeLevel = volumeSlider.getValue() - LEVELS_TO_SKIP;
-        volumeSlider.setValue(recentVolumeLevel);
-    }
-
-    private void turnVolumeOff() {
-        recentVolumeLevel = volumeSlider.getValue();
-        soundOnButton.setVisible(false);
-        soundOffButton.setVisible(true);
-        volumeSlider.setValue(NULL_VOLUME);
-    }
-
-    private void turnVolumeOn() {
-        soundOffButton.setVisible(false);
-        soundOnButton.setVisible(true);
-        volumeSlider.setValue(recentVolumeLevel);
-    }
-
-    private void initKeyBindings() {
-        Action moveBackwardAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                moveBackward();
-            }
-        };
-        Action moveForwardAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                moveForward();
-            }
-        };
-        Action volumeUpAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                volumeUp();
-            }
-        };
-        Action volumeDownAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                volumeDown();
-            }
-        };
-        Action pauseAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                if (matlabHandler.isPlaying()) {
-                    pauseSong();
-                }
-                else {
-                    playSong();
-                }
-            }
-        };
-
-        KeyStroke leftKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0);
-        KeyStroke rightKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
-        KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
-        KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
-        KeyStroke spaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
-        inputMap.put(leftKeyStroke, MOVE_BACKWARD);
-        actionMap.put(MOVE_BACKWARD, moveBackwardAction);
-        inputMap.put(rightKeyStroke, MOVE_FORWARD);
-        actionMap.put(MOVE_FORWARD, moveForwardAction);
-        inputMap.put(upKeyStroke, VOLUME_UP);
-        actionMap.put(VOLUME_UP, volumeUpAction);
-        inputMap.put(downKeyStroke, VOLUME_DOWN);
-        actionMap.put(VOLUME_DOWN, volumeDownAction);
-        inputMap.put(spaceKeyStroke, PAUSE);
-        actionMap.put(PAUSE, pauseAction);
-        /* registerKeyboardAction(
-            pauseAction,
-            KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
-            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
-        ); */
-    }
-
-    private void initInnerListeners() {
-        sliderTimer.addObserver(this);
-        volumeSlider.addChangeListener(this);
-        backwardButton.addMouseListener(this);
-        playButton.addMouseListener(this);
-        pauseButton.addMouseListener(this);
-        stopButton.addMouseListener(this);
-        forwardButton.addMouseListener(this);
-        soundOnButton.addMouseListener(this);
-        soundOffButton.addMouseListener(this);
-    }
-
-    private void init() {
-        pauseButton.setVisible(false);
-        soundOffButton.setVisible(false);
-        setFavorite(false);
     }
 
     @Override
@@ -435,5 +284,202 @@ class PlayerPanel extends BasicPanel
         volumePanel.add(volumeSlider);
         mediaControlPanel.add(buttonPanel, BorderLayout.CENTER);
         mediaControlPanel.add(volumePanel, BorderLayout.EAST);
+    }
+
+    void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
+        stopSong();
+        mediaControlPanel.setVisible(true);
+        framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
+        sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
+        trackSlider.setImage(plot);
+        initKeyBindings();
+    }
+
+    void setFavorite(boolean isFavorite) {
+        if (isFavorite) {
+            favoriteButton.setVisible(false);
+            unfavoriteButton.setVisible(true);
+        }
+        else {
+            unfavoriteButton.setVisible(false);
+            favoriteButton.setVisible(true);
+        }
+    }
+
+    private void playSong() {
+        playButton.setVisible(false);
+        pauseButton.setVisible(true);
+        sliderTimer.resumeTimer();
+        playbackThread = new Thread(() -> matlabHandler.resumeSong());
+        playbackThread.start();
+        isPlaying = true;
+    }
+
+    void pauseSong() {
+        pauseButton.setVisible(false);
+        playButton.setVisible(true);
+        sliderTimer.pauseTimer();
+        playbackThread = new Thread(() -> matlabHandler.pauseSong());
+        playbackThread.start();
+        isPlaying = false;
+    }
+
+    private void stopSong() {
+        pauseButton.setVisible(false);
+        playButton.setVisible(true);
+        sliderTimer.stopTimer();
+        playbackThread = new Thread(() -> {
+            matlabHandler.stopSong();
+            matlabHandler.relocateSong(sliderTimer.getMin());
+        });
+        playbackThread.start();
+        isPlaying = false;
+    }
+
+    private void moveBackward() {
+        int newValue = trackSlider.getValue() - framesToSkip;
+        sliderTimer.changeTime(newValue);
+        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
+        playbackThread.start();
+    }
+
+    private void moveForward() {
+        int newValue = trackSlider.getValue() + framesToSkip;
+        sliderTimer.changeTime(newValue);
+        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
+        playbackThread.start();
+    }
+
+    private void volumeUp() {
+        recentVolumeLevel = volumeSlider.getValue() + LEVELS_TO_SKIP;
+        volumeSlider.setValue(recentVolumeLevel);
+    }
+
+    private void volumeDown() {
+        recentVolumeLevel = volumeSlider.getValue() - LEVELS_TO_SKIP;
+        volumeSlider.setValue(recentVolumeLevel);
+    }
+
+    private void turnVolumeOff() {
+        recentVolumeLevel = volumeSlider.getValue();
+        soundOnButton.setVisible(false);
+        soundOffButton.setVisible(true);
+        volumeSlider.setValue(NULL_VOLUME);
+    }
+
+    private void turnVolumeOn() {
+        soundOffButton.setVisible(false);
+        soundOnButton.setVisible(true);
+        volumeSlider.setValue(recentVolumeLevel);
+    }
+
+    private boolean isMute() {
+        return volumeSlider.getValue() == NULL_VOLUME;
+    }
+
+    private boolean isPlaying() {
+        return isPlaying;
+    }
+
+    private void initKeyBindings() {
+        Action moveBackwardAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    moveBackward();
+                }
+            }
+        };
+        Action moveForwardAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    moveForward();
+                }
+            }
+        };
+        Action volumeUpAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    volumeUp();
+                }
+            }
+        };
+        Action volumeDownAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    volumeDown();
+                }
+            }
+        };
+        Action pauseAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    if (isPlaying()) {
+                        pauseSong();
+                    }
+                    else {
+                        playSong();
+                    }
+                }
+            }
+        };
+        Action stopAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    stopSong();
+                }
+            }
+        };
+        Action muteAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (DoubleActionTool.isDoubleAction(e)) {
+                    if (isMute()) {
+                        turnVolumeOn();
+                    }
+                    else {
+                        turnVolumeOff();
+                    }
+                }
+            }
+        };
+
+        KeyStroke leftKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0);
+        KeyStroke rightKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
+        KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+        KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
+        KeyStroke pKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_P, 0);
+        KeyStroke sKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, 0);
+        KeyStroke mKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_M, 0);
+        inputMap.put(leftKeyStroke, MOVE_BACKWARD);
+        actionMap.put(MOVE_BACKWARD, moveBackwardAction);
+        inputMap.put(rightKeyStroke, MOVE_FORWARD);
+        actionMap.put(MOVE_FORWARD, moveForwardAction);
+        inputMap.put(upKeyStroke, VOLUME_UP);
+        actionMap.put(VOLUME_UP, volumeUpAction);
+        inputMap.put(downKeyStroke, VOLUME_DOWN);
+        actionMap.put(VOLUME_DOWN, volumeDownAction);
+        inputMap.put(pKeyStroke, PAUSE);
+        actionMap.put(PAUSE, pauseAction);
+        inputMap.put(sKeyStroke, STOP);
+        actionMap.put(STOP, stopAction);
+        inputMap.put(mKeyStroke, MUTE);
+        actionMap.put(MUTE, muteAction);
+    }
+
+    private void initInnerListeners() {
+        sliderTimer.addObserver(this);
+        volumeSlider.addChangeListener(this);
+        backwardButton.addMouseListener(this);
+        playButton.addMouseListener(this);
+        pauseButton.addMouseListener(this);
+        stopButton.addMouseListener(this);
+        forwardButton.addMouseListener(this);
+        soundOnButton.addMouseListener(this);
+        soundOffButton.addMouseListener(this);
+    }
+
+    private void init() {
+        pauseButton.setVisible(false);
+        soundOffButton.setVisible(false);
+        setFavorite(false);
     }
 }

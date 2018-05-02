@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * DatabaseAccessModel Backend: controls data acquired from the database
+ * Backend: controls data acquired from the database.
  */
-public class DatabaseAccessModel {
+public final class DatabaseAccessModel {
     /**
-     * Constants
+     * Error messages.
      */
     private static final String ONE_OF_THE_SONGS_ERROR =
         "One of the songs has the following error: ";
@@ -32,13 +32,13 @@ public class DatabaseAccessModel {
         "The path specified does not represent a valid file.";
 
     /**
-     * Private data members
+     * Private data members.
      */
     private final Persistence persistence;
     private boolean invalid;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param persistence Persistence
      */
@@ -46,12 +46,24 @@ public class DatabaseAccessModel {
         this.persistence = persistence;
     }
 
+    /**
+     * Create table during initialization.
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
     public void createTable() throws SQLConnectionException {
         if (!persistence.createTable()) {
             throw new SQLConnectionException(SQL_ERROR);
         }
     }
 
+    /**
+     * Get list of songs.
+     *
+     * @return Song list model
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
     public SongListModel getSongList() throws SQLConnectionException {
         SongListModel slm = new SongListModel();
         slm.setSongs(getSongs());
@@ -59,9 +71,9 @@ public class DatabaseAccessModel {
     }
 
     /**
-     * Getter
+     * Getter.
      *
-     * @return all songs in the database if logged in
+     * @return All songs in the database
      */
     private List<Song> getSongs() throws SQLConnectionException {
         List<Song> songs = persistence.getSongs();
@@ -83,10 +95,10 @@ public class DatabaseAccessModel {
     }
 
     /**
-     * Getter
+     * Getter.
      *
      * @param id ID of a certain song
-     * @return The actual song if logged in
+     * @return The actual song
      */
     private Song getSong(int id) throws SQLConnectionException {
         try {
@@ -101,10 +113,10 @@ public class DatabaseAccessModel {
     }
 
     /**
-     * Getter
+     * Getter.
      *
      * @param path File path to a certain song
-     * @return The actual song if logged in
+     * @return The actual song
      */
     private Song getSong(String path) throws SQLConnectionException {
         try {
@@ -118,10 +130,27 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Checks whether a certain song is still valid according to its path.
+     *
+     * @param sm Song model
+     * @return Logical value
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
     public boolean isSongValid(SongModel sm) throws SQLConnectionException {
         return (getSong(sm.getPath()) != null);
     }
 
+    /**
+     * Add song contained in the provided song model to the database.
+     *
+     * @param sm Song model
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     public void addSong(SongModel sm)
         throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
@@ -132,6 +161,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Add song to the database.
+     *
+     * @param song The actual song
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     private void addSong(Song song)
         throws InvalidOperationException, SQLConnectionException {
         if (song.getId() == SongPropertiesLoader.getEmptySongId()) {
@@ -156,6 +194,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Add multiple songs to the database.
+     *
+     * @param slm Song list model
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     public void addSongs(SongListModel slm)
         throws InvalidOperationException, SQLConnectionException {
         List<Song> songs = slm.getItems();
@@ -171,6 +218,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Delete song contained in the provided song model from database.
+     *
+     * @param sm Song list model
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     public void deleteSong(SongModel sm)
         throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
@@ -181,6 +237,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Delete song from the database.
+     *
+     * @param song The actual song
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     private void deleteSong(Song song)
         throws InvalidOperationException, SQLConnectionException {
         if (song.getId() == -1) {
@@ -199,6 +264,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Delete multiple songs from the database.
+     *
+     * @param slm Song list model
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     public void deleteSongs(SongListModel slm)
         throws InvalidOperationException, SQLConnectionException {
         List<Song> songs = slm.getItems();
@@ -214,6 +288,15 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Edit song contained in the provided song model.
+     *
+     * @param sm Song list model
+     * @throws InvalidOperationException Exception caused by an invalid
+     *                                   operation
+     * @throws SQLConnectionException    Exception caused by database
+     *                                   connection
+     */
     public void editSong(SongModel sm)
         throws InvalidOperationException, SQLConnectionException {
         Song s = sm.getSong();
@@ -233,6 +316,14 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Returns the ID of the song contained in the provided song model.
+     *
+     * @param sm Song model
+     * @return ID (default song ID if not present in the database)
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
     public int getId(SongModel sm) throws SQLConnectionException {
         try {
             return getId(sm.getSong());
@@ -241,6 +332,14 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Returns the ID of a song according to the database.
+     *
+     * @param song The song
+     * @return ID (default song ID if not present in the database)
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
     private int getId(Song song) throws SQLConnectionException {
         String path = song.getPath();
         Song s = getSong(path);
@@ -252,10 +351,18 @@ public class DatabaseAccessModel {
         }
     }
 
+    /**
+     * Checks whether there is any invalid song present.
+     *
+     * @return Logical value
+     */
     public boolean hasInvalid() {
         return invalid;
     }
 
+    /**
+     * Close database connection.
+     */
     public void close() {
         persistence.close();
     }

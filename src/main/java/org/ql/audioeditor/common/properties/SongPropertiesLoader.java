@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Song properties loader (utility class).
+ */
 public final class SongPropertiesLoader {
     private static Properties properties;
     private static InputStream inputStream;
@@ -31,6 +34,10 @@ public final class SongPropertiesLoader {
     private static int frequencyMax;
     private static int songRefreshMillis;
     private static int secondsToSkip;
+
+    private SongPropertiesLoader() {
+        throw new AssertionError();
+    }
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();

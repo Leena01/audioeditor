@@ -10,6 +10,9 @@ import java.awt.event.MouseMotionListener;
 
 import static org.ql.audioeditor.common.util.Helper.fillColor;
 
+/**
+ * Horizontal bar.
+ */
 public class HorizontalBar extends JPanel {
     public HorizontalBar() {
         super(new BorderLayout());

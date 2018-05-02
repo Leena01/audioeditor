@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Config properties loader (utility class).
+ */
 public final class ConfigPropertiesLoader {
     private static Properties properties;
     private static InputStream inputStream;
@@ -12,6 +15,10 @@ public final class ConfigPropertiesLoader {
     private static String jdbc;
     private static String url;
     private static int refreshMillis;
+
+    private ConfigPropertiesLoader() {
+        throw new AssertionError();
+    }
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();

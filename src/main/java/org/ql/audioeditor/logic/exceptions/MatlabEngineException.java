@@ -1,6 +1,9 @@
 package org.ql.audioeditor.logic.exceptions;
 
-public class MatlabEngineException extends Exception {
+/**
+ * Class for exceptions caused by the MATLAB Engine.
+ */
+public final class MatlabEngineException extends Exception {
     /**
      * Constructor that accepts a message.
      *

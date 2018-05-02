@@ -13,7 +13,23 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.io.File;
 
+/**
+ * General utility class.
+ */
 public final class Helper {
+    public static final int MILLIS_SECONDS_CONVERSION = 1000;
+    private static final int HOUR_CONVERSION = 3600;
+    private static final int MINUTE_CONVERSION = 3600;
+    private static final String PATH = new File("").getAbsolutePath();
+
+    private Helper() {
+        throw new AssertionError();
+    }
+
+    public static String getPath() {
+        return PATH;
+    }
+
     public static void showDialog(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
@@ -36,17 +52,20 @@ public final class Helper {
     }
 
     public static String formatDuration(long duration) {
-        long absSeconds = Math.abs(duration / 1000);
+        long absSeconds = Math.abs(duration / MILLIS_SECONDS_CONVERSION);
         String positive = String.format(
             "%d:%02d:%02d",
-            absSeconds / 3600,
-            (absSeconds % 3600) / 60,
-            absSeconds % 60);
-        return duration < 0 ? "-" + positive : positive;
+            absSeconds / HOUR_CONVERSION,
+            (absSeconds % HOUR_CONVERSION) / MINUTE_CONVERSION,
+            absSeconds % MINUTE_CONVERSION);
+        if (duration < 0) {
+            return "-" + positive;
+        }
+        return positive;
     }
 
     public static int framesToMillis(double frame, double freq) {
-        return (int) (frame / freq) * 1000;
+        return (int) (frame / freq) * MILLIS_SECONDS_CONVERSION;
     }
 
     public static int secondsToFrames(int seconds, double freq) {
@@ -87,7 +106,9 @@ public final class Helper {
     }
 
     public static int convertToNumber(String numberString) {
-        return (!numberString.equals("") ?
-            Integer.parseInt(numberString) : 0);
+        if (!numberString.equals("")) {
+            return Integer.parseInt(numberString);
+        }
+        return 0;
     }
 }

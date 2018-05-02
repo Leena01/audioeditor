@@ -29,6 +29,9 @@ import static org.ql.audioeditor.common.util.Helper.framesToMillis;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
+/**
+ * Panel for cutting sections of the audio file.
+ */
 public final class CutSongPanel extends BasicPanel
     implements ChangeListener, ActionListener {
     private static final int MIN = 1;
@@ -44,7 +47,7 @@ public final class CutSongPanel extends BasicPanel
         BorderFactory.createEmptyBorder(0, 6, 0, 6);
     private static final Border BUTTON_PANEL_BORDER =
         BorderFactory.createEmptyBorder(10, 0, 0, 0);
-    private static int MAX;
+    private static int max;
     private final RangeSlider rangeSlider;
     private final JLabel cutLabel;
     private final JLabel framesLabel;
@@ -87,9 +90,9 @@ public final class CutSongPanel extends BasicPanel
 
     public void setCurrentSong(double totalSamples, double freq,
         BufferedImage plot, boolean isMaximized) {
-        MAX = (int) totalSamples;
+        max = (int) totalSamples;
         rangeSlider.setMinimum(MIN);
-        rangeSlider.setMaximum(MAX);
+        rangeSlider.setMaximum(max);
         setDefaultValues();
         rangeSlider.setImage(plot);
         this.freq = freq;
@@ -119,7 +122,7 @@ public final class CutSongPanel extends BasicPanel
         if (source == setButton) {
             try {
                 int value = Integer.parseInt(fromValue.getText());
-                if (value >= MIN && value <= MAX) {
+                if (value >= MIN && value <= max) {
                     rangeSlider.setValue(value);
                     int newValue = Integer.parseInt(fromValue.getText());
                     fromSecValue.setText(
@@ -134,7 +137,7 @@ public final class CutSongPanel extends BasicPanel
             }
             try {
                 int upperValue = Integer.parseInt(toValue.getText());
-                if (upperValue >= MIN && upperValue <= MAX) {
+                if (upperValue >= MIN && upperValue <= max) {
                     rangeSlider.setUpperValue(upperValue);
                     int newUpperValue = Integer.parseInt(toValue.getText());
                     toSecValue.setText(
@@ -172,7 +175,7 @@ public final class CutSongPanel extends BasicPanel
 
     public void setDefaultValues() {
         rangeSlider.setValue(MIN);
-        rangeSlider.setUpperValue(MAX);
+        rangeSlider.setUpperValue(max);
     }
 
     private void initInnerListeners() {

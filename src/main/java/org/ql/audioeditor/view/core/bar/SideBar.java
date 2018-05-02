@@ -9,6 +9,9 @@ import java.awt.Graphics;
 
 import static org.ql.audioeditor.common.util.Helper.fillColor;
 
+/**
+ * Sidebar.
+ */
 public class SideBar extends JPanel {
     private static final Border BORDER =
         BorderFactory.createMatteBorder(0, 0, 0, 3, Color.DARK_GRAY);

@@ -45,5 +45,6 @@
     <orderEntry type="library" name="Maven: com.mpatric:mp3agic:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: com.jtattoo:JTattoo:1.6.11" level="project" />
     <orderEntry type="library" name="Maven: com.mathworks:engine:1.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
   </component>
 </module>

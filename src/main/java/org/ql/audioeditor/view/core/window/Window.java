@@ -36,6 +36,9 @@ import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE_HIDDEN;
 
+/**
+ * General window (frame).
+ */
 public abstract class Window extends JFrame {
     private static final int FONT_SIZE = 36;
     private static final String LOOK_AND_FEEL =
@@ -65,7 +68,7 @@ public abstract class Window extends JFrame {
             IMAGE_SIZE);
     private static final Border MENU_PANEL_BORDER =
         BorderFactory.createEmptyBorder(5, 5, 5, 5);
-    private static Point COMP_COORDINATES = null;
+    private static Point compCoordinates = null;
     private final HorizontalBar titleBar;
     private final JLabel titleLabel;
     private final JPanel titlePanel;
@@ -84,8 +87,8 @@ public abstract class Window extends JFrame {
         public void mouseDragged(MouseEvent e) {
             if (getExtendedState() == NORMAL) {
                 Point currCoordinates = e.getLocationOnScreen();
-                setLocation(currCoordinates.x - COMP_COORDINATES.x,
-                    currCoordinates.y - COMP_COORDINATES.y);
+                setLocation(currCoordinates.x - compCoordinates.x,
+                    currCoordinates.y - compCoordinates.y);
             }
         }
     };
@@ -93,12 +96,12 @@ public abstract class Window extends JFrame {
     private final MouseListener maximizeMouseListener = new MouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {
-            COMP_COORDINATES = null;
+            compCoordinates = null;
         }
 
         @Override
         public void mousePressed(MouseEvent me) {
-            COMP_COORDINATES = me.getPoint();
+            compCoordinates = me.getPoint();
         }
 
         @Override
@@ -120,6 +123,9 @@ public abstract class Window extends JFrame {
     protected InputMap inputMap;
     protected ActionMap actionMap;
 
+    /**
+     * Constructor.
+     */
     public Window() {
         super();
         try {
@@ -167,6 +173,9 @@ public abstract class Window extends JFrame {
         initKeyBindings();
     }
 
+    /**
+     * Changes the size of the window.
+     */
     private void changeSize() {
         if (getExtendedState() == MAXIMIZED_BOTH) {
             maximizeImage(false);
@@ -187,10 +196,16 @@ public abstract class Window extends JFrame {
         }
     }
 
+    /**
+     * Minimizes the window.
+     */
     private void minimize() {
         setState(ICONIFIED);
     }
 
+    /**
+     * Sets the window to full screen.
+     */
     private void maximize() {
         if (getExtendedState() == NORMAL) {
             maximizeImage(true);
@@ -206,6 +221,9 @@ public abstract class Window extends JFrame {
         }
     }
 
+    /**
+     * Closes the window.
+     */
     private void close() {
         System.exit(0);
     }
@@ -221,7 +239,17 @@ public abstract class Window extends JFrame {
         actionMap.put(MAXIMIZE, maximizeAction);
     }
 
+    /**
+     * Hides/shows the core image according to the given boolean.
+     *
+     * @param isHidden Indicates whether the core image should be hidden
+     */
     protected abstract void hideImage(boolean isHidden);
 
+    /**
+     * Maximizes/normalizes the core image according to the given boolean.
+     *
+     * @param isMaximized Indicates whether the core image should be maximized
+     */
     protected abstract void maximizeImage(boolean isMaximized);
 }

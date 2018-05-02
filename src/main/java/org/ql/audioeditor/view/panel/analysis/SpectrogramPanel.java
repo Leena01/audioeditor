@@ -16,6 +16,9 @@ import static org.ql.audioeditor.common.util.Helper.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
+/**
+ * Panel for showing spectrograms.
+ */
 public final class SpectrogramPanel extends ChromagramPanel implements
     ItemListener {
     private final JToggleButton toggleButton;
@@ -80,14 +83,14 @@ public final class SpectrogramPanel extends ChromagramPanel implements
     }
 
     @Override
-    protected final void setStyle() {
+    protected void setStyle() {
         super.setStyle();
         toggleButton.setFocusPainted(false);
         image3dLabel.setVisible(false);
     }
 
     @Override
-    protected final void addPanels() {
+    protected void addPanels() {
         imagePanel.add(imageLabel);
         imagePanel.add(image3dLabel);
         formPanel.add(windowSizeLabel);

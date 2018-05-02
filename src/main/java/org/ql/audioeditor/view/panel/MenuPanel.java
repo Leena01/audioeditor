@@ -29,14 +29,13 @@ import static org.ql.audioeditor.view.param.Constants.COVER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.COVER_SIZE_MAX;
 
 /**
- * Main menu
+ * Main menu. Contains the media control panel in case a song is loaded.
  */
-
 public final class MenuPanel extends BasicPanel {
     private static final String NO_MEDIA_LABEL =
         "No media found. Please choose a file.";
-    private static final String INFO_LABEL = "Welcome! Please select a song " +
-        "and choose from the options on the left.";
+    private static final String INFO_LABEL = "Welcome! Please select a song "
+        + "and choose from the options on the left.";
     private static final Dimension DISTANCE_DIMENSION = new Dimension(0, 30);
     private static final ImageIcon COVER_IMAGE =
         resizeImageIcon(new ImageIcon(ImageLoader.getCover()), COVER_SIZE);

@@ -4,10 +4,13 @@ import org.ql.audioeditor.database.entities.Song;
 import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
 
 /**
- * Book Table DatabaseAccessModel
+ * Table model containing elements of type 'Song'.
  */
-public class SongTableModel extends TableModel<Song> {
+public final class SongTableModel extends TableModel<Song> {
 
+    /**
+     * Constructor.
+     */
     public SongTableModel() {
         columnNames.add("ID");
         columnNames.add("Title");

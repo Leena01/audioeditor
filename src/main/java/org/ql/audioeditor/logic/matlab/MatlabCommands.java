@@ -2,12 +2,16 @@ package org.ql.audioeditor.logic.matlab;
 
 import java.io.File;
 
+import static org.ql.audioeditor.common.util.Helper.getPath;
+
+/**
+ * MATLAB commands for MATLAB language injection.
+ */
 final class MatlabCommands {
     /**
-     * Matlab language injection.
-     *
+     * MATLAB variable names.
      */
-    static final String FOLDER = new File("").getAbsolutePath() + "\\matlab";
+    static final String FOLDER = getPath() + File.separator + "matlab";
     static final String FILE_VAR = "file";
     static final String FOLDER_PATH_VAR = "folderpath";
     static final String WINDOW_KEYS_VAR = "windowkeys";
@@ -29,11 +33,14 @@ final class MatlabCommands {
     static final String WINDOW_VAR = "window";
     static final String FROM_VAR = "from";
     static final String TO_VAR = "to";
+    private static final String PLAYER_VAR = "player";
     private static final String WINDOW_MAP_VAR = "windowmap";
     private static final String SAMPLE_VAR = "x";
     private static final String SAMPLE_VAR_2 = "y";
-    private static final String PLAYER_VAR = "player";
 
+    /**
+     * MATLAB functions.
+     */
     static final String ADD_PATH =
         String.format("addpath(genpath(%s));",
             FOLDER_PATH_VAR);
@@ -45,10 +52,6 @@ final class MatlabCommands {
     static final String OPEN_SONG =
         String.format("[%s, %s, %s, %s] = openSong(%s);",
             PLAYER_VAR, SAMPLE_VAR, TOTAL_VAR, FREQ_VAR, FILE_VAR);
-
-    static final String PLOT_SONG =
-        String.format("plotSong(%s, %s, %s);",
-            SAMPLE_VAR, FREQ_VAR, PLOT_IMG_VAR);
 
     static final String PAUSE_SONG =
         String.format("pauseSong(%s);",
@@ -70,22 +73,18 @@ final class MatlabCommands {
         String.format("%s = isPlaying(%s);",
             IS_PLAYING_VAR, PLAYER_VAR);
 
-    static final String RELOCATE_SONG =
-        String.format("relocateSong(%s, %s, %s);",
-            PLAYER_VAR, START_VAR, EMPTY_VAR);
-
-    static final String CHANGE_VOLUME =
-        String.format("%s = changeVolume(%s, %s, %s, %s);",
-            PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, FREQ_VAR, LEVEL_VAR);
+    static final String PLOT_SONG =
+        String.format("plotSong(%s, %s, %s);",
+            SAMPLE_VAR, FREQ_VAR, PLOT_IMG_VAR);
 
     static final String SHOW_SPECTROGRAM =
         String.format("showSpectrogram(%s, %s, %s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
+            SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
             WINDOW_VAR, FREQ_VAR, SPEC_IMG_VAR, WINDOW_MAP_VAR);
 
     static final String SHOW_SPECTROGRAM_3D =
         String.format("showSpectrogram3d(%s, %s, %s, %s, %s, %s, %s, %s);",
-        SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
+            SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
             WINDOW_VAR, FREQ_VAR, SPEC_3D_IMG_VAR, WINDOW_MAP_VAR);
 
     static final String SHOW_CHROMAGRAM =
@@ -101,7 +100,19 @@ final class MatlabCommands {
         String.format("saveSong(%s, %s, %s);",
             FILE_VAR, SAMPLE_VAR_2, FREQ_VAR);
 
+    static final String RELOCATE_SONG =
+        String.format("relocateSong(%s, %s, %s);",
+            PLAYER_VAR, START_VAR, EMPTY_VAR);
+
+    static final String CHANGE_VOLUME =
+        String.format("%s = changeVolume(%s, %s, %s, %s);",
+            PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, FREQ_VAR, LEVEL_VAR);
+
     static final String CHANGE_PITCH =
         String.format("%s = changePitch(%s);",
             PLAYER_VAR, FREQ_VAR_2);
+
+    private MatlabCommands() {
+        throw new AssertionError();
+    }
 }

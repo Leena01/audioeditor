@@ -1,6 +1,9 @@
 package org.ql.audioeditor.logic.exceptions;
 
-public class InvalidOperationException extends Exception {
+/**
+ * Exception for invalid operations.
+ */
+public final class InvalidOperationException extends Exception {
     /**
      * Constructor that accepts a message.
      *

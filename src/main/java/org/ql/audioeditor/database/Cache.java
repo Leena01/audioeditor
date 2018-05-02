@@ -7,16 +7,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Cache for refreshing data
+ * Cache for refreshing data.
  */
-public class Cache implements DatabaseDao {
+public final class Cache implements DatabaseDao {
     private final DatabaseDao database;
     private Timer timer;
     private int interval;
     private List<Song> songs;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param database DatabaseDao class
      */
@@ -77,7 +77,7 @@ public class Cache implements DatabaseDao {
     }
 
     /**
-     * Set refresh interval Default: 5 mins
+     * Set refresh interval.
      *
      * @param millis to be set
      */
@@ -87,11 +87,12 @@ public class Cache implements DatabaseDao {
     }
 
     /**
-     * Start timer
+     * Start timer.
      */
     private void startTimer() {
-        if (timer != null)
+        if (timer != null) {
             timer.cancel();
+        }
         timer = new Timer(true);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

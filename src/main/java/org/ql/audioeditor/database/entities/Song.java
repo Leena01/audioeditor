@@ -4,8 +4,11 @@ import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 
 import java.util.Objects;
 
-public class Song {
-
+/**
+ * Song object.
+ */
+public final class Song {
+    private static final int RAND_HASH_NUM = 31;
     private int id;
     private String title;
     private String track;
@@ -16,6 +19,19 @@ public class Song {
     private String comment;
     private String path;
 
+    /**
+     * Constructor with ID.
+     *
+     * @param id      ID
+     * @param title   Title
+     * @param track   Track number
+     * @param artist  Artist
+     * @param album   Album
+     * @param year    Year
+     * @param genre   Genre
+     * @param comment Comment
+     * @param path    Path
+     */
     public Song(int id, String title, String track, String artist, String album,
         String year, String genre, String comment, String path) {
         this.id = id;
@@ -29,12 +45,27 @@ public class Song {
         this.path = path;
     }
 
+    /**
+     * Constructor without ID.
+     *
+     * @param title   Title
+     * @param track   Track number
+     * @param artist  Artist
+     * @param album   Album
+     * @param year    Year
+     * @param genre   Genre
+     * @param comment Comment
+     * @param path    Path
+     */
     public Song(String title, String track, String artist, String album,
         String year, String genre, String comment, String path) {
         this(SongPropertiesLoader.getDefaultSongId(), title, track, artist,
             album, year, genre, comment, path);
     }
 
+    /**
+     * Default constructor.
+     */
     public Song() {
         this(SongPropertiesLoader.getEmptySongId(),
             SongPropertiesLoader.getDefaultTitle(),
@@ -47,6 +78,11 @@ public class Song {
             SongPropertiesLoader.getDefaultPath());
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param other The other song
+     */
     public Song(Song other) {
         this.id = other.id;
         this.title = other.title;
@@ -133,46 +169,61 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-            "id=" + id +
-            ", title='" + title + '\'' +
-            ", track='" + track + '\'' +
-            ", artist='" + artist + '\'' +
-            ", album='" + album + '\'' +
-            ", year='" + year + '\'' +
-            ", genre='" + genre + '\'' +
-            ", comment='" + comment + '\'' +
-            ", path='" + path + '\'' +
-            '}';
+        return "Song{"
+            + "id=" + id
+            + ", title='" + title + '\''
+            + ", track='" + track + '\''
+            + ", artist='" + artist + '\''
+            + ", album='" + album + '\''
+            + ", year='" + year + '\''
+            + ", genre='" + genre + '\''
+            + ", comment='" + comment + '\''
+            + ", path='" + path + '\'' + '}';
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (track != null ? track.hashCode() : 0);
-        result = 31 * result + (artist != null ? artist.hashCode() : 0);
-        result = 31 * result + (album != null ? album.hashCode() : 0);
-        result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (path != null ? path.hashCode() : 0);
+        result = RAND_HASH_NUM * result + addHashNum(title);
+        result = RAND_HASH_NUM * result + addHashNum(track);
+        result = RAND_HASH_NUM * result + addHashNum(artist);
+        result = RAND_HASH_NUM * result + addHashNum(album);
+        result = RAND_HASH_NUM * result + addHashNum(year);
+        result = RAND_HASH_NUM * result + addHashNum(genre);
+        result = RAND_HASH_NUM * result + addHashNum(comment);
+        result = RAND_HASH_NUM * result + addHashNum(path);
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
 
-        if (obj == null)
+        if (obj == null) {
             return false;
+        }
 
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.getClass()) {
             return false;
+        }
 
         final Song other = (Song) obj;
 
         return Objects.equals(this.id, other.id);
+    }
+
+    /**
+     * Determine field hashcode.
+     *
+     * @param field The field
+     * @return Hashcode
+     */
+    private int addHashNum(String field) {
+        if (field != null) {
+            return field.hashCode();
+        }
+        return 0;
     }
 }

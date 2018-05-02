@@ -11,19 +11,22 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.Helper.formatDuration;
 import static org.ql.audioeditor.common.util.Helper.framesToMillis;
 
+/**
+ * Timer with slider.
+ */
 public class SliderTimer extends Observable {
-    private static final int MIN = 1;
-    private static int MAX;
-
+    private static final int MIN_FRAMES = 1;
+    private static int maxFrames;
+    private final JSlider slider;
+    private final MatlabHandler matlabHandler;
+    private final JLabel timeField;
+    private final JLabel totalLengthField;
+    private final boolean isDaemon;
     private Timer timer;
-    private JSlider slider;
-    private MatlabHandler matlabHandler;
-    private JLabel timeField;
-    private JLabel totalLengthField;
-    private boolean isDaemon;
     private int refreshMillis;
     private double freq;
     private int totalLength;
@@ -39,7 +42,7 @@ public class SliderTimer extends Observable {
         this.refreshMillis = 0;
         this.freq = 0.0;
         this.totalLength = 0;
-        MAX = 0;
+        maxFrames = 0;
         slider.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -56,13 +59,14 @@ public class SliderTimer extends Observable {
 
     public void schedule(int refreshMillis, double totalSamples, double freq) {
         this.refreshMillis = refreshMillis;
-        MAX = (int) totalSamples;
+        maxFrames = (int) totalSamples;
         this.freq = freq;
-        this.totalLength = (int) ((MAX / freq) * 1000);
+        this.totalLength =
+            (int) ((maxFrames / freq) * MILLIS_SECONDS_CONVERSION);
         this.totalLengthField.setText(formatDuration(totalLength));
-        this.slider.setMinimum(MIN);
-        this.slider.setMaximum(MAX);
-        timeField.setText(formatDuration(framesToMillis(MIN, freq)));
+        this.slider.setMinimum(MIN_FRAMES);
+        this.slider.setMaximum(maxFrames);
+        timeField.setText(formatDuration(framesToMillis(MIN_FRAMES, freq)));
     }
 
     public void resumeTimer() {
@@ -71,7 +75,7 @@ public class SliderTimer extends Observable {
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    if (matlabHandler.isPlaying()) {
+                    if (isPlaying()) {
                         autoMove();
                     }
                     else {
@@ -95,7 +99,7 @@ public class SliderTimer extends Observable {
             timer.cancel();
         }
         if (slider != null) {
-            setCurrentTime(MIN);
+            setCurrentTime(MIN_FRAMES);
         }
     }
 
@@ -107,18 +111,28 @@ public class SliderTimer extends Observable {
 
     public void changeTime(int frame) {
         if (slider != null) {
-            if (frame < MIN) {
-                setCurrentTime(MIN);
-            } else if (frame > MAX) {
-                setCurrentTime(MAX);
-            } else {
+            if (frame < MIN_FRAMES) {
+                setCurrentTime(MIN_FRAMES);
+            }
+            else if (frame > maxFrames) {
+                setCurrentTime(maxFrames);
+            }
+            else {
                 setCurrentTime(frame);
             }
         }
     }
 
+    public int getMin() {
+        return MIN_FRAMES;
+    }
+
     private void setCurrentTime(int currentFrame) {
         timeField.setText(formatDuration(framesToMillis(currentFrame, freq)));
         slider.setValue(currentFrame);
+    }
+
+    private boolean isPlaying() {
+        return matlabHandler.isPlaying();
     }
 }

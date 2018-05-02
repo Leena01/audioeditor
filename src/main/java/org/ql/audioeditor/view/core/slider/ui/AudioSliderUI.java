@@ -19,8 +19,11 @@ import java.awt.event.MouseEvent;
 
 import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;
 
+/**
+ * AudioSlider UI.
+ */
 public class AudioSliderUI extends BasicSliderUI {
-
+    private static final int KNOB_WIDTH = 3;
     public AudioSliderUI(TrackSlider b) {
         super(b);
         b.setPreferredSize(AUDIO_SLIDER_SIZE);
@@ -41,7 +44,7 @@ public class AudioSliderUI extends BasicSliderUI {
 
     @Override
     protected Dimension getThumbSize() {
-        return new Dimension(3, focusRect.height);
+        return new Dimension(KNOB_WIDTH, focusRect.height);
     }
 
     @Override
@@ -86,8 +89,8 @@ public class AudioSliderUI extends BasicSliderUI {
                             break;
                         default:
                             throw new IllegalArgumentException(
-                                "orientation must be one of: VERTICAL, " +
-                                    "HORIZONTAL");
+                                "orientation must be one of: VERTICAL, "
+                                    + "HORIZONTAL");
                     }
                     super.mousePressed(e); // isDragging = true;
                     super.mouseDragged(e);

@@ -2,6 +2,10 @@ package org.ql.audioeditor.view.param;
 
 import java.awt.Dimension;
 
+/**
+ * Class for constants related to the GUI.
+ *
+ */
 public final class Constants {
     public static final int BOTTOM_PANEL_HEIGHT = 32;
     public static final int MEDIA_CONTROL_PANEL_HEIGHT = 100;
@@ -23,4 +27,9 @@ public final class Constants {
     public static final Object[] OPTIONS = {"Save as...", "Save", "Cancel"};
     public static final int TEXT_FIELD_DIGIT_SIZE_MIN = 1;
     public static final int TEXT_FIELD_DIGIT_SIZE_MAX = 5;
+    public static final int YEAR_DIGIT_SIZE = 4;
+
+    private Constants() {
+        throw new AssertionError();
+    }
 }

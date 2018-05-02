@@ -44,11 +44,13 @@ import java.awt.event.MouseEvent;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
 
 /**
- * UI delegate for the RangeSlider component.  RangeSliderUI paints two thumbs,
+ * UI delegate for the RangeSlider component. RangeSliderUI paints two thumbs,
  * one for the lower value and one for the upper value.
  */
 public class RangeSliderUI extends BasicSliderUI {
 
+    private static final int KNOB_WIDTH = 3;
+    private static final int INC_FRAC = 10;
     /**
      * Location and size of thumb for upper value.
      */
@@ -145,8 +147,8 @@ public class RangeSliderUI extends BasicSliderUI {
             if (tickSpacing != 0) {
                 // If it's not on a tick, change the value
                 if ((upperValue - slider.getMinimum()) % tickSpacing != 0) {
-                    float temp = (float) (upperValue - slider.getMinimum()) /
-                        (float) tickSpacing;
+                    float temp = (float) (upperValue - slider.getMinimum())
+                        / (float) tickSpacing;
                     int whichTick = Math.round(temp);
                     snappedValue =
                         slider.getMinimum() + (whichTick * tickSpacing);
@@ -180,7 +182,7 @@ public class RangeSliderUI extends BasicSliderUI {
      */
     @Override
     protected Dimension getThumbSize() {
-        return new Dimension(3, focusRect.height);
+        return new Dimension(KNOB_WIDTH, focusRect.height);
     }
 
     /**
@@ -295,13 +297,18 @@ public class RangeSliderUI extends BasicSliderUI {
     public void scrollByBlock(int direction) {
         synchronized (slider) {
             int blockIncrement =
-                (slider.getMaximum() - slider.getMinimum()) / 10;
-            if (blockIncrement <= 0 &&
-                slider.getMaximum() > slider.getMinimum()) {
+                (slider.getMaximum() - slider.getMinimum()) / INC_FRAC;
+            if (blockIncrement <= 0
+                && slider.getMaximum() > slider.getMinimum()) {
                 blockIncrement = 1;
             }
-            int delta = blockIncrement *
-                ((direction > 0) ? POSITIVE_SCROLL : NEGATIVE_SCROLL);
+            int delta = blockIncrement;
+            if (direction > 0) {
+                delta = delta * POSITIVE_SCROLL;
+            }
+            else {
+                delta = delta * NEGATIVE_SCROLL;
+            }
 
             if (upperThumbSelected) {
                 int oldValue = ((RangeSlider) slider).getUpperValue();
@@ -320,8 +327,13 @@ public class RangeSliderUI extends BasicSliderUI {
      */
     public void scrollByUnit(int direction) {
         synchronized (slider) {
-            int delta =
-                1 * ((direction > 0) ? POSITIVE_SCROLL : NEGATIVE_SCROLL);
+            int delta = 1;
+            if (direction > 0) {
+                delta = delta * POSITIVE_SCROLL;
+            }
+            else {
+                delta = delta * NEGATIVE_SCROLL;
+            }
 
             if (upperThumbSelected) {
                 int oldValue = ((RangeSlider) slider).getUpperValue();
@@ -381,8 +393,8 @@ public class RangeSliderUI extends BasicSliderUI {
             // otherwise check the position of the lower thumb first.
             boolean lowerPressed = false;
             boolean upperPressed = false;
-            if (upperThumbSelected ||
-                slider.getMinimum() == slider.getValue()) {
+            if (upperThumbSelected
+                || slider.getMinimum() == slider.getValue()) {
                 if (upperThumbRect.contains(currentMouseX, currentMouseY)) {
                     upperPressed = true;
                 }
@@ -409,6 +421,8 @@ public class RangeSliderUI extends BasicSliderUI {
                     case JSlider.HORIZONTAL:
                         offset = currentMouseX - thumbRect.x;
                         break;
+                    default:
+                        break;
                 }
                 upperThumbSelected = false;
                 lowerDragging = true;
@@ -424,6 +438,8 @@ public class RangeSliderUI extends BasicSliderUI {
                         break;
                     case JSlider.HORIZONTAL:
                         offset = currentMouseX - upperThumbRect.x;
+                        break;
+                    default:
                         break;
                 }
                 upperThumbSelected = true;

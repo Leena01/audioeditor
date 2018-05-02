@@ -6,6 +6,9 @@ import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
 import javax.swing.JTable;
 import java.awt.event.MouseEvent;
 
+/**
+ * Table with entries of type 'Song'.
+ */
 public class SongTable extends JTable {
     public SongTable(TableModel tm) {
         super(tm);
@@ -15,7 +18,7 @@ public class SongTable extends JTable {
     }
 
     /**
-     * Table cell tooltips
+     * Table cell tooltips.
      */
     @Override
     public String getToolTipText(@NotNull MouseEvent e) {

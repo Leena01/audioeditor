@@ -2,6 +2,7 @@ package org.ql.audioeditor;
 
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
+import org.ql.audioeditor.common.matlab.MatlabFileLoader;
 import org.ql.audioeditor.common.properties.ConfigPropertiesLoader;
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
@@ -15,16 +16,16 @@ import org.ql.audioeditor.logic.exceptions.SQLConnectionException;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.MainWindow;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static org.ql.audioeditor.common.util.Helper.getPath;
 import static org.ql.audioeditor.common.util.Helper.showDialog;
 
-public class AudioEditor {
-    // private static final String PATH = "C:\\Users\\livix\\Desktop" +
-    //     "\\audioeditor\\src\\main\\resources";
-    private static final String PATH = new File("").getAbsolutePath();
+/**
+ * Main class.
+ */
+public final class AudioEditor {
     private static final String CONFIG_PROPERTIES_FILE =
         "/config/config.properties";
     private static final String SONG_PROPERTIES_FILE =
@@ -38,15 +39,28 @@ public class AudioEditor {
     private static final String DATABASE_CONNECTION_FAILED =
         "Database connection failed.";
 
-    public static void main(String s[]) {
+    /**
+     * Private constructor.
+     */
+    private AudioEditor() {
+        throw new AssertionError();
+    }
+
+    /**
+     * Main method.
+     *
+     * @param s Arguments
+     */
+    public static void main(String[] s) {
         try {
             ConfigPropertiesLoader.init(CONFIG_PROPERTIES_FILE);
             SongPropertiesLoader.init(SONG_PROPERTIES_FILE);
             ImageLoader.init(IMAGES_PROPERTIES_FILE);
+            MatlabFileLoader.init();
             final DatabaseDao database =
                 new DatabaseDaoImpl(ConfigPropertiesLoader.getDriver(),
-                    ConfigPropertiesLoader.getJdbc() + PATH +
-                        ConfigPropertiesLoader.getUrl());
+                    ConfigPropertiesLoader.getJdbc() + getPath()
+                        + ConfigPropertiesLoader.getUrl());
             // DatabaseDao database = new MockDatabase();
             final Cache cache = new Cache(database,
                 ConfigPropertiesLoader.getRefreshMillis());
@@ -76,6 +90,8 @@ public class AudioEditor {
             showDialog(CANNOT_READ_PROPERIES_ERROR);
         } catch (ClassNotFoundException | SQLException e) {
             showDialog(DATABASE_CONNECTION_FAILED);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

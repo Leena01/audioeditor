@@ -5,6 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * List model.
+ * @param <T> Type to encapsulate
+ */
 public abstract class ListModel<T> {
     @NotNull
     protected List<T> items;

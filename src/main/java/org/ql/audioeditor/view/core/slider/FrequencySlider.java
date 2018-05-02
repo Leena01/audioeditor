@@ -3,6 +3,9 @@ package org.ql.audioeditor.view.core.slider;
 import javax.swing.JSlider;
 import java.awt.Dimension;
 
+/**
+ * Frequency slider.
+ */
 public class FrequencySlider extends JSlider {
     public FrequencySlider(Dimension d, int min, int max, int majorTick,
         int minorTick) {

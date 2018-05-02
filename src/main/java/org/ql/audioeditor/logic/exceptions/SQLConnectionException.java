@@ -1,9 +1,9 @@
 package org.ql.audioeditor.logic.exceptions;
 
 /**
- * Created by Livia on 2017.08.31..
+ * Class for exceptions caused by the SQL connection.
  */
-public class SQLConnectionException extends Exception {
+public final class SQLConnectionException extends Exception {
     /**
      * Constructor that accepts a message.
      *

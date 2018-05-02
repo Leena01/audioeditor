@@ -5,6 +5,7 @@ import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.view.core.button.OptionButton;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
+import org.ql.audioeditor.view.param.Constants;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -24,14 +25,16 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 /**
- * Edit panel
+ * Panel for user-induced modification of the data related to the current song.
  */
 public final class EditPanel extends BasicPanel {
     private static final int FIELD_LENGTH = 20;
     private static final String INSTR_TEXT =
         "Please enter the new data for the song with the following ID: %d.";
+    private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(7, 2);
     private static final Border INFO_PANEL_BORDER =
         BorderFactory.createEmptyBorder(0, 0, 15, 0);
     private static final Border BODY_PANEL_BORDER =
@@ -63,15 +66,15 @@ public final class EditPanel extends BasicPanel {
     private SongModel selectedSongModel;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param al action listener
+     * @param al Action listener
      */
     public EditPanel(ActionListener al) {
         super();
         selectedSongModel = new SongModel();
         infoPanel = new JPanel(new FlowLayout());
-        formPanel = new JPanel(new GridLayout(7, 2));
+        formPanel = new JPanel(FORM_PANEL_LAYOUT);
         bottomPanel = new JPanel(new FlowLayout());
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
@@ -87,16 +90,27 @@ public final class EditPanel extends BasicPanel {
         genreLabel = new Label("Genre:");
         commentLabel = new Label("Comment:");
         titleTextField = new JTextField("", FIELD_LENGTH);
+
+        NumberFormat nf = NumberFormat.getIntegerInstance();
+        nf.setMinimumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MIN);
+        nf.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX);
+        nf.setGroupingUsed(false);
         trackTextField = new JTextField("", FIELD_LENGTH);
+
         artistTextField = new JTextField("", FIELD_LENGTH);
         albumTextField = new JTextField("", FIELD_LENGTH);
-        yearTextField = new JTextField("", FIELD_LENGTH);
 
-        NumberFormatter nf = new NumberFormatter();
-        nf.setMinimum(SongPropertiesLoader.getGenreMin());
-        nf.setMaximum(SongPropertiesLoader.getGenreMax());
-        genreTextField = new JFormattedTextField(nf);
-        commentTextField = new JTextField("", 20);
+        NumberFormat nf2 = NumberFormat.getIntegerInstance();
+        nf2.setMinimumIntegerDigits(Constants.YEAR_DIGIT_SIZE);
+        nf2.setMaximumIntegerDigits(Constants.YEAR_DIGIT_SIZE);
+        nf2.setGroupingUsed(false);
+        yearTextField = new JFormattedTextField(nf2);
+
+        NumberFormatter nf3 = new NumberFormatter();
+        nf3.setMinimum(SongPropertiesLoader.getGenreMin());
+        nf3.setMaximum(SongPropertiesLoader.getGenreMax());
+        genreTextField = new JFormattedTextField(nf3);
+        commentTextField = new JTextField("", FIELD_LENGTH);
 
         setStyle();
         addPanels();

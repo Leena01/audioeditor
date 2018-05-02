@@ -17,7 +17,11 @@ import java.awt.event.ActionListener;
 
 import static org.ql.audioeditor.view.param.Constants.DATA_LABEL_SIZE;
 
+/**
+ * Panel showing the data related to the current song.
+ */
 public final class DataPanel extends BasicPanel {
+    private static final GridLayout LABEL_PANEL_LAYOUT = new GridLayout(9, 2);
     private static final Border BUTTON_PANEL_BORDER =
         BorderFactory.createEmptyBorder(15, 0, 0, 0);
     private final JLabel idLabel;
@@ -46,7 +50,7 @@ public final class DataPanel extends BasicPanel {
     public DataPanel(SongModel currentSongModel, ActionListener b) {
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new BorderLayout());
-        labelPanel = new JPanel(new GridLayout(9, 2));
+        labelPanel = new JPanel(LABEL_PANEL_LAYOUT);
         idLabel = new Label("ID:", DATA_LABEL_SIZE);
         titleLabel = new Label("Title:", DATA_LABEL_SIZE);
         trackLabel = new Label("Track:", DATA_LABEL_SIZE);

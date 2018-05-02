@@ -2,14 +2,18 @@ package org.ql.audioeditor.common.properties;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static org.ql.audioeditor.common.util.Helper.getPath;
+
+/**
+ * Image loader (utility class).
+ */
 public final class ImageLoader {
-    private static final String PATH = new File("").getAbsolutePath();
+    private static final String PATH = getPath();
     private static Properties properties;
     private static InputStream inputStream;
     private static String plotImagePath;
@@ -32,6 +36,10 @@ public final class ImageLoader {
     private static Image upwardIcon;
     private static Image downwardIcon;
     private static Image closeIcon;
+
+    private ImageLoader() {
+        throw new AssertionError();
+    }
 
     public static void init(String propFileName) throws IOException {
         properties = new Properties();

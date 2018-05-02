@@ -27,10 +27,13 @@ import static org.ql.audioeditor.common.util.Helper.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
+/**
+ * Panel for showing chroma feature.
+ */
 public class ChromagramPanel extends BasicPanel implements ItemListener {
     private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(6, 2,
         10, 10);
-    private static final String[] windowNames = SongPropertiesLoader
+    private static final String[] WINDOW_NAMES = SongPropertiesLoader
         .getWindowNames();
 
     protected JButton doneButton;
@@ -81,7 +84,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         nfftTextField = new JFormattedTextField(nf);
 
         windowLabel = new Label("Window type:");
-        windowComboBox = new JComboBox<>(windowNames);
+        windowComboBox = new JComboBox<>(WINDOW_NAMES);
 
         imageLabel = new Label();
         imagePanel = new JPanel();

@@ -5,7 +5,10 @@ import org.ql.audioeditor.view.core.panel.BasicPanel;
 
 import java.awt.Color;
 
-public class AnalysisPanel extends BasicPanel {
+/**
+ * Panel for analysis.
+ */
+public final class AnalysisPanel extends BasicPanel {
     private final MatlabHandler matlabHandler;
 
     public AnalysisPanel(MatlabHandler matlabHandler) {

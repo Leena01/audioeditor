@@ -19,6 +19,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Panel for user-induced song deletion.
+ */
 public final class DeleteSongsPanel extends ViewSongsPanel {
     private static final Border SCROLL_PANE_BORDER =
         BorderFactory.createEmptyBorder(15, 20, 10, 20);

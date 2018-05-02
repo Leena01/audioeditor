@@ -6,12 +6,18 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JSlider;
 import java.awt.Image;
 
+/**
+ * Track slider.
+ */
 public class TrackSlider extends JSlider {
-    private static final Object lock = new Object();
+    private static final Object LOCK_OBJECT = new Object();
+    private static final int TRACK_MIN_DEFAULT = 0;
+    private static final int TRACK_MAX_DEFAULT = 100;
+    private static final int TRACK_INIT_DEFAULT = 0;
     private Image img;
 
     public TrackSlider(final int n) {
-        super(n, 0, 100, 50);
+        super(n, TRACK_MIN_DEFAULT, TRACK_MAX_DEFAULT, TRACK_INIT_DEFAULT);
     }
 
     public Image getImage() {
@@ -30,7 +36,7 @@ public class TrackSlider extends JSlider {
 
     @Override
     public void setValue(final int value) {
-        synchronized (lock) {
+        synchronized (LOCK_OBJECT) {
             final BoundedRangeModel model = this.getModel();
             model.removeChangeListener(this.changeListener);
             final int value2 = model.getValue();

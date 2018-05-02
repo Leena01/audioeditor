@@ -6,6 +6,9 @@ import java.awt.Graphics;
 
 import static org.ql.audioeditor.common.util.Helper.fillColor;
 
+/**
+ * Inverse horizontal bar.
+ */
 public class InverseHorizontalBar extends HorizontalBar {
     public InverseHorizontalBar(BorderLayout bl) {
         super(bl);

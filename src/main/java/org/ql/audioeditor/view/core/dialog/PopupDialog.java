@@ -4,6 +4,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import java.awt.Frame;
 
+/**
+ * Popup dialog.
+ */
 public class PopupDialog extends JDialog {
     public PopupDialog(Frame owner, String title, JPanel panel) {
         super(owner, title, true);

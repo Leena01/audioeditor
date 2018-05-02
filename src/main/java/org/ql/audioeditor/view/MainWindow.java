@@ -75,7 +75,10 @@ import static org.ql.audioeditor.view.param.Constants.OPTIONS;
 import static org.ql.audioeditor.view.param.Constants.TEXT_FIELD_DIGIT_SIZE_MIN;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE;
 
-public class MainWindow extends Window {
+/**
+ * Main window (frame). Acts as controller.
+ */
+public final class MainWindow extends Window {
     /**
      * Constants.
      */
@@ -99,13 +102,14 @@ public class MainWindow extends Window {
     private static final String SPECTROGRAM_PANEL = "Spectrogram Panel";
     private static final String CHROMAGRAM_PANEL = "Chromagram Panel";
     private static final String CUT_SONG_PANEL = "Cut Song Panel";
-    private static final int INFO_LABEL_DELAY = 5000;
     private static final Border ROOT_PANE_BORDER =
         BorderFactory.createLineBorder(Color.DARK_GRAY);
     private static final Border CURRENT_SONG_TITLE_BORDER =
         BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private static final Border INFO_LABEL_BORDER =
         BorderFactory.createEmptyBorder(0, 12, 0, 12);
+    private static final int INFO_LABEL_DELAY = 5000;
+    private static final int BASE_NUM = 10;
 
     /**
      * Private data members.
@@ -140,6 +144,7 @@ public class MainWindow extends Window {
     private JLabel infoLabel;
     private String defaultOpenDir;
     private BufferedImage plot;
+
     /**
      * Listeners.
      */
@@ -169,10 +174,10 @@ public class MainWindow extends Window {
     private ActionListener deleteDoneListener;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param databaseAccessModel Database access model
-     * @param matlabHandler       Matlab handler
+     * @param matlabHandler       MATLAB handler
      */
     public MainWindow(DatabaseAccessModel databaseAccessModel,
         MatlabHandler matlabHandler) {
@@ -204,6 +209,9 @@ public class MainWindow extends Window {
         super.paint(g);
     }
 
+    /**
+     * Starts GUI.
+     */
     public void run() {
         changePanel(MENU_PANEL);
         if (currentSongModel.isEmpty()) {
@@ -217,6 +225,12 @@ public class MainWindow extends Window {
         setVisible(true);
     }
 
+    /**
+     * Hides/shows the core image according to the given boolean.
+     *
+     * @param isHidden Indicates whether the core image should be hidden
+     */
+    @Override
     protected void hideImage(boolean isHidden) {
         if (!currentSongModel.isEmpty()) {
             menuPanel.hideImage(isHidden);
@@ -225,6 +239,12 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Maximizes/normalizes the core image according to the given boolean.
+     *
+     * @param isMaximized Indicates whether the core image should be maximized
+     */
+    @Override
     protected void maximizeImage(boolean isMaximized) {
         menuPanel.maximizeImage(isMaximized);
         spectrogramPanel.maximizeImage(isMaximized);
@@ -232,16 +252,25 @@ public class MainWindow extends Window {
         cutSongPanel.maximizeImage(isMaximized);
     }
 
+    /**
+     * Adds WindowAdapter and EmptyMouseListener.
+     */
     private void addListeners() {
         addWindowListener(new ClosingWindowAdapter());
         this.glassPane.addMouseListener(emptyMouseListener);
     }
 
+    /**
+     * Gets the default song.
+     */
     private void getDefaultSong() {
         defaultOpenDir = getDir(currentSongModel.getPath());
         getSavedInstance();
     }
 
+    /**
+     * Gets the ID of the current song's saved instance.
+     */
     private void getSavedInstance() {
         if (!currentSongModel.isEmpty()) {
             try {
@@ -260,6 +289,9 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Adds panels.
+     */
     private void addPanels() {
         add(mainPanel, BorderLayout.CENTER);
         mainPanel.setPreferredSize(mainPanel.getSize());
@@ -276,6 +308,9 @@ public class MainWindow extends Window {
         innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL);
     }
 
+    /**
+     * Refreshes the cache.
+     */
     private void refreshCache() {
         try {
             viewSongsPanel.setList(databaseAccessModel.getSongList());
@@ -294,6 +329,9 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Sets the timer to refresh the cache.
+     */
     private void setTimer() {
         Timer t = new Timer(ConfigPropertiesLoader.getRefreshMillis(),
             e -> refreshCache());
@@ -301,6 +339,11 @@ public class MainWindow extends Window {
         t.start();
     }
 
+    /**
+     * Open a selected file.
+     *
+     * @return File opened
+     */
     private File openFile() {
         JFileChooser fileChooser;
 
@@ -318,6 +361,11 @@ public class MainWindow extends Window {
         return null;
     }
 
+    /**
+     * Open multiple files.
+     *
+     * @return Files opened.
+     */
     private File[] openFiles() {
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(true);
@@ -325,6 +373,11 @@ public class MainWindow extends Window {
         return chooser.getSelectedFiles();
     }
 
+    /**
+     * Get the cover of the current song.
+     *
+     * @return Cover
+     */
     private Image getCover() {
         try {
             Image cover = ImageLoader.getCover();
@@ -344,6 +397,12 @@ public class MainWindow extends Window {
         return null;
     }
 
+    /**
+     * Sets certain GUI elements according to the current song's being/not being
+     * the database.
+     *
+     * @param isFavorite True if the current song is already in the database
+     */
     private void setFavorite(boolean isFavorite) {
         menuPanel.setFavorite(isFavorite);
         if (isFavorite) {
@@ -354,6 +413,9 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Opens the current song.
+     */
     private void openSong() {
         Image cover = getCover();
         currentSongTitle.setText(currentSongModel.getTitle());
@@ -392,6 +454,9 @@ public class MainWindow extends Window {
         }).start();
     }
 
+    /**
+     * Show spectrogram.
+     */
     private void showSpec() {
         String windowSizeString = spectrogramPanel.getWindowSize();
         String hopSizeString = spectrogramPanel.getHopSize();
@@ -434,6 +499,9 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Show chromagram.
+     */
     private void showChrom() {
         String windowSizeString = chromagramPanel.getWindowSize();
         String hopSizeString = chromagramPanel.getHopSize();
@@ -472,18 +540,30 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Checks whether the numeric input fetched from the spectrogram/chromagram
+     * chooser is correct.
+     *
+     * @param windowSize Window size
+     * @param hopSize    Hop size
+     * @param nfft       Number of FFT points
+     * @return Logical value
+     */
     private boolean checkNumbers(int windowSize, int
         hopSize, int nfft) {
-        if (windowSize < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
-            hopSize < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
-            nfft < Math.pow(10, TEXT_FIELD_DIGIT_SIZE_MIN - 1) ||
-            windowSize <= hopSize) {
+        if (windowSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
+            || hopSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
+            || nfft < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
+            || windowSize <= hopSize) {
             showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
             return false;
         }
         return true;
     }
 
+    /**
+     * Cuts the current song.
+     */
     private void cutSong() {
         new Thread(() -> {
             glassPane.setVisible(true);
@@ -527,6 +607,8 @@ public class MainWindow extends Window {
                     } catch (MatlabEngineException mee) {
                         showDialog(mee.getMessage());
                     }
+                default:
+                    break;
             }
 
             SwingUtilities.invokeLater(() -> {
@@ -536,7 +618,10 @@ public class MainWindow extends Window {
         }).start();
     }
 
-    private void editSongsDone() {
+    /**
+     * Edits a song in the database.
+     */
+    private void editSongDone() {
         try {
             editPanel.setNewData();
             SongModel sm = editPanel.getSelectedSongModel();
@@ -552,6 +637,9 @@ public class MainWindow extends Window {
         editDialog.setVisible(false);
     }
 
+    /**
+     * Adds songs to the database.
+     */
     private void addSongs() {
         File[] files = openFiles();
         List<File> validFiles = new ArrayList<>();
@@ -573,16 +661,25 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Deletes songs previously chosen by the user.
+     */
     private void deleteSongsDone() {
         deleteSongsDialog.setVisible(false);
         try {
-            databaseAccessModel.deleteSongs(deleteSongsPanel.getSelectedRows());
+            SongListModel slm = deleteSongsPanel.getSelectedRows();
+            if (slm != null) {
+                databaseAccessModel.deleteSongs(slm);
+            }
             showDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
             showDialog(e.getMessage());
         }
     }
 
+    /**
+     * Initializes labels.
+     */
     private void initializeLabels() {
         currentSongTitle = new Label();
         currentSongTitle.setSize(BOTTOM_FIELD_SIZE);
@@ -594,6 +691,9 @@ public class MainWindow extends Window {
         infoLabel.setBorder(INFO_LABEL_BORDER);
     }
 
+    /**
+     * Initializes panels.
+     */
     private void initializePanels() {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.BLACK);
@@ -648,6 +748,11 @@ public class MainWindow extends Window {
         bottomPanel.setHeight(BOTTOM_PANEL_HEIGHT);
     }
 
+    /**
+     * Switches panel.
+     *
+     * @param name Panel to switch to
+     */
     private void changePanel(String name) {
         cardLayout.show(innerMainPanel, name);
         if (name.equals(MENU_PANEL) && !currentSongModel.isEmpty()) {
@@ -658,6 +763,9 @@ public class MainWindow extends Window {
         }
     }
 
+    /**
+     * Initializes listeners.
+     */
     private void initializeListeners() {
         emptyMouseListener = new EmptyMouseListener();
 
@@ -780,7 +888,7 @@ public class MainWindow extends Window {
             }
         };
 
-        editDoneListener = ae -> editSongsDone();
+        editDoneListener = ae -> editSongDone();
 
         addSongsListener = ae -> addSongs();
 
@@ -789,6 +897,9 @@ public class MainWindow extends Window {
         deleteDoneListener = ae -> deleteSongsDone();
     }
 
+    /**
+     * WindowAdapter.
+     */
     private class ClosingWindowAdapter extends WindowAdapter {
         public void windowClosing(WindowEvent we) {
             glassPane.setVisible(true);

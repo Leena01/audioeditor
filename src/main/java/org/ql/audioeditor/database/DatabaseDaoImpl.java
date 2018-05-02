@@ -2,19 +2,26 @@ package org.ql.audioeditor.database;
 
 import org.ql.audioeditor.database.entities.Song;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DatabaseDaoImpl implements DatabaseDao {
-    private Connection connection;
+/**
+ * Database implementation.
+ */
+public final class DatabaseDaoImpl implements DatabaseDao {
     private final Statement stat;
+    private Connection connection;
     private ResultSet rs;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param driver Drivers
+     * @param driver Driver
      * @param url    URL
      */
     public DatabaseDaoImpl(String driver, String url)
@@ -30,15 +37,15 @@ public class DatabaseDaoImpl implements DatabaseDao {
     public boolean createTable() {
         try {
             String query =
-                "create table if not exists fav(song_id INTEGER PRIMARY KEY, " +
-                    "song_title VARCHAR(255) NOT NULL, " +
-                    "song_track VARCHAR(255) NOT NULL, " +
-                    "song_artist VARCHAR(255) NOT NULL, " +
-                    "song_album VARCHAR(255) NOT NULL, " +
-                    "song_year VARCHAR(255) NOT NULL, " +
-                    "song_genre VARCHAR(255) NOT NULL, " +
-                    "song_comment VARCHAR(255) NOT NULL, " +
-                    "song_path VARCHAR(255) NOT NULL UNIQUE);";
+                "create table if not exists fav(song_id INTEGER PRIMARY KEY, "
+                    + "song_title VARCHAR(255) NOT NULL, "
+                    + "song_track VARCHAR(255) NOT NULL, "
+                    + "song_artist VARCHAR(255) NOT NULL, "
+                    + "song_album VARCHAR(255) NOT NULL, "
+                    + "song_year VARCHAR(255) NOT NULL, "
+                    + "song_genre VARCHAR(255) NOT NULL, "
+                    + "song_comment VARCHAR(255) NOT NULL, "
+                    + "song_path VARCHAR(255) NOT NULL UNIQUE);";
             stat.executeUpdate(query);
             connection.commit();
             return true;
@@ -78,17 +85,17 @@ public class DatabaseDaoImpl implements DatabaseDao {
     public boolean addSong(Song s) {
         try {
             String query =
-                "insert into fav(song_title, song_track, song_artist, " +
-                    "song_album, song_year, " +
-                    "song_genre, song_comment, song_path) values (\"" +
-                    s.getTitle() + "\", \"" +
-                    s.getTrack() + "\", \"" +
-                    s.getArtist() + "\", \"" +
-                    s.getAlbum() + "\", \"" +
-                    s.getYear() + "\", \"" +
-                    s.getGenre() + "\", \"" +
-                    s.getComment() + "\", \"" +
-                    s.getPath() + "\");";
+                "insert into fav(song_title, song_track, song_artist, "
+                    + "song_album, song_year, song_genre, song_comment, "
+                    + "song_path) values (\""
+                    + s.getTitle() + "\", \""
+                    + s.getTrack() + "\", \""
+                    + s.getArtist() + "\", \""
+                    + s.getAlbum() + "\", \""
+                    + s.getYear() + "\", \""
+                    + s.getGenre() + "\", \""
+                    + s.getComment() + "\", \""
+                    + s.getPath() + "\");";
             stat.executeUpdate(query);
             connection.commit();
             return true;
@@ -121,15 +128,15 @@ public class DatabaseDaoImpl implements DatabaseDao {
     @Override
     public boolean editSong(Song s) {
         try {
-            String query = "update fav set song_title = \"" + s.getTitle() +
-                "\", song_track = \"" + s.getTrack() +
-                "\", song_artist = \"" + s.getArtist() +
-                "\", song_album = \"" + s.getAlbum() +
-                "\", song_year = \"" + s.getYear() +
-                "\", song_genre = \"" + s.getGenre() +
-                "\", song_comment = \"" + s.getComment() +
-                "\", song_path = \"" + s.getPath() +
-                "\" where `id` = \"" + s.getId() + "\";";
+            String query = "update fav set song_title = \"" + s.getTitle()
+                + "\", song_track = \"" + s.getTrack()
+                + "\", song_artist = \"" + s.getArtist()
+                + "\", song_album = \"" + s.getAlbum()
+                + "\", song_year = \"" + s.getYear()
+                + "\", song_genre = \"" + s.getGenre()
+                + "\", song_comment = \"" + s.getComment()
+                + "\", song_path = \"" + s.getPath()
+                + "\" where `id` = \"" + s.getId() + "\";";
             stat.executeUpdate(query);
             connection.commit();
             return true;
@@ -142,9 +149,6 @@ public class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
-    /**
-     * Commit changes
-     */
     @Override
     public void commit() {
         try {
@@ -153,9 +157,6 @@ public class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
-    /**
-     * Rollback changes
-     */
     @Override
     public void rollback() {
         try {
@@ -164,20 +165,15 @@ public class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
-    /**
-     * Close connection
-     */
     @Override
     public void close() {
         try {
             if (rs != null) {
                 rs.close();
             }
-
             if (stat != null) {
                 stat.close();
             }
-
             if (connection != null) {
                 connection.close();
             }
