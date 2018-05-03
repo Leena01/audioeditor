@@ -67,6 +67,7 @@ import java.util.List;
 
 import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.Helper.convertToNumber;
+import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
 import static org.ql.audioeditor.common.util.Helper.getDir;
 import static org.ql.audioeditor.common.util.Helper.getFileExtension;
 import static org.ql.audioeditor.common.util.Helper.showInfo;
@@ -93,6 +94,8 @@ public final class MainWindow extends Window {
     private static final String SHOW_SIMILAR_SONGS_TITLE = "Show similar songs";
     private static final String SHOW_SIMILAR_SONGS_INSTR =
         "Please choose an attribute.";
+    private static final String LONG_SONG_INFO =
+        "Warning: this song might be too long to analyze.";
     private static final String FILE_ALREADY_EXISTS_ERROR =
         "The path specified already exists.";
     private static final String COVER_ERROR = "Could not load cover.";
@@ -454,7 +457,6 @@ public final class MainWindow extends Window {
      * @param sm Song model
      */
     private void loadSong(SongModel sm) {
-        currentSongModel = new SongModel(sm);
         defaultOpenDir = getDir(currentSongModel.getPath());
         openSong(sm);
     }
@@ -613,6 +615,9 @@ public final class MainWindow extends Window {
         }
     }
 
+    /**
+     * Creates dialog for showing related songs.
+     */
     private void showRelated() {
         String attribute = (String) JOptionPane
             .showInputDialog(this,
@@ -903,7 +908,9 @@ public final class MainWindow extends Window {
                     .plotSong(ImageLoader.getPlotImagePath());
                 matlabHandler.passData(sm);
                 SwingUtilities.invokeLater(() -> {
-                    changePitchPanel.setFreq(sm.getFreq());
+                    double freq = sm.getFreq();
+                    double totalSamples = sm.getTotalSamples();
+                    changePitchPanel.setFreq(freq);
                     currentSongTitle.setText(sm.getTitle());
                     try {
                         plot = ImageIO.read(new File(ImageLoader
@@ -911,9 +918,7 @@ public final class MainWindow extends Window {
                     } catch (IOException ignored) {
                     }
                     menuPanel
-                        .setCurrentSong(
-                            sm.getTotalSamples(),
-                            sm.getFreq(), plot, cover,
+                        .setCurrentSong(totalSamples, freq, plot, cover,
                             isNormal, getExtendedState()
                                 == MAXIMIZED_BOTH, makeFavoriteAction,
                             showRelatedAction);
@@ -922,6 +927,10 @@ public final class MainWindow extends Window {
                     optionPanel.showOptions(true);
                     currentSongModel = sm;
                     changePanel(MENU_PANEL);
+                    if (framesToSeconds(totalSamples, freq) >
+                        SongPropertiesLoader.getMaxSeconds()) {
+                        showInfo(infoLabel, LONG_SONG_INFO, INFO_LABEL_DELAY);
+                    }
                 });
             } catch (MatlabEngineException mee) {
                 new Thread(new DialogRunnable(mee.getMessage())).start();

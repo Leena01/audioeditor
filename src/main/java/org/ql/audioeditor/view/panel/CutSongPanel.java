@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToMillis;
+import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
@@ -122,8 +122,8 @@ public final class CutSongPanel extends BasicPanel {
         int upperValue = rangeSlider.getUpperValue();
         fromValue.setText(String.valueOf(lowerValue));
         toValue.setText(String.valueOf(upperValue));
-        fromSecValue.setText(formatDuration(framesToMillis(lowerValue, freq)));
-        toSecValue.setText(formatDuration(framesToMillis(upperValue, freq)));
+        fromSecValue.setText(formatDuration(framesToSeconds(lowerValue, freq)));
+        toSecValue.setText(formatDuration(framesToSeconds(upperValue, freq)));
     }
 
     public void setDefaultValues() {
@@ -195,7 +195,7 @@ public final class CutSongPanel extends BasicPanel {
                         rangeSlider.setValue(value);
                         int newValue = Integer.parseInt(fromValue.getText());
                         fromSecValue.setText(
-                            formatDuration(framesToMillis(newValue, freq)));
+                            formatDuration(framesToSeconds(newValue, freq)));
                     } else {
                         int oldValue = rangeSlider.getValue();
                         fromValue.setText(String.valueOf(oldValue));
@@ -210,7 +210,7 @@ public final class CutSongPanel extends BasicPanel {
                         int newUpperValue = Integer.parseInt(toValue.getText());
                         toSecValue.setText(
                             formatDuration(
-                                framesToMillis(newUpperValue, freq)));
+                                framesToSeconds(newUpperValue, freq)));
                     } else {
                         int oldUpperValue = rangeSlider.getUpperValue();
                         toValue.setText(String.valueOf(oldUpperValue));

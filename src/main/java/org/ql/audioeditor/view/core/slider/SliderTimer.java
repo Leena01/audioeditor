@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToMillis;
+import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
 
 /**
  * Timer with slider.
@@ -29,7 +29,6 @@ public class SliderTimer extends Observable {
     private Timer timer;
     private int refreshMillis;
     private double freq;
-    private int totalLength;
 
     public SliderTimer(JSlider slider, MatlabHandler matlabHandler,
         JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
@@ -41,7 +40,6 @@ public class SliderTimer extends Observable {
         this.isDaemon = isDaemon;
         this.refreshMillis = 0;
         this.freq = 0.0;
-        this.totalLength = 0;
         maxFrames = 0;
         slider.addMouseListener(new MouseAdapter() {
             @Override
@@ -61,12 +59,11 @@ public class SliderTimer extends Observable {
         this.refreshMillis = refreshMillis;
         maxFrames = (int) totalSamples;
         this.freq = freq;
-        this.totalLength =
-            (int) ((maxFrames / freq) * MILLIS_SECONDS_CONVERSION);
-        this.totalLengthField.setText(formatDuration(totalLength));
+        this.totalLengthField.setText(formatDuration(framesToSeconds
+            (maxFrames, freq)));
         this.slider.setMinimum(MIN_FRAMES);
         this.slider.setMaximum(maxFrames);
-        timeField.setText(formatDuration(framesToMillis(MIN_FRAMES, freq)));
+        timeField.setText(formatDuration(framesToSeconds(MIN_FRAMES, freq)));
     }
 
     public void resumeTimer() {
@@ -119,7 +116,7 @@ public class SliderTimer extends Observable {
     }
 
     private void setCurrentTime(int currentFrame) {
-        timeField.setText(formatDuration(framesToMillis(currentFrame, freq)));
+        timeField.setText(formatDuration(framesToSeconds(currentFrame, freq)));
         slider.setValue(currentFrame);
     }
 
