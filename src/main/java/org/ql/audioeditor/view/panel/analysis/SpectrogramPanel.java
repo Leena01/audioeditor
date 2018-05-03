@@ -45,10 +45,10 @@ public final class SpectrogramPanel extends ChromagramPanel {
 
     public void changeImage(Image image, Image image3d, boolean isNormal,
         boolean isMaximized) {
-        if (specIcon3d != null) {
+        if (specIcon3d.getImage() != null) {
             specIcon3d.getImage().flush();
         }
-        if (specIcon3dMax != null) {
+        if (specIcon3dMax.getImage() != null) {
             specIcon3dMax.getImage().flush();
         }
 
@@ -56,6 +56,20 @@ public final class SpectrogramPanel extends ChromagramPanel {
             new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE_MAX));
         specIcon3d = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE));
         super.changeImage(image, isNormal, isMaximized);
+    }
+
+    @Override
+    public void removeImages() {
+        super.removeImages();
+        if (specIcon3d.getImage() != null) {
+            specIcon3d.getImage().flush();
+            specIcon3d = new ImageIcon();
+        }
+        if (specIcon3dMax.getImage() != null) {
+            specIcon3dMax.getImage().flush();
+            specIcon3dMax = new ImageIcon();
+        }
+        image3dLabel.setIcon(new ImageIcon());
     }
 
     @Override

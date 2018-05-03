@@ -89,8 +89,12 @@ public final class MenuPanel extends BasicPanel {
         boolean isNormal, boolean isMaximized, Action makeFavoriteAction,
         Action showRelatedAction) {
         infoPanel.setVisible(false);
-        coverIcon.getImage().flush();
-        coverIconMax.getImage().flush();
+        if (coverIcon.getImage() != null) {
+            coverIcon.getImage().flush();
+        }
+        if (coverIconMax.getImage() != null) {
+            coverIconMax.getImage().flush();
+        }
         coverIcon = new ImageIcon(cover);
         coverIconMax = resizeImageIcon(coverIcon, COVER_SIZE_MAX);
         coverIcon = resizeImageIcon(coverIcon, COVER_SIZE);

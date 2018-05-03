@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\package-info.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\window\package-info.java">
-</file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
-<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\AnalysisPanel.java">
-<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\package-info.java">
+<error line="0" severity="error" message="File does not end with a newline." source="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\ChangePitchPanel.java">
-<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\package-info.java">
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\popup\DeleteSongsPanel.java">
-<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\package-info.java">
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\param\Constants.java">
-<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\popup\package-info.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\param\package-info.java">
 </file>
 </checkstyle>

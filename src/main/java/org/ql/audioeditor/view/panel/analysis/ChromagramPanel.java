@@ -129,13 +129,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
 
     public void changeImage(Image image, boolean isNormal, boolean
         isMaximized) {
-        if (specIcon != null) {
-            specIcon.getImage().flush();
-        }
-        if (specIconMax != null) {
-            specIconMax.getImage().flush();
-        }
-
+        removeImages();
         specIconMax = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE_MAX));
         specIcon = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE));
 
@@ -151,6 +145,18 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         } else {
             imagePanel.setVisible(true);
         }
+    }
+
+    public void removeImages() {
+        if (specIcon.getImage() != null) {
+            specIcon.getImage().flush();
+            specIcon = new ImageIcon();
+        }
+        if (specIconMax.getImage() != null) {
+            specIconMax.getImage().flush();
+            specIconMax = new ImageIcon();
+        }
+        imageLabel.setIcon(new ImageIcon());
     }
 
     public void maximizeImage(boolean isMaximized) {

@@ -1,13 +1,27 @@
 function showChromagram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
+%SHOWCHROMAGRAM   Convert affine P-systems to polytopic representation
 	figure('visible', 'off');
-	xsize = size(x);
-	if (xsize(2) == 2)
-		x = x(:, 1);
-	end
+	x = x(:, 1);
+	
+	% generate chromagram
 	win = windowmap(window);
-	[S, ~, ~] = spectrogram(x, feval(win, wlen), hop, nfft, fs, 'yaxis');
+	[S, ~, T] = spectrogram(x, feval(win, wlen), hop, nfft, fs, 'yaxis');
 	C = getCMatrix(fs, wlen, 27.5);
 	Y = C * abs(S);
-	imagesc(Y);
+	
+	% set axis tick labels
+	notes = {'G^#/A^b', 'G', 'F^#/G^b', 'F', 'E', 'D^#/E^b', 'D', 'C^#/D^b', 'C', 'B', 'A^#/B^b', 'A'};
+	set(gca, 'YTickLabel', notes);
+	[T, ~, ut] = engunits(T, 'unicode', 'time');
+	
+	% plot image
+	imagesc(T, 1:12, Y);
+	
+	% set axis labels
+	timelbl = [getString(message('signal:spectrogram:Time')) ' (' ut ')'];
+	xlabel(timelbl);
+	ylabel('Notes');
+	
+	% export image
 	hgexport(gcf, imgname, hgexport('factorystyle'), 'Format', 'png');
 end

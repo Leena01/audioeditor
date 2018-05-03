@@ -69,7 +69,6 @@ import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.Helper.convertToNumber;
 import static org.ql.audioeditor.common.util.Helper.getDir;
 import static org.ql.audioeditor.common.util.Helper.getFileExtension;
-import static org.ql.audioeditor.common.util.Helper.showDialog;
 import static org.ql.audioeditor.common.util.Helper.showInfo;
 import static org.ql.audioeditor.view.param.Constants.ATTRIBUTES;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_FIELD_SIZE;
@@ -213,6 +212,7 @@ public final class MainWindow extends Window {
         this.glassPane = getGlassPane();
         this.rootPane.setBorder(ROOT_PANE_BORDER);
         this.t = new Thread();
+
         initKeyBindings();
         initializeListeners();
         addListeners();
@@ -279,24 +279,24 @@ public final class MainWindow extends Window {
      */
     private void getDefaultSong() {
         defaultOpenDir = getDir(currentSongModel.getPath());
-        getSavedInstance();
+        getSavedInstance(currentSongModel);
     }
 
     /**
      * Gets the ID of the current song's saved instance.
      */
-    private void getSavedInstance() {
-        if (!currentSongModel.isEmpty()) {
+    private void getSavedInstance(SongModel sm) {
+        if (!sm.isEmpty()) {
             try {
-                int id = databaseAccessModel.getId(currentSongModel);
-                currentSongModel.setId(id);
-                if (currentSongModel.isDefault()) {
+                int id = databaseAccessModel.getId(sm);
+                sm.setId(id);
+                if (sm.isDefault()) {
                     setFavorite(false);
                 } else {
                     setFavorite(true);
                 }
             } catch (SQLConnectionException e) {
-                showDialog(e.getMessage());
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 menuPanel.setFavorite(false);
             }
         }
@@ -404,7 +404,7 @@ public final class MainWindow extends Window {
             }
             return cover;
         } catch (Exception ex) {
-            showDialog(COVER_ERROR);
+            JOptionPane.showMessageDialog(this, COVER_ERROR);
         }
         return null;
     }
@@ -456,18 +456,17 @@ public final class MainWindow extends Window {
     private void loadSong(SongModel sm) {
         currentSongModel = new SongModel(sm);
         defaultOpenDir = getDir(currentSongModel.getPath());
-        openSong();
+        openSong(sm);
     }
 
     /**
      * Opens the current song.
      */
-    private void openSong() {
+    private void openSong(SongModel sm) {
         cover = getCover();
-        currentSongTitle.setText(currentSongModel.getTitle());
-        getSavedInstance();
+        getSavedInstance(sm);
 
-        t = new Thread(new OpenSongRunnable());
+        t = new Thread(new OpenSongRunnable(sm));
         waitForThread(t);
     }
 
@@ -548,9 +547,9 @@ public final class MainWindow extends Window {
             }
             sm.setTags();
             databaseAccessModel.editSong(editPanel.getSelectedSongModel());
-            showDialog(SUCCESSFUL_OPERATION_INFO);
+            JOptionPane.showMessageDialog(this, SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showDialog(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ignored) {
         }
         editDialog.setVisible(false);
@@ -573,9 +572,9 @@ public final class MainWindow extends Window {
         SongListModel songListModel = new SongListModel(validFiles);
         try {
             databaseAccessModel.addSongs(songListModel);
-            showDialog(SUCCESSFUL_OPERATION_INFO);
+            JOptionPane.showMessageDialog(this, SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showDialog(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -589,9 +588,9 @@ public final class MainWindow extends Window {
             if (slm != null) {
                 databaseAccessModel.deleteSongs(slm);
             }
-            showDialog(SUCCESSFUL_OPERATION_INFO);
+            JOptionPane.showMessageDialog(this, SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showDialog(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -610,7 +609,7 @@ public final class MainWindow extends Window {
                 setFavorite(false);
             }
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showDialog(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -628,7 +627,7 @@ public final class MainWindow extends Window {
                 currentSongModel));
             similarSongsDialog.setVisible(true);
         } catch (SQLConnectionException e) {
-            showDialog(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -757,8 +756,7 @@ public final class MainWindow extends Window {
             File f = openFile();
             if (f != null) {
                 defaultOpenDir = f.getParent();
-                currentSongModel = new SongModel(f);
-                openSong();
+                openSong(new SongModel(f));
             }
         };
 
@@ -880,7 +878,8 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.close();
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                JOptionPane.showMessageDialog(MainWindow.this, mee.getMessage
+                    ());
             }
             databaseAccessModel.close();
         }
@@ -890,32 +889,42 @@ public final class MainWindow extends Window {
      * Runnable for opening songs.
      */
     private final class OpenSongRunnable implements Runnable {
+        private final SongModel sm;
+
+        private OpenSongRunnable(SongModel sm) {
+            this.sm = sm;
+        }
+
         @Override
-        public void run() {
+        public synchronized void run() {
             try {
-                matlabHandler.openSong(currentSongModel.getPath());
+                matlabHandler.openSong(sm.getPath());
                 matlabHandler
                     .plotSong(ImageLoader.getPlotImagePath());
+                matlabHandler.passData(sm);
                 SwingUtilities.invokeLater(() -> {
-                    matlabHandler.passData(currentSongModel);
-                    changePitchPanel.setFreq(currentSongModel.getFreq());
+                    changePitchPanel.setFreq(sm.getFreq());
+                    currentSongTitle.setText(sm.getTitle());
                     try {
                         plot = ImageIO.read(new File(ImageLoader
                             .getPlotImagePath()));
-                        menuPanel
-                            .setCurrentSong(
-                                currentSongModel.getTotalSamples(),
-                                currentSongModel.getFreq(), plot, cover,
-                                isNormal, getExtendedState()
-                                    == MAXIMIZED_BOTH, makeFavoriteAction,
-                                showRelatedAction);
-                        optionPanel.showOptions(true);
-                        changePanel(MENU_PANEL);
                     } catch (IOException ignored) {
                     }
+                    menuPanel
+                        .setCurrentSong(
+                            sm.getTotalSamples(),
+                            sm.getFreq(), plot, cover,
+                            isNormal, getExtendedState()
+                                == MAXIMIZED_BOTH, makeFavoriteAction,
+                            showRelatedAction);
+                    spectrogramPanel.removeImages();
+                    chromagramPanel.removeImages();
+                    optionPanel.showOptions(true);
+                    currentSongModel = sm;
+                    changePanel(MENU_PANEL);
                 });
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -940,7 +949,7 @@ public final class MainWindow extends Window {
         }
 
         @Override
-        public void run() {
+        public synchronized void run() {
             try {
                 matlabHandler
                     .showSpectrogram(windowSize, hopSize, nfft, window,
@@ -960,7 +969,7 @@ public final class MainWindow extends Window {
                     }
                 });
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -983,7 +992,7 @@ public final class MainWindow extends Window {
         }
 
         @Override
-        public void run() {
+        public synchronized void run() {
             try {
                 matlabHandler
                     .showChromagram(windowSize, hopSize, nfft, window,
@@ -999,7 +1008,7 @@ public final class MainWindow extends Window {
                     }
                 });
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1009,7 +1018,7 @@ public final class MainWindow extends Window {
      */
     private final class CutSongRunnable implements Runnable {
         @Override
-        public void run() {
+        public synchronized void run() {
             try {
                 matlabHandler
                     .cutSong(cutSongPanel.getFrom(), cutSongPanel.getTo());
@@ -1032,33 +1041,52 @@ public final class MainWindow extends Window {
                                     File fileToSave = fileChooser
                                         .getSelectedFile();
                                     if (fileToSave.exists()) {
-                                        showDialog(FILE_ALREADY_EXISTS_ERROR);
+                                        JOptionPane.showMessageDialog
+                                            (MainWindow.this,
+                                                FILE_ALREADY_EXISTS_ERROR);
                                     } else {
-                                        matlabHandler
-                                            .saveSong(
-                                                fileToSave.getAbsolutePath());
+                                        matlabHandler.saveSong(
+                                            fileToSave.getAbsolutePath());
                                     }
                                 }
                             } catch (MatlabEngineException mee) {
-                                showDialog(mee.getMessage());
+                                JOptionPane.showMessageDialog(MainWindow
+                                    .this, mee.getMessage());
                             }
                             break;
                         case JOptionPane.NO_OPTION:
                             try {
                                 matlabHandler
                                     .saveSong(currentSongModel.getPath());
-                                openSong();
+                                openSong(currentSongModel);
                             } catch (MatlabEngineException mee) {
-                                showDialog(mee.getMessage());
+                                JOptionPane.showMessageDialog(MainWindow
+                                    .this, mee.getMessage());
                             }
                         default:
                             break;
                     }
                 });
-            } catch (MatlabEngineException e) {
-                showDialog(e.getMessage());
+            } catch (MatlabEngineException mee) {
+                new Thread(new DialogRunnable(mee.getMessage())).start();
                 cutSongPanel.setDefaultValues();
             }
+        }
+    }
+
+    /**
+     * Runnable for displaying message dialogs.
+     */
+    private final class DialogRunnable implements Runnable {
+        private final String message;
+
+        private DialogRunnable(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public synchronized void run() {
+            JOptionPane.showMessageDialog(MainWindow.this, message);
         }
     }
 }
