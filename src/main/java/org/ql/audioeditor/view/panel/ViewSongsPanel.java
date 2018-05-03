@@ -46,10 +46,10 @@ public class ViewSongsPanel extends BasicPanel {
     protected JPanel outerSearchPanel;
     protected JScrollPane scrollPane;
     protected SongTableModel tableModel;
+    protected SongModel selected;
     private JPanel buttonPanel;
     private JPanel songButtonPanel;
     private JPanel importButtonPanel;
-    private SongModel selected;
     private JButton selectOptionButton;
     private JButton addOptionButton;
     private JButton editOptionButton;
@@ -76,8 +76,7 @@ public class ViewSongsPanel extends BasicPanel {
 
                     if (text.trim().length() == 0) {
                         sorter.setRowFilter(null);
-                    }
-                    else {
+                    } else {
                         sorter.setRowFilter(
                             RowFilter.regexFilter("(?i)" + text));
                     }
@@ -89,8 +88,7 @@ public class ViewSongsPanel extends BasicPanel {
 
                     if (text.trim().length() == 0) {
                         sorter.setRowFilter(null);
-                    }
-                    else {
+                    } else {
                         sorter.setRowFilter(
                             RowFilter.regexFilter("(?i)" + text));
                     }
@@ -158,8 +156,7 @@ public class ViewSongsPanel extends BasicPanel {
         }
         if (selectedRow >= 0 && selectedRow < this.table.getRowCount()) {
             this.table.setRowSelectionInterval(selectedRow, selectedRow);
-        }
-        else {
+        } else {
             this.table.setRowSelectionInterval(0, 0);
         }
     }

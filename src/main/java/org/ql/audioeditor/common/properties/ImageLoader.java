@@ -30,6 +30,7 @@ public final class ImageLoader {
     private static Image soundOffIcon;
     private static Image favoriteIcon;
     private static Image unfavoriteIcon;
+    private static Image playlistIcon;
     private static Image minimizeIcon;
     private static Image maximizeIcon;
     private static Image normalizeIcon;
@@ -47,8 +48,7 @@ public final class ImageLoader {
             ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null) {
             properties.load(inputStream);
-        }
-        else {
+        } else {
             throw new FileNotFoundException();
         }
 
@@ -76,6 +76,8 @@ public final class ImageLoader {
             properties.getProperty("sound.off.icon.name")));
         unfavoriteIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("unfavorite.icon.name")));
+        playlistIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("playlist.icon.name")));
         minimizeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("minimize.icon.name")));
         maximizeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
@@ -144,6 +146,10 @@ public final class ImageLoader {
 
     public static Image getUnfavoriteIcon() {
         return unfavoriteIcon;
+    }
+
+    public static Image getPlaylistIcon() {
+        return playlistIcon;
     }
 
     public static Image getMinimizeIcon() {

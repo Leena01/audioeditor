@@ -19,7 +19,7 @@ import java.io.File;
 public final class Helper {
     public static final int MILLIS_SECONDS_CONVERSION = 1000;
     private static final int HOUR_CONVERSION = 3600;
-    private static final int MINUTE_CONVERSION = 3600;
+    private static final int MINUTE_CONVERSION = 60;
     private static final String PATH = new File("").getAbsolutePath();
 
     private Helper() {
@@ -99,8 +99,7 @@ public final class Helper {
         File parent = file.getParentFile();
         if (parent != null) {
             return parent.getAbsolutePath();
-        }
-        else {
+        } else {
             return path;
         }
     }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * List model.
+ * List model that encapsulates a list.
  * @param <T> Type to encapsulate
  */
 public abstract class ListModel<T> {

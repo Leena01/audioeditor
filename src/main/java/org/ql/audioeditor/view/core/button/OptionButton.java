@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 /**
  * Option button.
  */
-public class OptionButton extends JButton implements MouseListener {
+public class OptionButton extends JButton {
     private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
     private static final Color HOVER_COLOR = Color.WHITE;
     private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
@@ -21,35 +21,8 @@ public class OptionButton extends JButton implements MouseListener {
         addMouseListener();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        setContentAreaFilled(true);
-        setContentAreaFilled(false);
-        addMouseListener();
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        setContentAreaFilled(true);
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        setContentAreaFilled(false);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        setForeground(HOVER_COLOR);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        setForeground(DEFAULT_COLOR);
-    }
-
     private void addMouseListener() {
-        this.addMouseListener(this);
+        this.addMouseListener(new OptionButtonListener());
     }
 
     private void setAttributes() {
@@ -58,5 +31,37 @@ public class OptionButton extends JButton implements MouseListener {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
+    }
+
+    /**
+     * Mouse listener for class 'OptionButton'.
+     */
+    private final class OptionButtonListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            setContentAreaFilled(true);
+            setContentAreaFilled(false);
+            addMouseListener();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            setContentAreaFilled(true);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            setForeground(HOVER_COLOR);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            setForeground(DEFAULT_COLOR);
+        }
     }
 }

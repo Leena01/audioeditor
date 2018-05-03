@@ -21,6 +21,7 @@ public final class SongModel {
     private Song song;
     private double totalSamples = 0.0;
     private double freq = 0.0;
+    private boolean isSaved = false;
 
     /**
      * Default constructor.
@@ -152,6 +153,14 @@ public final class SongModel {
         this.freq = freq;
     }
 
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean isSaved) {
+        this.isSaved = isSaved;
+    }
+
     public boolean isEmpty() {
         return getId() == SongPropertiesLoader.getEmptySongId();
     }
@@ -197,8 +206,7 @@ public final class SongModel {
         ID3v1 id3v1Tag;
         if (song.hasId3v1Tag()) {
             id3v1Tag = song.getId3v1Tag();
-        }
-        else {
+        } else {
             id3v1Tag = new ID3v1Tag();
             song.setId3v1Tag(id3v1Tag);
         }

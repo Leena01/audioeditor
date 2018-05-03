@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -48,8 +49,7 @@ import static org.ql.audioeditor.view.param.Constants.VOLUME_SLIDER_SIZE;
 /**
  * Panel for playing media.
  */
-class PlayerPanel extends BasicPanel
-    implements MouseListener, ChangeListener, Observer {
+class PlayerPanel extends BasicPanel {
     private static final String MOVE_BACKWARD = "moveBackwardAction";
     private static final String MOVE_FORWARD = "moveForwardAction";
     private static final String VOLUME_UP = "volumeUpAction";
@@ -57,6 +57,8 @@ class PlayerPanel extends BasicPanel
     private static final String PAUSE = "pauseAction";
     private static final String STOP = "stopAction";
     private static final String MUTE = "muteAction";
+    private static final String MAKE_FAVORITE = "makeFavoriteAction";
+    private static final String SHOW_RELATED = "showRelatedAction";
     private static final int NULL_VOLUME = 0;
     private static final int VOLUME_MIN = SongPropertiesLoader.getVolumeMin();
     private static final int VOLUME_MAX = SongPropertiesLoader.getVolumeMax();
@@ -92,6 +94,9 @@ class PlayerPanel extends BasicPanel
     private static final ImageIcon UNFAVORITE_ICON =
         resizeImageIcon(new ImageIcon(ImageLoader.getUnfavoriteIcon()),
             BUTTON_SIZE);
+    private static final ImageIcon PLAYLIST_ICON =
+        resizeImageIcon(new ImageIcon(ImageLoader.getPlaylistIcon()),
+            SOUND_BUTTON_SIZE);
     private static final ImageIcon SOUND_ON_ICON =
         resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIcon()),
             SOUND_BUTTON_SIZE);
@@ -119,6 +124,7 @@ class PlayerPanel extends BasicPanel
     private final JButton forwardButton;
     private final JButton favoriteButton;
     private final JButton unfavoriteButton;
+    private final JButton similarSongsButton;
     private final JButton soundOnButton;
     private final JButton soundOffButton;
     private final JPanel volumePanel;
@@ -138,7 +144,7 @@ class PlayerPanel extends BasicPanel
 
     PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel,
         InputMap inputMap, ActionMap actionMap, ActionListener fb,
-        ActionListener ufb) {
+        ActionListener ufb, ActionListener sss) {
         super();
         this.playbackThread = new Thread();
         playbackThread.start();
@@ -169,6 +175,8 @@ class PlayerPanel extends BasicPanel
         favoriteButton = new TransparentButton(FAVORITE_ICON, BUTTON_SIZE, fb);
         unfavoriteButton =
             new TransparentButton(UNFAVORITE_ICON, BUTTON_SIZE, ufb);
+        similarSongsButton =
+            new TransparentButton(PLAYLIST_ICON, BUTTON_SIZE, sss);
         soundOnButton = new TransparentButton(SOUND_ON_ICON, BUTTON_SIZE);
         soundOffButton = new TransparentButton(SOUND_OFF_ICON, BUTTON_SIZE);
 
@@ -182,70 +190,6 @@ class PlayerPanel extends BasicPanel
         addPanels();
         initInnerListeners();
         init();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Object source = e.getSource();
-        if (e.getClickCount() == 1) {
-            if (source == playButton) {
-                playSong();
-            }
-            else if (source == pauseButton) {
-                pauseSong();
-            }
-            else if (source == stopButton) {
-                stopSong();
-            }
-            else if (source == soundOnButton) {
-                turnVolumeOff();
-            }
-            else if (source == soundOffButton) {
-                turnVolumeOn();
-            }
-        }
-        if (source == backwardButton) {
-            moveBackward();
-        }
-        else if (source == forwardButton) {
-            moveForward();
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        Object source = e.getSource();
-        if (source == volumeSlider) {
-            JSlider vs = (JSlider) source;
-            float level = vs.getValue() / CONVERSION_RATE;
-            if (!vs.getValueIsAdjusting()) {
-                playbackThread =
-                    new Thread(() -> matlabHandler.changeVolume(level));
-                playbackThread.start();
-            }
-        }
-    }
-
-    @Override
-    public void update(Observable obs, Object obj) {
-        pauseButton.setVisible(false);
-        playButton.setVisible(true);
     }
 
     @Override
@@ -279,6 +223,7 @@ class PlayerPanel extends BasicPanel
         buttonPanel.add(favoriteButton);
         buttonPanel.add(unfavoriteButton);
         buttonPanel.add(volumePanel);
+        volumePanel.add(similarSongsButton);
         volumePanel.add(soundOnButton);
         volumePanel.add(soundOffButton);
         volumePanel.add(volumeSlider);
@@ -286,21 +231,23 @@ class PlayerPanel extends BasicPanel
         mediaControlPanel.add(volumePanel, BorderLayout.EAST);
     }
 
-    void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
+    void setCurrentSong(double totalSamples, double freq, BufferedImage plot,
+        Action makeFavoriteAction, Action showRelatedAction) {
         stopSong();
         mediaControlPanel.setVisible(true);
         framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
-        trackSlider.setImage(plot);
-        initKeyBindings();
+        if (plot != null) {
+            trackSlider.setImage(plot);
+        }
+        initKeyBindings(makeFavoriteAction, showRelatedAction);
     }
 
     void setFavorite(boolean isFavorite) {
         if (isFavorite) {
             favoriteButton.setVisible(false);
             unfavoriteButton.setVisible(true);
-        }
-        else {
+        } else {
             unfavoriteButton.setVisible(false);
             favoriteButton.setVisible(true);
         }
@@ -327,10 +274,10 @@ class PlayerPanel extends BasicPanel
     private void stopSong() {
         pauseButton.setVisible(false);
         playButton.setVisible(true);
-        sliderTimer.stopTimer();
         playbackThread = new Thread(() -> {
             matlabHandler.stopSong();
-            matlabHandler.relocateSong(sliderTimer.getMin());
+            SwingUtilities.invokeLater(
+                () -> sliderTimer.stopTimer());
         });
         playbackThread.start();
         isPlaying = false;
@@ -381,42 +328,42 @@ class PlayerPanel extends BasicPanel
         return isPlaying;
     }
 
-    private void initKeyBindings() {
+    private void initKeyBindings(Action makeFavoriteAction,
+        Action showRelatedAction) {
         Action moveBackwardAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     moveBackward();
                 }
             }
         };
         Action moveForwardAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     moveForward();
                 }
             }
         };
         Action volumeUpAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     volumeUp();
                 }
             }
         };
         Action volumeDownAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     volumeDown();
                 }
             }
         };
         Action pauseAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     if (isPlaying()) {
                         pauseSong();
-                    }
-                    else {
+                    } else {
                         playSong();
                     }
                 }
@@ -424,18 +371,17 @@ class PlayerPanel extends BasicPanel
         };
         Action stopAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     stopSong();
                 }
             }
         };
         Action muteAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (DoubleActionTool.isDoubleAction(e)) {
+                if (!DoubleActionTool.isDoubleAction(e)) {
                     if (isMute()) {
                         turnVolumeOn();
-                    }
-                    else {
+                    } else {
                         turnVolumeOff();
                     }
                 }
@@ -449,6 +395,8 @@ class PlayerPanel extends BasicPanel
         KeyStroke pKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_P, 0);
         KeyStroke sKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, 0);
         KeyStroke mKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_M, 0);
+        KeyStroke fKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0);
+        KeyStroke rKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, 0);
         inputMap.put(leftKeyStroke, MOVE_BACKWARD);
         actionMap.put(MOVE_BACKWARD, moveBackwardAction);
         inputMap.put(rightKeyStroke, MOVE_FORWARD);
@@ -463,23 +411,101 @@ class PlayerPanel extends BasicPanel
         actionMap.put(STOP, stopAction);
         inputMap.put(mKeyStroke, MUTE);
         actionMap.put(MUTE, muteAction);
+        inputMap.put(fKeyStroke, MAKE_FAVORITE);
+        actionMap.put(MAKE_FAVORITE, makeFavoriteAction);
+        inputMap.put(rKeyStroke, SHOW_RELATED);
+        actionMap.put(SHOW_RELATED, showRelatedAction);
     }
 
     private void initInnerListeners() {
-        sliderTimer.addObserver(this);
-        volumeSlider.addChangeListener(this);
-        backwardButton.addMouseListener(this);
-        playButton.addMouseListener(this);
-        pauseButton.addMouseListener(this);
-        stopButton.addMouseListener(this);
-        forwardButton.addMouseListener(this);
-        soundOnButton.addMouseListener(this);
-        soundOffButton.addMouseListener(this);
+        sliderTimer.addObserver(new InnerObserver());
+        volumeSlider.addChangeListener(new InnerChangeListener());
+        backwardButton.addMouseListener(new InnerMouseListener());
+        playButton.addMouseListener(new InnerMouseListener());
+        pauseButton.addMouseListener(new InnerMouseListener());
+        stopButton.addMouseListener(new InnerMouseListener());
+        forwardButton.addMouseListener(new InnerMouseListener());
+        soundOnButton.addMouseListener(new InnerMouseListener());
+        soundOffButton.addMouseListener(new InnerMouseListener());
     }
 
     private void init() {
         pauseButton.setVisible(false);
         soundOffButton.setVisible(false);
         setFavorite(false);
+    }
+
+    /**
+     * Mouse listener for media control buttons. Ignores double clicks.
+     */
+    private final class InnerMouseListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            Object source = e.getSource();
+            if (e.getClickCount() == 1) {
+                if (source == playButton) {
+                    playSong();
+                } else if (source == pauseButton) {
+                    pauseSong();
+                } else if (source == stopButton) {
+                    stopSong();
+                } else if (source == soundOnButton) {
+                    turnVolumeOff();
+                } else if (source == soundOffButton) {
+                    turnVolumeOn();
+                }
+            }
+            if (source == backwardButton) {
+                moveBackward();
+            } else if (source == forwardButton) {
+                moveForward();
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    }
+
+    /**
+     * Change listener for sliders.
+     */
+    private final class InnerChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            Object source = e.getSource();
+            if (source == volumeSlider) {
+                JSlider vs = (JSlider) source;
+                float level = vs.getValue() / CONVERSION_RATE;
+                if (!vs.getValueIsAdjusting()) {
+                    playbackThread =
+                        new Thread(() -> matlabHandler.changeVolume(level));
+                    playbackThread.start();
+                }
+            }
+        }
+    }
+
+    /**
+     * Observer for media control buttons.
+     */
+    private final class InnerObserver implements Observer {
+        @Override
+        public void update(Observable obs, Object obj) {
+            pauseButton.setVisible(false);
+            playButton.setVisible(true);
+        }
     }
 }

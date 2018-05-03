@@ -71,9 +71,24 @@ public final class DatabaseAccessModel {
     }
 
     /**
-     * Getter.
+     * Get list of songs filtered by a given attribute.
      *
-     * @return All songs in the database
+     * @param attribute Filter
+     * @return Song list model
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
+    public SongListModel getSongList(String attribute, SongModel sm) throws
+        SQLConnectionException {
+        SongListModel slm = new SongListModel();
+        slm.setSongs(getSongs(attribute, sm));
+        return slm;
+    }
+
+    /**
+     * Getter that checks the validity of every song in the database.
+     *
+     * @return Songs in the database
      */
     private List<Song> getSongs() throws SQLConnectionException {
         List<Song> songs = persistence.getSongs();
@@ -85,13 +100,41 @@ public final class DatabaseAccessModel {
             File f = new File(s.getPath());
             if (f.exists() && !f.isDirectory()) {
                 validSongs.add(s);
-            }
-            else {
+            } else {
                 persistence.deleteSong(s);
             }
         }
         invalid = (validSongs.size() < songs.size());
         return validSongs;
+    }
+
+    /**
+     * Getter that filters songs according to a given attribute.
+     *
+     * @return Songs in the database
+     */
+    private List<Song> getSongs(String attribute, SongModel sm) throws
+        SQLConnectionException {
+        switch (attribute) {
+            case "Artist":
+                return getSongs().stream()
+                    .filter(s -> s.getArtist().equals(sm.getArtist()))
+                    .collect(Collectors.toList());
+            case "Album":
+                return getSongs().stream()
+                    .filter(s -> s.getAlbum().equals(sm.getAlbum()))
+                    .collect(Collectors.toList());
+            case "Genre":
+                return getSongs().stream()
+                    .filter(s -> s.getGenre().equals(sm.getGenre()))
+                    .collect(Collectors.toList());
+            case "Year":
+                return getSongs().stream()
+                    .filter(s -> s.getYear().equals(sm.getYear()))
+                    .collect(Collectors.toList());
+            default:
+                return null;
+        }
     }
 
     /**
@@ -102,8 +145,7 @@ public final class DatabaseAccessModel {
      */
     private Song getSong(int id) throws SQLConnectionException {
         try {
-            return getSongs().stream()
-                .filter(s -> s.getId() == id)
+            return getSongs().stream().filter(s -> s.getId() == id)
                 .collect(Collectors.toList()).get(0);
         } catch (IndexOutOfBoundsException e) {
             return null;
@@ -120,8 +162,7 @@ public final class DatabaseAccessModel {
      */
     private Song getSong(String path) throws SQLConnectionException {
         try {
-            return getSongs().stream()
-                .filter(s -> s.getPath().equals(path))
+            return getSongs().stream().filter(s -> s.getPath().equals(path))
                 .collect(Collectors.toList()).get(0);
         } catch (IndexOutOfBoundsException e) {
             return null;
@@ -174,11 +215,9 @@ public final class DatabaseAccessModel {
         throws InvalidOperationException, SQLConnectionException {
         if (song.getId() == SongPropertiesLoader.getEmptySongId()) {
             throw new InvalidOperationException(NO_SONG_LOADED_ERROR);
-        }
-        else if (getId(song) != SongPropertiesLoader.getDefaultSongId()) {
+        } else if (getId(song) != SongPropertiesLoader.getDefaultSongId()) {
             throw new InvalidOperationException(ALREADY_EXISTS_ERROR);
-        }
-        else {
+        } else {
             if (!persistence.addSong(song)) {
                 throw new SQLConnectionException(SQL_ERROR);
             }
@@ -255,8 +294,7 @@ public final class DatabaseAccessModel {
             int id = song.getId();
             if (getSong(id) == null) {
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
-            }
-            else if (!persistence.deleteSong(song)) {
+            } else if (!persistence.deleteSong(song)) {
                 throw new SQLConnectionException(SQL_ERROR);
             }
         } catch (SQLConnectionException e) {
@@ -307,8 +345,7 @@ public final class DatabaseAccessModel {
             int id = s.getId();
             if (getSong(id) == null) {
                 throw new InvalidOperationException(NO_SUCH_SONG_ERROR);
-            }
-            else if (!persistence.editSong(s)) {
+            } else if (!persistence.editSong(s)) {
                 throw new SQLConnectionException(SQL_ERROR);
             }
         } catch (SQLConnectionException e) {
@@ -345,8 +382,7 @@ public final class DatabaseAccessModel {
         Song s = getSong(path);
         if (s != null) {
             return s.getId();
-        }
-        else {
+        } else {
             return SongPropertiesLoader.getDefaultSongId();
         }
     }

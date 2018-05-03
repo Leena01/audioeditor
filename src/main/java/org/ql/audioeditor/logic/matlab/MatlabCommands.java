@@ -1,5 +1,7 @@
 package org.ql.audioeditor.logic.matlab;
 
+import org.ql.audioeditor.common.properties.ConfigPropertiesLoader;
+
 import java.io.File;
 
 import static org.ql.audioeditor.common.util.Helper.getPath;
@@ -11,7 +13,8 @@ final class MatlabCommands {
     /**
      * MATLAB variable names.
      */
-    static final String FOLDER = getPath() + File.separator + "matlab";
+    static final String FOLDER = getPath() + File.separator
+        + ConfigPropertiesLoader.getMatlabFolder();
     static final String FILE_VAR = "file";
     static final String FOLDER_PATH_VAR = "folderpath";
     static final String WINDOW_KEYS_VAR = "windowkeys";

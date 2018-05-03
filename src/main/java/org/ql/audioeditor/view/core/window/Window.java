@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -173,6 +174,16 @@ public abstract class Window extends JFrame {
         initKeyBindings();
     }
 
+    @Override
+    public void paint(Graphics g) {
+        Dimension d = getSize();
+        Dimension m = getMinimumSize();
+        if (d.width < m.width || d.height < m.height) {
+            pack();
+        }
+        super.paint(g);
+    }
+
     /**
      * Changes the size of the window.
      */
@@ -188,8 +199,7 @@ public abstract class Window extends JFrame {
             hideButton.setIcon(UPWARD_ICON);
             setMinimumSize(WIN_MIN_SIZE);
             setSize(WIN_MIN_SIZE);
-        }
-        else {
+        } else {
             hideButton.setIcon(DOWNWARD_ICON);
             setMinimumSize(WIN_MIN_SIZE_HIDDEN);
             setSize(WIN_MIN_SIZE_HIDDEN);
@@ -212,8 +222,7 @@ public abstract class Window extends JFrame {
             hideImage(false);
             setExtendedState(MAXIMIZED_BOTH);
             maximizeButton.setIcon(NORMALIZE_ICON);
-        }
-        else {
+        } else {
             maximizeImage(false);
             hideImage(!isNormal);
             setExtendedState(NORMAL);
@@ -234,8 +243,8 @@ public abstract class Window extends JFrame {
                 maximize();
             }
         };
-        KeyStroke fKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0);
-        inputMap.put(fKeyStroke, MAXIMIZE);
+        KeyStroke f11KeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0);
+        inputMap.put(f11KeyStroke, MAXIMIZE);
         actionMap.put(MAXIMIZE, maximizeAction);
     }
 

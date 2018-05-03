@@ -139,8 +139,7 @@ public class RangeSliderUI extends BasicSliderUI {
 
             if (minorTickSpacing > 0) {
                 tickSpacing = minorTickSpacing;
-            }
-            else if (majorTickSpacing > 0) {
+            } else if (majorTickSpacing > 0) {
                 tickSpacing = majorTickSpacing;
             }
 
@@ -168,8 +167,7 @@ public class RangeSliderUI extends BasicSliderUI {
             upperThumbRect.x = upperPosition - (upperThumbRect.width / 2);
             upperThumbRect.y = trackRect.y;
 
-        }
-        else {
+        } else {
             int upperPosition =
                 yPositionForValue(slider.getValue() + slider.getExtent());
             upperThumbRect.x = trackRect.x;
@@ -203,8 +201,7 @@ public class RangeSliderUI extends BasicSliderUI {
                 paintUpperThumb(g);
             }
 
-        }
-        else {
+        } else {
             // Paint upper thumb first, then lower thumb.
             if (clipRect.intersects(upperThumbRect)) {
                 paintUpperThumb(g);
@@ -305,16 +302,14 @@ public class RangeSliderUI extends BasicSliderUI {
             int delta = blockIncrement;
             if (direction > 0) {
                 delta = delta * POSITIVE_SCROLL;
-            }
-            else {
+            } else {
                 delta = delta * NEGATIVE_SCROLL;
             }
 
             if (upperThumbSelected) {
                 int oldValue = ((RangeSlider) slider).getUpperValue();
                 ((RangeSlider) slider).setUpperValue(oldValue + delta);
-            }
-            else {
+            } else {
                 int oldValue = slider.getValue();
                 slider.setValue(oldValue + delta);
             }
@@ -330,16 +325,14 @@ public class RangeSliderUI extends BasicSliderUI {
             int delta = 1;
             if (direction > 0) {
                 delta = delta * POSITIVE_SCROLL;
-            }
-            else {
+            } else {
                 delta = delta * NEGATIVE_SCROLL;
             }
 
             if (upperThumbSelected) {
                 int oldValue = ((RangeSlider) slider).getUpperValue();
                 ((RangeSlider) slider).setUpperValue(oldValue + delta);
-            }
-            else {
+            } else {
                 int oldValue = slider.getValue();
                 slider.setValue(oldValue + delta);
             }
@@ -397,16 +390,13 @@ public class RangeSliderUI extends BasicSliderUI {
                 || slider.getMinimum() == slider.getValue()) {
                 if (upperThumbRect.contains(currentMouseX, currentMouseY)) {
                     upperPressed = true;
-                }
-                else if (thumbRect.contains(currentMouseX, currentMouseY)) {
+                } else if (thumbRect.contains(currentMouseX, currentMouseY)) {
                     lowerPressed = true;
                 }
-            }
-            else {
+            } else {
                 if (thumbRect.contains(currentMouseX, currentMouseY)) {
                     lowerPressed = true;
-                }
-                else if (upperThumbRect
+                } else if (upperThumbRect
                     .contains(currentMouseX, currentMouseY)) {
                     upperPressed = true;
                 }
@@ -470,8 +460,7 @@ public class RangeSliderUI extends BasicSliderUI {
                 slider.setValueIsAdjusting(true);
                 moveLowerThumb();
 
-            }
-            else if (upperDragging) {
+            } else if (upperDragging) {
                 slider.setValueIsAdjusting(true);
                 moveUpperThumb();
             }
@@ -501,8 +490,7 @@ public class RangeSliderUI extends BasicSliderUI {
                     // Apply bounds to thumb position.
                     if (drawInverted()) {
                         trackBottom = vMax;
-                    }
-                    else {
+                    } else {
                         trackTop = vMax;
                     }
                     thumbTop = Math.max(thumbTop, trackTop - halfThumbHeight);
@@ -527,8 +515,7 @@ public class RangeSliderUI extends BasicSliderUI {
                     // Apply bounds to thumb position.
                     if (drawInverted()) {
                         trackLeft = hMax;
-                    }
-                    else {
+                    } else {
                         trackRight = hMax;
                     }
                     thumbLeft = Math.max(thumbLeft, trackLeft - halfThumbWidth);
@@ -565,8 +552,7 @@ public class RangeSliderUI extends BasicSliderUI {
                     // Apply bounds to thumb position.
                     if (drawInverted()) {
                         trackTop = vMin;
-                    }
-                    else {
+                    } else {
                         trackBottom = vMin;
                     }
                     thumbTop = Math.max(thumbTop, trackTop - halfThumbHeight);
@@ -591,8 +577,7 @@ public class RangeSliderUI extends BasicSliderUI {
                     // Apply bounds to thumb position.
                     if (drawInverted()) {
                         trackRight = hMin;
-                    }
-                    else {
+                    } else {
                         trackLeft = hMin;
                     }
                     thumbLeft = Math.max(thumbLeft, trackLeft - halfThumbWidth);

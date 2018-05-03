@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 /**
  * Transparent button.
  */
-public class TransparentButton extends JButton implements MouseListener {
+public class TransparentButton extends JButton {
     private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
     private static final Color HOVER_COLOR = Color.WHITE;
     private static final Color PRESSED_COLOR = Color.GRAY;
@@ -38,29 +38,8 @@ public class TransparentButton extends JButton implements MouseListener {
         addMouseListener();
     }
 
-    public void mouseClicked(MouseEvent e) {
-        setForeground(PRESSED_COLOR);
-        setForeground(DEFAULT_COLOR);
-    }
-
-    public void mousePressed(MouseEvent e) {
-        setForeground(PRESSED_COLOR);
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        setForeground(DEFAULT_COLOR);
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        setForeground(HOVER_COLOR);
-    }
-
-    public void mouseExited(MouseEvent e) {
-        setForeground(DEFAULT_COLOR);
-    }
-
     private void addMouseListener() {
-        this.addMouseListener(this);
+        this.addMouseListener(new ButtonListener());
     }
 
     private void setAttributes() {
@@ -68,5 +47,36 @@ public class TransparentButton extends JButton implements MouseListener {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
+    }
+
+    /**
+     * Mouse listener for class 'TransparentButton'.
+     */
+    private final class ButtonListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            setForeground(PRESSED_COLOR);
+            setForeground(DEFAULT_COLOR);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            setForeground(PRESSED_COLOR);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            setForeground(DEFAULT_COLOR);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            setForeground(HOVER_COLOR);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            setForeground(DEFAULT_COLOR);
+        }
     }
 }

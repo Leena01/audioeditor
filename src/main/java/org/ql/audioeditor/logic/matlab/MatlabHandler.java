@@ -52,8 +52,8 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.WINDOW_VAR;
  * Singleton class for establishing connection with the MATLAB Engine.
  */
 public final class MatlabHandler {
-    private static final String FILE_FORMAT_ERROR =
-        "This file type is not supported.";
+    private static final String OPEN_ERROR =
+        "Error: file cannot be opened.";
     private static final String IMAGE_ERROR = "Cannot generate image.";
     private static final String CANNOT_CUT_ERROR = "Cannot cut song.";
     private static final String CLOSE_ERROR = "Error closing Matlab Engine.";
@@ -143,7 +143,7 @@ public final class MatlabHandler {
             this.totalSamples = eng.getVariable(TOTAL_VAR);
             this.freq = eng.getVariable(FREQ_VAR);
         } catch (Exception e) {
-            throw new MatlabEngineException(FILE_FORMAT_ERROR);
+            throw new MatlabEngineException(OPEN_ERROR);
         }
     }
 
@@ -236,8 +236,7 @@ public final class MatlabHandler {
             eng.putVariable(START_VAR, frame);
             if (frame <= 0 || frame >= totalSamples) {
                 eng.putVariable(EMPTY_VAR, 1);
-            }
-            else {
+            } else {
                 eng.putVariable(EMPTY_VAR, 0);
             }
             eng.eval(RELOCATE_SONG);
@@ -358,7 +357,7 @@ public final class MatlabHandler {
             eng.putVariable(FILE_VAR, file.toCharArray());
             eng.eval(SAVE_SONG);
         } catch (Exception e) {
-            throw new MatlabEngineException(FILE_FORMAT_ERROR);
+            throw new MatlabEngineException(OPEN_ERROR);
         }
     }
 }

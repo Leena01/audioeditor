@@ -129,10 +129,10 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
 
     public void changeImage(Image image, boolean isNormal, boolean
         isMaximized) {
-        if (specIcon.getImage() != null) {
+        if (specIcon != null) {
             specIcon.getImage().flush();
         }
-        if (specIconMax.getImage() != null) {
+        if (specIconMax != null) {
             specIconMax.getImage().flush();
         }
 
@@ -148,8 +148,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
     public void hideImage(boolean isHidden) {
         if (isHidden) {
             imagePanel.setVisible(false);
-        }
-        else {
+        } else {
             imagePanel.setVisible(true);
         }
     }
@@ -157,8 +156,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             imageLabel.setIcon(specIconMax);
-        }
-        else {
+        } else {
             imageLabel.setIcon(specIcon);
         }
     }
@@ -167,8 +165,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
     public void itemStateChanged(ItemEvent ie) {
         if (ie.getStateChange() == ItemEvent.SELECTED) {
             imageLabel.setVisible(false);
-        }
-        else if (ie.getStateChange() == ItemEvent.DESELECTED) {
+        } else if (ie.getStateChange() == ItemEvent.DESELECTED) {
             imageLabel.setVisible(true);
         }
     }

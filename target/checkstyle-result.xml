@@ -1,127 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\AudioEditor.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\package-info.java">
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\matlab\MatlabFileLoader.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\matlab\MatlabFiles.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\properties\ConfigPropertiesLoader.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\properties\ImageLoader.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\properties\SongPropertiesLoader.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\util\DoubleActionTool.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\util\Helper.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\Cache.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\DatabaseDao.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\DatabaseDaoImpl.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\entities\Song.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\Persistence.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\adt\ListModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\adt\TableModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\DatabaseAccessModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\listmodel\SongListModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\SongModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\tablemodel\SongTableModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\exceptions\InvalidOperationException.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\exceptions\MatlabEngineException.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\exceptions\SQLConnectionException.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\matlab\MatlabCommands.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\matlab\MatlabHandler.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\bar\HorizontalBar.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\bar\InverseHorizontalBar.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\bar\SideBar.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\button\Button.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\button\OptionButton.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\button\TransparentButton.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\dialog\PopupDialog.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\label\Label.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\listener\EmptyMouseListener.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\panel\BasicPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\FrequencySlider.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\RangeSlider.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\SliderTimer.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\TimeLabel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\TrackSlider.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\ui\AudioSliderUI.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\ui\RangeSliderUI.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\slider\VolumeSlider.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\table\SongTable.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\textfield\TextField.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\window\Window.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\window\package-info.java">
 </file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\AnalysisPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\ChromagramPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\SpectrogramPanel.java">
+<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\ChangePitchPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\CutSongPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\DataPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\MenuPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\OptionPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\PlayerPanel.java">
+<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\popup\DeleteSongsPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\popup\EditPanel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\ViewSongsPanel.java">
+<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
 <file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\param\Constants.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\config.properties">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\images.properties">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\song.properties">
+<error line="0" severity="error" message="Missing package-info.java file." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
 </file>
 </checkstyle>

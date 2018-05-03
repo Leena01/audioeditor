@@ -77,8 +77,7 @@ public class SliderTimer extends Observable {
                 public void run() {
                     if (isPlaying()) {
                         autoMove();
-                    }
-                    else {
+                    } else {
                         setChanged();
                         notifyObservers();
                         stopTimer();
@@ -95,9 +94,7 @@ public class SliderTimer extends Observable {
     }
 
     public void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
+        pauseTimer();
         if (slider != null) {
             setCurrentTime(MIN_FRAMES);
         }
@@ -113,18 +110,12 @@ public class SliderTimer extends Observable {
         if (slider != null) {
             if (frame < MIN_FRAMES) {
                 setCurrentTime(MIN_FRAMES);
-            }
-            else if (frame > maxFrames) {
+            } else if (frame > maxFrames) {
                 setCurrentTime(maxFrames);
-            }
-            else {
+            } else {
                 setCurrentTime(frame);
             }
         }
-    }
-
-    public int getMin() {
-        return MIN_FRAMES;
     }
 
     private void setCurrentTime(int currentFrame) {

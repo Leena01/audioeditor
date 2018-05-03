@@ -14,6 +14,7 @@ public final class ConfigPropertiesLoader {
     private static String driver;
     private static String jdbc;
     private static String url;
+    private static String matlabFolder;
     private static int refreshMillis;
 
     private ConfigPropertiesLoader() {
@@ -26,14 +27,14 @@ public final class ConfigPropertiesLoader {
             ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null) {
             properties.load(inputStream);
-        }
-        else {
+        } else {
             throw new FileNotFoundException();
         }
 
         driver = properties.getProperty("driver");
         jdbc = properties.getProperty("jdbc");
         url = properties.getProperty("url");
+        matlabFolder = properties.getProperty("matlab.folder");
         refreshMillis =
             Integer.parseInt(properties.getProperty("refresh.millis"));
     }
@@ -48,6 +49,10 @@ public final class ConfigPropertiesLoader {
 
     public static String getUrl() {
         return url;
+    }
+
+    public static String getMatlabFolder() {
+        return matlabFolder;
     }
 
     public static int getRefreshMillis() {

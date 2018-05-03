@@ -32,8 +32,7 @@ import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 /**
  * Panel for cutting sections of the audio file.
  */
-public final class CutSongPanel extends BasicPanel
-    implements ChangeListener, ActionListener {
+public final class CutSongPanel extends BasicPanel {
     private static final int MIN = 1;
     private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(3, 3);
     private static final Dimension FIELD_SIZE = new Dimension(120, 20);
@@ -80,7 +79,7 @@ public final class CutSongPanel extends BasicPanel
         toValue = new TextField("", FIELD_SIZE, SwingConstants.LEFT);
         fromSecValue = new Label("", FIELD_SIZE, SwingConstants.LEFT);
         toSecValue = new Label("", FIELD_SIZE, SwingConstants.LEFT);
-        setButton = new Button("Set values", this);
+        setButton = new Button("Set values", new ButtonListener());
         doneButton = new Button("Done", cutDoneListener);
         backOptionButton = new Button("Back to Main Menu", b);
         initInnerListeners();
@@ -108,57 +107,11 @@ public final class CutSongPanel extends BasicPanel
         return rangeSlider.getUpperValue();
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        Object source = e.getSource();
-        if (source == rangeSlider) {
-            changeFieldValues();
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        if (source == setButton) {
-            try {
-                int value = Integer.parseInt(fromValue.getText());
-                if (value >= MIN && value <= max) {
-                    rangeSlider.setValue(value);
-                    int newValue = Integer.parseInt(fromValue.getText());
-                    fromSecValue.setText(
-                        formatDuration(framesToMillis(newValue, freq)));
-                }
-                else {
-                    int oldValue = rangeSlider.getValue();
-                    fromValue.setText(String.valueOf(oldValue));
-                }
-            } catch (NumberFormatException nfe) {
-                fromValue.setText(String.valueOf(rangeSlider.getValue()));
-            }
-            try {
-                int upperValue = Integer.parseInt(toValue.getText());
-                if (upperValue >= MIN && upperValue <= max) {
-                    rangeSlider.setUpperValue(upperValue);
-                    int newUpperValue = Integer.parseInt(toValue.getText());
-                    toSecValue.setText(
-                        formatDuration(framesToMillis(newUpperValue, freq)));
-                }
-                else {
-                    int oldUpperValue = rangeSlider.getUpperValue();
-                    toValue.setText(String.valueOf(oldUpperValue));
-                }
-            } catch (NumberFormatException nfe) {
-                toValue.setText(String.valueOf(rangeSlider.getUpperValue()));
-            }
-        }
-    }
-
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             rangeSlider.setPreferredSize(RANGE_SLIDER_SIZE_MAX);
             rangeSlider.setSize(RANGE_SLIDER_SIZE_MAX);
-        }
-        else {
+        } else {
             rangeSlider.setPreferredSize(RANGE_SLIDER_SIZE);
             rangeSlider.setSize(RANGE_SLIDER_SIZE);
         }
@@ -179,9 +132,7 @@ public final class CutSongPanel extends BasicPanel
     }
 
     private void initInnerListeners() {
-        rangeSlider.addChangeListener(this);
-        fromValue.addActionListener(this);
-        toValue.addActionListener(this);
+        rangeSlider.addChangeListener(new SliderListener());
     }
 
     @Override
@@ -215,5 +166,60 @@ public final class CutSongPanel extends BasicPanel
         buttonPanel.add(backOptionButton);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel);
+    }
+
+    /**
+     * Slider listener.
+     */
+    private final class SliderListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            Object source = e.getSource();
+            if (source == rangeSlider) {
+                changeFieldValues();
+            }
+        }
+    }
+
+    /**
+     * Button listener.
+     */
+    private final class ButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object source = e.getSource();
+            if (source == setButton) {
+                try {
+                    int value = Integer.parseInt(fromValue.getText());
+                    if (value >= MIN && value <= max) {
+                        rangeSlider.setValue(value);
+                        int newValue = Integer.parseInt(fromValue.getText());
+                        fromSecValue.setText(
+                            formatDuration(framesToMillis(newValue, freq)));
+                    } else {
+                        int oldValue = rangeSlider.getValue();
+                        fromValue.setText(String.valueOf(oldValue));
+                    }
+                } catch (NumberFormatException nfe) {
+                    fromValue.setText(String.valueOf(rangeSlider.getValue()));
+                }
+                try {
+                    int upperValue = Integer.parseInt(toValue.getText());
+                    if (upperValue >= MIN && upperValue <= max) {
+                        rangeSlider.setUpperValue(upperValue);
+                        int newUpperValue = Integer.parseInt(toValue.getText());
+                        toSecValue.setText(
+                            formatDuration(
+                                framesToMillis(newUpperValue, freq)));
+                    } else {
+                        int oldUpperValue = rangeSlider.getUpperValue();
+                        toValue.setText(String.valueOf(oldUpperValue));
+                    }
+                } catch (NumberFormatException nfe) {
+                    toValue
+                        .setText(String.valueOf(rangeSlider.getUpperValue()));
+                }
+            }
+        }
     }
 }

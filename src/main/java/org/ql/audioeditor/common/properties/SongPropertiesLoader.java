@@ -45,8 +45,7 @@ public final class SongPropertiesLoader {
             ConfigPropertiesLoader.class.getResourceAsStream(propFileName);
         if (inputStream != null) {
             properties.load(inputStream);
-        }
-        else {
+        } else {
             throw new FileNotFoundException();
         }
 

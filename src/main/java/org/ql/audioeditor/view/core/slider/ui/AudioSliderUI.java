@@ -24,6 +24,7 @@ import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;
  */
 public class AudioSliderUI extends BasicSliderUI {
     private static final int KNOB_WIDTH = 3;
+
     public AudioSliderUI(TrackSlider b) {
         super(b);
         b.setPreferredSize(AUDIO_SLIDER_SIZE);
@@ -94,8 +95,7 @@ public class AudioSliderUI extends BasicSliderUI {
                     }
                     super.mousePressed(e); // isDragging = true;
                     super.mouseDragged(e);
-                }
-                else {
+                } else {
                     super.mousePressed(e);
                 }
             }

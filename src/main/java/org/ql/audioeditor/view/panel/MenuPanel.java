@@ -6,6 +6,7 @@ import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
+import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -62,7 +63,7 @@ public final class MenuPanel extends BasicPanel {
 
     public MenuPanel(MatlabHandler matlabHandler, HorizontalBar
         mediaControlPanel, InputMap inputMap, ActionMap
-        actionMap, ActionListener fb, ActionListener ufb) {
+        actionMap, ActionListener fb, ActionListener ufb, ActionListener sss) {
         super();
         infoLabel = new Label(INFO_LABEL);
         infoPanel = new JPanel();
@@ -73,7 +74,7 @@ public final class MenuPanel extends BasicPanel {
         imagePanel = new JPanel();
         playerPanel =
             new PlayerPanel(matlabHandler, mediaControlPanel, inputMap,
-                actionMap, fb, ufb);
+                actionMap, fb, ufb, sss);
         noMediaFoundLabel = new Label(NO_MEDIA_LABEL);
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
@@ -85,7 +86,8 @@ public final class MenuPanel extends BasicPanel {
 
     public void setCurrentSong(double totalSamples, double freq,
         BufferedImage plot, Image cover,
-        boolean isNormal, boolean isMaximized) {
+        boolean isNormal, boolean isMaximized, Action makeFavoriteAction,
+        Action showRelatedAction) {
         infoPanel.setVisible(false);
         coverIcon.getImage().flush();
         coverIconMax.getImage().flush();
@@ -97,14 +99,14 @@ public final class MenuPanel extends BasicPanel {
             imagePanel.setVisible(true);
         }
         playerPanel.setVisible(true);
-        playerPanel.setCurrentSong(totalSamples, freq, plot);
+        playerPanel.setCurrentSong(totalSamples, freq, plot,
+            makeFavoriteAction, showRelatedAction);
     }
 
     public void hideImage(boolean isHidden) {
         if (isHidden) {
             imagePanel.setVisible(false);
-        }
-        else {
+        } else {
             imagePanel.setVisible(true);
         }
     }
@@ -112,8 +114,7 @@ public final class MenuPanel extends BasicPanel {
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             imageLabel.setIcon(coverIconMax);
-        }
-        else {
+        } else {
             imageLabel.setIcon(coverIcon);
         }
     }

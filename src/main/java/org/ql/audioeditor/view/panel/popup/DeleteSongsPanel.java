@@ -32,6 +32,7 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
     public DeleteSongsPanel(SongTableModel tm, ActionListener d) {
         super();
         buttonPanel = new JPanel(new FlowLayout());
+
         tableModel = tm;
         selectedSongs = new SongListModel();
         table = new SongTable(tableModel);
@@ -41,7 +42,9 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
         scrollPane = new JScrollPane(this.table,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         doneButton = new TransparentButton("Delete", d);
+
         setStyle();
         addPanels();
     }

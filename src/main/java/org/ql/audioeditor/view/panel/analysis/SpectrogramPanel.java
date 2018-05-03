@@ -19,8 +19,7 @@ import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 /**
  * Panel for showing spectrograms.
  */
-public final class SpectrogramPanel extends ChromagramPanel implements
-    ItemListener {
+public final class SpectrogramPanel extends ChromagramPanel {
     private final JToggleButton toggleButton;
     private final JLabel image3dLabel;
     private ImageIcon specIcon3d;
@@ -33,7 +32,7 @@ public final class SpectrogramPanel extends ChromagramPanel implements
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         toggleButton = new JToggleButton("3D");
-        toggleButton.addItemListener(this);
+        toggleButton.addItemListener(new ToggleButtonListener());
 
         image3dLabel = new Label();
 
@@ -46,10 +45,10 @@ public final class SpectrogramPanel extends ChromagramPanel implements
 
     public void changeImage(Image image, Image image3d, boolean isNormal,
         boolean isMaximized) {
-        if (specIcon3d.getImage() != null) {
+        if (specIcon3d != null) {
             specIcon3d.getImage().flush();
         }
-        if (specIcon3dMax.getImage() != null) {
+        if (specIcon3dMax != null) {
             specIcon3dMax.getImage().flush();
         }
 
@@ -64,21 +63,8 @@ public final class SpectrogramPanel extends ChromagramPanel implements
         super.maximizeImage(isMaximized);
         if (isMaximized) {
             image3dLabel.setIcon(specIcon3dMax);
-        }
-        else {
+        } else {
             image3dLabel.setIcon(specIcon3d);
-        }
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent ie) {
-        if (ie.getStateChange() == ItemEvent.SELECTED) {
-            image3dLabel.setVisible(true);
-            imageLabel.setVisible(false);
-        }
-        else if (ie.getStateChange() == ItemEvent.DESELECTED) {
-            image3dLabel.setVisible(false);
-            imageLabel.setVisible(true);
         }
     }
 
@@ -110,5 +96,22 @@ public final class SpectrogramPanel extends ChromagramPanel implements
         mainPanel.add(imagePanel);
         bodyPanel.add(mainPanel);
         add(bodyPanel);
+    }
+
+    /**
+     * Item listener for the toggle button.
+     */
+    private final class ToggleButtonListener implements
+        ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent ie) {
+            if (ie.getStateChange() == ItemEvent.SELECTED) {
+                image3dLabel.setVisible(true);
+                imageLabel.setVisible(false);
+            } else if (ie.getStateChange() == ItemEvent.DESELECTED) {
+                image3dLabel.setVisible(false);
+                imageLabel.setVisible(true);
+            }
+        }
     }
 }
