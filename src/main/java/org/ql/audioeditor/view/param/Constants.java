@@ -1,14 +1,17 @@
 package org.ql.audioeditor.view.param;
 
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 import java.awt.Dimension;
 
 /**
  * Class for constants related to the GUI.
- *
  */
 public final class Constants {
     public static final int BOTTOM_PANEL_HEIGHT = 32;
     public static final int MEDIA_CONTROL_PANEL_HEIGHT = 100;
+    public static final Border PLAYER_PANEL_BORDER =
+        BorderFactory.createEmptyBorder(15, 15, 15, 15);
     public static final Dimension WIN_MIN_SIZE = new Dimension(800, 600);
     public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 330);
     public static final Dimension COVER_SIZE = new Dimension(300, 300);

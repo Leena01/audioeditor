@@ -6,9 +6,12 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.NotSupportedException;
 import com.mpatric.mp3agic.UnsupportedTagException;
+import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.database.entities.Song;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,6 +25,8 @@ public final class SongModel {
     private double totalSamples = 0.0;
     private double freq = 0.0;
     private boolean isSaved = false;
+    private Image cover = ImageLoader.getCover();
+    private BufferedImage plot = null;
 
     /**
      * Default constructor.
@@ -59,6 +64,9 @@ public final class SongModel {
         this.song = other.song;
         this.totalSamples = other.totalSamples;
         this.freq = other.freq;
+        this.isSaved = other.isSaved;
+        this.cover = other.cover;
+        this.plot = other.plot;
     }
 
     Song getSong() {
@@ -159,6 +167,22 @@ public final class SongModel {
 
     public void setSaved(boolean isSaved) {
         this.isSaved = isSaved;
+    }
+
+    public Image getCover() {
+        return cover;
+    }
+
+    public void setCover(Image cover) {
+        this.cover = cover;
+    }
+
+    public BufferedImage getPlot() {
+        return plot;
+    }
+
+    public void setPlot(BufferedImage plot) {
+        this.plot = plot;
     }
 
     public boolean isEmpty() {

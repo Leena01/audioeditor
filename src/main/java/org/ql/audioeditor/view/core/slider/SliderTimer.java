@@ -11,7 +11,6 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.Helper.formatDuration;
 import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
 
@@ -19,7 +18,7 @@ import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
  * Timer with slider.
  */
 public class SliderTimer extends Observable {
-    private static final int MIN_FRAMES = 1;
+    private static final int MIN_FRAMES = MatlabHandler.getMinFrames();
     private static int maxFrames;
     private final JSlider slider;
     private final MatlabHandler matlabHandler;
@@ -59,8 +58,8 @@ public class SliderTimer extends Observable {
         this.refreshMillis = refreshMillis;
         maxFrames = (int) totalSamples;
         this.freq = freq;
-        this.totalLengthField.setText(formatDuration(framesToSeconds
-            (maxFrames, freq)));
+        this.totalLengthField.
+            setText(formatDuration(framesToSeconds(maxFrames, freq)));
         this.slider.setMinimum(MIN_FRAMES);
         this.slider.setMaximum(maxFrames);
         timeField.setText(formatDuration(framesToSeconds(MIN_FRAMES, freq)));

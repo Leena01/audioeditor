@@ -3,33 +3,23 @@ package org.ql.audioeditor.logic.matlab;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import com.mathworks.matlab.types.CellStr;
+import org.ql.audioeditor.common.properties.ConfigPropertiesLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.logic.exceptions.MatlabEngineException;
 
+import java.io.File;
+
+import static org.ql.audioeditor.common.util.Helper.getPath;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.ADD_PATH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_PITCH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_VOLUME;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHROM_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CREATE_WINDOW_MAP;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.CURRENT_FRAME_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CUT_SONG;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.EMPTY_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FILE_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FOLDER;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FOLDER_PATH_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FREQ_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FREQ_VAR_2;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.FROM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.GET_CURRENT_FRAME;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.HOP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.IS_PLAYING;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.IS_PLAYING_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.LEVEL_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.NFFT_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.OPEN_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.PAUSE_SONG;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.PLOT_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.PLOT_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.RELOCATE_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.RESUME_SONG;
@@ -38,25 +28,41 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_CHROMAGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_SPECTROGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands
     .SHOW_SPECTROGRAM_3D;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.SPEC_3D_IMG_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.SPEC_IMG_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.START_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.STOP_SONG;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.TOTAL_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.TO_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.WINDOW_KEYS_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.WINDOW_SIZE_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.WINDOW_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FILE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FOLDER_PATH_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR_2;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.START_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.TOTAL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.TO_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_KEYS_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_VAR;
 
 /**
  * Singleton class for establishing connection with the MATLAB Engine.
  */
 public final class MatlabHandler {
+    private static final int MIN_FRAMES = 1;
     private static final String OPEN_ERROR =
         "Error: file cannot be opened.";
     private static final String IMAGE_ERROR = "Cannot generate image.";
     private static final String CANNOT_CUT_ERROR = "Cannot cut song.";
     private static final String CLOSE_ERROR = "Error closing Matlab Engine.";
+    private static final String FOLDER = getPath() + File.separator
+        + ConfigPropertiesLoader.getMatlabFolder();
     private static MatlabHandler instance = null;
     private final MatlabEngine eng;
     private double totalSamples;
@@ -86,6 +92,10 @@ public final class MatlabHandler {
         return instance;
     }
 
+    public static int getMinFrames() {
+        return MIN_FRAMES;
+    }
+
     /**
      * Initialization (loading classpath and creating a map for window types).
      *
@@ -93,9 +103,10 @@ public final class MatlabHandler {
      */
     public void init() throws MatlabEngineException {
         try {
-            eng.putVariable(FOLDER_PATH_VAR, FOLDER.toCharArray());
+            eng.putVariable(FOLDER_PATH_VAR.toString(),
+                FOLDER.toCharArray());
             eng.eval(ADD_PATH);
-            eng.putVariable(WINDOW_KEYS_VAR,
+            eng.putVariable(WINDOW_KEYS_VAR.toString(),
                 new CellStr(SongPropertiesLoader.getWindowNames()));
             eng.eval(CREATE_WINDOW_MAP);
         } catch (Exception e) {
@@ -138,10 +149,10 @@ public final class MatlabHandler {
     public synchronized void openSong(String file)
         throws MatlabEngineException {
         try {
-            eng.putVariable(FILE_VAR, file.toCharArray());
+            eng.putVariable(FILE_VAR.toString(), file.toCharArray());
             eng.eval(OPEN_SONG);
-            this.totalSamples = eng.getVariable(TOTAL_VAR);
-            this.freq = eng.getVariable(FREQ_VAR);
+            this.totalSamples = eng.getVariable(TOTAL_VAR.toString());
+            this.freq = eng.getVariable(FREQ_VAR.toString());
         } catch (Exception e) {
             throw new MatlabEngineException(OPEN_ERROR);
         }
@@ -156,7 +167,7 @@ public final class MatlabHandler {
     public synchronized void plotSong(String imageName)
         throws MatlabEngineException {
         try {
-            eng.putVariable(PLOT_IMG_VAR, imageName.toCharArray());
+            eng.putVariable(PLOT_IMG_VAR.toString(), imageName.toCharArray());
             eng.eval(PLOT_SONG);
         } catch (Exception e) {
             throw new MatlabEngineException(IMAGE_ERROR);
@@ -204,11 +215,11 @@ public final class MatlabHandler {
     public synchronized double getCurrentFrame() {
         try {
             eng.eval(GET_CURRENT_FRAME);
-            return eng.getVariable(CURRENT_FRAME_VAR);
+            return eng.getVariable(CURRENT_FRAME_VAR.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 1;
+        return MIN_FRAMES;
     }
 
     /**
@@ -219,7 +230,7 @@ public final class MatlabHandler {
     public synchronized boolean isPlaying() {
         try {
             eng.eval(IS_PLAYING);
-            return eng.getVariable(IS_PLAYING_VAR);
+            return eng.getVariable(IS_PLAYING_VAR.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,11 +244,11 @@ public final class MatlabHandler {
      */
     public synchronized void relocateSong(int frame) {
         try {
-            eng.putVariable(START_VAR, frame);
-            if (frame <= 0 || frame >= totalSamples) {
-                eng.putVariable(EMPTY_VAR, 1);
+            eng.putVariable(START_VAR.toString(), frame);
+            if (frame < MIN_FRAMES || frame >= totalSamples) {
+                eng.putVariable(EMPTY_VAR.toString(), 1);
             } else {
-                eng.putVariable(EMPTY_VAR, 0);
+                eng.putVariable(EMPTY_VAR.toString(), 0);
             }
             eng.eval(RELOCATE_SONG);
         } catch (Exception e) {
@@ -253,7 +264,7 @@ public final class MatlabHandler {
      */
     public synchronized void changeVolume(float level) {
         try {
-            eng.putVariable(LEVEL_VAR, level);
+            eng.putVariable(LEVEL_VAR.toString(), level);
             eng.eval(CHANGE_VOLUME);
         } catch (Exception e) {
             e.printStackTrace();
@@ -275,12 +286,13 @@ public final class MatlabHandler {
         double nfft, String window, String imageName, String imageName2)
         throws MatlabEngineException {
         try {
-            eng.putVariable(WINDOW_SIZE_VAR, windowSize);
-            eng.putVariable(HOP_SIZE_VAR, hopSize);
-            eng.putVariable(NFFT_VAR, nfft);
-            eng.putVariable(WINDOW_VAR, window.toCharArray());
-            eng.putVariable(SPEC_IMG_VAR, imageName.toCharArray());
-            eng.putVariable(SPEC_3D_IMG_VAR, imageName2.toCharArray());
+            eng.putVariable(WINDOW_SIZE_VAR.toString(), windowSize);
+            eng.putVariable(HOP_SIZE_VAR.toString(), hopSize);
+            eng.putVariable(NFFT_VAR.toString(), nfft);
+            eng.putVariable(WINDOW_VAR.toString(), window.toCharArray());
+            eng.putVariable(SPEC_IMG_VAR.toString(), imageName.toCharArray());
+            eng.putVariable(SPEC_3D_IMG_VAR.toString(),
+                imageName2.toCharArray());
             eng.eval(SHOW_SPECTROGRAM);
             eng.eval(SHOW_SPECTROGRAM_3D);
         } catch (Exception e) {
@@ -302,11 +314,11 @@ public final class MatlabHandler {
         double nfft, String window, String imageName)
         throws MatlabEngineException {
         try {
-            eng.putVariable(WINDOW_SIZE_VAR, windowSize);
-            eng.putVariable(HOP_SIZE_VAR, hopSize);
-            eng.putVariable(NFFT_VAR, nfft);
-            eng.putVariable(WINDOW_VAR, window.toCharArray());
-            eng.putVariable(CHROM_IMG_VAR, imageName.toCharArray());
+            eng.putVariable(WINDOW_SIZE_VAR.toString(), windowSize);
+            eng.putVariable(HOP_SIZE_VAR.toString(), hopSize);
+            eng.putVariable(NFFT_VAR.toString(), nfft);
+            eng.putVariable(WINDOW_VAR.toString(), window.toCharArray());
+            eng.putVariable(CHROM_IMG_VAR.toString(), imageName.toCharArray());
             eng.eval(SHOW_CHROMAGRAM);
         } catch (Exception e) {
             throw new MatlabEngineException(IMAGE_ERROR);
@@ -323,8 +335,8 @@ public final class MatlabHandler {
     public synchronized void cutSong(int from, int to)
         throws MatlabEngineException {
         try {
-            eng.putVariable(FROM_VAR, from);
-            eng.putVariable(TO_VAR, to);
+            eng.putVariable(FROM_VAR.toString(), from);
+            eng.putVariable(TO_VAR.toString(), to);
             eng.eval(CUT_SONG);
         } catch (Exception e) {
             throw new MatlabEngineException(CANNOT_CUT_ERROR);
@@ -338,7 +350,7 @@ public final class MatlabHandler {
      */
     public synchronized void changePitch(double freq) {
         try {
-            eng.putVariable(FREQ_VAR_2, freq);
+            eng.putVariable(FREQ_VAR_2.toString(), freq);
             eng.eval(CHANGE_PITCH);
         } catch (Exception e) {
             e.printStackTrace();
@@ -354,7 +366,7 @@ public final class MatlabHandler {
     public synchronized void saveSong(String file)
         throws MatlabEngineException {
         try {
-            eng.putVariable(FILE_VAR, file.toCharArray());
+            eng.putVariable(FILE_VAR.toString(), file.toCharArray());
             eng.eval(SAVE_SONG);
         } catch (Exception e) {
             throw new MatlabEngineException(OPEN_ERROR);

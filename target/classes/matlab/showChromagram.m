@@ -1,5 +1,5 @@
 function showChromagram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
-%SHOWCHROMAGRAM   Convert affine P-systems to polytopic representation
+%SHOWCHROMAGRAM   Displaying a chromagram generated using a Short-Time Fourier Transform (STFT).
 	figure('visible', 'off');
 	x = x(:, 1);
 	

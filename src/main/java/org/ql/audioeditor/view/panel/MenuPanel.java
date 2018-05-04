@@ -6,7 +6,6 @@ import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
-import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,6 +27,7 @@ import static javax.swing.BoxLayout.PAGE_AXIS;
 import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
 import static org.ql.audioeditor.view.param.Constants.COVER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.COVER_SIZE_MAX;
+import static org.ql.audioeditor.view.param.Constants.PLAYER_PANEL_BORDER;
 
 /**
  * Main menu. Contains the media control panel in case a song is loaded.
@@ -47,8 +47,6 @@ public final class MenuPanel extends BasicPanel {
         BorderFactory.createEmptyBorder(0, 0, 15, 0);
     private static final Border BODY_PANEL_BORDER =
         BorderFactory.createEmptyBorder(15, 30, 30, 30);
-    private static final Border PLAYER_PANEL_BORDER =
-        BorderFactory.createEmptyBorder(15, 15, 15, 15);
 
     private final JLabel infoLabel;
     private final PlayerPanel playerPanel;
@@ -86,8 +84,7 @@ public final class MenuPanel extends BasicPanel {
 
     public void setCurrentSong(double totalSamples, double freq,
         BufferedImage plot, Image cover,
-        boolean isNormal, boolean isMaximized, Action makeFavoriteAction,
-        Action showRelatedAction) {
+        boolean isNormal, boolean isMaximized) {
         infoPanel.setVisible(false);
         if (coverIcon.getImage() != null) {
             coverIcon.getImage().flush();
@@ -103,8 +100,7 @@ public final class MenuPanel extends BasicPanel {
             imagePanel.setVisible(true);
         }
         playerPanel.setVisible(true);
-        playerPanel.setCurrentSong(totalSamples, freq, plot,
-            makeFavoriteAction, showRelatedAction);
+        playerPanel.setCurrentSong(totalSamples, freq, plot);
     }
 
     public void hideImage(boolean isHidden) {
@@ -127,8 +123,20 @@ public final class MenuPanel extends BasicPanel {
         playerPanel.setFavorite(isFavorite);
     }
 
+    public boolean isActive() {
+        return playerPanel.isActive();
+    }
+
+    public void setActive(boolean active) {
+        playerPanel.setActive(active);
+    }
+
     public void pauseSong() {
         playerPanel.pauseSong();
+    }
+
+    public void stopSong() {
+        playerPanel.stopSong();
     }
 
     private void init() {

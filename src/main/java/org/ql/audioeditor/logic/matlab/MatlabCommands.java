@@ -1,45 +1,35 @@
 package org.ql.audioeditor.logic.matlab;
 
-import org.ql.audioeditor.common.properties.ConfigPropertiesLoader;
-
-import java.io.File;
-
-import static org.ql.audioeditor.common.util.Helper.getPath;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FILE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FOLDER_PATH_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR_2;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLAYER_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR_2;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.START_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.TOTAL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.TO_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_KEYS_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_MAP_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_VAR;
 
 /**
  * MATLAB commands for MATLAB language injection.
  */
 final class MatlabCommands {
-    /**
-     * MATLAB variable names.
-     */
-    static final String FOLDER = getPath() + File.separator
-        + ConfigPropertiesLoader.getMatlabFolder();
-    static final String FILE_VAR = "file";
-    static final String FOLDER_PATH_VAR = "folderpath";
-    static final String WINDOW_KEYS_VAR = "windowkeys";
-    static final String TOTAL_VAR = "total";
-    static final String FREQ_VAR = "fs";
-    static final String FREQ_VAR_2 = "fs2";
-    static final String PLOT_IMG_VAR = "imgname";
-    static final String SPEC_IMG_VAR = "imgname2";
-    static final String SPEC_3D_IMG_VAR = "imgname3";
-    static final String CHROM_IMG_VAR = "imgname4";
-    static final String START_VAR = "start";
-    static final String CURRENT_FRAME_VAR = "current";
-    static final String LEVEL_VAR = "level";
-    static final String EMPTY_VAR = "empty";
-    static final String IS_PLAYING_VAR = "isplaying";
-    static final String WINDOW_SIZE_VAR = "wlen";
-    static final String HOP_SIZE_VAR = "hop";
-    static final String NFFT_VAR = "nfft";
-    static final String WINDOW_VAR = "window";
-    static final String FROM_VAR = "from";
-    static final String TO_VAR = "to";
-    private static final String PLAYER_VAR = "player";
-    private static final String WINDOW_MAP_VAR = "windowmap";
-    private static final String SAMPLE_VAR = "x";
-    private static final String SAMPLE_VAR_2 = "y";
 
     /**
      * MATLAB functions.
@@ -108,12 +98,12 @@ final class MatlabCommands {
             PLAYER_VAR, START_VAR, EMPTY_VAR);
 
     static final String CHANGE_VOLUME =
-        String.format("%s = changeVolume(%s, %s, %s, %s);",
-            PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, FREQ_VAR, LEVEL_VAR);
+        String.format("%s = changeVolume(%s, %s, %s);",
+            PLAYER_VAR, PLAYER_VAR, SAMPLE_VAR, LEVEL_VAR);
 
     static final String CHANGE_PITCH =
-        String.format("%s = changePitch(%s);",
-            PLAYER_VAR, FREQ_VAR_2);
+        String.format("%s = audioplayer(%s, %s);",
+            PLAYER_VAR, SAMPLE_VAR, FREQ_VAR_2);
 
     private MatlabCommands() {
         throw new AssertionError();

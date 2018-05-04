@@ -89,18 +89,6 @@ public final class DataPanel extends BasicPanel {
         setToolTipTexts();
     }
 
-    private void setToolTipTexts() {
-        id.setToolTipText(id.getText());
-        title.setToolTipText(title.getText());
-        track.setToolTipText(track.getText());
-        artist.setToolTipText(artist.getText());
-        album.setToolTipText(album.getText());
-        year.setToolTipText(year.getText());
-        genre.setToolTipText(genre.getText());
-        comment.setToolTipText(comment.getText());
-        path.setToolTipText(path.getText());
-    }
-
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -134,5 +122,17 @@ public final class DataPanel extends BasicPanel {
         mainPanel.add(labelPanel, BorderLayout.WEST);
         mainPanel.add(buttonPanel, BorderLayout.EAST);
         add(mainPanel);
+    }
+
+    private void setToolTipTexts() {
+        id.setToolTipText(id.getText());
+        title.setToolTipText(title.getText());
+        track.setToolTipText(track.getText());
+        artist.setToolTipText(artist.getText());
+        album.setToolTipText(album.getText());
+        year.setToolTipText(year.getText());
+        genre.setToolTipText(genre.getText());
+        comment.setToolTipText(comment.getText());
+        path.setToolTipText(path.getText());
     }
 }

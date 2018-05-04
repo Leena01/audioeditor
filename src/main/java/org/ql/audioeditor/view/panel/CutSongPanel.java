@@ -117,22 +117,9 @@ public final class CutSongPanel extends BasicPanel {
         }
     }
 
-    private void changeFieldValues() {
-        int lowerValue = rangeSlider.getValue();
-        int upperValue = rangeSlider.getUpperValue();
-        fromValue.setText(String.valueOf(lowerValue));
-        toValue.setText(String.valueOf(upperValue));
-        fromSecValue.setText(formatDuration(framesToSeconds(lowerValue, freq)));
-        toSecValue.setText(formatDuration(framesToSeconds(upperValue, freq)));
-    }
-
     public void setDefaultValues() {
         rangeSlider.setValue(MIN);
         rangeSlider.setUpperValue(max);
-    }
-
-    private void initInnerListeners() {
-        rangeSlider.addChangeListener(new SliderListener());
     }
 
     @Override
@@ -168,6 +155,52 @@ public final class CutSongPanel extends BasicPanel {
         add(mainPanel);
     }
 
+    private void changeFieldValues() {
+        int lowerValue = rangeSlider.getValue();
+        int upperValue = rangeSlider.getUpperValue();
+        fromValue.setText(String.valueOf(lowerValue));
+        toValue.setText(String.valueOf(upperValue));
+        fromSecValue.setText(formatDuration(framesToSeconds(lowerValue, freq)));
+        toSecValue.setText(formatDuration(framesToSeconds(upperValue, freq)));
+    }
+
+    private void changeSliderValues() {
+        try {
+            int value = Integer.parseInt(fromValue.getText());
+            if (value >= MIN && value <= max) {
+                rangeSlider.setValue(value);
+                int newValue = Integer.parseInt(fromValue.getText());
+                fromSecValue.setText(
+                    formatDuration(framesToSeconds(newValue, freq)));
+            } else {
+                int oldValue = rangeSlider.getValue();
+                fromValue.setText(String.valueOf(oldValue));
+            }
+        } catch (NumberFormatException nfe) {
+            fromValue.setText(String.valueOf(rangeSlider.getValue()));
+        }
+        try {
+            int upperValue = Integer.parseInt(toValue.getText());
+            if (upperValue >= MIN && upperValue <= max) {
+                rangeSlider.setUpperValue(upperValue);
+                int newUpperValue = Integer.parseInt(toValue.getText());
+                toSecValue.setText(
+                    formatDuration(
+                        framesToSeconds(newUpperValue, freq)));
+            } else {
+                int oldUpperValue = rangeSlider.getUpperValue();
+                toValue.setText(String.valueOf(oldUpperValue));
+            }
+        } catch (NumberFormatException nfe) {
+            toValue
+                .setText(String.valueOf(rangeSlider.getUpperValue()));
+        }
+    }
+
+    private void initInnerListeners() {
+        rangeSlider.addChangeListener(new SliderListener());
+    }
+
     /**
      * Slider listener.
      */
@@ -189,36 +222,7 @@ public final class CutSongPanel extends BasicPanel {
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             if (source == setButton) {
-                try {
-                    int value = Integer.parseInt(fromValue.getText());
-                    if (value >= MIN && value <= max) {
-                        rangeSlider.setValue(value);
-                        int newValue = Integer.parseInt(fromValue.getText());
-                        fromSecValue.setText(
-                            formatDuration(framesToSeconds(newValue, freq)));
-                    } else {
-                        int oldValue = rangeSlider.getValue();
-                        fromValue.setText(String.valueOf(oldValue));
-                    }
-                } catch (NumberFormatException nfe) {
-                    fromValue.setText(String.valueOf(rangeSlider.getValue()));
-                }
-                try {
-                    int upperValue = Integer.parseInt(toValue.getText());
-                    if (upperValue >= MIN && upperValue <= max) {
-                        rangeSlider.setUpperValue(upperValue);
-                        int newUpperValue = Integer.parseInt(toValue.getText());
-                        toSecValue.setText(
-                            formatDuration(
-                                framesToSeconds(newUpperValue, freq)));
-                    } else {
-                        int oldUpperValue = rangeSlider.getUpperValue();
-                        toValue.setText(String.valueOf(oldUpperValue));
-                    }
-                } catch (NumberFormatException nfe) {
-                    toValue
-                        .setText(String.valueOf(rangeSlider.getUpperValue()));
-                }
+                changeSliderValues();
             }
         }
     }

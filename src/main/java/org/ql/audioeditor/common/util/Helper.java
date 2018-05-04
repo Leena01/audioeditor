@@ -101,10 +101,10 @@ public final class Helper {
     }
 
     /**
-     * Converts frames to seconds according to the sampling frequency given.
+     * Converts frames to seconds according to the sampling rate given.
      *
      * @param frame Number of frames
-     * @param freq  Sampling frequency
+     * @param freq  Sampling rate
      * @return Seconds
      */
     public static int framesToSeconds(double frame, double freq) {
@@ -112,10 +112,10 @@ public final class Helper {
     }
 
     /**
-     * Converts seconds to frames according to the sampling frequency given.
+     * Converts seconds to frames according to the sampling rate given.
      *
      * @param seconds Seconds
-     * @param freq    Sampling frequency
+     * @param freq    Sampling rate
      * @return Number of frames
      */
     public static int secondsToFrames(int seconds, double freq) {
