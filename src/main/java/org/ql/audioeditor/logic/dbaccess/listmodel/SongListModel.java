@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Model class to encapsulate a list of songs.
+ * Model class designed to encapsulate a list of songs.
  */
 public final class SongListModel extends ListModel<Song> {
 

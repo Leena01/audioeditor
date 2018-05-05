@@ -29,7 +29,7 @@ public final class SongModel {
     private BufferedImage plot = null;
 
     /**
-     * Default constructor.
+     * Constructor.
      */
     public SongModel() {
         this.song = DEFAULT_SONG;

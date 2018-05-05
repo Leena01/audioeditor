@@ -89,10 +89,6 @@ final class MatlabCommands {
         String.format("%s = cutSong(%s, %s, %s);",
             SAMPLE_VAR_2, SAMPLE_VAR, FROM_VAR, TO_VAR);
 
-    static final String SAVE_SONG =
-        String.format("saveSong(%s, %s, %s);",
-            FILE_VAR, SAMPLE_VAR_2, FREQ_VAR);
-
     static final String RELOCATE_SONG =
         String.format("relocateSong(%s, %s, %s);",
             PLAYER_VAR, START_VAR, EMPTY_VAR);
@@ -104,6 +100,14 @@ final class MatlabCommands {
     static final String CHANGE_PITCH =
         String.format("%s = audioplayer(%s, %s);",
             PLAYER_VAR, SAMPLE_VAR, FREQ_VAR_2);
+
+    private static final String SAVE_SONG = "saveSong(%s, %s, %s);";
+
+    static final String SAVE_SONG_CUT =
+        String.format(SAVE_SONG, FILE_VAR, SAMPLE_VAR_2, FREQ_VAR);
+
+    static final String SAVE_SONG_CHANGE_PITCH =
+        String.format(SAVE_SONG, FILE_VAR, SAMPLE_VAR, FREQ_VAR_2);
 
     private MatlabCommands() {
         throw new AssertionError();

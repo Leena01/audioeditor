@@ -28,6 +28,8 @@ public final class ImageLoader {
     private static Image forwardIcon;
     private static Image soundOnIcon;
     private static Image soundOffIcon;
+    private static Image previousIcon;
+    private static Image nextIcon;
     private static Image favoriteIcon;
     private static Image unfavoriteIcon;
     private static Image playlistIcon;
@@ -42,6 +44,11 @@ public final class ImageLoader {
         throw new AssertionError();
     }
 
+    /**
+     * Initialization.
+     *
+     * @throws IOException IOException
+     */
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
         inputStream =
@@ -74,6 +81,10 @@ public final class ImageLoader {
             properties.getProperty("sound.on.icon.name")));
         soundOffIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("sound.off.icon.name")));
+        previousIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("previous.icon.name")));
+        nextIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
+            properties.getProperty("next.icon.name")));
         unfavoriteIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("unfavorite.icon.name")));
         playlistIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
@@ -138,6 +149,14 @@ public final class ImageLoader {
 
     public static Image getSoundOffIcon() {
         return soundOffIcon;
+    }
+
+    public static Image getPreviousIcon() {
+        return previousIcon;
+    }
+
+    public static Image getNextIcon() {
+        return nextIcon;
     }
 
     public static Image getFavoriteIcon() {

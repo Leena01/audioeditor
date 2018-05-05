@@ -57,7 +57,7 @@ public class ViewSongsPanel extends BasicPanel {
     private JButton backOptionButton;
 
     /**
-     * Default constructor.
+     * Constructor.
      */
     protected ViewSongsPanel() {
         super();

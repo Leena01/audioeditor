@@ -23,7 +23,9 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.PAUSE_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.PLOT_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.RELOCATE_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.RESUME_SONG;
-import static org.ql.audioeditor.logic.matlab.MatlabCommands.SAVE_SONG;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands
+    .SAVE_SONG_CHANGE_PITCH;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.SAVE_SONG_CUT;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_CHROMAGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_SPECTROGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands
@@ -358,16 +360,39 @@ public final class MatlabHandler {
     }
 
     /**
-     * Save song.
+     * Save song after cut.
      *
      * @param file Path to save the song to
      * @throws MatlabEngineException Exception caused by the MATLAB Engine
      */
-    public synchronized void saveSong(String file)
+    public synchronized void saveSongCut(String file)
+        throws MatlabEngineException {
+        saveSong(file, SAVE_SONG_CUT);
+    }
+
+    /**
+     * Save song after the pitch was changed.
+     *
+     * @param file Path to save the song to
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    public synchronized void saveSongChangePitch(String file)
+        throws MatlabEngineException {
+        saveSong(file, SAVE_SONG_CHANGE_PITCH);
+    }
+
+    /**
+     * Save song.
+     *
+     * @param file Path to save the song to
+     * @param type Type of save
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    private synchronized void saveSong(String file, String type)
         throws MatlabEngineException {
         try {
             eng.putVariable(FILE_VAR.toString(), file.toCharArray());
-            eng.eval(SAVE_SONG);
+            eng.eval(type);
         } catch (Exception e) {
             throw new MatlabEngineException(OPEN_ERROR);
         }

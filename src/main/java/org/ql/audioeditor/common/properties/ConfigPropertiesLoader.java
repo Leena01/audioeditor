@@ -21,6 +21,11 @@ public final class ConfigPropertiesLoader {
         throw new AssertionError();
     }
 
+    /**
+     * Initialization.
+     *
+     * @throws IOException IOException
+     */
     public static void init(String propFileName) throws IOException {
         properties = new Properties();
         inputStream =

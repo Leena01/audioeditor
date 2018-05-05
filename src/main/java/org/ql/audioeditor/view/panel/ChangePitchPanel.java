@@ -100,6 +100,7 @@ public final class ChangePitchPanel extends BasicPanel {
         currentFreqPanel.setVisible(true);
         simplePlayerPanel.setVisible(true);
         mediaControlPanel.setVisible(true);
+        saveButton.setVisible(true);
     }
 
     public void setSong(double totalSamples, double freq, BufferedImage plot) {
@@ -113,6 +114,7 @@ public final class ChangePitchPanel extends BasicPanel {
     public void removeSong() {
         simplePlayerPanel.setVisible(false);
         mediaControlPanel.setVisible(false);
+        saveButton.setVisible(false);
     }
 
     @Override
@@ -152,6 +154,7 @@ public final class ChangePitchPanel extends BasicPanel {
         currentFreqPanel.setVisible(false);
         mediaControlPanel.setVisible(false);
         simplePlayerPanel.setVisible(false);
+        saveButton.setVisible(false);
     }
 
     private void changeFieldValue() {

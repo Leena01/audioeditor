@@ -16,10 +16,18 @@ public final class MatlabFileLoader {
         .getMatlabFolder() + "/";
     private static final String PATH = getPath() + SUBFOLDER;
 
+    /**
+     * Private constructor.
+     */
     private MatlabFileLoader() {
         throw new AssertionError();
     }
 
+    /**
+     * Initialization.
+     *
+     * @throws IOException IOException
+     */
     public static void init() throws IOException {
         for (MatlabFiles f : MatlabFiles.values()) {
             copyFile(f.toString());

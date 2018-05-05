@@ -64,7 +64,7 @@ public final class Song {
     }
 
     /**
-     * Default constructor.
+     * Constructor.
      */
     public Song() {
         this(SongPropertiesLoader.getEmptySongId(),

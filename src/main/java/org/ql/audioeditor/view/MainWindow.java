@@ -460,7 +460,6 @@ public final class MainWindow extends Window {
     private void openSong(SongModel sm) {
         getCover(sm);
         getSavedInstance(sm);
-
         t = new Thread(new OpenSongRunnable(sm));
         waitForThread(t);
     }
@@ -495,8 +494,8 @@ public final class MainWindow extends Window {
         int hopSize = convertToNumber(hopSizeString);
         int nfft = convertToNumber(nfftString);
         if (checkNumbers(windowSize, hopSize, nfft)) {
-            t = new Thread(new ShowChromRunnable(windowSize, hopSize, nfft,
-                window));
+            t = new Thread(new ShowChromRunnable(
+                windowSize, hopSize, nfft, window));
             waitForThread(t);
         }
     }
@@ -510,8 +509,7 @@ public final class MainWindow extends Window {
      * @param nfft       Number of FFT points
      * @return Logical value
      */
-    private boolean checkNumbers(int windowSize, int
-        hopSize, int nfft) {
+    private boolean checkNumbers(int windowSize, int hopSize, int nfft) {
         if (windowSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
             || hopSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
             || nfft < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
@@ -528,6 +526,26 @@ public final class MainWindow extends Window {
     private void cutSong() {
         t = new Thread(new CutSongRunnable());
         waitForThread(t);
+    }
+
+    /**
+     * Get a path to save a new file to.
+     *
+     * @return Path
+     */
+    private String saveAsNewFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(FILE_BROWSER_INFO);
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (fileToSave.exists()) {
+                showMessageDialog(FILE_ALREADY_EXISTS_ERROR);
+                return null;
+            }
+            return fileToSave.getAbsolutePath();
+        }
+        return null;
     }
 
     /**
@@ -705,9 +723,8 @@ public final class MainWindow extends Window {
             new PopupDialog(this, "Delete songs", deleteSongsPanel);
         deleteSongsDialog.setVisible(false);
 
-        similarSongsPanel =
-            new SimilarSongsPanel(similarSongTableModel,
-                showSimilarDoneListener);
+        similarSongsPanel = new SimilarSongsPanel(similarSongTableModel,
+            showSimilarDoneListener);
         similarSongsDialog =
             new PopupDialog(this, "Similar songs", similarSongsPanel);
         similarSongsDialog.setVisible(false);
@@ -811,15 +828,8 @@ public final class MainWindow extends Window {
 
         cpSaveListener = ae -> {
             //TODO Load save button after preview?
-            int result = showSaveDialog();
-            switch (result) {
-                case JOptionPane.YES_OPTION:
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-                default:
-                    break;
-            }
+            t = new Thread(new ChangePitchRunnable());
+            waitForThread(t);
         };
 
         cutFileListener = ae -> {
@@ -891,6 +901,11 @@ public final class MainWindow extends Window {
         };
     }
 
+    /**
+     * Option dialog with MainWindow as parent.
+     *
+     * @return Option dialog
+     */
     private int showSaveDialog() {
         return JOptionPane.showOptionDialog(this,
             SAVE_QUESTION, null, JOptionPane.YES_NO_CANCEL_OPTION,
@@ -898,6 +913,9 @@ public final class MainWindow extends Window {
             OPTIONS[0]);
     }
 
+    /**
+     * Message dialog with MainWindow as parent.
+     */
     private void showMessageDialog(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
@@ -960,22 +978,12 @@ public final class MainWindow extends Window {
                             new File(ImageLoader.getPlotImagePath()));
                         sm.setPlot(plot);
                         menuPanel.stopSong();
-                        menuPanel
-                            .setCurrentSong(totalSamples, freq, plot,
-                                sm.getCover(), isNormal,
-                                getExtendedState() == MAXIMIZED_BOTH);
+                        menuPanel.setCurrentSong(
+                            totalSamples, freq, plot, sm.getCover(), isNormal,
+                            getExtendedState() == MAXIMIZED_BOTH);
                         changePitchPanel.setSong(totalSamples, freq, plot);
-                        currentSongTitle.setText(sm.getTitle());
-                        spectrogramPanel.removeImages();
-                        chromagramPanel.removeImages();
-                        optionPanel.showOptions(true);
                         currentSongModel = sm;
-                        changePanel(MENU_PANEL);
-                        if (framesToSeconds(totalSamples, freq)
-                            > SongPropertiesLoader.getMaxSeconds()) {
-                            showInfo(infoLabel, LONG_SONG_INFO,
-                                INFO_LABEL_DELAY);
-                        }
+                        loadEnv();
                     } catch (IOException ioe) {
                         showMessageDialog(IMAGE_ERROR);
                     }
@@ -985,6 +993,19 @@ public final class MainWindow extends Window {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        private void loadEnv() {
+            if (framesToSeconds(sm.getTotalSamples(), sm.getFreq())
+                > SongPropertiesLoader.getMaxSeconds()) {
+                showInfo(infoLabel, LONG_SONG_INFO,
+                    INFO_LABEL_DELAY);
+            }
+            currentSongTitle.setText(sm.getTitle());
+            spectrogramPanel.removeImages();
+            chromagramPanel.removeImages();
+            optionPanel.showOptions(true);
+            changePanel(MENU_PANEL);
         }
     }
 
@@ -1098,31 +1119,19 @@ public final class MainWindow extends Window {
         }
 
         private void saveAs() {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle(FILE_BROWSER_INFO);
-            int userSelection = fileChooser
-                .showSaveDialog(MainWindow.this);
-            try {
-                if (userSelection
-                    == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser
-                        .getSelectedFile();
-                    if (fileToSave.exists()) {
-                        showMessageDialog(FILE_ALREADY_EXISTS_ERROR);
-                    } else {
-                        matlabHandler.saveSong(
-                            fileToSave.getAbsolutePath());
-                    }
+            String path = saveAsNewFile();
+            if (path != null) {
+                try {
+                    matlabHandler.saveSongCut(path);
+                } catch (MatlabEngineException mee) {
+                    showMessageDialog(mee.getMessage());
                 }
-            } catch (MatlabEngineException mee) {
-                showMessageDialog(mee.getMessage());
             }
         }
 
         private void save() {
             try {
-                matlabHandler
-                    .saveSong(currentSongModel.getPath());
+                matlabHandler.saveSongCut(currentSongModel.getPath());
                 openSong(currentSongModel);
             } catch (MatlabEngineException mee) {
                 showMessageDialog(mee.getMessage());
@@ -1142,10 +1151,51 @@ public final class MainWindow extends Window {
                 SwingUtilities.invokeLater(() -> {
                     changePitchPanel.setFreq(newFreq);
                     changePitchDialog.pack();
-                    changePitchDialog.setMinimumSize(changePitchDialog.getSize());
+                    changePitchDialog
+                        .setMinimumSize(changePitchDialog.getSize());
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Runnable for changing pitch.
+     */
+    private final class ChangePitchRunnable implements Runnable {
+        @Override
+        public synchronized void run() {
+            int result = showSaveDialog();
+            switch (result) {
+                case JOptionPane.YES_OPTION:
+                    saveAs();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    save();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void saveAs() {
+            String path = saveAsNewFile();
+            if (path != null) {
+                try {
+                    matlabHandler.saveSongChangePitch(path);
+                } catch (MatlabEngineException mee) {
+                    showMessageDialog(mee.getMessage());
+                }
+            }
+        }
+
+        private void save() {
+            try {
+                matlabHandler.saveSongChangePitch(currentSongModel.getPath());
+                openSong(currentSongModel);
+            } catch (MatlabEngineException mee) {
+                showMessageDialog(mee.getMessage());
             }
         }
     }
