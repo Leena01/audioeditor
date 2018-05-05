@@ -113,6 +113,11 @@ public class ViewSongsPanel extends BasicPanel {
      * Constructor.
      *
      * @param tm Table model
+     * @param l  SelectOptionButton listener
+     * @param a  EditOptionButton listener
+     * @param e  AddOptionButton listener
+     * @param d  DeleteOptionButton listener
+     * @param b  BackOptionButton listener
      */
     public ViewSongsPanel(SongTableModel tm, ActionListener l, ActionListener a,
         ActionListener e, ActionListener d, ActionListener b) {
@@ -143,7 +148,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Set list.
+     * Sets list.
      *
      * @param slm Song list model
      */
@@ -162,7 +167,7 @@ public class ViewSongsPanel extends BasicPanel {
     }
 
     /**
-     * Initialize table.
+     * Initializes table.
      *
      * @param slm Song list model
      */
@@ -184,6 +189,9 @@ public class ViewSongsPanel extends BasicPanel {
         return selected;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         scrollPane.setBorder(SCROLL_PANE_BORDER);
@@ -193,6 +201,9 @@ public class ViewSongsPanel extends BasicPanel {
         importButtonPanel.setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         songButtonPanel.add(selectOptionButton);

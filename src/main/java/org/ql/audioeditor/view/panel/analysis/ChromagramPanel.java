@@ -23,7 +23,7 @@ import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import static org.ql.audioeditor.common.util.Helper.resizeImage;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
@@ -56,6 +56,9 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
     private ImageIcon specIcon;
     private ImageIcon specIconMax;
 
+    /**
+     * Constructor.
+     */
     public ChromagramPanel() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -97,6 +100,12 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         specIconMax = new ImageIcon();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param s DoneButton listener
+     * @param b BackOptionButton listener
+     */
     public ChromagramPanel(ActionListener s, ActionListener b) {
         this();
         doneButton = new Button("Done", s);
@@ -105,28 +114,58 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         addPanels();
     }
 
+    /**
+     * Returns the window size set by the user.
+     *
+     * @return Window size
+     */
     public String getWindowSize() {
         return windowSizeTextField.getText();
     }
 
+    /**
+     * Returns the hop size set by the user.
+     *
+     * @return Hop size
+     */
     public String getHopSize() {
         return hopSizeTextField.getText();
     }
 
+    /**
+     * Returns the number of FFT points set by the user.
+     *
+     * @return Number of FFT points
+     */
     public String getNfft() {
         return nfftTextField.getText();
     }
 
+    /**
+     * Returns the type of window function chosen by the user.
+     *
+     * @return Window type
+     */
     public String getWindow() {
         return (String) windowComboBox.getSelectedItem();
     }
 
+    /**
+     * Clears text fields.
+     */
     private void clearFields() {
         windowSizeTextField.setValue(null);
         hopSizeTextField.setValue(null);
         nfftTextField.setValue(null);
     }
 
+    /**
+     * Changes the image.
+     *
+     * @param image       Image
+     * @param isNormal    Is the size normal
+     * @param isMaximized Is the image maximized
+     */
     public void changeImage(Image image, boolean isNormal, boolean
         isMaximized) {
         removeImages();
@@ -139,6 +178,11 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         }
     }
 
+    /**
+     * Hides image.
+     *
+     * @param isHidden Is the image hidden
+     */
     public void hideImage(boolean isHidden) {
         if (isHidden) {
             imagePanel.setVisible(false);
@@ -147,6 +191,9 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         }
     }
 
+    /**
+     * Removes the images.
+     */
     public void removeImages() {
         if (specIcon.getImage() != null) {
             specIcon.getImage().flush();
@@ -159,6 +206,11 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         imageLabel.setIcon(new ImageIcon());
     }
 
+    /**
+     * Maximizes the image.
+     *
+     * @param isMaximized Is the image maximized
+     */
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             imageLabel.setIcon(specIconMax);
@@ -167,6 +219,9 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void itemStateChanged(ItemEvent ie) {
         if (ie.getStateChange() == ItemEvent.SELECTED) {
@@ -176,6 +231,9 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -186,6 +244,9 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         mainPanel.setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         imagePanel.add(imageLabel);

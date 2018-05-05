@@ -74,6 +74,7 @@ public final class DatabaseAccessModel {
      * Get list of songs filtered by a given attribute.
      *
      * @param attribute Filter
+     * @param sm Song model
      * @return Song list model
      *
      * @throws SQLConnectionException Exception caused by database connection

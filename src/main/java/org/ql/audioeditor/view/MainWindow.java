@@ -67,12 +67,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.ql.audioeditor.common.util.Helper.MILLIS_SECONDS_CONVERSION;
-import static org.ql.audioeditor.common.util.Helper.convertToNumber;
-import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
-import static org.ql.audioeditor.common.util.Helper.getDir;
-import static org.ql.audioeditor.common.util.Helper.getFileExtension;
-import static org.ql.audioeditor.common.util.Helper.showInfo;
+import static org.ql.audioeditor.common.util.TimeUtils.MILLIS_SECONDS_CONVERSION;
+import static org.ql.audioeditor.common.util.GeneralUtils.convertToNumber;
+import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
+import static org.ql.audioeditor.common.util.GeneralUtils.getDir;
+import static org.ql.audioeditor.common.util.GeneralUtils.getFileExtension;
+import static org.ql.audioeditor.common.util.ViewUtils.showInfo;
 import static org.ql.audioeditor.view.param.Constants.ATTRIBUTES;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_FIELD_SIZE;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_PANEL_HEIGHT;

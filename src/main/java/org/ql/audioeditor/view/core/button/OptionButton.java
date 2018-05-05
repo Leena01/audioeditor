@@ -14,6 +14,12 @@ public class OptionButton extends JButton {
     private static final Color HOVER_COLOR = Color.WHITE;
     private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
 
+    /**
+     * Constructor.
+     *
+     * @param text Text
+     * @param al   Aciton listener
+     */
     public OptionButton(String text, ActionListener al) {
         super(text);
         addActionListener(al);
@@ -21,10 +27,16 @@ public class OptionButton extends JButton {
         addMouseListener();
     }
 
+    /**
+     * Adds mouse listener to button.
+     */
     private void addMouseListener() {
         this.addMouseListener(new OptionButtonListener());
     }
 
+    /**
+     * Sets attributes.
+     */
     private void setAttributes() {
         setForeground(DEFAULT_COLOR);
         setBackground(BACKGROUND_COLOR);
@@ -37,6 +49,9 @@ public class OptionButton extends JButton {
      * Mouse listener for class 'OptionButton'.
      */
     private final class OptionButtonListener implements MouseListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             setContentAreaFilled(true);
@@ -44,21 +59,33 @@ public class OptionButton extends JButton {
             addMouseListener();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mousePressed(MouseEvent e) {
             setContentAreaFilled(true);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             setContentAreaFilled(false);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseEntered(MouseEvent e) {
             setForeground(HOVER_COLOR);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseExited(MouseEvent e) {
             setForeground(DEFAULT_COLOR);

@@ -49,15 +49,6 @@ public class RangeSlider extends JSlider {
     }
 
     /**
-     * Constructs a RangeSlider with the specified default minimum and maximum
-     * values.
-     */
-    public RangeSlider(int min, int max) {
-        super(min, max);
-        initSlider();
-    }
-
-    /**
      * Initializes the slider by setting default org.ql.audioeditor.org.ql
      * .audioeditor.common.properties.
      */
@@ -87,6 +78,8 @@ public class RangeSlider extends JSlider {
 
     /**
      * Sets the lower value in the range.
+     *
+     * @param value lower value
      */
     @Override
     public void setValue(int value) {
@@ -108,6 +101,8 @@ public class RangeSlider extends JSlider {
 
     /**
      * Returns the upper value in the range.
+     *
+     * @return upper value
      */
     public int getUpperValue() {
         return getValue() + getExtent();
@@ -115,6 +110,8 @@ public class RangeSlider extends JSlider {
 
     /**
      * Sets the upper value in the range.
+     *
+     * @param value upper value
      */
     public void setUpperValue(int value) {
         // Compute new extent.

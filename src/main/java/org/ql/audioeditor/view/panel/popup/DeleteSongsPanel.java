@@ -29,6 +29,12 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
     private final JPanel buttonPanel;
     private final JButton doneButton;
 
+    /**
+     * Constructor.
+     *
+     * @param tm Table model
+     * @param d  doneButton listener
+     */
     public DeleteSongsPanel(SongTableModel tm, ActionListener d) {
         super();
         buttonPanel = new JPanel(new FlowLayout());
@@ -49,6 +55,11 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
         addPanels();
     }
 
+    /**
+     * Returns selected songs.
+     *
+     * @return Selected songs
+     */
     public SongListModel getSelectedRows() {
         if (this.table.getSelectedRow() == -1) {
             return null;
@@ -62,6 +73,9 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
         return selectedSongs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         scrollPane.setBorder(SCROLL_PANE_BORDER);
@@ -69,6 +83,9 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
         buttonPanel.setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         buttonPanel.add(doneButton);

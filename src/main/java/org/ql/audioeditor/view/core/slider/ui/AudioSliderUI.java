@@ -25,6 +25,11 @@ import static org.ql.audioeditor.view.param.Constants.AUDIO_SLIDER_SIZE;
 public class AudioSliderUI extends BasicSliderUI {
     private static final int KNOB_WIDTH = 3;
 
+    /**
+     * Constructor.
+     *
+     * @param b Track slider
+     */
     public AudioSliderUI(TrackSlider b) {
         super(b);
         b.setPreferredSize(AUDIO_SLIDER_SIZE);

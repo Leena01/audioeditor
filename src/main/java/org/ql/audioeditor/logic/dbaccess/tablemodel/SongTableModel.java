@@ -23,6 +23,9 @@ public final class SongTableModel extends TableModel<Song> {
         columnNames.add("Path");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         String column = columnNames.get(columnIndex);

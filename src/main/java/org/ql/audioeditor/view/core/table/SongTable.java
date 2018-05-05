@@ -10,6 +10,11 @@ import java.awt.event.MouseEvent;
  * Table with entries of type 'Song'.
  */
 public class SongTable extends JTable {
+    /**
+     * Constructor.
+     *
+     * @param tm Table model
+     */
     public SongTable(TableModel tm) {
         super(tm);
         setAutoCreateRowSorter(true);
@@ -19,6 +24,8 @@ public class SongTable extends JTable {
 
     /**
      * Table cell tooltips.
+     *
+     * @param e Mouse event
      */
     @Override
     public String getToolTipText(@NotNull MouseEvent e) {

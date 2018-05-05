@@ -7,6 +7,14 @@ import java.awt.Dimension;
  * Frequency slider.
  */
 public class FrequencySlider extends JSlider {
+    /**
+     * Constructor.
+     * @param d Dimension
+     * @param min Minimum value
+     * @param max Maximum value
+     * @param majorTick Major tick
+     * @param minorTick Minor tick
+     */
     public FrequencySlider(Dimension d, int min, int max, int majorTick,
         int minorTick) {
         super(JSlider.HORIZONTAL, min, max, (min + max) / 2);

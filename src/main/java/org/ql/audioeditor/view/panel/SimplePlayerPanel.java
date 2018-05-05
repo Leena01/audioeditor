@@ -33,8 +33,8 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
-import static org.ql.audioeditor.common.util.Helper.secondsToFrames;
+import static org.ql.audioeditor.common.util.TimeUtils.secondsToFrames;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
 import static org.ql.audioeditor.view.param.Constants.VOLUME_SLIDER_SIZE;
 
 /**
@@ -109,6 +109,12 @@ public class SimplePlayerPanel extends BasicPanel {
     private int recentVolumeLevel;
     private boolean isPlaying;
 
+    /**
+     * Constructor.
+     *
+     * @param matlabHandler     Matlab handler
+     * @param mediaControlPanel Media control panel
+     */
     SimplePlayerPanel(MatlabHandler matlabHandler,
         HorizontalBar mediaControlPanel) {
         super();
@@ -151,6 +157,9 @@ public class SimplePlayerPanel extends BasicPanel {
         init();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final void setStyle() {
         setOpaque(false);
@@ -162,6 +171,9 @@ public class SimplePlayerPanel extends BasicPanel {
         totalLengthField.setBorder(TOTAL_LENGTH_FIELD_BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final void addPanels() {
         c.gridx = 0;
@@ -188,6 +200,13 @@ public class SimplePlayerPanel extends BasicPanel {
         mediaControlPanel.add(volumePanel, BorderLayout.EAST);
     }
 
+    /**
+     * Sets the current song.
+     *
+     * @param totalSamples Total number of samples
+     * @param freq         Sampling rate
+     * @param plot         Plot
+     */
     void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
         framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
@@ -196,6 +215,9 @@ public class SimplePlayerPanel extends BasicPanel {
         }
     }
 
+    /**
+     * Plays the current song.
+     */
     protected void playSong() {
         playButton.setVisible(false);
         pauseButton.setVisible(true);
@@ -205,6 +227,9 @@ public class SimplePlayerPanel extends BasicPanel {
         isPlaying = true;
     }
 
+    /**
+     * Pauses the current song.
+     */
     protected void pauseSong() {
         pauseButton.setVisible(false);
         playButton.setVisible(true);
@@ -214,6 +239,9 @@ public class SimplePlayerPanel extends BasicPanel {
         isPlaying = false;
     }
 
+    /**
+     * Stops the current song.
+     */
     protected void stopSong() {
         pauseButton.setVisible(false);
         playButton.setVisible(true);
@@ -226,6 +254,10 @@ public class SimplePlayerPanel extends BasicPanel {
         isPlaying = false;
     }
 
+    /**
+     * Moves the track slider's cursor backward. It skips the number of frames
+     * specified in framesToSkip.
+     */
     protected void moveBackward() {
         int newValue = trackSlider.getValue() - framesToSkip;
         sliderTimer.changeTime(newValue);
@@ -233,6 +265,10 @@ public class SimplePlayerPanel extends BasicPanel {
         playbackThread.start();
     }
 
+    /**
+     * Moves the track slider's cursor forward. It skips the number of frames
+     * specified in framesToSkip.
+     */
     protected void moveForward() {
         int newValue = trackSlider.getValue() + framesToSkip;
         sliderTimer.changeTime(newValue);
@@ -240,16 +276,25 @@ public class SimplePlayerPanel extends BasicPanel {
         playbackThread.start();
     }
 
+    /**
+     * Turns the volume up.
+     */
     protected void volumeUp() {
         recentVolumeLevel = volumeSlider.getValue() + LEVELS_TO_SKIP;
         volumeSlider.setValue(recentVolumeLevel);
     }
 
+    /**
+     * Turns the volume down.
+     */
     protected void volumeDown() {
         recentVolumeLevel = volumeSlider.getValue() - LEVELS_TO_SKIP;
         volumeSlider.setValue(recentVolumeLevel);
     }
 
+    /**
+     * Turns the volume off.
+     */
     protected void turnVolumeOff() {
         recentVolumeLevel = volumeSlider.getValue();
         soundOnButton.setVisible(false);
@@ -257,26 +302,45 @@ public class SimplePlayerPanel extends BasicPanel {
         volumeSlider.setValue(NULL_VOLUME);
     }
 
+    /**
+     * Turns the volume on.
+     */
     protected void turnVolumeOn() {
         soundOffButton.setVisible(false);
         soundOnButton.setVisible(true);
         volumeSlider.setValue(recentVolumeLevel);
     }
 
+    /**
+     * Sets the volume to default.
+     */
     protected void resetVolume() {
         soundOffButton.setVisible(false);
         soundOnButton.setVisible(true);
         volumeSlider.setValue(VOLUME_INIT);
     }
 
+    /**
+     * Returns whether the current song is mute.
+     *
+     * @return Logical value (true if mute)
+     */
     protected boolean isMute() {
         return volumeSlider.getValue() == NULL_VOLUME;
     }
 
+    /**
+     * Returns whether the current song is playing.
+     *
+     * @return Logical value (true if playing)
+     */
     protected boolean isPlaying() {
         return isPlaying;
     }
 
+    /**
+     * Initializes listeners.
+     */
     private void initInnerListeners() {
         sliderTimer.addObserver(
             new SimplePlayerPanel.InnerObserver());
@@ -298,6 +362,9 @@ public class SimplePlayerPanel extends BasicPanel {
             new SimplePlayerPanel.InnerMouseListener());
     }
 
+    /**
+     * Initializes GUI elements.
+     */
     private void init() {
         pauseButton.setVisible(false);
         soundOffButton.setVisible(false);
@@ -307,6 +374,9 @@ public class SimplePlayerPanel extends BasicPanel {
      * Mouse listener for media control buttons. Ignores double clicks.
      */
     private final class InnerMouseListener implements MouseListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             Object source = e.getSource();
@@ -330,18 +400,30 @@ public class SimplePlayerPanel extends BasicPanel {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mousePressed(MouseEvent e) {
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseEntered(MouseEvent e) {
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseExited(MouseEvent e) {
         }
@@ -351,6 +433,9 @@ public class SimplePlayerPanel extends BasicPanel {
      * Change listener for sliders.
      */
     private final class InnerChangeListener implements ChangeListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             Object source = e.getSource();
@@ -370,6 +455,9 @@ public class SimplePlayerPanel extends BasicPanel {
      * Observer for media control buttons.
      */
     private final class InnerObserver implements Observer {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void update(Observable obs, Object obj) {
             pauseButton.setVisible(false);

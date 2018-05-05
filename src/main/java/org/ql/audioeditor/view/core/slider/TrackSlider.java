@@ -16,24 +16,45 @@ public class TrackSlider extends JSlider {
     private static final int TRACK_INIT_DEFAULT = 0;
     private Image img;
 
+    /**
+     * Constructor.
+     *
+     * @param n Orientation
+     */
     public TrackSlider(final int n) {
         super(n, TRACK_MIN_DEFAULT, TRACK_MAX_DEFAULT, TRACK_INIT_DEFAULT);
     }
 
+    /**
+     * Constructor.
+     *
+     * @return Image
+     */
     public Image getImage() {
         return img;
     }
 
+    /**
+     * Setter for image.
+     *
+     * @param img Image
+     */
     public void setImage(Image img) {
         this.img = img;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateUI() {
         setUI(new AudioSliderUI(this));
         updateLabelUIs();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setValue(final int value) {
         synchronized (LOCK_OBJECT) {

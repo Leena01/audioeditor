@@ -30,10 +30,6 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_VAR;
  * MATLAB commands for MATLAB language injection.
  */
 final class MatlabCommands {
-
-    /**
-     * MATLAB functions.
-     */
     static final String ADD_PATH =
         String.format("addpath(genpath(%s));",
             FOLDER_PATH_VAR);
@@ -109,6 +105,9 @@ final class MatlabCommands {
     static final String SAVE_SONG_CHANGE_PITCH =
         String.format(SAVE_SONG, FILE_VAR, SAMPLE_VAR, FREQ_VAR_2);
 
+    /**
+     * Private constructor. May not be called.
+     */
     private MatlabCommands() {
         throw new AssertionError();
     }

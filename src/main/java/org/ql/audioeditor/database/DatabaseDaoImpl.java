@@ -23,6 +23,8 @@ public final class DatabaseDaoImpl implements DatabaseDao {
      *
      * @param driver Driver
      * @param url    URL
+     * @throws SQLException SQLException
+     * @throws ClassNotFoundException ClassNotFoundException
      */
     public DatabaseDaoImpl(String driver, String url)
         throws SQLException, ClassNotFoundException {
@@ -33,6 +35,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         stat = connection.createStatement();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean createTable() {
         try {
@@ -58,6 +63,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Song> getSongs() {
         try {
@@ -81,6 +89,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addSong(Song s) {
         try {
@@ -108,6 +119,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteSong(Song s) {
         try {
@@ -125,6 +139,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean editSong(Song s) {
         try {
@@ -149,6 +166,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void commit() {
         try {
@@ -157,6 +177,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rollback() {
         try {
@@ -165,6 +188,9 @@ public final class DatabaseDaoImpl implements DatabaseDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         try {

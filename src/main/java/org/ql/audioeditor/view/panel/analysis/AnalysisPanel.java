@@ -11,6 +11,11 @@ import java.awt.Color;
 public final class AnalysisPanel extends BasicPanel {
     private final MatlabHandler matlabHandler;
 
+    /**
+     * Constructor.
+     *
+     * @param matlabHandler Matlab handler.
+     */
     public AnalysisPanel(MatlabHandler matlabHandler) {
         super();
         this.matlabHandler = matlabHandler;
@@ -18,11 +23,17 @@ public final class AnalysisPanel extends BasicPanel {
         addPanels();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
 

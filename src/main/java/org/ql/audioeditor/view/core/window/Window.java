@@ -33,7 +33,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import static javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE_HIDDEN;
 
@@ -174,6 +174,9 @@ public abstract class Window extends JFrame {
         initKeyBindings();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void paint(Graphics g) {
         Dimension d = getSize();
@@ -237,6 +240,9 @@ public abstract class Window extends JFrame {
         System.exit(0);
     }
 
+    /**
+     * Initializes key bindings.
+     */
     private void initKeyBindings() {
         Action maximizeAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {

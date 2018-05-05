@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImage;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
@@ -25,6 +25,12 @@ public final class SpectrogramPanel extends ChromagramPanel {
     private ImageIcon specIcon3d;
     private ImageIcon specIcon3dMax;
 
+    /**
+     * Constructor.
+     *
+     * @param s DoneButton listener
+     * @param b BackOptionButton
+     */
     public SpectrogramPanel(ActionListener s, ActionListener b) {
         super();
         doneButton = new Button("Done", s);
@@ -43,6 +49,14 @@ public final class SpectrogramPanel extends ChromagramPanel {
         addPanels();
     }
 
+    /**
+     * Changes the image.
+     *
+     * @param image       Image
+     * @param image3d     3D image
+     * @param isNormal    Is the image size normal
+     * @param isMaximized Is the image maximized
+     */
     public void changeImage(Image image, Image image3d, boolean isNormal,
         boolean isMaximized) {
         if (specIcon3d.getImage() != null) {
@@ -58,6 +72,9 @@ public final class SpectrogramPanel extends ChromagramPanel {
         super.changeImage(image, isNormal, isMaximized);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeImages() {
         super.removeImages();
@@ -72,6 +89,9 @@ public final class SpectrogramPanel extends ChromagramPanel {
         image3dLabel.setIcon(new ImageIcon());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void maximizeImage(boolean isMaximized) {
         super.maximizeImage(isMaximized);
@@ -82,6 +102,9 @@ public final class SpectrogramPanel extends ChromagramPanel {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         super.setStyle();
@@ -89,6 +112,9 @@ public final class SpectrogramPanel extends ChromagramPanel {
         image3dLabel.setVisible(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         imagePanel.add(imageLabel);
@@ -117,6 +143,9 @@ public final class SpectrogramPanel extends ChromagramPanel {
      */
     private final class ToggleButtonListener implements
         ItemListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void itemStateChanged(ItemEvent ie) {
             if (ie.getStateChange() == ItemEvent.SELECTED) {

@@ -11,8 +11,8 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
+import static org.ql.audioeditor.common.util.TimeUtils.formatDuration;
+import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
 
 /**
  * Timer with slider.
@@ -29,6 +29,15 @@ public class SliderTimer extends Observable {
     private int refreshMillis;
     private double freq;
 
+    /**
+     * Constructor.
+     *
+     * @param slider           Slider
+     * @param matlabHandler    Matlab handler
+     * @param timeField        Text field to show time elapsed
+     * @param totalLengthField Text field to show the total length of the song
+     * @param isDaemon         Is daemon
+     */
     public SliderTimer(JSlider slider, MatlabHandler matlabHandler,
         JLabel timeField, JLabel totalLengthField, boolean isDaemon) {
         this.timer = null;
@@ -54,6 +63,13 @@ public class SliderTimer extends Observable {
         });
     }
 
+    /**
+     * Schedules the timer.
+     *
+     * @param refreshMillis Refresh interval (in milliseconds)
+     * @param totalSamples  Total number of samples
+     * @param freq          Sampling rate
+     */
     public void schedule(int refreshMillis, double totalSamples, double freq) {
         this.refreshMillis = refreshMillis;
         maxFrames = (int) totalSamples;
@@ -65,6 +81,9 @@ public class SliderTimer extends Observable {
         timeField.setText(formatDuration(framesToSeconds(MIN_FRAMES, freq)));
     }
 
+    /**
+     * Resumes the timer.
+     */
     public void resumeTimer() {
         if (refreshMillis != 0) {
             timer = new Timer(isDaemon);
@@ -83,12 +102,18 @@ public class SliderTimer extends Observable {
         }
     }
 
+    /**
+     * Pauses the timer.
+     */
     public void pauseTimer() {
         if (timer != null) {
             timer.cancel();
         }
     }
 
+    /**
+     * Stops the timer.
+     */
     public void stopTimer() {
         pauseTimer();
         if (slider != null) {
@@ -96,12 +121,11 @@ public class SliderTimer extends Observable {
         }
     }
 
-    private void autoMove() {
-        if (slider != null && !slider.getValueIsAdjusting()) {
-            setCurrentTime((int) matlabHandler.getCurrentFrame());
-        }
-    }
-
+    /**
+     * Changes the current time.
+     *
+     * @param frame Position to set the slider to
+     */
     public void changeTime(int frame) {
         if (slider != null) {
             if (frame < MIN_FRAMES) {
@@ -114,11 +138,30 @@ public class SliderTimer extends Observable {
         }
     }
 
+    /**
+     * Moves the slider automatically.
+     */
+    private void autoMove() {
+        if (slider != null && !slider.getValueIsAdjusting()) {
+            setCurrentTime((int) matlabHandler.getCurrentFrame());
+        }
+    }
+
+    /**
+     * Sets the slider and timeField to the value given.
+     *
+     * @param currentFrame Current frane
+     */
     private void setCurrentTime(int currentFrame) {
         timeField.setText(formatDuration(framesToSeconds(currentFrame, freq)));
         slider.setValue(currentFrame);
     }
 
+    /**
+     * Returns whether the song is playing.
+     *
+     * @return
+     */
     private boolean isPlaying() {
         return matlabHandler.isPlaying();
     }

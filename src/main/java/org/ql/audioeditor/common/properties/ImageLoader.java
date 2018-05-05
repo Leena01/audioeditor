@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static org.ql.audioeditor.common.util.Helper.getPath;
+import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
 
 /**
- * Image loader (utility class).
+ * Image loader.
  */
 public final class ImageLoader {
     private static final String PATH = getPath();
@@ -47,6 +47,7 @@ public final class ImageLoader {
     /**
      * Initialization.
      *
+     * @param propFileName Property file name
      * @throws IOException IOException
      */
     public static void init(String propFileName) throws IOException {
@@ -103,98 +104,218 @@ public final class ImageLoader {
             properties.getProperty("close.icon.name")));
     }
 
+    /**
+     * Returns the path to the plot image.
+     *
+     * @return Path
+     */
     public static String getPlotImagePath() {
         return plotImagePath;
     }
 
+    /**
+     * Returns the path to the spectrogram image.
+     *
+     * @return Path
+     */
     public static String getSpecImagePath() {
         return specImagePath;
     }
 
+    /**
+     * Returns the path to the three-dimensional spectrogram image.
+     *
+     * @return Path
+     */
     public static String getSpec3dImagePath() {
         return spec3dImagePath;
     }
 
+    /**
+     * Returns the path to the chromagram image.
+     *
+     * @return Path
+     */
     public static String getChromImagePath() {
         return chromImagePath;
     }
 
+    /**
+     * Returns the cover image.
+     *
+     * @return Cover
+     */
     public static Image getCover() {
         return cover;
     }
 
+    /**
+     * Returns the icon for the play button.
+     *
+     * @return Play icon
+     */
     public static Image getPlayIcon() {
         return playIcon;
     }
 
+    /**
+     * Returns the icon for the pause button.
+     *
+     * @return Pause icon
+     */
     public static Image getPauseIcon() {
         return pauseIcon;
     }
 
+    /**
+     * Returns the icon for the stop button.
+     *
+     * @return Stop icon
+     */
     public static Image getStopIcon() {
         return stopIcon;
     }
 
+    /**
+     * Returns the icon for the backward button.
+     *
+     * @return Backward icon
+     */
     public static Image getBackwardIcon() {
         return backwardIcon;
     }
 
+    /**
+     * Returns the icon for the forward button.
+     *
+     * @return Forward icon
+     */
     public static Image getForwardIcon() {
         return forwardIcon;
     }
 
+    /**
+     * Returns the icon for the sound-on button.
+     *
+     * @return Sound-on icon
+     */
     public static Image getSoundOnIcon() {
         return soundOnIcon;
     }
 
+    /**
+     * Returns the icon for the sound-off button.
+     *
+     * @return Sound-off icon
+     */
     public static Image getSoundOffIcon() {
         return soundOffIcon;
     }
 
+    /**
+     * Returns the icon for the previous button.
+     *
+     * @return Previous icon
+     */
     public static Image getPreviousIcon() {
         return previousIcon;
     }
 
+    /**
+     * Returns the icon for the next button.
+     *
+     * @return Next icon
+     */
     public static Image getNextIcon() {
         return nextIcon;
     }
 
+    /**
+     * Returns the icon for the favorite button.
+     *
+     * @return Favorite icon
+     */
     public static Image getFavoriteIcon() {
         return favoriteIcon;
     }
 
+    /**
+     * Returns the icon for the unfavorite button.
+     *
+     * @return Unfavorite icon
+     */
     public static Image getUnfavoriteIcon() {
         return unfavoriteIcon;
     }
 
+    /**
+     * Returns the icon for the playlist button.
+     *
+     * @return Playlist icon
+     */
     public static Image getPlaylistIcon() {
         return playlistIcon;
     }
 
+    /**
+     * Returns the icon for the minimize button.
+     *
+     * @return Minimize icon
+     */
     public static Image getMinimizeIcon() {
         return minimizeIcon;
     }
 
+    /**
+     * Returns the icon for the maximize button.
+     *
+     * @return Maximize icon
+     */
     public static Image getMaximizeIcon() {
         return maximizeIcon;
     }
 
+    /**
+     * Returns the icon for the toggle button.
+     *
+     * @return Normalize icon
+     */
     public static Image getNormalizeIcon() {
         return normalizeIcon;
     }
 
+    /**
+     * Returns the icon for the upward button.
+     *
+     * @return Upward icon
+     */
     public static Image getUpwardIcon() {
         return upwardIcon;
     }
 
+    /**
+     * Returns the icon for the downward button.
+     *
+     * @return Downward icon
+     */
     public static Image getDownwardIcon() {
         return downwardIcon;
     }
 
+    /**
+     * Returns the icon for the close button.
+     *
+     * @return Close icon
+     */
     public static Image getCloseIcon() {
         return closeIcon;
     }
 
+    /**
+     * Closes the input stream.
+     *
+     * @throws IOException IOException
+     */
     public static void close() throws IOException {
         if (inputStream != null) {
             inputStream.close();

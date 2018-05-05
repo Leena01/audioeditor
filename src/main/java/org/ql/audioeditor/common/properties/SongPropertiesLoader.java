@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Song properties loader (utility class).
+ * Song properties loader.
  */
 public final class SongPropertiesLoader {
     private static Properties properties;
@@ -42,6 +42,7 @@ public final class SongPropertiesLoader {
     /**
      * Initialization.
      *
+     * @param propFileName Property file name
      * @throws IOException IOException
      */
     public static void init(String propFileName) throws IOException {
@@ -85,98 +86,222 @@ public final class SongPropertiesLoader {
             Integer.parseInt(properties.getProperty("seconds.to.skip"));
     }
 
+    /**
+     * Returns the default song ID.
+     *
+     * @return Default song ID
+     */
     public static int getDefaultSongId() {
         return defaultSongId;
     }
 
+    /**
+     * Returns the ID for empty songs.
+     *
+     * @return Empty song ID
+     */
     public static int getEmptySongId() {
         return emptySongId;
     }
 
+    /**
+     * Returns the default song title.
+     *
+     * @return Default song title
+     */
     public static String getDefaultTitle() {
         return defaultTitle;
     }
 
+    /**
+     * Returns the default track.
+     *
+     * @return Default track
+     */
     public static String getDefaultTrack() {
         return defaultTrack;
     }
 
+    /**
+     * Returns the default artist.
+     *
+     * @return Default artist
+     */
     public static String getDefaultArtist() {
         return defaultArtist;
     }
 
+    /**
+     * Returns the default album.
+     *
+     * @return Default album
+     */
     public static String getDefaultAlbum() {
         return defaultAlbum;
     }
 
+    /**
+     * Returns the default year.
+     *
+     * @return Default year
+     */
     public static String getDefaultYear() {
         return defaultYear;
     }
 
+    /**
+     * Returns the default genre.
+     *
+     * @return Default genre
+     */
     public static String getDefaultGenre() {
         return defaultGenre;
     }
 
+    /**
+     * Returns the default comment.
+     *
+     * @return Default comment
+     */
     public static String getDefaultComment() {
         return defaultComment;
     }
 
+    /**
+     * Returns the default song path.
+     *
+     * @return Default song path
+     */
     public static String getDefaultPath() {
         return defaultPath;
     }
 
+    /**
+     * Returns the length over which it is not recommended to analyze a song (in
+     * seconds).
+     *
+     * @return Maximum number of seconds
+     */
     public static int getMaxSeconds() {
         return maxSeconds;
     }
 
+    /**
+     * Returns the name of the window functions used.
+     *
+     * @return Array of window names
+     */
     public static String[] getWindowNames() {
         return windowNames;
     }
 
+    /**
+     * Returns the array of supported extensions.
+     *
+     * @return Array of supported extensions
+     */
     public static String[] getExtensionNames() {
         return extensionNames;
     }
 
+    /**
+     * Returns the minimum volume.
+     *
+     * @return Minimum volume
+     */
     public static int getVolumeMin() {
         return volumeMin;
     }
 
+    /**
+     * Returns the maximum volume.
+     *
+     * @return Maximum volume
+     */
     public static int getVolumeMax() {
         return volumeMax;
     }
 
+    /**
+     * Returns the initial volume.
+     *
+     * @return Initial volume
+     */
     public static int getVolumeInit() {
         return volumeInit;
     }
 
+    /**
+     * Returns the conversion rate between the symbolic and actual volume
+     * levels.
+     *
+     * @return Conversion rate
+     */
     public static float getVolumeConversionRate() {
         return volumeConversionRate;
     }
 
+    /**
+     * Returns the smallest genre number according to ID3v1.
+     *
+     * @return Smallest number
+     */
     public static int getGenreMin() {
         return genreMin;
     }
 
+    /**
+     * Returns the smallest genre number according to ID3v1.
+     *
+     * @return Biggest number
+     */
     public static int getGenreMax() {
         return genreMax;
     }
 
+    /**
+     * Returns the smallest sampling rate allowed.
+     *
+     * @return Smallest sampling rate
+     */
     public static int getFrequencyMin() {
         return frequencyMin;
     }
 
+    /**
+     * Returns the biggest sampling rate allowed.
+     *
+     * @return Biggest sampling rate
+     */
     public static int getFrequencyMax() {
         return frequencyMax;
     }
 
+    /**
+     * Returns the interval at which the track slider should be refreshed (in
+     * milliseconds).
+     *
+     * @return Interval in ms
+     */
     public static int getSongRefreshMillis() {
         return songRefreshMillis;
     }
 
+    /**
+     * Returns the number of seconds to skip when fast-forwarding (or going
+     * backwards).
+     *
+     * @return Interval in ms
+     */
     public static int getSecondsToSkip() {
         return secondsToSkip;
     }
 
+    /**
+     * Closes the input stream.
+     *
+     * @throws IOException IOException
+     */
     public static void close() throws IOException {
         if (inputStream != null) {
             inputStream.close();

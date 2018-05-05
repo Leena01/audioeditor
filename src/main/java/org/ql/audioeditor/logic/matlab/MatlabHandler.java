@@ -10,7 +10,7 @@ import org.ql.audioeditor.logic.exceptions.MatlabEngineException;
 
 import java.io.File;
 
-import static org.ql.audioeditor.common.util.Helper.getPath;
+import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.ADD_PATH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_PITCH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_VOLUME;
@@ -94,6 +94,11 @@ public final class MatlabHandler {
         return instance;
     }
 
+    /**
+     * Returns the smallest frame index.
+     *
+     * @return Smallest frame index
+     */
     public static int getMinFrames() {
         return MIN_FRAMES;
     }

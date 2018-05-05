@@ -9,6 +9,11 @@ import java.awt.Dimension;
  * Time label.
  */
 public class TimeLabel extends Label {
+    /**
+     * Constructor.
+     * @param d Dimension
+     * @param horizontalAlignment Horizontal alignment
+     */
     public TimeLabel(Dimension d, int horizontalAlignment) {
         super("", horizontalAlignment);
         setOpaque(false);

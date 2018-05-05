@@ -47,6 +47,12 @@ public final class DataPanel extends BasicPanel {
     private final JPanel buttonPanel;
     private final JPanel mainPanel;
 
+    /**
+     * Constructor.
+     *
+     * @param currentSongModel Current song model
+     * @param b                BackOptionButton listener
+     */
     public DataPanel(SongModel currentSongModel, ActionListener b) {
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new BorderLayout());
@@ -76,6 +82,11 @@ public final class DataPanel extends BasicPanel {
         addPanels();
     }
 
+    /**
+     * Sets the current song's data.
+     *
+     * @param currentSongModel Current song model
+     */
     public void setSongData(SongModel currentSongModel) {
         id.setText(Integer.toString(currentSongModel.getId()));
         title.setText(currentSongModel.getTitle());
@@ -89,6 +100,9 @@ public final class DataPanel extends BasicPanel {
         setToolTipTexts();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -98,6 +112,9 @@ public final class DataPanel extends BasicPanel {
         buttonPanel.setBorder(BUTTON_PANEL_BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         labelPanel.add(idLabel);
@@ -124,6 +141,9 @@ public final class DataPanel extends BasicPanel {
         add(mainPanel);
     }
 
+    /**
+     * Sets tooltip texts.
+     */
     private void setToolTipTexts() {
         id.setToolTipText(id.getText());
         title.setToolTipText(title.getText());

@@ -20,6 +20,10 @@ import java.io.IOException;
  * may not be changed.
  */
 public final class SongModel {
+    private static final int DEFAULT_ID
+        = SongPropertiesLoader.getDefaultSongId();
+    private static final int EMPTY_ID
+        = SongPropertiesLoader.getEmptySongId();
     private static final Song DEFAULT_SONG = new Song();
     private Song song;
     private double totalSamples = 0.0;
@@ -69,134 +73,295 @@ public final class SongModel {
         this.plot = other.plot;
     }
 
+    /**
+     * Returns the song.
+     *
+     * @return Song
+     */
     Song getSong() {
         return song;
     }
 
+    /**
+     * Returns the ID of the song.
+     *
+     * @return ID
+     */
     public int getId() {
         return song.getId();
     }
 
+    /**
+     * Sets the ID of the song.
+     *
+     * @param id ID
+     */
     public void setId(int id) {
         song.setId(id);
     }
 
+    /**
+     * Returns the title of the song.
+     *
+     * @return Title
+     */
     public String getTitle() {
         return song.getTitle();
     }
 
+    /**
+     * Sets the title of the song.
+     *
+     * @param title Title
+     */
     public void setTitle(String title) {
         song.setTitle(title);
     }
 
+    /**
+     * Returns the track number.
+     *
+     * @return Track number
+     */
     public String getTrack() {
         return song.getTrack();
     }
 
+    /**
+     * Sets the track number.
+     *
+     * @param track Track number
+     */
     public void setTrack(String track) {
         song.setTrack(track);
     }
 
+    /**
+     * Returns the artist of the song.
+     *
+     * @return Artist
+     */
     public String getArtist() {
         return song.getArtist();
     }
 
+    /**
+     * Sets the artist of the song.
+     *
+     * @param artist Artist
+     */
     public void setArtist(String artist) {
         song.setArtist(artist);
     }
 
+    /**
+     * Returns the album of the song.
+     *
+     * @return Album
+     */
     public String getAlbum() {
         return song.getAlbum();
     }
 
+    /**
+     * Sets the album of the song.
+     *
+     * @param album Album
+     */
     public void setAlbum(String album) {
         song.setAlbum(album);
     }
 
+    /**
+     * Returns the year.
+     *
+     * @return Year
+     */
     public String getYear() {
         return song.getYear();
     }
 
+    /**
+     * Sets the year.
+     *
+     * @param year Year
+     */
     public void setYear(String year) {
         song.setYear(year);
     }
 
+    /**
+     * Returns the genre of the song.
+     *
+     * @return Genre
+     */
     public String getGenre() {
         return song.getGenre();
     }
 
+    /**
+     * Sets the genre of the song.
+     *
+     * @param genre Genre
+     */
     public void setGenre(String genre) {
         song.setGenre(genre);
     }
 
+    /**
+     * Returns the comment that belongs to the song.
+     *
+     * @return Comment
+     */
     public String getComment() {
         return song.getComment();
     }
 
+    /**
+     * Sets the comment that belongs to the song.
+     *
+     * @param comment Comment
+     */
     public void setComment(String comment) {
         song.setComment(comment);
     }
 
+    /**
+     * Returns the song's path.
+     *
+     * @return Path
+     */
     public String getPath() {
         return song.getPath();
     }
 
+    /**
+     * Sets the song's path.
+     *
+     * @param path Path
+     */
     public void setPath(String path) {
         song.setPath(path);
     }
 
+    /**
+     * Returns the total number of samples.
+     *
+     * @return Number of samples
+     */
     public double getTotalSamples() {
         return totalSamples;
     }
 
+    /**
+     * Sets the total number of samples.
+     *
+     * @param totalSamples Number of samples
+     */
     public void setTotalSamples(double totalSamples) {
         this.totalSamples = totalSamples;
     }
 
+    /**
+     * Returns the sampling rate.
+     *
+     * @return Sampling rate
+     */
     public double getFreq() {
         return freq;
     }
 
+    /**
+     * Sets the sampling rate.
+     *
+     * @param freq Sampling rate
+     */
     public void setFreq(double freq) {
         this.freq = freq;
     }
 
+    /**
+     * Returns whether the current song is stored in the database.
+     *
+     * @return Logical value (true if stored)
+     */
     public boolean isSaved() {
         return isSaved;
     }
 
+    /**
+     * Sets the current song's save status.
+     *
+     * @param isSaved Shows whether the current song is saved in the database
+     */
     public void setSaved(boolean isSaved) {
         this.isSaved = isSaved;
     }
 
+    /**
+     * Returns the cover that belongs to the song.
+     *
+     * @return Cover
+     */
     public Image getCover() {
         return cover;
     }
 
+    /**
+     * Sets the cover that belongs to the song.
+     *
+     * @param cover Cover
+     */
     public void setCover(Image cover) {
         this.cover = cover;
     }
 
+    /**
+     * Returns the plot that belongs to the song.
+     *
+     * @return Plot
+     */
     public BufferedImage getPlot() {
         return plot;
     }
 
+    /**
+     * Sets the plot that belongs to the song.
+     *
+     * @param plot Plot
+     */
     public void setPlot(BufferedImage plot) {
         this.plot = plot;
     }
 
+    /**
+     * Returns whether there is a song loaded.
+     *
+     * @return Logical value (true if not loaded)
+     */
     public boolean isEmpty() {
-        return getId() == SongPropertiesLoader.getEmptySongId();
+        return getId() == EMPTY_ID;
     }
 
+    /**
+     * Returns whether the song is the default song.
+     *
+     * @return Logical value
+     */
     public boolean isDefault() {
-        return getId() == SongPropertiesLoader.getDefaultSongId();
+        return getId() == DEFAULT_ID;
     }
 
+    /**
+     * Sets the ID of the song to the default.
+     */
     public void setDefault() {
-        song.setId(SongPropertiesLoader.getDefaultSongId());
+        song.setId(DEFAULT_ID);
     }
 
+    /**
+     * Returns the MP3 tags if present.
+     */
     private void getTags(String title, String path) {
         String track = SongPropertiesLoader.getDefaultTrack();
         String artist = SongPropertiesLoader.getDefaultArtist();
@@ -223,6 +388,14 @@ public final class SongModel {
             new Song(title, track, artist, album, year, genre, comment, path);
     }
 
+    /**
+     * Sets the MP3 tags if present.
+     *
+     * @throws UnsupportedTagException UnsupportedTagException
+     * @throws NotSupportedException NotSupportedException
+     * @throws InvalidDataException InvalidDataException
+     * @throws IOException IOException
+     */
     public void setTags()
         throws UnsupportedTagException, NotSupportedException,
         InvalidDataException, IOException {

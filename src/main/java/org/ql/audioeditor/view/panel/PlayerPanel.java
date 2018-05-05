@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
 
 /**
  * Panel for playing media, saving files to the database and show
@@ -49,6 +49,16 @@ class PlayerPanel extends SimplePlayerPanel {
     private final ActionMap actionMap;
     private boolean active;
 
+    /**
+     * Constructor.
+     * @param matlabHandler Matlab handler
+     * @param mediaControlPanel Media control panel
+     * @param inputMap Input map
+     * @param actionMap Action map
+     * @param fb FavoriteButton listener
+     * @param ufb InfavoriteButton listener
+     * @param sss SimilarSongsButton listener
+     */
     PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel,
         InputMap inputMap, ActionMap actionMap, ActionListener fb,
         ActionListener ufb, ActionListener sss) {

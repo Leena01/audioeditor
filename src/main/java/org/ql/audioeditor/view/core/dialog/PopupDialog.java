@@ -9,6 +9,13 @@ import java.awt.event.WindowAdapter;
  * Popup dialog.
  */
 public class PopupDialog extends JDialog {
+    /**
+     * Constructor.
+     *
+     * @param owner Owner
+     * @param title Title
+     * @param panel Panel
+     */
     public PopupDialog(Frame owner, String title, JPanel panel) {
         super(owner, title, true);
         getContentPane().add(panel);
@@ -16,6 +23,14 @@ public class PopupDialog extends JDialog {
         pack();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param owner         Owner
+     * @param title         Title
+     * @param panel         Panel
+     * @param windowAdapter Window adapter
+     */
     public PopupDialog(Frame owner, String title, JPanel panel, WindowAdapter
         windowAdapter) {
         this(owner, title, panel);

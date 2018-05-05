@@ -59,6 +59,12 @@ public final class ChangePitchPanel extends BasicPanel {
     private final HorizontalBar mediaControlPanel;
     private final SimplePlayerPanel simplePlayerPanel;
 
+    /**
+     * Constructor.
+     * @param matlabHandler Matlab handler
+     * @param p PreviewButton listener
+     * @param s SaveButton listener
+     */
     public ChangePitchPanel(MatlabHandler matlabHandler, ActionListener p,
         ActionListener s) {
         super();
@@ -89,10 +95,18 @@ public final class ChangePitchPanel extends BasicPanel {
         init();
     }
 
+    /**
+     * Returns the sampling rate shown by the slider.
+     * @return Sampling rate
+     */
     public int getFreq() {
         return frequencySlider.getValue();
     }
 
+    /**
+     * Set new sampling rate.
+     * @param freq Sampling rate
+     */
     public void setFreq(double freq) {
         frequencySlider.setValue((int) freq);
         currentFreqLabel.setText(String.format(CURR_FREQ_TEXT, freq));
@@ -103,6 +117,12 @@ public final class ChangePitchPanel extends BasicPanel {
         saveButton.setVisible(true);
     }
 
+    /**
+     * Sets the current song.
+     * @param totalSamples Total number of samples
+     * @param freq Sampling rate
+     * @param plot Plot image
+     */
     public void setSong(double totalSamples, double freq, BufferedImage plot) {
         infoLabel.setText(String.format(INSTR_TEXT, freq));
         currentFreqLabel.setText(String.format(CURR_FREQ_TEXT, freq));
@@ -111,12 +131,18 @@ public final class ChangePitchPanel extends BasicPanel {
         simplePlayerPanel.setCurrentSong(totalSamples, freq, plot);
     }
 
+    /**
+     * Hides the current song's settings.
+     */
     public void removeSong() {
         simplePlayerPanel.setVisible(false);
         mediaControlPanel.setVisible(false);
         saveButton.setVisible(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -131,6 +157,9 @@ public final class ChangePitchPanel extends BasicPanel {
         simplePlayerPanel.setBorder(PLAYER_PANEL_BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         infoPanel.add(infoLabel);

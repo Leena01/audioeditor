@@ -19,6 +19,7 @@ public final class Cache implements DatabaseDao {
      * Constructor.
      *
      * @param database DatabaseDao class
+     * @param millis Refresh interval (milliseconds)
      */
     public Cache(DatabaseDao database, int millis) {
         this.database = database;
@@ -26,16 +27,25 @@ public final class Cache implements DatabaseDao {
         setRefreshInterval(millis);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean createTable() {
         return database.createTable();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Song> getSongs() {
         return songs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addSong(Song s) {
         boolean success = database.addSong(s);
@@ -43,6 +53,9 @@ public final class Cache implements DatabaseDao {
         return success;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteSong(Song s) {
         boolean success = database.deleteSong(s);
@@ -50,6 +63,9 @@ public final class Cache implements DatabaseDao {
         return success;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean editSong(Song s) {
         boolean success = database.editSong(s);
@@ -57,27 +73,39 @@ public final class Cache implements DatabaseDao {
         return success;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void commit() {
         database.commit();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rollback() {
         database.rollback();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         database.close();
     }
 
+    /**
+     * Refreshes the cache.
+     */
     private void refreshCache() {
         this.songs = database.getSongs();
     }
 
     /**
-     * Set refresh interval.
+     * Sets the refresh interval.
      *
      * @param millis to be set
      */
@@ -87,7 +115,7 @@ public final class Cache implements DatabaseDao {
     }
 
     /**
-     * Start timer.
+     * Starts the timer.
      */
     private void startTimer() {
         if (timer != null) {

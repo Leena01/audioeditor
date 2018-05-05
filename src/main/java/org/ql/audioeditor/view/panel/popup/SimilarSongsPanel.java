@@ -24,6 +24,13 @@ public final class SimilarSongsPanel extends ViewSongsPanel {
         BorderFactory.createEmptyBorder(15, 20, 10, 20);
     private final JPanel buttonPanel;
     private final JButton doneButton;
+
+    /**
+     * Constructor.
+     *
+     * @param tm Table model
+     * @param l  DoneButton listener
+     */
     public SimilarSongsPanel(SongTableModel tm, ActionListener l) {
         super();
         buttonPanel = new JPanel(new FlowLayout());
@@ -44,6 +51,9 @@ public final class SimilarSongsPanel extends ViewSongsPanel {
         addPanels();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         scrollPane.setBorder(SCROLL_PANE_BORDER);
@@ -51,6 +61,9 @@ public final class SimilarSongsPanel extends ViewSongsPanel {
         buttonPanel.setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         buttonPanel.add(doneButton);

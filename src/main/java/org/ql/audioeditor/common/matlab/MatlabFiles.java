@@ -33,6 +33,11 @@ public enum MatlabFiles {
         this.filePath = filePath;
     }
 
+    /**
+     * Returns the string representation of the filename.
+     *
+     * @return Filename
+     */
     @Override
     public String toString() {
         return filePath;

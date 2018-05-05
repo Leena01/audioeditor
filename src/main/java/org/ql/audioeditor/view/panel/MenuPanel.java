@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import static javax.swing.BoxLayout.PAGE_AXIS;
-import static org.ql.audioeditor.common.util.Helper.resizeImageIcon;
+import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
 import static org.ql.audioeditor.view.param.Constants.COVER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.COVER_SIZE_MAX;
 import static org.ql.audioeditor.view.param.Constants.PLAYER_PANEL_BORDER;
@@ -59,6 +59,17 @@ public final class MenuPanel extends BasicPanel {
     private ImageIcon coverIcon;
     private ImageIcon coverIconMax;
 
+    /**
+     * Constructor.
+     *
+     * @param matlabHandler     Matlab handler
+     * @param mediaControlPanel Media control panel
+     * @param inputMap          Input map
+     * @param actionMap         Action map
+     * @param fb                FavoriteButton listener
+     * @param ufb               Unfavorite button listener
+     * @param sss               Show similar songs listener
+     */
     public MenuPanel(MatlabHandler matlabHandler, HorizontalBar
         mediaControlPanel, InputMap inputMap, ActionMap
         actionMap, ActionListener fb, ActionListener ufb, ActionListener sss) {
@@ -82,6 +93,16 @@ public final class MenuPanel extends BasicPanel {
         init();
     }
 
+    /**
+     * Sets the current song.
+     *
+     * @param totalSamples Total number of samples
+     * @param freq         Sampling rate
+     * @param plot         Plot
+     * @param cover        Cover
+     * @param isNormal     Is the image size normal
+     * @param isMaximized  Is the window maximized
+     */
     public void setCurrentSong(double totalSamples, double freq,
         BufferedImage plot, Image cover,
         boolean isNormal, boolean isMaximized) {
@@ -103,6 +124,11 @@ public final class MenuPanel extends BasicPanel {
         playerPanel.setCurrentSong(totalSamples, freq, plot);
     }
 
+    /**
+     * Hides the image.
+     *
+     * @param isHidden Is the image hidden
+     */
     public void hideImage(boolean isHidden) {
         if (isHidden) {
             imagePanel.setVisible(false);
@@ -111,6 +137,11 @@ public final class MenuPanel extends BasicPanel {
         }
     }
 
+    /**
+     * Maximizes the image.
+     *
+     * @param isMaximized Is the image maximized
+     */
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             imageLabel.setIcon(coverIconMax);
@@ -119,31 +150,58 @@ public final class MenuPanel extends BasicPanel {
         }
     }
 
+    /**
+     * Saves the current song/removes the current song from the database.
+     *
+     * @param isFavorite Is the current song in the database (true if saved)
+     */
     public void setFavorite(boolean isFavorite) {
         playerPanel.setFavorite(isFavorite);
     }
 
+    /**
+     * Returns whether the playerPanel is currently visible.
+     *
+     * @return Logical value (true if active)
+     */
     public boolean isActive() {
         return playerPanel.isActive();
     }
 
+    /**
+     * Sets the playerpanel's visibility.
+     *
+     * @param active New visibility (true if active)
+     */
     public void setActive(boolean active) {
         playerPanel.setActive(active);
     }
 
+    /**
+     * Pauses the current song.
+     */
     public void pauseSong() {
         playerPanel.pauseSong();
     }
 
+    /**
+     * Stops the current song.
+     */
     public void stopSong() {
         playerPanel.stopSong();
     }
 
+    /**
+     * Initializes GUI elements.
+     */
     private void init() {
         playerPanel.setVisible(false);
         imagePanel.setVisible(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -158,6 +216,9 @@ public final class MenuPanel extends BasicPanel {
         playerPanel.setBorder(PLAYER_PANEL_BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         infoPanel.add(infoLabel);

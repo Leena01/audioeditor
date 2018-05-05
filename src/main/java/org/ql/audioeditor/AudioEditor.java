@@ -19,8 +19,8 @@ import org.ql.audioeditor.view.MainWindow;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.ql.audioeditor.common.util.Helper.getPath;
-import static org.ql.audioeditor.common.util.Helper.showDialog;
+import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
+import static org.ql.audioeditor.common.util.ViewUtils.showDialog;
 
 /**
  * Main class.

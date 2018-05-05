@@ -95,78 +95,173 @@ public final class Song {
         this.path = other.path;
     }
 
+    /**
+     * Returns the ID of the song.
+     *
+     * @return ID
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of the song.
+     *
+     * @param id ID
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Returns the title of the song.
+     *
+     * @return Title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets the title of the song.
+     *
+     * @param title Title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Returns the track number.
+     *
+     * @return Track number
+     */
     public String getTrack() {
         return track;
     }
 
+    /**
+     * Sets the track number.
+     *
+     * @param track Track number
+     */
     public void setTrack(String track) {
         this.track = track;
     }
 
+    /**
+     * Returns the artist of the song.
+     *
+     * @return Artist
+     */
     public String getArtist() {
         return artist;
     }
 
+    /**
+     * Sets the artist of the song.
+     *
+     * @param artist Artist
+     */
     public void setArtist(String artist) {
         this.artist = artist;
     }
 
+    /**
+     * Returns the album of the song.
+     *
+     * @return Album
+     */
     public String getAlbum() {
         return album;
     }
 
+    /**
+     * Sets the album of the song.
+     *
+     * @param album Album
+     */
     public void setAlbum(String album) {
         this.album = album;
     }
 
+    /**
+     * Returns the year.
+     *
+     * @return Year
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * Sets the year.
+     *
+     * @param year Year
+     */
     public void setYear(String year) {
         this.year = year;
     }
 
+    /**
+     * Returns the genre of the song.
+     *
+     * @return Genre
+     */
     public String getGenre() {
         return genre;
     }
 
+    /**
+     * Sets the genre of the song.
+     *
+     * @param genre Genre
+     */
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    /**
+     * Returns the comment that belongs to the song.
+     *
+     * @return Comment
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     * Sets the comment that belongs to the song.
+     *
+     * @param comment Comment
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+    /**
+     * Returns the song's path.
+     *
+     * @return Path
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * Sets the song's path.
+     *
+     * @param path Path
+     */
     public void setPath(String path) {
         this.path = path;
     }
 
+    /**
+     * Returns the string representation of the song.
+     *
+     * @return String representation of the song
+     */
     @Override
     public String toString() {
         return "Song{"
@@ -181,6 +276,11 @@ public final class Song {
             + ", path='" + path + '\'' + '}';
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int result = id;
@@ -195,6 +295,12 @@ public final class Song {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

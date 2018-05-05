@@ -24,7 +24,7 @@ public final class Persistence {
     }
 
     /**
-     * Create table.
+     * Creates table.
      *
      * @return Logical value (true if successful)
      */
@@ -33,7 +33,7 @@ public final class Persistence {
     }
 
     /**
-     * Get every song from the database.
+     * Returns every song from the database.
      *
      * @return List of songs (null in case of SQL error)
      */
@@ -42,7 +42,7 @@ public final class Persistence {
     }
 
     /**
-     * Add a song to the database.
+     * Adds a song to the database.
      *
      * @param s The actual song to add
      * @return Logical value (true if successful)
@@ -52,7 +52,7 @@ public final class Persistence {
     }
 
     /**
-     * Delete a song from the database.
+     * Deletes a song from the database.
      *
      * @param s The actual song to delete
      * @return Logical value (true if successful)
@@ -62,7 +62,7 @@ public final class Persistence {
     }
 
     /**
-     * Edit a song in the database.
+     * Edits a song in the database.
      *
      * @param s The actual song to edit
      * @return Logical value (true if successful)
@@ -72,7 +72,7 @@ public final class Persistence {
     }
 
     /**
-     * Close database connection.
+     * Closes database connection.
      */
     public void close() {
         database.close();

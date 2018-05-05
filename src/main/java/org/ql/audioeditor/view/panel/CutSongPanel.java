@@ -24,8 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-import static org.ql.audioeditor.common.util.Helper.formatDuration;
-import static org.ql.audioeditor.common.util.Helper.framesToSeconds;
+import static org.ql.audioeditor.common.util.TimeUtils.formatDuration;
+import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
@@ -65,6 +65,12 @@ public final class CutSongPanel extends BasicPanel {
     private final JPanel buttonPanel;
     private double freq;
 
+    /**
+     * Constructor.
+     *
+     * @param cutDoneListener DoneButton listener
+     * @param b               BbackOptionButton listener
+     */
     public CutSongPanel(ActionListener cutDoneListener, ActionListener b) {
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new FlowLayout());
@@ -87,6 +93,14 @@ public final class CutSongPanel extends BasicPanel {
         addPanels();
     }
 
+    /**
+     * Sets the current song.
+     *
+     * @param totalSamples Total number of samples
+     * @param freq         Sampling rate
+     * @param plot         Plot
+     * @param isMaximized  Is the window maximized
+     */
     public void setCurrentSong(double totalSamples, double freq,
         BufferedImage plot, boolean isMaximized) {
         max = (int) totalSamples;
@@ -99,14 +113,29 @@ public final class CutSongPanel extends BasicPanel {
         maximizeImage(isMaximized);
     }
 
+    /**
+     * Returns the starting value of the cut.
+     *
+     * @return Start position
+     */
     public int getFrom() {
         return rangeSlider.getValue();
     }
 
+    /**
+     * Returns the end value of the cut.
+     *
+     * @return End position
+     */
     public int getTo() {
         return rangeSlider.getUpperValue();
     }
 
+    /**
+     * Maximizes the image.
+     *
+     * @param isMaximized Is the image maximized
+     */
     public void maximizeImage(boolean isMaximized) {
         if (isMaximized) {
             rangeSlider.setPreferredSize(RANGE_SLIDER_SIZE_MAX);
@@ -117,11 +146,17 @@ public final class CutSongPanel extends BasicPanel {
         }
     }
 
+    /**
+     * Sets the slider values to default.
+     */
     public void setDefaultValues() {
         rangeSlider.setValue(MIN);
         rangeSlider.setUpperValue(max);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setBackground(Color.BLACK);
@@ -135,6 +170,9 @@ public final class CutSongPanel extends BasicPanel {
         buttonPanel.setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         mainPanel.add(rangeSlider, BorderLayout.NORTH);
@@ -155,6 +193,9 @@ public final class CutSongPanel extends BasicPanel {
         add(mainPanel);
     }
 
+    /**
+     * Changes the value of the fields on the panel according to the slider.
+     */
     private void changeFieldValues() {
         int lowerValue = rangeSlider.getValue();
         int upperValue = rangeSlider.getUpperValue();
@@ -164,6 +205,9 @@ public final class CutSongPanel extends BasicPanel {
         toSecValue.setText(formatDuration(framesToSeconds(upperValue, freq)));
     }
 
+    /**
+     * Changes the value of the slider according to the fields on the panel.
+     */
     private void changeSliderValues() {
         try {
             int value = Integer.parseInt(fromValue.getText());
@@ -197,6 +241,9 @@ public final class CutSongPanel extends BasicPanel {
         }
     }
 
+    /**
+     * Initializes listeners.
+     */
     private void initInnerListeners() {
         rangeSlider.addChangeListener(new SliderListener());
     }
@@ -205,6 +252,9 @@ public final class CutSongPanel extends BasicPanel {
      * Slider listener.
      */
     private final class SliderListener implements ChangeListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             Object source = e.getSource();
@@ -218,6 +268,9 @@ public final class CutSongPanel extends BasicPanel {
      * Button listener.
      */
     private final class ButtonListener implements ActionListener {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();

@@ -32,10 +32,20 @@ enum MatlabVariables {
 
     private final String variable;
 
+    /**
+     * Constructor.
+     *
+     * @param variable MATLAB variable name
+     */
     MatlabVariables(String variable) {
         this.variable = variable;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return variable;

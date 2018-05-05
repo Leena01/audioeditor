@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
-import static org.ql.audioeditor.common.util.Helper.getPath;
+import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
 
 /**
  * MATLAB file loader.
@@ -16,9 +16,6 @@ public final class MatlabFileLoader {
         .getMatlabFolder() + "/";
     private static final String PATH = getPath() + SUBFOLDER;
 
-    /**
-     * Private constructor.
-     */
     private MatlabFileLoader() {
         throw new AssertionError();
     }

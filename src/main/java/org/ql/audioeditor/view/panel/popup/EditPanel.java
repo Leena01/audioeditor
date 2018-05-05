@@ -116,6 +116,9 @@ public final class EditPanel extends BasicPanel {
         addPanels();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -130,6 +133,10 @@ public final class EditPanel extends BasicPanel {
         g2d.fillRect(0, 0, w, h);
     }
 
+    /**
+     * Fetches the data entered by the user and changes the current song
+     * according to it.
+     */
     public void setNewData() {
         selectedSongModel.setTitle(titleTextField.getText());
         selectedSongModel.setTrack(trackTextField.getText());
@@ -140,10 +147,20 @@ public final class EditPanel extends BasicPanel {
         selectedSongModel.setComment(commentTextField.getText());
     }
 
+    /**
+     * Returns the selected song's model.
+     *
+     * @return Song model
+     */
     public SongModel getSelectedSongModel() {
         return selectedSongModel;
     }
 
+    /**
+     * Sets the song selected.
+     *
+     * @param sm Song model
+     */
     public void setSelectedSong(SongModel sm) {
         if (sm != null) {
             this.selectedSongModel = new SongModel(sm);
@@ -160,6 +177,9 @@ public final class EditPanel extends BasicPanel {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         infoPanel.setOpaque(false);
@@ -172,6 +192,9 @@ public final class EditPanel extends BasicPanel {
         bottomPanel.setBorder(BOTTOM_PANEL_BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         infoPanel.add(infoLabel);

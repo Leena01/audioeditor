@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
-import static org.ql.audioeditor.common.util.Helper.fillColor;
+import static org.ql.audioeditor.common.util.ViewUtils.fillColor;
 
 /**
  * Sidebar.
@@ -16,6 +16,9 @@ public class SideBar extends JPanel {
     private static final Border BORDER =
         BorderFactory.createMatteBorder(0, 0, 0, 3, Color.DARK_GRAY);
 
+    /**
+     * Constructor.
+     */
     public SideBar() {
         FlowLayout layout = (FlowLayout) getLayout();
         layout.setVgap(0);
@@ -23,6 +26,9 @@ public class SideBar extends JPanel {
         setBorder(BORDER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

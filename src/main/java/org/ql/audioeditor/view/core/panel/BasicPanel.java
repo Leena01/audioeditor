@@ -6,6 +6,9 @@ import javax.swing.JPanel;
  * Basic panel.
  */
 public abstract class BasicPanel extends JPanel {
+    /**
+     * Constructor.
+     */
     public BasicPanel() {
         super();
     }

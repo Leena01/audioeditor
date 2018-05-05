@@ -22,6 +22,19 @@ public final class OptionPanel extends BasicPanel {
     private final OptionButton analyzeOptionButton;
     private GridBagConstraints c;
 
+    /**
+     * Constructor.
+     *
+     * @param mm  MainMenuOptionButton listener
+     * @param of  OpenFileOptionButton listener
+     * @param vs  ViewSongsOptionButton listener
+     * @param sd  ShowDataButton listener
+     * @param cp  ChangePitchOptionButton listener
+     * @param cf  CutOptionButton listener
+     * @param fft FftOptionButton listener
+     * @param cg  ChromaOptionButton listener
+     * @param as  AnalyzeOptionButton listener
+     */
     public OptionPanel(ActionListener mm, ActionListener of, ActionListener vs,
         ActionListener sd, ActionListener cp,
         ActionListener cf, ActionListener fft, ActionListener cg,
@@ -39,6 +52,11 @@ public final class OptionPanel extends BasicPanel {
         addPanels();
     }
 
+    /**
+     * Shows option buttons.
+     *
+     * @param l Logical value (true if should show)
+     */
     public void showOptions(boolean l) {
         showDataButton.setVisible(l);
         changePitchOptionButton.setVisible(l);
@@ -48,11 +66,17 @@ public final class OptionPanel extends BasicPanel {
         analyzeOptionButton.setVisible(l);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setStyle() {
         setOpaque(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPanels() {
         setLayout(new GridBagLayout());

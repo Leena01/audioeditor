@@ -290,6 +290,8 @@ public class RangeSliderUI extends BasicSliderUI {
     /**
      * Moves the selected thumb in the specified direction by a block increment.
      * This method is called when the user presses the Page Up or Down keys.
+     *
+     * @param direction direction
      */
     public void scrollByBlock(int direction) {
         synchronized (slider) {
@@ -319,6 +321,8 @@ public class RangeSliderUI extends BasicSliderUI {
     /**
      * Moves the selected thumb in the specified direction by a unit increment.
      * This method is called when the user presses one of the arrow keys.
+     *
+     * @param direction direction
      */
     public void scrollByUnit(int direction) {
         synchronized (slider) {
@@ -355,6 +359,7 @@ public class RangeSliderUI extends BasicSliderUI {
      * dragging a thumb.
      */
     public class ChangeHandler implements ChangeListener {
+        @Override
         public void stateChanged(ChangeEvent arg0) {
             if (!lowerDragging && !upperDragging) {
                 calculateThumbLocation();
