@@ -51,17 +51,21 @@ class PlayerPanel extends SimplePlayerPanel {
 
     /**
      * Constructor.
-     * @param matlabHandler Matlab handler
+     *
+     * @param matlabHandler     Matlab handler
      * @param mediaControlPanel Media control panel
-     * @param inputMap Input map
-     * @param actionMap Action map
-     * @param fb FavoriteButton listener
-     * @param ufb InfavoriteButton listener
-     * @param sss SimilarSongsButton listener
+     * @param inputMap          Input map
+     * @param actionMap         Action map
+     * @param fb                FavoriteButton listener
+     * @param ufb               UnfavoriteButton listener
+     * @param p                 PreviousButton listener
+     * @param n                 NextButton listener
+     * @param sss               SimilarSongsButton listener
      */
     PlayerPanel(MatlabHandler matlabHandler, HorizontalBar mediaControlPanel,
         InputMap inputMap, ActionMap actionMap, ActionListener fb,
-        ActionListener ufb, ActionListener sss) {
+        ActionListener ufb, ActionListener p, ActionListener n,
+        ActionListener sss) {
         super(matlabHandler, mediaControlPanel);
         this.inputMap = inputMap;
         this.actionMap = actionMap;
@@ -74,10 +78,16 @@ class PlayerPanel extends SimplePlayerPanel {
             new TransparentButton(PLAYLIST_ICON, BUTTON_SIZE, sss);
 
         initKeyBindings();
-        addAdditionalPanels();
+        initAdditionalListeners(p, n);
+        addAdditional();
         initAdditional();
     }
 
+    /**
+     * Saves the current song/removes the current song from the database.
+     *
+     * @param isFavorite Is the current song in the database (true if saved)
+     */
     void setFavorite(boolean isFavorite) {
         if (isFavorite) {
             favoriteButton.setVisible(false);
@@ -88,16 +98,30 @@ class PlayerPanel extends SimplePlayerPanel {
         }
     }
 
+    /**
+     * Returns whether the playerPanel is currently visible.
+     *
+     * @return Logical value (true if active)
+     */
     boolean isActive() {
         return active;
     }
 
+    /**
+     * Sets the playerpanel's visibility.
+     *
+     * @param active New visibility (true if active)
+     */
     void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * Initializes key bindings.
+     */
     private void initKeyBindings() {
         Action moveBackwardAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     moveBackward();
@@ -105,6 +129,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action moveForwardAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     moveForward();
@@ -112,6 +137,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action volumeUpAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     volumeUp();
@@ -119,6 +145,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action volumeDownAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     volumeDown();
@@ -126,6 +153,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action pauseAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     if (isPlaying()) {
@@ -137,6 +165,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action stopAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     stopSong();
@@ -144,6 +173,7 @@ class PlayerPanel extends SimplePlayerPanel {
             }
         };
         Action muteAction = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (active && !DoubleActionTool.isDoubleAction(e)) {
                     if (isMute()) {
@@ -178,13 +208,21 @@ class PlayerPanel extends SimplePlayerPanel {
         actionMap.put(MUTE, muteAction);
     }
 
-    private void addAdditionalPanels() {
+    /**
+     * Adds additional elements to this panel.
+     */
+    private void addAdditional() {
         buttonPanel.add(favoriteButton);
         buttonPanel.add(unfavoriteButton);
         volumePanel.add(similarSongsButton);
     }
 
+    /**
+     * Initializes additional GUI elements.
+     */
     private void initAdditional() {
         setFavorite(false);
+        previousButton.setVisible(true);
+        nextButton.setVisible(true);
     }
 }

@@ -19,7 +19,7 @@ public final class Cache implements DatabaseDao {
      * Constructor.
      *
      * @param database DatabaseDao class
-     * @param millis Refresh interval (milliseconds)
+     * @param millis   Refresh interval (milliseconds)
      */
     public Cache(DatabaseDao database, int millis) {
         this.database = database;

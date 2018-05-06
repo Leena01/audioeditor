@@ -68,11 +68,14 @@ public final class MenuPanel extends BasicPanel {
      * @param actionMap         Action map
      * @param fb                FavoriteButton listener
      * @param ufb               Unfavorite button listener
+     * @param p                 PreviousButton listener
+     * @param n                 NextButton listener
      * @param sss               Show similar songs listener
      */
     public MenuPanel(MatlabHandler matlabHandler, HorizontalBar
         mediaControlPanel, InputMap inputMap, ActionMap
-        actionMap, ActionListener fb, ActionListener ufb, ActionListener sss) {
+        actionMap, ActionListener fb, ActionListener ufb, ActionListener p,
+        ActionListener n, ActionListener sss) {
         super();
         infoLabel = new Label(INFO_LABEL);
         infoPanel = new JPanel();
@@ -83,7 +86,7 @@ public final class MenuPanel extends BasicPanel {
         imagePanel = new JPanel();
         playerPanel =
             new PlayerPanel(matlabHandler, mediaControlPanel, inputMap,
-                actionMap, fb, ufb, sss);
+                actionMap, fb, ufb, p, n, sss);
         noMediaFoundLabel = new Label(NO_MEDIA_LABEL);
         bodyPanel = new JPanel(new FlowLayout());
         mainPanel = new JPanel();
@@ -178,6 +181,13 @@ public final class MenuPanel extends BasicPanel {
     }
 
     /**
+     * Plays/resumes the current song.
+     */
+    public void playSong() {
+        playerPanel.playSong();
+    }
+
+    /**
      * Pauses the current song.
      */
     public void pauseSong() {
@@ -189,6 +199,13 @@ public final class MenuPanel extends BasicPanel {
      */
     public void stopSong() {
         playerPanel.stopSong();
+    }
+
+    /**
+     * Sets the volume to default.
+     */
+    public void resetVolume() {
+        playerPanel.resetVolume();
     }
 
     /**

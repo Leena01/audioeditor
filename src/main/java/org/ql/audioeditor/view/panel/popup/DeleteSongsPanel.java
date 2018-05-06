@@ -1,8 +1,8 @@
 package org.ql.audioeditor.view.panel.popup;
 
 import org.ql.audioeditor.database.entities.Song;
-import org.ql.audioeditor.logic.dbaccess.listmodel.SongListModel;
-import org.ql.audioeditor.logic.dbaccess.tablemodel.SongTableModel;
+import org.ql.audioeditor.logic.dbaccess.SongListModel;
+import org.ql.audioeditor.logic.dbaccess.SongTableModel;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.table.SongTable;
 import org.ql.audioeditor.view.panel.ViewSongsPanel;
@@ -56,18 +56,40 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
     }
 
     /**
+     * Sets list.
+     *
+     * @param slm Song list model
+     */
+    @Override
+    public void setList(SongListModel slm) {
+        int[] selectedRows = this.table.getSelectedRows();
+        initTable(slm);
+        this.table.setModel(this.tableModel);
+        if (this.table.getRowCount() <= 0) {
+            return;
+        }
+        if (selectedRows.length != 0) {
+            for (int i : selectedRows) {
+                this.table.addRowSelectionInterval(i, i);
+            }
+        }
+    }
+
+    /**
      * Returns selected songs.
      *
      * @return Selected songs
      */
     public SongListModel getSelectedRows() {
-        if (this.table.getSelectedRow() == -1) {
+        int[] selectedRows = this.table.getSelectedRows();
+        if (selectedRows.length == 0) {
             return null;
         }
         List<Song> songs = new ArrayList<>();
-        int[] selected = this.table.getSelectedRows();
-        for (int i : selected) {
-            songs.add(this.tableModel.getRow(i));
+
+        for (int i : selectedRows) {
+            int selectedRow = this.table.convertRowIndexToModel(i);
+            songs.add(this.tableModel.getRow(selectedRow));
         }
         selectedSongs.setSongs(songs);
         return selectedSongs;

@@ -41,7 +41,7 @@ import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE_HIDDEN;
  * General window (frame).
  */
 public abstract class Window extends JFrame {
-    private static final int FONT_SIZE = 36;
+    private static final int FONT_SIZE = 30;
     private static final String LOOK_AND_FEEL =
         "com.jtattoo.plaf.hifi.HiFiLookAndFeel";
     private static final String TITLE = "Audio Editor";

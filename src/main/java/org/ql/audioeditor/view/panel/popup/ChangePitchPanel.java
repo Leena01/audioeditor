@@ -1,4 +1,4 @@
-package org.ql.audioeditor.view.panel;
+package org.ql.audioeditor.view.panel.popup;
 
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
@@ -7,6 +7,7 @@ import org.ql.audioeditor.view.core.bar.InverseHorizontalBar;
 import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.slider.FrequencySlider;
+import org.ql.audioeditor.view.panel.SimplePlayerPanel;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;

@@ -3,7 +3,6 @@ package org.ql.audioeditor.logic.dbaccess;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.database.Persistence;
 import org.ql.audioeditor.database.entities.Song;
-import org.ql.audioeditor.logic.dbaccess.listmodel.SongListModel;
 import org.ql.audioeditor.logic.exceptions.InvalidOperationException;
 import org.ql.audioeditor.logic.exceptions.SQLConnectionException;
 

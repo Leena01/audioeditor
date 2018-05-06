@@ -90,5 +90,14 @@ public abstract class TableModel<E> extends AbstractTableModel {
         entries.clear();
         fireTableRowsDeleted(0, lastRow);
     }
+
+    /**
+     * Returns the row index of a given element.
+     * @param e Element
+     * @return Row index
+     */
+    protected int indexOf(E e) {
+        return entries.indexOf(e);
+    }
 }
 

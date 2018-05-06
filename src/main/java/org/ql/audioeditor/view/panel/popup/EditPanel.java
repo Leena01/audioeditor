@@ -32,6 +32,11 @@ import java.text.NumberFormat;
  */
 public final class EditPanel extends BasicPanel {
     private static final int FIELD_LENGTH = 20;
+    private static final String TRACK_LIMIT = "Only numbers are allowed.";
+    private static final String YEAR_LIMIT =
+        "Only four-digit numbers are allowed.";
+    private static final String GENRE_LIMIT = "Only numbers between -1 and "
+        + "191 are allowed (see genre list in ID3v1).";
     private static final String INSTR_TEXT =
         "Please enter the new data for the song with the following ID: %d.";
     private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(7, 2);
@@ -84,10 +89,13 @@ public final class EditPanel extends BasicPanel {
 
         titleLabel = new Label("Title:");
         trackLabel = new Label("Track:");
+        trackLabel.setToolTipText(TRACK_LIMIT);
         artistLabel = new Label("Artist:");
         albumLabel = new Label("Album:");
         yearLabel = new Label("Year:");
+        yearLabel.setToolTipText(YEAR_LIMIT);
         genreLabel = new Label("Genre:");
+        genreLabel.setToolTipText(GENRE_LIMIT);
         commentLabel = new Label("Comment:");
         titleTextField = new JTextField("", FIELD_LENGTH);
 
@@ -96,6 +104,7 @@ public final class EditPanel extends BasicPanel {
         nf.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX);
         nf.setGroupingUsed(false);
         trackTextField = new JTextField("", FIELD_LENGTH);
+        trackTextField.setToolTipText(TRACK_LIMIT);
 
         artistTextField = new JTextField("", FIELD_LENGTH);
         albumTextField = new JTextField("", FIELD_LENGTH);
@@ -105,11 +114,14 @@ public final class EditPanel extends BasicPanel {
         nf2.setMaximumIntegerDigits(Constants.YEAR_DIGIT_SIZE);
         nf2.setGroupingUsed(false);
         yearTextField = new JFormattedTextField(nf2);
+        yearTextField.setToolTipText(YEAR_LIMIT);
 
         NumberFormatter nf3 = new NumberFormatter();
         nf3.setMinimum(SongPropertiesLoader.getGenreMin());
         nf3.setMaximum(SongPropertiesLoader.getGenreMax());
         genreTextField = new JFormattedTextField(nf3);
+        genreTextField.setToolTipText(GENRE_LIMIT);
+
         commentTextField = new JTextField("", FIELD_LENGTH);
 
         setStyle();

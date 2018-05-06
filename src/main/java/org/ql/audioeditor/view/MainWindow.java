@@ -7,9 +7,9 @@ import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.common.util.DoubleActionTool;
 import org.ql.audioeditor.logic.dbaccess.DatabaseAccessModel;
+import org.ql.audioeditor.logic.dbaccess.SongListModel;
 import org.ql.audioeditor.logic.dbaccess.SongModel;
-import org.ql.audioeditor.logic.dbaccess.listmodel.SongListModel;
-import org.ql.audioeditor.logic.dbaccess.tablemodel.SongTableModel;
+import org.ql.audioeditor.logic.dbaccess.SongTableModel;
 import org.ql.audioeditor.logic.exceptions.InvalidOperationException;
 import org.ql.audioeditor.logic.exceptions.MatlabEngineException;
 import org.ql.audioeditor.logic.exceptions.SQLConnectionException;
@@ -21,7 +21,6 @@ import org.ql.audioeditor.view.core.dialog.PopupDialog;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.listener.EmptyMouseListener;
 import org.ql.audioeditor.view.core.window.Window;
-import org.ql.audioeditor.view.panel.ChangePitchPanel;
 import org.ql.audioeditor.view.panel.CutSongPanel;
 import org.ql.audioeditor.view.panel.DataPanel;
 import org.ql.audioeditor.view.panel.MenuPanel;
@@ -30,6 +29,7 @@ import org.ql.audioeditor.view.panel.ViewSongsPanel;
 import org.ql.audioeditor.view.panel.analysis.AnalysisPanel;
 import org.ql.audioeditor.view.panel.analysis.ChromagramPanel;
 import org.ql.audioeditor.view.panel.analysis.SpectrogramPanel;
+import org.ql.audioeditor.view.panel.popup.ChangePitchPanel;
 import org.ql.audioeditor.view.panel.popup.DeleteSongsPanel;
 import org.ql.audioeditor.view.panel.popup.EditPanel;
 import org.ql.audioeditor.view.panel.popup.SimilarSongsPanel;
@@ -67,11 +67,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.ql.audioeditor.common.util.TimeUtils.MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.GeneralUtils.convertToNumber;
-import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
 import static org.ql.audioeditor.common.util.GeneralUtils.getDir;
 import static org.ql.audioeditor.common.util.GeneralUtils.getFileExtension;
+import static org.ql.audioeditor.common.util.TimeUtils
+    .MILLIS_SECONDS_CONVERSION;
+import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
 import static org.ql.audioeditor.common.util.ViewUtils.showInfo;
 import static org.ql.audioeditor.view.param.Constants.ATTRIBUTES;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_FIELD_SIZE;
@@ -95,7 +96,7 @@ public final class MainWindow extends Window {
         "Specify the directory and the file name";
     private static final String SHOW_SIMILAR_SONGS_TITLE = "Show similar songs";
     private static final String SHOW_SIMILAR_SONGS_INSTR =
-        "Please choose an attribute.";
+        "Please choose a filter.";
     private static final String LONG_SONG_INFO =
         "Warning: this song might be too long to analyze.";
     private static final String FILE_ALREADY_EXISTS_ERROR =
@@ -141,6 +142,7 @@ public final class MainWindow extends Window {
     private final CardLayout cardLayout;
     private final Component glassPane;
     private SongModel currentSongModel;
+    private SongListModel currentSongListModel;
     private JPanel mainPanel;
     private JPanel innerMainPanel;
     private HorizontalBar mediaControlPanel;
@@ -178,6 +180,8 @@ public final class MainWindow extends Window {
     private ActionListener viewSongsListener;
     private ActionListener showDataListener;
     private ActionListener showSimilarSongsListener;
+    private ActionListener showPreviousListener;
+    private ActionListener showNextListener;
     private ActionListener favoriteButtonListener;
     private ActionListener unfavoriteButtonListener;
     private ActionListener changePitchListener;
@@ -213,6 +217,7 @@ public final class MainWindow extends Window {
         this.deleteSongTableModel = new SongTableModel();
         this.similarSongTableModel = new SongTableModel();
         this.currentSongModel = new SongModel();
+        this.currentSongListModel = new SongListModel();
         this.cardLayout = new CardLayout();
         this.glassPane = getGlassPane();
         this.rootPane.setBorder(ROOT_PANE_BORDER);
@@ -331,8 +336,9 @@ public final class MainWindow extends Window {
      */
     private void refreshCache() {
         try {
-            viewSongsPanel.setList(databaseAccessModel.getSongList());
-            deleteSongsPanel.setList(databaseAccessModel.getSongList());
+            currentSongListModel = databaseAccessModel.getSongList();
+            viewSongsPanel.setList(currentSongListModel);
+            deleteSongsPanel.setList(currentSongListModel);
             if (databaseAccessModel.hasInvalid()) {
                 showInfo(infoLabel, SONGS_DELETED_INFO, INFO_LABEL_DELAY);
                 if (!databaseAccessModel.isSongValid(currentSongModel)) {
@@ -445,21 +451,15 @@ public final class MainWindow extends Window {
     }
 
     /**
-     * Loads the song provided.
-     *
-     * @param sm Song model
-     */
-    private void loadSong(SongModel sm) {
-        defaultOpenDir = getDir(currentSongModel.getPath());
-        openSong(sm);
-    }
-
-    /**
      * Opens the current song.
      */
     private void openSong(SongModel sm) {
         getCover(sm);
         getSavedInstance(sm);
+        if (!currentSongModel.isEmpty()) {
+            menuPanel.stopSong();
+            menuPanel.resetVolume();
+        }
         t = new Thread(new OpenSongRunnable(sm));
         waitForThread(t);
     }
@@ -556,14 +556,17 @@ public final class MainWindow extends Window {
             editPanel.setNewData();
             SongModel sm = editPanel.getSelectedSongModel();
             if (sm.getId() == currentSongModel.getId()) {
-                currentSongModel = sm;
+                currentSongModel = new SongModel(sm);
             }
-            sm.setTags();
-            databaseAccessModel.editSong(editPanel.getSelectedSongModel());
+            try {
+                sm.setTags();
+            } catch (Exception ignored) {
+            }
+            databaseAccessModel.editSong(sm);
+            refreshCache();
             showMessageDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
             showMessageDialog(e.getMessage());
-        } catch (Exception ignored) {
         }
         editDialog.setVisible(false);
     }
@@ -640,9 +643,16 @@ public final class MainWindow extends Window {
                 ATTRIBUTES[0]);
         if (attribute != null) {
             try {
-                similarSongsPanel
-                    .setList(databaseAccessModel.getSongList(attribute,
-                        currentSongModel));
+                if (attribute.equals(ATTRIBUTES[0])) {
+                    similarSongsPanel.setList(
+                        databaseAccessModel.getSongList());
+                } else {
+                    similarSongsPanel
+                        .setList(databaseAccessModel.getSongList(attribute,
+                            currentSongModel));
+                }
+                int i = similarSongTableModel.indexOf(currentSongModel);
+                similarSongsPanel.setCurrentSongIndex(i);
                 similarSongsDialog.setVisible(true);
             } catch (SQLConnectionException e) {
                 showMessageDialog(e.getMessage());
@@ -707,6 +717,7 @@ public final class MainWindow extends Window {
         menuPanel =
             new MenuPanel(matlabHandler, mediaControlPanel, inputMap, actionMap,
                 favoriteButtonListener, unfavoriteButtonListener,
+                showPreviousListener, showNextListener,
                 showSimilarSongsListener);
         viewSongsPanel =
             new ViewSongsPanel(viewSongTableModel, loadSongListener,
@@ -715,19 +726,31 @@ public final class MainWindow extends Window {
 
         editPanel = new EditPanel(editDoneListener);
         editDialog = new PopupDialog(this, "Edit song", editPanel);
+        editDialog.setMinimumSize(changePitchDialog.getSize());
         editDialog.setVisible(false);
 
         deleteSongsPanel =
             new DeleteSongsPanel(deleteSongTableModel, deleteDoneListener);
         deleteSongsDialog =
             new PopupDialog(this, "Delete songs", deleteSongsPanel);
+        deleteSongsDialog.setMinimumSize(changePitchDialog.getSize());
         deleteSongsDialog.setVisible(false);
 
         similarSongsPanel = new SimilarSongsPanel(similarSongTableModel,
             showSimilarDoneListener);
         similarSongsDialog =
             new PopupDialog(this, "Similar songs", similarSongsPanel);
+        similarSongsDialog.setMinimumSize(changePitchDialog.getSize());
         similarSongsDialog.setVisible(false);
+
+        changePitchPanel =
+            new ChangePitchPanel(matlabHandler, cpPreviewListener,
+                cpSaveListener);
+        changePitchDialog =
+            new PopupDialog(this, "Change pitch", changePitchPanel, new
+                ClosingChangePitchAdapter());
+        changePitchDialog.setMinimumSize(changePitchDialog.getSize());
+        changePitchDialog.setVisible(false);
 
         dataPanel = new DataPanel(currentSongModel, backToMenuListener);
         cutSongPanel = new CutSongPanel(cutDoneListener, backToMenuListener);
@@ -744,15 +767,6 @@ public final class MainWindow extends Window {
             new SpectrogramPanel(showSpecListener, backToMenuListener);
         chromagramPanel =
             new ChromagramPanel(showChromListener, backToMenuListener);
-
-        changePitchPanel =
-            new ChangePitchPanel(matlabHandler, cpPreviewListener,
-                cpSaveListener);
-        changePitchDialog =
-            new PopupDialog(this, "Change pitch", changePitchPanel, new
-                ClosingChangePitchAdapter());
-        changePitchDialog.setVisible(false);
-        changePitchDialog.setMinimumSize(changePitchDialog.getSize());
 
         bottomPanel = new HorizontalBar();
         bottomPanel.add(currentSongTitle, BorderLayout.WEST);
@@ -795,8 +809,8 @@ public final class MainWindow extends Window {
         viewSongsListener = ae -> {
             if (!currentSongModel.isEmpty()) {
                 menuPanel.pauseSong();
-                changePanel(VIEW_SONGS_PANEL);
             }
+            changePanel(VIEW_SONGS_PANEL);
         };
 
         showDataListener = ae -> {
@@ -808,6 +822,32 @@ public final class MainWindow extends Window {
         };
 
         showSimilarSongsListener = ae -> showRelated();
+
+        showPreviousListener = ae -> {
+            if (menuPanel.isActive() && !DoubleActionTool.isDoubleAction(ae)) {
+                SongModel sm =
+                    currentSongListModel.getPreviousSong(currentSongModel);
+                if (sm != null) {
+                    openSong(sm);
+                } else {
+                    menuPanel.stopSong();
+                }
+                menuPanel.playSong();
+            }
+        };
+
+        showNextListener = ae -> {
+            if (menuPanel.isActive() && !DoubleActionTool.isDoubleAction(ae)) {
+                SongModel sm =
+                    currentSongListModel.getNextSong(currentSongModel);
+                if (sm != null) {
+                    openSong(sm);
+                    menuPanel.playSong();
+                } else {
+                    menuPanel.stopSong();
+                }
+            }
+        };
 
         favoriteButtonListener = ae -> setFavorite();
 
@@ -873,7 +913,8 @@ public final class MainWindow extends Window {
         loadSongListener = ae -> {
             SongModel sm = viewSongsPanel.getSelectedRow();
             if (sm != null) {
-                loadSong(sm);
+                defaultOpenDir = getDir(sm.getPath());
+                openSong(sm);
             }
         };
 
@@ -896,7 +937,7 @@ public final class MainWindow extends Window {
         showSimilarDoneListener = ae -> {
             SongModel sm = similarSongsPanel.getSelectedRow();
             if (sm != null) {
-                loadSong(sm);
+                openSong(sm);
             }
         };
     }
@@ -925,7 +966,7 @@ public final class MainWindow extends Window {
      */
     private final class ClosingWindowAdapter extends WindowAdapter {
         @Override
-        public void windowClosing(WindowEvent we) {
+        public void windowClosed(WindowEvent we) {
             glassPane.setVisible(true);
             try {
                 matlabHandler.close();
@@ -943,7 +984,7 @@ public final class MainWindow extends Window {
      */
     private final class ClosingChangePitchAdapter extends WindowAdapter {
         @Override
-        public void windowClosing(WindowEvent we) {
+        public void windowClosed(WindowEvent we) {
             changePitchPanel.removeSong();
             t = new Thread(() -> {
                 matlabHandler.stopSong();
@@ -977,7 +1018,6 @@ public final class MainWindow extends Window {
                         BufferedImage plot = ImageIO.read(
                             new File(ImageLoader.getPlotImagePath()));
                         sm.setPlot(plot);
-                        menuPanel.stopSong();
                         menuPanel.setCurrentSong(
                             totalSamples, freq, plot, sm.getCover(), isNormal,
                             getExtendedState() == MAXIMIZED_BOTH);

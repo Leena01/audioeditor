@@ -1,4 +1,4 @@
-package org.ql.audioeditor.logic.dbaccess.listmodel;
+package org.ql.audioeditor.logic.dbaccess;
 
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.Mp3File;
@@ -57,5 +57,45 @@ public final class SongListModel extends ListModel<Song> {
                 new Song(title, track, artist, album, year, genre, comment,
                     path));
         }
+    }
+
+    /**
+     * Returns the previous song in the list.
+     *
+     * @param sm Song model
+     * @return The previous song
+     */
+    public SongModel getPreviousSong(SongModel sm) {
+        int index = currentSongPos(sm);
+        if (index <= 0) {
+            return null;
+        } else {
+            return new SongModel(items.get(index - 1));
+        }
+    }
+
+    /**
+     * Returns the next song in the list.
+     *
+     * @param sm Song model
+     * @return The next song
+     */
+    public SongModel getNextSong(SongModel sm) {
+        int index = currentSongPos(sm);
+        if (index < 0 || index >= items.size() - 1) {
+            return null;
+        } else {
+            return new SongModel(items.get(index + 1));
+        }
+    }
+
+    /**
+     * Returns the current song's position in the list.
+     *
+     * @param sm Song model
+     * @return Position
+     */
+    private int currentSongPos(SongModel sm) {
+        return items.indexOf(sm.getSong());
     }
 }

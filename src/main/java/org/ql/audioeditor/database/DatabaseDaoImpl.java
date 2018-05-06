@@ -153,11 +153,12 @@ public final class DatabaseDaoImpl implements DatabaseDao {
                 + "\", song_genre = \"" + s.getGenre()
                 + "\", song_comment = \"" + s.getComment()
                 + "\", song_path = \"" + s.getPath()
-                + "\" where `id` = \"" + s.getId() + "\";";
+                + "\" where song_id = \"" + s.getId() + "\";";
             stat.executeUpdate(query);
             connection.commit();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ignored) {

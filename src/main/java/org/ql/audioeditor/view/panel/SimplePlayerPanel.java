@@ -2,6 +2,7 @@ package org.ql.audioeditor.view.panel;
 
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
+import org.ql.audioeditor.common.util.DoubleActionTool;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
@@ -18,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,8 +27,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
@@ -69,6 +69,12 @@ public class SimplePlayerPanel extends BasicPanel {
     private static final ImageIcon FORWARD_ICON =
         resizeImageIcon(new ImageIcon(ImageLoader.getForwardIcon()),
             BUTTON_SIZE);
+    private static final ImageIcon PREVIOUS_ICON =
+        resizeImageIcon(new ImageIcon(ImageLoader.getPreviousIcon()),
+            BUTTON_SIZE);
+    private static final ImageIcon NEXT_ICON =
+        resizeImageIcon(new ImageIcon(ImageLoader.getNextIcon()),
+            BUTTON_SIZE);
     private static final ImageIcon SOUND_ON_ICON =
         resizeImageIcon(new ImageIcon(ImageLoader.getSoundOnIcon()),
             SOUND_BUTTON_SIZE);
@@ -88,6 +94,8 @@ public class SimplePlayerPanel extends BasicPanel {
 
     protected final JPanel volumePanel;
     protected final JPanel buttonPanel;
+    protected final JButton previousButton;
+    protected final JButton nextButton;
     private final JLabel timeField;
     private final JLabel totalLengthField;
     private final TrackSlider trackSlider;
@@ -115,7 +123,7 @@ public class SimplePlayerPanel extends BasicPanel {
      * @param matlabHandler     Matlab handler
      * @param mediaControlPanel Media control panel
      */
-    SimplePlayerPanel(MatlabHandler matlabHandler,
+    public SimplePlayerPanel(MatlabHandler matlabHandler,
         HorizontalBar mediaControlPanel) {
         super();
         this.playbackThread = new Thread();
@@ -142,6 +150,8 @@ public class SimplePlayerPanel extends BasicPanel {
         stopButton = new TransparentButton(STOP_ICON, BUTTON_SIZE);
         backwardButton = new TransparentButton(BACKWARD_ICON, BUTTON_SIZE);
         forwardButton = new TransparentButton(FORWARD_ICON, BUTTON_SIZE);
+        previousButton = new TransparentButton(PREVIOUS_ICON, BUTTON_SIZE);
+        nextButton = new TransparentButton(NEXT_ICON, BUTTON_SIZE);
         soundOnButton = new TransparentButton(SOUND_ON_ICON, BUTTON_SIZE);
         soundOffButton = new TransparentButton(SOUND_OFF_ICON, BUTTON_SIZE);
 
@@ -187,11 +197,13 @@ public class SimplePlayerPanel extends BasicPanel {
         c.gridx = 2;
         add(totalLengthField, c);
 
+        buttonPanel.add(previousButton);
         buttonPanel.add(backwardButton);
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(stopButton);
         buttonPanel.add(forwardButton);
+        buttonPanel.add(nextButton);
         volumePanel.add(soundOnButton);
         volumePanel.add(soundOffButton);
         volumePanel.add(volumeSlider);
@@ -207,7 +219,8 @@ public class SimplePlayerPanel extends BasicPanel {
      * @param freq         Sampling rate
      * @param plot         Plot
      */
-    void setCurrentSong(double totalSamples, double freq, BufferedImage plot) {
+    public void setCurrentSong(double totalSamples, double freq, BufferedImage
+        plot) {
         framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
         if (plot != null) {
@@ -216,42 +229,52 @@ public class SimplePlayerPanel extends BasicPanel {
     }
 
     /**
-     * Plays the current song.
+     * Sets the volume to default.
+     */
+    public void resetVolume() {
+        soundOffButton.setVisible(false);
+        soundOnButton.setVisible(true);
+        volumeSlider.setValue(VOLUME_INIT);
+    }
+
+    /**
+     * Plays/resumes the current song.
      */
     protected void playSong() {
-        playButton.setVisible(false);
-        pauseButton.setVisible(true);
-        sliderTimer.resumeTimer();
         playbackThread = new Thread(() -> matlabHandler.resumeSong());
         playbackThread.start();
-        isPlaying = true;
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
+        sliderTimer.resumeTimer();
     }
 
     /**
      * Pauses the current song.
      */
     protected void pauseSong() {
-        pauseButton.setVisible(false);
-        playButton.setVisible(true);
-        sliderTimer.pauseTimer();
         playbackThread = new Thread(() -> matlabHandler.pauseSong());
         playbackThread.start();
-        isPlaying = false;
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
     }
 
     /**
      * Stops the current song.
      */
     protected void stopSong() {
-        pauseButton.setVisible(false);
-        playButton.setVisible(true);
-        playbackThread = new Thread(() -> {
-            matlabHandler.stopSong();
-            SwingUtilities.invokeLater(
-                () -> sliderTimer.stopTimer());
-        });
+        if (!isPlaying) {
+            sliderTimer.reset();
+        }
+        playbackThread = new Thread(() -> matlabHandler.stopSong());
         playbackThread.start();
-        isPlaying = false;
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
     }
 
     /**
@@ -260,9 +283,13 @@ public class SimplePlayerPanel extends BasicPanel {
      */
     protected void moveBackward() {
         int newValue = trackSlider.getValue() - framesToSkip;
-        sliderTimer.changeTime(newValue);
         playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
         playbackThread.start();
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
+        sliderTimer.changeTime(newValue);
     }
 
     /**
@@ -271,9 +298,13 @@ public class SimplePlayerPanel extends BasicPanel {
      */
     protected void moveForward() {
         int newValue = trackSlider.getValue() + framesToSkip;
-        sliderTimer.changeTime(newValue);
         playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
         playbackThread.start();
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
+        sliderTimer.changeTime(newValue);
     }
 
     /**
@@ -312,15 +343,6 @@ public class SimplePlayerPanel extends BasicPanel {
     }
 
     /**
-     * Sets the volume to default.
-     */
-    protected void resetVolume() {
-        soundOffButton.setVisible(false);
-        soundOnButton.setVisible(true);
-        volumeSlider.setValue(VOLUME_INIT);
-    }
-
-    /**
      * Returns whether the current song is mute.
      *
      * @return Logical value (true if mute)
@@ -346,20 +368,31 @@ public class SimplePlayerPanel extends BasicPanel {
             new SimplePlayerPanel.InnerObserver());
         volumeSlider.addChangeListener(
             new SimplePlayerPanel.InnerChangeListener());
-        backwardButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        playButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        pauseButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        stopButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        forwardButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        soundOnButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
-        soundOffButton.addMouseListener(
-            new SimplePlayerPanel.InnerMouseListener());
+        backwardButton.addActionListener(
+            new InnerActionListener());
+        playButton.addActionListener(
+            new InnerActionListener());
+        pauseButton.addActionListener(
+            new InnerActionListener());
+        stopButton.addActionListener(
+            new InnerActionListener());
+        forwardButton.addActionListener(
+            new InnerActionListener());
+        soundOnButton.addActionListener(
+            new InnerActionListener());
+        soundOffButton.addActionListener(
+            new InnerActionListener());
+    }
+
+    /**
+     * Initializes additional listeners.
+     *
+     * @param p PreviousButton listener
+     * @param n NextButton listener
+     */
+    protected void initAdditionalListeners(ActionListener p, ActionListener n) {
+        previousButton.addActionListener(p);
+        nextButton.addActionListener(n);
     }
 
     /**
@@ -368,19 +401,21 @@ public class SimplePlayerPanel extends BasicPanel {
     private void init() {
         pauseButton.setVisible(false);
         soundOffButton.setVisible(false);
+        previousButton.setVisible(false);
+        nextButton.setVisible(false);
     }
 
     /**
      * Mouse listener for media control buttons. Ignores double clicks.
      */
-    private final class InnerMouseListener implements MouseListener {
+    private final class InnerActionListener implements ActionListener {
         /**
          * {@inheritDoc}
          */
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-            if (e.getClickCount() == 1) {
+            if (!DoubleActionTool.isDoubleAction(e)) {
                 if (source == playButton) {
                     playSong();
                 } else if (source == pauseButton) {
@@ -398,34 +433,6 @@ public class SimplePlayerPanel extends BasicPanel {
             } else if (source == forwardButton) {
                 moveForward();
             }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseExited(MouseEvent e) {
         }
     }
 
@@ -446,6 +453,10 @@ public class SimplePlayerPanel extends BasicPanel {
                     playbackThread =
                         new Thread(() -> matlabHandler.changeVolume(level));
                     playbackThread.start();
+                    try {
+                        playbackThread.join();
+                    } catch (InterruptedException ignored) {
+                    }
                 }
             }
         }
@@ -460,8 +471,21 @@ public class SimplePlayerPanel extends BasicPanel {
          */
         @Override
         public void update(Observable obs, Object obj) {
-            pauseButton.setVisible(false);
-            playButton.setVisible(true);
+            String message = (String) obj;
+            switch (message) {
+                case "Play":
+                    isPlaying = true;
+                    pauseButton.setVisible(true);
+                    playButton.setVisible(false);
+                    break;
+                case "Pause":
+                    isPlaying = false;
+                    pauseButton.setVisible(false);
+                    playButton.setVisible(true);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package org.ql.audioeditor.logic.dbaccess.tablemodel;
+package org.ql.audioeditor.logic.dbaccess;
 
 import org.ql.audioeditor.database.entities.Song;
 import org.ql.audioeditor.logic.dbaccess.adt.TableModel;
@@ -52,5 +52,15 @@ public final class SongTableModel extends TableModel<Song> {
             default:
                 throw new IllegalArgumentException(column + "......");
         }
+    }
+
+    /**
+     * Returns the row index of a given element.
+     *
+     * @param sm Song model
+     * @return Row index
+     */
+    public int indexOf(SongModel sm) {
+        return indexOf(sm.getSong());
     }
 }

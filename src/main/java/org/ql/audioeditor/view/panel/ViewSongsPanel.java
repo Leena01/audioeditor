@@ -1,8 +1,8 @@
 package org.ql.audioeditor.view.panel;
 
 import org.ql.audioeditor.logic.dbaccess.SongModel;
-import org.ql.audioeditor.logic.dbaccess.listmodel.SongListModel;
-import org.ql.audioeditor.logic.dbaccess.tablemodel.SongTableModel;
+import org.ql.audioeditor.logic.dbaccess.SongListModel;
+import org.ql.audioeditor.logic.dbaccess.SongTableModel;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
@@ -171,7 +171,7 @@ public class ViewSongsPanel extends BasicPanel {
      *
      * @param slm Song list model
      */
-    private void initTable(SongListModel slm) {
+    protected final void initTable(SongListModel slm) {
         this.tableModel.clear();
         this.tableModel.addAll(slm);
     }
@@ -182,10 +182,11 @@ public class ViewSongsPanel extends BasicPanel {
      * @return selected items
      */
     public SongModel getSelectedRow() {
-        if (table.getSelectedRow() == -1) {
+        int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+        if (selectedRow == -1) {
             return null;
         }
-        selected = new SongModel(tableModel.getRow(table.getSelectedRow()));
+        selected = new SongModel(tableModel.getRow(selectedRow));
         return selected;
     }
 

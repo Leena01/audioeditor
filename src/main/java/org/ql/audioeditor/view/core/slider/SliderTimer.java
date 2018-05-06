@@ -19,6 +19,8 @@ import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
  */
 public class SliderTimer extends Observable {
     private static final int MIN_FRAMES = MatlabHandler.getMinFrames();
+    private static final String PLAY_MESSAGE = "Play";
+    private static final String PAUSE_MESSAGE = "Pause";
     private static int maxFrames;
     private final JSlider slider;
     private final MatlabHandler matlabHandler;
@@ -86,39 +88,28 @@ public class SliderTimer extends Observable {
      */
     public void resumeTimer() {
         if (refreshMillis != 0) {
+            setChanged();
+            notifyObservers(PLAY_MESSAGE);
             timer = new Timer(isDaemon);
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    if (isPlaying()) {
-                        autoMove();
-                    } else {
+                    if (!isPlaying()) {
                         setChanged();
-                        notifyObservers();
-                        stopTimer();
+                        notifyObservers(PAUSE_MESSAGE);
+                        pauseTimer();
                     }
+                    autoMove();
                 }
             }, refreshMillis, refreshMillis);
         }
     }
 
     /**
-     * Pauses the timer.
+     * Resets the slider.
      */
-    public void pauseTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-    }
-
-    /**
-     * Stops the timer.
-     */
-    public void stopTimer() {
-        pauseTimer();
-        if (slider != null) {
-            setCurrentTime(MIN_FRAMES);
-        }
+    public void reset() {
+        changeTime(MIN_FRAMES);
     }
 
     /**
@@ -135,6 +126,15 @@ public class SliderTimer extends Observable {
             } else {
                 setCurrentTime(frame);
             }
+        }
+    }
+
+    /**
+     * Pauses the timer.
+     */
+    private void pauseTimer() {
+        if (timer != null) {
+            timer.cancel();
         }
     }
 
@@ -160,9 +160,17 @@ public class SliderTimer extends Observable {
     /**
      * Returns whether the song is playing.
      *
-     * @return
+     * @return Logical value (true if playing)
      */
     private boolean isPlaying() {
         return matlabHandler.isPlaying();
+    }
+
+    /**
+     * Returns the current frame position.
+     * @return Current frame
+     */
+    private double getCurrentFrame() {
+        return matlabHandler.getCurrentFrame();
     }
 }
