@@ -1,12 +1,13 @@
 package org.ql.audioeditor.view.panel;
 
-import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.logic.dbaccess.SongListModel;
+import org.ql.audioeditor.logic.dbaccess.SongModel;
 import org.ql.audioeditor.logic.dbaccess.SongTableModel;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 import org.ql.audioeditor.view.core.table.SongTable;
+import org.ql.audioeditor.view.core.textfield.TextField;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,6 +28,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+
+import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 
 /**
  * View the list of songs stored in the database.
@@ -65,7 +68,7 @@ public class ViewSongsPanel extends BasicPanel {
         setBackground(Color.BLACK);
         sorter = new TableRowSorter<>();
         searchLabel = new Label("Search: ");
-        searchTextField = new JTextField();
+        searchTextField = new TextField();
         searchTextField.setPreferredSize(SEARCH_TEXT_FIELD_SIZE);
         searchTextField.setMinimumSize(SEARCH_TEXT_FIELD_SIZE);
         searchTextField.getDocument()
@@ -141,7 +144,7 @@ public class ViewSongsPanel extends BasicPanel {
         editOptionButton = new TransparentButton("Edit", e);
         addOptionButton = new TransparentButton("Add songs", a);
         deleteOptionButton = new TransparentButton("Delete songs", d);
-        backOptionButton = new TransparentButton("Back to Main Menu", b);
+        backOptionButton = new TransparentButton(BACK_TO_MAIN_MENU_TEXT, b);
 
         setStyle();
         addPanels();

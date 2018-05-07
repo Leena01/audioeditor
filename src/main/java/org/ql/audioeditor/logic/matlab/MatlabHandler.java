@@ -16,6 +16,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_PITCH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_VOLUME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CREATE_WINDOW_MAP;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CUT_SONG;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.ESTIMATE_BEAT;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.GET_CURRENT_FRAME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.IS_PLAYING;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.OPEN_SONG;
@@ -31,6 +32,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_SPECTROGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands
     .SHOW_SPECTROGRAM_3D;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.STOP_SONG;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
@@ -42,6 +44,8 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
@@ -62,6 +66,10 @@ public final class MatlabHandler {
         "Error: file cannot be opened.";
     private static final String IMAGE_ERROR = "Cannot generate image.";
     private static final String CANNOT_CUT_ERROR = "Cannot cut song.";
+    private static final String CANNOT_CHANGE_PITCH_ERROR =
+        "Cannot change pitch.";
+    private static final String CANNOT_ESTIMATE_BEAT =
+        "Beat estimation has failed.";
     private static final String CLOSE_ERROR = "Error closing Matlab Engine.";
     private static final String FOLDER = getPath() + File.separator
         + ConfigPropertiesLoader.getMatlabFolder();
@@ -354,13 +362,36 @@ public final class MatlabHandler {
      * Change pitch.
      *
      * @param freq New frequency
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
      */
-    public synchronized void changePitch(double freq) {
+    public synchronized void changePitch(double freq) throws
+        MatlabEngineException {
         try {
             eng.putVariable(FREQ_VAR_2.toString(), freq);
             eng.eval(CHANGE_PITCH);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new MatlabEngineException(CANNOT_CHANGE_PITCH_ERROR);
+        }
+    }
+
+    /**
+     * Estimate beat.
+     *
+     * @param minBpm Minimum BPM
+     * @param maxBpm Maximum BPM
+     * @return Estimated BPM
+     *
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    public synchronized int estimateBeat(int minBpm, int maxBpm) throws
+        MatlabEngineException {
+        try {
+            eng.putVariable(MIN_BPM.toString(), minBpm);
+            eng.putVariable(MAX_BPM.toString(), maxBpm);
+            eng.eval(ESTIMATE_BEAT);
+            return eng.getVariable(BEAT_EST.toString());
+        } catch (Exception e) {
+            throw new MatlabEngineException(CANNOT_ESTIMATE_BEAT);
         }
     }
 

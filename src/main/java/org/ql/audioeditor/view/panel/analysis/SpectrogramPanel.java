@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
+import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
@@ -34,7 +35,7 @@ public final class SpectrogramPanel extends ChromagramPanel {
     public SpectrogramPanel(ActionListener s, ActionListener b) {
         super();
         doneButton = new Button("Done", s);
-        backOptionButton = new Button("Back to Main Menu", b);
+        backOptionButton = new Button(BACK_TO_MAIN_MENU_TEXT, b);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         toggleButton = new JToggleButton("3D");

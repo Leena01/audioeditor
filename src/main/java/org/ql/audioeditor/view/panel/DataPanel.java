@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 import static org.ql.audioeditor.view.param.Constants.DATA_LABEL_SIZE;
 
 /**
@@ -54,6 +55,7 @@ public final class DataPanel extends BasicPanel {
      * @param b                BackOptionButton listener
      */
     public DataPanel(SongModel currentSongModel, ActionListener b) {
+        super();
         mainPanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel(new BorderLayout());
         labelPanel = new JPanel(LABEL_PANEL_LAYOUT);
@@ -76,7 +78,7 @@ public final class DataPanel extends BasicPanel {
         genre = new Label(currentSongModel.getGenre(), DATA_LABEL_SIZE);
         comment = new Label(currentSongModel.getComment(), DATA_LABEL_SIZE);
         path = new Label(currentSongModel.getPath(), DATA_LABEL_SIZE);
-        backOptionButton = new Button("Back to Main Menu", b);
+        backOptionButton = new Button(BACK_TO_MAIN_MENU_TEXT, b);
         setToolTipTexts();
         setStyle();
         addPanels();

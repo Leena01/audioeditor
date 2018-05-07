@@ -4,6 +4,7 @@ import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
+import org.ql.audioeditor.view.core.textfield.FormattedTextField;
 import org.ql.audioeditor.view.param.Constants;
 
 import javax.swing.BoxLayout;
@@ -18,19 +19,18 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 
 import static javax.swing.BoxLayout.PAGE_AXIS;
 import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
+import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
 import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
 /**
  * Panel for showing chroma feature.
  */
-public class ChromagramPanel extends BasicPanel implements ItemListener {
+public class ChromagramPanel extends BasicPanel {
     private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(6, 2,
         10, 10);
     private static final String[] WINDOW_NAMES = SongPropertiesLoader
@@ -74,17 +74,17 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
         nf.setMinimumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MIN);
         nf.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX);
         nf.setGroupingUsed(false);
-        windowSizeTextField = new JFormattedTextField(nf);
+        windowSizeTextField = new FormattedTextField(nf);
 
         NumberFormat nf2 = NumberFormat.getIntegerInstance();
         nf2.setMinimumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MIN);
         nf2.setMaximumIntegerDigits(Constants.TEXT_FIELD_DIGIT_SIZE_MAX - 1);
         nf2.setGroupingUsed(false);
         hopSizeLabel = new Label("Hop size:");
-        hopSizeTextField = new JFormattedTextField(nf2);
+        hopSizeTextField = new FormattedTextField(nf2);
 
         nfftLabel = new Label("Number of FFT bins:");
-        nfftTextField = new JFormattedTextField(nf);
+        nfftTextField = new FormattedTextField(nf);
 
         windowLabel = new Label("Window type:");
         windowComboBox = new JComboBox<>(WINDOW_NAMES);
@@ -109,7 +109,7 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
     public ChromagramPanel(ActionListener s, ActionListener b) {
         this();
         doneButton = new Button("Done", s);
-        backOptionButton = new Button("Back to Main Menu", b);
+        backOptionButton = new Button(BACK_TO_MAIN_MENU_TEXT, b);
         setStyle();
         addPanels();
     }
@@ -216,18 +216,6 @@ public class ChromagramPanel extends BasicPanel implements ItemListener {
             imageLabel.setIcon(specIconMax);
         } else {
             imageLabel.setIcon(specIcon);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void itemStateChanged(ItemEvent ie) {
-        if (ie.getStateChange() == ItemEvent.SELECTED) {
-            imageLabel.setVisible(false);
-        } else if (ie.getStateChange() == ItemEvent.DESELECTED) {
-            imageLabel.setVisible(true);
         }
     }
 

@@ -4,6 +4,7 @@ import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
 import org.ql.audioeditor.view.core.label.Label;
+import org.ql.audioeditor.view.core.listener.EmptyMouseListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -81,7 +82,6 @@ public abstract class Window extends JFrame {
     private final MouseMotionListener dragListener = new MouseMotionListener() {
         @Override
         public void mouseMoved(MouseEvent e) {
-            // Do nothing.
         }
 
         @Override
@@ -94,7 +94,8 @@ public abstract class Window extends JFrame {
         }
     };
     protected boolean isNormal;
-    private final MouseListener maximizeMouseListener = new MouseListener() {
+    private final MouseListener maximizeMouseListener
+        = new EmptyMouseListener() {
         @Override
         public void mouseReleased(MouseEvent me) {
             compCoordinates = null;
@@ -103,14 +104,6 @@ public abstract class Window extends JFrame {
         @Override
         public void mousePressed(MouseEvent me) {
             compCoordinates = me.getPoint();
-        }
-
-        @Override
-        public void mouseExited(MouseEvent me) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent me) {
         }
 
         @Override

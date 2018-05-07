@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 
 import static org.ql.audioeditor.common.util.TimeUtils.formatDuration;
 import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
+import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE;
 import static org.ql.audioeditor.view.param.Constants.RANGE_SLIDER_SIZE_MAX;
 
@@ -87,7 +88,7 @@ public final class CutSongPanel extends BasicPanel {
         toSecValue = new Label("", FIELD_SIZE, SwingConstants.LEFT);
         setButton = new Button("Set values", new ButtonListener());
         doneButton = new Button("Done", cutDoneListener);
-        backOptionButton = new Button("Back to Main Menu", b);
+        backOptionButton = new Button(BACK_TO_MAIN_MENU_TEXT, b);
         initInnerListeners();
         setStyle();
         addPanels();

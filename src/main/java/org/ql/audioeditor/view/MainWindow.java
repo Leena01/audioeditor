@@ -129,7 +129,7 @@ public final class MainWindow extends Window {
         BorderFactory.createEmptyBorder(0, 12, 0, 12);
     private static final int INFO_LABEL_DELAY = 5000;
     private static final int BASE_NUM = 10;
-    private static final int TIMEOUT_MILLIS = 30 * MILLIS_SECONDS_CONVERSION;
+    private static final int TIMEOUT_MILLIS = 60 * MILLIS_SECONDS_CONVERSION;
 
     /**
      * Private data members.
@@ -201,6 +201,10 @@ public final class MainWindow extends Window {
     private ActionListener editDoneListener;
     private ActionListener deleteDoneListener;
     private ActionListener showSimilarDoneListener;
+    private ActionListener beatEstListener;
+    private ActionListener onsetDetListener;
+    private ActionListener keyEstListener;
+    private ActionListener beatEstDoneListener;
 
     /**
      * Constructor.
@@ -224,7 +228,9 @@ public final class MainWindow extends Window {
         this.t = new Thread();
 
         initKeyBindings();
-        initializeListeners();
+        initializeGeneralListeners();
+        initializeEditListeners();
+        initializeAnListeners();
         addListeners();
         initializeLabels();
         initializePanels();
@@ -520,6 +526,14 @@ public final class MainWindow extends Window {
         return true;
     }
 
+    private boolean checkNumbersBpm(int minBpm, int maxBpm) {
+        if (minBpm < maxBpm) {
+            showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Cuts the current song.
      */
@@ -726,21 +740,21 @@ public final class MainWindow extends Window {
 
         editPanel = new EditPanel(editDoneListener);
         editDialog = new PopupDialog(this, "Edit song", editPanel);
-        editDialog.setMinimumSize(changePitchDialog.getSize());
+        editDialog.setMinimumSize(editDialog.getSize());
         editDialog.setVisible(false);
 
         deleteSongsPanel =
             new DeleteSongsPanel(deleteSongTableModel, deleteDoneListener);
         deleteSongsDialog =
             new PopupDialog(this, "Delete songs", deleteSongsPanel);
-        deleteSongsDialog.setMinimumSize(changePitchDialog.getSize());
+        deleteSongsDialog.setMinimumSize(deleteSongsDialog.getSize());
         deleteSongsDialog.setVisible(false);
 
         similarSongsPanel = new SimilarSongsPanel(similarSongTableModel,
             showSimilarDoneListener);
         similarSongsDialog =
             new PopupDialog(this, "Similar songs", similarSongsPanel);
-        similarSongsDialog.setMinimumSize(changePitchDialog.getSize());
+        similarSongsDialog.setMinimumSize(similarSongsDialog.getSize());
         similarSongsDialog.setVisible(false);
 
         changePitchPanel =
@@ -762,7 +776,9 @@ public final class MainWindow extends Window {
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
-        analysisPanel = new AnalysisPanel(matlabHandler);
+        analysisPanel = new AnalysisPanel(beatEstListener,
+            onsetDetListener, keyEstListener, backToMenuListener,
+            beatEstDoneListener);
         spectrogramPanel =
             new SpectrogramPanel(showSpecListener, backToMenuListener);
         chromagramPanel =
@@ -793,7 +809,7 @@ public final class MainWindow extends Window {
     /**
      * Initializes listeners.
      */
-    private void initializeListeners() {
+    private void initializeGeneralListeners() {
         emptyMouseListener = new EmptyMouseListener();
 
         backToMenuListener = ae -> changePanel(MENU_PANEL);
@@ -853,63 +869,6 @@ public final class MainWindow extends Window {
 
         unfavoriteButtonListener = ae -> setFavorite();
 
-        changePitchListener = ae -> {
-            if (!currentSongModel.isEmpty()) {
-                menuPanel.stopSong();
-                changePitchDialog.setVisible(true);
-            }
-        };
-
-        cpPreviewListener = ae -> {
-            menuPanel.stopSong();
-            t = new Thread(new PreviewSongRunnable());
-            waitForThread(t);
-        };
-
-        cpSaveListener = ae -> {
-            //TODO Load save button after preview?
-            t = new Thread(new ChangePitchRunnable());
-            waitForThread(t);
-        };
-
-        cutFileListener = ae -> {
-            if (!currentSongModel.isEmpty()) {
-                menuPanel.pauseSong();
-                cutSongPanel.setCurrentSong(currentSongModel.getTotalSamples(),
-                    currentSongModel.getFreq(), currentSongModel.getPlot(),
-                    getExtendedState() == MAXIMIZED_BOTH);
-                changePanel(CUT_SONG_PANEL);
-            }
-        };
-
-        cutDoneListener = ae -> cutSong();
-
-        viewSpecListener = ae -> {
-            if (!currentSongModel.isEmpty()) {
-                menuPanel.pauseSong();
-                changePanel(SPECTROGRAM_PANEL);
-            }
-        };
-
-        showSpecListener = ae -> showSpec();
-
-        viewChromListener = ae -> {
-            if (!currentSongModel.isEmpty()) {
-                menuPanel.pauseSong();
-                changePanel(CHROMAGRAM_PANEL);
-            }
-        };
-
-        showChromListener = ae -> showChrom();
-
-        analyzeSongListener = ae -> {
-            if (!currentSongModel.isEmpty()) {
-                menuPanel.pauseSong();
-                changePanel(ANALYSIS_PANEL);
-            }
-            // TODO
-        };
-
         loadSongListener = ae -> {
             SongModel sm = viewSongsPanel.getSelectedRow();
             if (sm != null) {
@@ -938,6 +897,79 @@ public final class MainWindow extends Window {
             SongModel sm = similarSongsPanel.getSelectedRow();
             if (sm != null) {
                 openSong(sm);
+            }
+        };
+    }
+
+    private void initializeEditListeners() {
+        changePitchListener = ae -> {
+            if (!currentSongModel.isEmpty()) {
+                menuPanel.stopSong();
+                changePitchDialog.setVisible(true);
+            }
+        };
+
+        cpPreviewListener = ae -> {
+            menuPanel.stopSong();
+            t = new Thread(new PreviewSongRunnable());
+            waitForThread(t);
+        };
+
+        cpSaveListener = ae -> {
+            t = new Thread(new ChangePitchRunnable());
+            waitForThread(t);
+        };
+
+        cutFileListener = ae -> {
+            if (!currentSongModel.isEmpty()) {
+                menuPanel.pauseSong();
+                cutSongPanel.setCurrentSong(currentSongModel.getTotalSamples(),
+                    currentSongModel.getFreq(), currentSongModel.getPlot(),
+                    getExtendedState() == MAXIMIZED_BOTH);
+                changePanel(CUT_SONG_PANEL);
+            }
+        };
+        cutDoneListener = ae -> cutSong();
+    }
+
+    private void initializeAnListeners() {
+        viewSpecListener = ae -> {
+            if (!currentSongModel.isEmpty()) {
+                menuPanel.pauseSong();
+                changePanel(SPECTROGRAM_PANEL);
+            }
+        };
+
+        showSpecListener = ae -> showSpec();
+
+        viewChromListener = ae -> {
+            if (!currentSongModel.isEmpty()) {
+                menuPanel.pauseSong();
+                changePanel(CHROMAGRAM_PANEL);
+            }
+        };
+
+        showChromListener = ae -> showChrom();
+
+        analyzeSongListener = ae -> {
+            if (!currentSongModel.isEmpty()) {
+                menuPanel.pauseSong();
+                changePanel(ANALYSIS_PANEL);
+            }
+        };
+
+        beatEstListener = ae -> analysisPanel.setBeatEstOn();
+        onsetDetListener = ae -> analysisPanel.setOnsetDetOn();
+        keyEstListener = ae -> {
+            //TODO
+        };
+
+        beatEstDoneListener = ae -> {
+            int minBpm = analysisPanel.getMinBpm();
+            int maxBpm = analysisPanel.getMaxBpm();
+            if (!checkNumbersBpm(minBpm, maxBpm)) {
+                t = new Thread(new BeatEstRunnable(minBpm, maxBpm));
+                waitForThread(t);
             }
         };
     }
@@ -988,7 +1020,11 @@ public final class MainWindow extends Window {
             changePitchPanel.removeSong();
             t = new Thread(() -> {
                 matlabHandler.stopSong();
-                matlabHandler.changePitch(currentSongModel.getFreq());
+                try {
+                    matlabHandler.changePitch(currentSongModel.getFreq());
+                } catch (MatlabEngineException mee) {
+                    new Thread(new DialogRunnable(mee.getMessage())).start();
+                }
             });
             waitForThread(t);
         }
@@ -1042,6 +1078,7 @@ public final class MainWindow extends Window {
                     INFO_LABEL_DELAY);
             }
             currentSongTitle.setText(sm.getTitle());
+            analysisPanel.resetFields();
             spectrogramPanel.removeImages();
             chromagramPanel.removeImages();
             optionPanel.showOptions(true);
@@ -1194,8 +1231,8 @@ public final class MainWindow extends Window {
                     changePitchDialog
                         .setMinimumSize(changePitchDialog.getSize());
                 });
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (MatlabEngineException mee) {
+                showMessageDialog(mee.getMessage());
             }
         }
     }
@@ -1234,6 +1271,30 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.saveSongChangePitch(currentSongModel.getPath());
                 openSong(currentSongModel);
+            } catch (MatlabEngineException mee) {
+                showMessageDialog(mee.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Runnable for beat estimation.
+     */
+    private final class BeatEstRunnable implements Runnable {
+        private final int minBpm;
+        private final int maxBpm;
+
+        private BeatEstRunnable(int minBpm, int maxBpm) {
+            this.minBpm = minBpm;
+            this.maxBpm = maxBpm;
+        }
+
+        @Override
+        public synchronized void run() {
+            try {
+                int est = matlabHandler.estimateBeat(minBpm, maxBpm);
+                SwingUtilities.invokeLater(() ->
+                    analysisPanel.showEstimation(est));
             } catch (MatlabEngineException mee) {
                 showMessageDialog(mee.getMessage());
             }

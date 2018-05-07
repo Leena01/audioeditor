@@ -39,6 +39,7 @@ public final class OptionPanel extends BasicPanel {
         ActionListener sd, ActionListener cp,
         ActionListener cf, ActionListener fft, ActionListener cg,
         ActionListener as) {
+        super();
         mainMenuOptionButton = new OptionButton("Main menu", mm);
         openFileOptionButton = new OptionButton("Open file", of);
         viewSongsOptionButton = new OptionButton("View favorite songs", vs);

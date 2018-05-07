@@ -32,6 +32,8 @@ public final class SongPropertiesLoader {
     private static int genreMax;
     private static int frequencyMin;
     private static int frequencyMax;
+    private static int bpmMin;
+    private static int bpmMax;
     private static int songRefreshMillis;
     private static int secondsToSkip;
 
@@ -80,6 +82,10 @@ public final class SongPropertiesLoader {
             Integer.parseInt(properties.getProperty("frequency.min"));
         frequencyMax =
             Integer.parseInt(properties.getProperty("frequency.max"));
+        bpmMin =
+            Integer.parseInt(properties.getProperty("bpm.min"));
+        bpmMax =
+            Integer.parseInt(properties.getProperty("bpm.max"));
         songRefreshMillis =
             Integer.parseInt(properties.getProperty("song.refresh.millis"));
         secondsToSkip =
@@ -275,6 +281,24 @@ public final class SongPropertiesLoader {
      */
     public static int getFrequencyMax() {
         return frequencyMax;
+    }
+
+    /**
+     * Returns the minimum BPM.
+     *
+     * @return Minimum BPM.
+     */
+    public static int getBpmMin() {
+        return bpmMin;
+    }
+
+    /**
+     * Returns the maximum BPM.
+     *
+     * @return Maximum BPM
+     */
+    public static int getBpmMax() {
+        return bpmMax;
     }
 
     /**

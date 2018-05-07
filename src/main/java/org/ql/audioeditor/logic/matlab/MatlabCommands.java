@@ -1,5 +1,6 @@
 package org.ql.audioeditor.logic.matlab;
 
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
@@ -11,6 +12,8 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLAYER_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
@@ -104,6 +107,10 @@ final class MatlabCommands {
 
     static final String SAVE_SONG_CHANGE_PITCH =
         String.format(SAVE_SONG, FILE_VAR, SAMPLE_VAR, FREQ_VAR_2);
+
+    static final String ESTIMATE_BEAT =
+        String.format("%s = beatAlgo(%s, %s, %s);",
+            BEAT_EST, SAMPLE_VAR, MIN_BPM, MAX_BPM);
 
     /**
      * Private constructor. May not be called.

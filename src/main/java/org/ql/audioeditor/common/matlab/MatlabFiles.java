@@ -25,7 +25,11 @@ public enum MatlabFiles {
     SHOW_SPECTROGRAM("showSpectrogram.m"),
     SHOW_SPECTROGRAM_3D("showSpectrogram3d.m"),
     STFT("stft.m"),
-    STOP_SONG("stopSong.m");
+    FILTERBANK("filterbank.m"),
+    HWINDOW("hwindow.m"),
+    DIFFRECT("diffrect.m"),
+    TIMECOMB("timecomb.m"),
+    BEAT_ALGO("beatAlgo.m");
 
     private final String filePath;
 

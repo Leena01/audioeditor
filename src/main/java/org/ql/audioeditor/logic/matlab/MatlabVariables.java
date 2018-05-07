@@ -28,7 +28,10 @@ enum MatlabVariables {
     PLAYER_VAR("player"),
     WINDOW_MAP_VAR("windowmap"),
     SAMPLE_VAR("x"),
-    SAMPLE_VAR_2("y");
+    SAMPLE_VAR_2("y"),
+    BEAT_EST("beatest"),
+    MIN_BPM("minbpm"),
+    MAX_BPM("maxbpm");
 
     private final String variable;
 

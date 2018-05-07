@@ -30,6 +30,7 @@ public final class Constants {
     public static final Object[] OPTIONS = {"Save as...", "Save", "Cancel"};
     public static final Object[] ATTRIBUTES = {"Every song in order", "Artist",
         "Album", "Genre"};
+    public static final String BACK_TO_MAIN_MENU_TEXT = "Back to main menu";
     public static final int TEXT_FIELD_DIGIT_SIZE_MIN = 1;
     public static final int TEXT_FIELD_DIGIT_SIZE_MAX = 5;
     public static final int YEAR_DIGIT_SIZE = 4;

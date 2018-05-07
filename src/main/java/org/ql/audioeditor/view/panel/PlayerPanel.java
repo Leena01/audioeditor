@@ -23,7 +23,7 @@ import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
  * Panel for playing media, saving files to the database and show
  * recommendations.
  */
-class PlayerPanel extends SimplePlayerPanel {
+final class PlayerPanel extends SimplePlayerPanel {
     private static final String MOVE_BACKWARD = "moveBackwardAction";
     private static final String MOVE_FORWARD = "moveForwardAction";
     private static final String VOLUME_UP = "volumeUpAction";
