@@ -1,5 +1,7 @@
 package org.ql.audioeditor.common.util;
 
+import org.ql.audioeditor.view.enums.Message;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,6 +35,15 @@ public final class ViewUtils {
     }
 
     /**
+     * Shows a message dialog with parent set to null.
+     *
+     * @param message Message
+     */
+    public static void showDialog(Message message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    /**
      * Shows a message via the label specified. The message disappears after
      * some time.
      *
@@ -45,6 +56,19 @@ public final class ViewUtils {
         Timer t = new Timer(delay, e -> infoLabel.setText(null));
         t.setRepeats(false);
         t.start();
+    }
+
+    /**
+     * Shows a message via the label specified. The message disappears after
+     * some time.
+     *
+     * @param infoLabel Label
+     * @param message   Message to show
+     * @param delay     Delay in milliseconds
+     */
+    public static void showInfo(JLabel infoLabel, Message message, int
+        delay) {
+        showInfo(infoLabel, message.toString(), delay);
     }
 
     /**

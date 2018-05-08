@@ -14,6 +14,7 @@ enum MatlabVariables {
     SPEC_IMG_VAR("imgname2"),
     SPEC_3D_IMG_VAR("imgname3"),
     CHROM_IMG_VAR("imgname4"),
+    ONSET_DET_VAR("imgname5"),
     START_VAR("start"),
     CURRENT_FRAME_VAR("current"),
     LEVEL_VAR("level"),
@@ -29,9 +30,13 @@ enum MatlabVariables {
     WINDOW_MAP_VAR("windowmap"),
     SAMPLE_VAR("x"),
     SAMPLE_VAR_2("y"),
-    BEAT_EST("beatest"),
-    MIN_BPM("minbpm"),
-    MAX_BPM("maxbpm");
+    BEAT_EST_VAR("beatest"),
+    MIN_BPM_VAR("minbpm"),
+    MAX_BPM_VAR("maxbpm"),
+    BPM_VAR("bpm"),
+    S_VAR("s"),
+    BASE_VAR("base"),
+    SMALLEST_VAR("smallest");
 
     private final String variable;
 

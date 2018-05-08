@@ -1,5 +1,6 @@
 package org.ql.audioeditor.view.panel.analysis;
 
+import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
@@ -12,6 +13,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 
@@ -37,14 +39,17 @@ public final class AnalysisPanel extends BasicPanel {
     /**
      * Constructor.
      *
-     * @param be  BeatButton listener
-     * @param o   OnsetButton listener
-     * @param k   KeyButton listener
-     * @param b   BackOptionButton listener
-     * @param bed BeatEstPanel doneButton listener
+     * @param matlabHandler MATLAB handler
+     * @param be            BeatButton listener
+     * @param o             OnsetButton listener
+     * @param k             KeyButton listener
+     * @param b             BackOptionButton listener
+     * @param bed           BeatEstPanel doneButton listener
+     * @param od            OnsetDetPanel doneButton listener
      */
-    public AnalysisPanel(ActionListener be, ActionListener o,
-        ActionListener k, ActionListener b, ActionListener bed) {
+    public AnalysisPanel(MatlabHandler matlabHandler, ActionListener be,
+        ActionListener o, ActionListener k, ActionListener b, ActionListener
+        bed, ActionListener od) {
         super();
         beatButton = new Button("Beat estimation", be);
         onsetButton = new Button("Onset detection", o);
@@ -53,7 +58,7 @@ public final class AnalysisPanel extends BasicPanel {
         buttonPanel = new JPanel(new FlowLayout());
 
         beatEstPanel = new BeatEstPanel(bed);
-        onsetDetPanel = new OnsetDetPanel();
+        onsetDetPanel = new OnsetDetPanel(matlabHandler, od);
 
         cardLayout = new CardLayout();
         resultPanel = new JPanel(cardLayout);
@@ -108,6 +113,79 @@ public final class AnalysisPanel extends BasicPanel {
      */
     public void resetFields() {
         beatEstPanel.resetFields();
+    }
+
+    /**
+     * Hides image.
+     *
+     * @param isHidden Is the image hidden
+     */
+    public void hideImage(boolean isHidden) {
+        onsetDetPanel.hideImage(isHidden);
+    }
+
+    /**
+     * Removes the images.
+     */
+    public void removeImages() {
+        onsetDetPanel.removeImages();
+    }
+
+    /**
+     * Maximizes the image.
+     *
+     * @param isMaximized Is the image maximized
+     */
+    public void maximizeImage(boolean isMaximized) {
+        onsetDetPanel.maximizeImage(isMaximized);
+    }
+
+    /**
+     * Returns the BPM.
+     *
+     * @return BPM
+     */
+    public String getBpm() {
+        return onsetDetPanel.getBpm();
+    }
+
+    /**
+     * Returns the filter size.
+     *
+     * @return Filter size
+     */
+    public String getSmoothness() {
+        return onsetDetPanel.getSmoothness();
+    }
+
+    /**
+     * Returns the base note value.
+     *
+     * @return Base note value
+     */
+    public String getBase() {
+        return onsetDetPanel.getBase();
+    }
+
+    /**
+     * Returns the smallest note value.
+     *
+     * @return Smallest note value
+     */
+    public String getSmallest() {
+        return onsetDetPanel.getSmallest();
+    }
+
+    /**
+     * Shows the plot.
+     *
+     * @param totalSamples Total number of samples
+     * @param freq         Sampling rate
+     * @param plot         Plot
+     */
+    public void setOnsetImage(double totalSamples, double freq, BufferedImage
+        plot) {
+        onsetDetPanel.setOnsetImage(totalSamples, freq, plot);
     }
 
     /**

@@ -21,6 +21,7 @@ import org.ql.audioeditor.view.core.dialog.PopupDialog;
 import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.listener.EmptyMouseListener;
 import org.ql.audioeditor.view.core.window.Window;
+import org.ql.audioeditor.view.enums.PanelName;
 import org.ql.audioeditor.view.panel.CutSongPanel;
 import org.ql.audioeditor.view.panel.DataPanel;
 import org.ql.audioeditor.view.panel.MenuPanel;
@@ -37,7 +38,6 @@ import org.ql.audioeditor.view.panel.popup.SimilarSongsPanel;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -46,7 +46,6 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -73,13 +72,35 @@ import static org.ql.audioeditor.common.util.GeneralUtils.getFileExtension;
 import static org.ql.audioeditor.common.util.TimeUtils
     .MILLIS_SECONDS_CONVERSION;
 import static org.ql.audioeditor.common.util.TimeUtils.framesToSeconds;
+import static org.ql.audioeditor.common.util.ViewUtils.showDialog;
 import static org.ql.audioeditor.common.util.ViewUtils.showInfo;
+import static org.ql.audioeditor.view.enums.ActionName.MAKE_FAVORITE;
+import static org.ql.audioeditor.view.enums.ActionName.SHOW_RELATED;
+import static org.ql.audioeditor.view.enums.Message.FILE_ALREADY_EXISTS_ERROR;
+import static org.ql.audioeditor.view.enums.Message.FILE_TYPE_ERROR;
+import static org.ql.audioeditor.view.enums.Message.IMAGE_ERROR;
+import static org.ql.audioeditor.view.enums.Message.INTERRUPTED_ERROR;
+import static org.ql.audioeditor.view.enums.Message.LONG_SONG_INFO;
+import static org.ql.audioeditor.view.enums.Message.SONGS_DELETED_INFO;
+import static org.ql.audioeditor.view.enums.Message.SUCCESSFUL_OPERATION_INFO;
+import static org.ql.audioeditor.view.enums.Message.TIMEOUT_ERROR;
+import static org.ql.audioeditor.view.enums.Message.WRONG_INPUT_ERROR;
+import static org.ql.audioeditor.view.enums.PanelName.ANALYSIS_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.CHROMAGRAM_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.CUT_SONG_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.DATA_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.MENU_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.SPECTROGRAM_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.VIEW_SONGS_PANEL;
 import static org.ql.audioeditor.view.param.Constants.ATTRIBUTES;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_FIELD_SIZE;
 import static org.ql.audioeditor.view.param.Constants.BOTTOM_PANEL_HEIGHT;
+import static org.ql.audioeditor.view.param.Constants.CURRENT_SONG_TITLE_BORDER;
+import static org.ql.audioeditor.view.param.Constants.INFO_LABEL_BORDER;
 import static org.ql.audioeditor.view.param.Constants
     .MEDIA_CONTROL_PANEL_HEIGHT;
 import static org.ql.audioeditor.view.param.Constants.OPTIONS;
+import static org.ql.audioeditor.view.param.Constants.ROOT_PANE_BORDER;
 import static org.ql.audioeditor.view.param.Constants.TEXT_FIELD_DIGIT_SIZE_MIN;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE;
 
@@ -92,41 +113,22 @@ public final class MainWindow extends Window {
      */
     private static final String SAVE_QUESTION =
         "Do you want to save the new file?";
-    private static final String FILE_BROWSER_INFO =
+    private static final String FILE_BROWSER_INSTR =
         "Specify the directory and the file name";
     private static final String SHOW_SIMILAR_SONGS_TITLE = "Show similar songs";
     private static final String SHOW_SIMILAR_SONGS_INSTR =
         "Please choose a filter.";
-    private static final String LONG_SONG_INFO =
-        "Warning: this song might be too long to analyze.";
-    private static final String FILE_ALREADY_EXISTS_ERROR =
-        "The path specified already exists.";
-    private static final String WRONG_INPUT_ERROR = "Wrong input data.";
-    private static final String TIMEOUT_ERROR =
-        "Error: process took too long to finish.";
-    private static final String INTERRUPTED_ERROR
-        = "Error: the process was interrupted.";
-    private static final String FILE_TYPE_ERROR =
-        "This file type is not supported.";
-    private static final String IMAGE_ERROR = "Cannot load image.";
-    private static final String SONGS_DELETED_INFO = "Songs deleted.";
-    private static final String SUCCESSFUL_OPERATION_INFO =
-        "Successful operation.";
-    private static final String MENU_PANEL = "Menu Panel";
-    private static final String VIEW_SONGS_PANEL = "View Songs Panel";
-    private static final String DATA_PANEL = "Data Panel";
-    private static final String ANALYSIS_PANEL = "Analysis Panel";
-    private static final String SPECTROGRAM_PANEL = "Spectrogram Panel";
-    private static final String CHROMAGRAM_PANEL = "Chromagram Panel";
-    private static final String CUT_SONG_PANEL = "Cut Song Panel";
-    private static final String MAKE_FAVORITE = "makeFavoriteAction";
-    private static final String SHOW_RELATED = "showRelatedAction";
-    private static final Border ROOT_PANE_BORDER =
-        BorderFactory.createLineBorder(Color.DARK_GRAY);
-    private static final Border CURRENT_SONG_TITLE_BORDER =
-        BorderFactory.createEmptyBorder(5, 5, 5, 5);
-    private static final Border INFO_LABEL_BORDER =
-        BorderFactory.createEmptyBorder(0, 12, 0, 12);
+
+    private static final String PLOT_IMG_PATH =
+        ImageLoader.getPlotImagePath();
+    private static final String SPEC_IMG_PATH =
+        ImageLoader.getSpecImagePath();
+    private static final String SPEC_3D_IMG_PATH =
+        ImageLoader.getSpec3dImagePath();
+    private static final String CHROM_IMG_PATH =
+        ImageLoader.getChromImagePath();
+    private static final String ONSET_IMG_PATH =
+        ImageLoader.getOnsetImagePath();
     private static final int INFO_LABEL_DELAY = 5000;
     private static final int BASE_NUM = 10;
     private static final int TIMEOUT_MILLIS = 60 * MILLIS_SECONDS_CONVERSION;
@@ -205,6 +207,7 @@ public final class MainWindow extends Window {
     private ActionListener onsetDetListener;
     private ActionListener keyEstListener;
     private ActionListener beatEstDoneListener;
+    private ActionListener onsetDetDoneListener;
 
     /**
      * Constructor.
@@ -266,6 +269,7 @@ public final class MainWindow extends Window {
             menuPanel.hideImage(isHidden);
             spectrogramPanel.hideImage(isHidden);
             chromagramPanel.hideImage(isHidden);
+            analysisPanel.hideImage(isHidden);
         }
     }
 
@@ -279,6 +283,7 @@ public final class MainWindow extends Window {
         menuPanel.maximizeImage(isMaximized);
         spectrogramPanel.maximizeImage(isMaximized);
         chromagramPanel.maximizeImage(isMaximized);
+        analysisPanel.maximizeImage(isMaximized);
         cutSongPanel.maximizeImage(isMaximized);
     }
 
@@ -312,7 +317,7 @@ public final class MainWindow extends Window {
                     setFavorite(true);
                 }
             } catch (SQLConnectionException e) {
-                showMessageDialog(e.getMessage());
+                showDialog(e.getMessage());
                 menuPanel.setFavorite(false);
             }
         }
@@ -462,10 +467,6 @@ public final class MainWindow extends Window {
     private void openSong(SongModel sm) {
         getCover(sm);
         getSavedInstance(sm);
-        if (!currentSongModel.isEmpty()) {
-            menuPanel.stopSong();
-            menuPanel.resetVolume();
-        }
         t = new Thread(new OpenSongRunnable(sm));
         waitForThread(t);
     }
@@ -526,8 +527,31 @@ public final class MainWindow extends Window {
         return true;
     }
 
-    private boolean checkNumbersBpm(int minBpm, int maxBpm) {
-        if (minBpm < maxBpm) {
+    /**
+     * Checks whether the numeric input fetched from the BPM setter is correct.
+     *
+     * @param minBpm Minimum BPM
+     * @param maxBpm Maximum BPM
+     * @return Logical value
+     */
+    private boolean checkNumbersBeat(int minBpm, int maxBpm) {
+        if (minBpm > maxBpm) {
+            showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks whether the numeric input fetched from the onset detector is
+     * correct.
+     *
+     * @param bpm        BPM
+     * @param smoothness Filter size
+     * @return Logical value
+     */
+    private boolean checkNumbersOnset(int bpm, int smoothness) {
+        if (bpm == 0 || smoothness <= 0) {
             showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
             return false;
         }
@@ -549,12 +573,12 @@ public final class MainWindow extends Window {
      */
     private String saveAsNewFile() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle(FILE_BROWSER_INFO);
+        fileChooser.setDialogTitle(FILE_BROWSER_INSTR);
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             if (fileToSave.exists()) {
-                showMessageDialog(FILE_ALREADY_EXISTS_ERROR);
+                showDialog(FILE_ALREADY_EXISTS_ERROR);
                 return null;
             }
             return fileToSave.getAbsolutePath();
@@ -578,9 +602,9 @@ public final class MainWindow extends Window {
             }
             databaseAccessModel.editSong(sm);
             refreshCache();
-            showMessageDialog(SUCCESSFUL_OPERATION_INFO);
+            showDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showMessageDialog(e.getMessage());
+            showDialog(e.getMessage());
         }
         editDialog.setVisible(false);
     }
@@ -602,9 +626,9 @@ public final class MainWindow extends Window {
         SongListModel songListModel = new SongListModel(validFiles);
         try {
             databaseAccessModel.addSongs(songListModel);
-            showMessageDialog(SUCCESSFUL_OPERATION_INFO);
+            showDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showMessageDialog(e.getMessage());
+            showDialog(e.getMessage());
         }
     }
 
@@ -618,9 +642,9 @@ public final class MainWindow extends Window {
             if (slm != null) {
                 databaseAccessModel.deleteSongs(slm);
             }
-            showMessageDialog(SUCCESSFUL_OPERATION_INFO);
+            showDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showMessageDialog(e.getMessage());
+            showDialog(e.getMessage());
         }
     }
 
@@ -639,7 +663,7 @@ public final class MainWindow extends Window {
                 setFavorite(false);
             }
         } catch (InvalidOperationException | SQLConnectionException e) {
-            showMessageDialog(e.getMessage());
+            showDialog(e.getMessage());
         }
     }
 
@@ -669,7 +693,7 @@ public final class MainWindow extends Window {
                 similarSongsPanel.setCurrentSongIndex(i);
                 similarSongsDialog.setVisible(true);
             } catch (SQLConnectionException e) {
-                showMessageDialog(e.getMessage());
+                showDialog(e.getMessage());
             }
         }
     }
@@ -776,9 +800,9 @@ public final class MainWindow extends Window {
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
-        analysisPanel = new AnalysisPanel(beatEstListener,
+        analysisPanel = new AnalysisPanel(matlabHandler, beatEstListener,
             onsetDetListener, keyEstListener, backToMenuListener,
-            beatEstDoneListener);
+            beatEstDoneListener, onsetDetDoneListener);
         spectrogramPanel =
             new SpectrogramPanel(showSpecListener, backToMenuListener);
         chromagramPanel =
@@ -793,11 +817,11 @@ public final class MainWindow extends Window {
     /**
      * Switches panel.
      *
-     * @param name Panel to switch to
+     * @param panelName Panel to switch to
      */
-    private void changePanel(String name) {
-        cardLayout.show(innerMainPanel, name);
-        if (name.equals(MENU_PANEL) && !currentSongModel.isEmpty()) {
+    private void changePanel(PanelName panelName) {
+        cardLayout.show(innerMainPanel, panelName.toString());
+        if (panelName.equals(MENU_PANEL) && !currentSongModel.isEmpty()) {
             mediaControlPanel.setVisible(true);
             menuPanel.setActive(true);
         } else {
@@ -818,6 +842,10 @@ public final class MainWindow extends Window {
             File f = openFile();
             if (f != null) {
                 defaultOpenDir = f.getParent();
+                if (!currentSongModel.isEmpty()) {
+                    menuPanel.stopSong();
+                    menuPanel.resetVolume();
+                }
                 openSong(new SongModel(f));
             }
         };
@@ -967,8 +995,24 @@ public final class MainWindow extends Window {
         beatEstDoneListener = ae -> {
             int minBpm = analysisPanel.getMinBpm();
             int maxBpm = analysisPanel.getMaxBpm();
-            if (!checkNumbersBpm(minBpm, maxBpm)) {
+            if (checkNumbersBeat(minBpm, maxBpm)) {
                 t = new Thread(new BeatEstRunnable(minBpm, maxBpm));
+                waitForThread(t);
+            }
+        };
+
+        onsetDetDoneListener = ae -> {
+            String bpmText = analysisPanel.getBpm();
+            String smoothnessText = analysisPanel.getSmoothness();
+            String baseText = analysisPanel.getBase();
+            String smallestText = analysisPanel.getSmallest();
+            int bpm = convertToNumber(bpmText);
+            int smoothness = convertToNumber(smoothnessText);
+            int base = convertToNumber(baseText);
+            int smallest = convertToNumber(smallestText);
+            if (checkNumbersOnset(bpm, smoothness)) {
+                t = new Thread(
+                    new OnsetDetRunnable(bpm, smoothness, base, smallest));
                 waitForThread(t);
             }
         };
@@ -987,13 +1031,6 @@ public final class MainWindow extends Window {
     }
 
     /**
-     * Message dialog with MainWindow as parent.
-     */
-    private void showMessageDialog(String message) {
-        JOptionPane.showMessageDialog(this, message);
-    }
-
-    /**
      * Window adapter for defining actions to execute after exit.
      */
     private final class ClosingWindowAdapter extends WindowAdapter {
@@ -1003,8 +1040,7 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.close();
             } catch (MatlabEngineException mee) {
-                JOptionPane
-                    .showMessageDialog(MainWindow.this, mee.getMessage());
+                showDialog(mee.getMessage());
             }
             databaseAccessModel.close();
         }
@@ -1045,14 +1081,14 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.openSong(sm.getPath());
                 matlabHandler
-                    .plotSong(ImageLoader.getPlotImagePath());
+                    .plotSong(PLOT_IMG_PATH);
                 matlabHandler.passData(sm);
                 SwingUtilities.invokeLater(() -> {
                     double freq = sm.getFreq();
                     double totalSamples = sm.getTotalSamples();
                     try {
                         BufferedImage plot = ImageIO.read(
-                            new File(ImageLoader.getPlotImagePath()));
+                            new File(PLOT_IMG_PATH));
                         sm.setPlot(plot);
                         menuPanel.setCurrentSong(
                             totalSamples, freq, plot, sm.getCover(), isNormal,
@@ -1061,7 +1097,7 @@ public final class MainWindow extends Window {
                         currentSongModel = sm;
                         loadEnv();
                     } catch (IOException ioe) {
-                        showMessageDialog(IMAGE_ERROR);
+                        showDialog(IMAGE_ERROR);
                     }
                 });
             } catch (MatlabEngineException mee) {
@@ -1081,6 +1117,7 @@ public final class MainWindow extends Window {
             analysisPanel.resetFields();
             spectrogramPanel.removeImages();
             chromagramPanel.removeImages();
+            analysisPanel.removeImages();
             optionPanel.showOptions(true);
             changePanel(MENU_PANEL);
         }
@@ -1106,18 +1143,12 @@ public final class MainWindow extends Window {
         @Override
         public synchronized void run() {
             try {
-                matlabHandler
-                    .showSpectrogram(windowSize, hopSize, nfft, window,
-                        ImageLoader.getSpecImagePath(),
-                        ImageLoader.getSpec3dImagePath());
+                matlabHandler.showSpectrogram(windowSize, hopSize, nfft, window,
+                    SPEC_IMG_PATH, SPEC_3D_IMG_PATH);
                 SwingUtilities.invokeLater(() -> {
                     try {
-                        Image spec =
-                            ImageIO.read(new File(ImageLoader
-                                .getSpecImagePath()));
-                        Image spec3d =
-                            ImageIO.read(new File(ImageLoader
-                                .getSpec3dImagePath()));
+                        Image spec = ImageIO.read(new File(SPEC_IMG_PATH));
+                        Image spec3d = ImageIO.read(new File(SPEC_3D_IMG_PATH));
                         spectrogramPanel.changeImage(spec, spec3d, isNormal,
                             getExtendedState() == MAXIMIZED_BOTH);
                     } catch (IOException ignored) {
@@ -1151,12 +1182,11 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler
                     .showChromagram(windowSize, hopSize, nfft, window,
-                        ImageLoader.getChromImagePath());
+                        CHROM_IMG_PATH);
                 SwingUtilities.invokeLater(() -> {
                     try {
                         Image chromagram =
-                            ImageIO.read(new File(ImageLoader
-                                .getChromImagePath()));
+                            ImageIO.read(new File(CHROM_IMG_PATH));
                         chromagramPanel.changeImage(chromagram, isNormal,
                             getExtendedState() == MAXIMIZED_BOTH);
                     } catch (IOException ignored) {
@@ -1201,7 +1231,7 @@ public final class MainWindow extends Window {
                 try {
                     matlabHandler.saveSongCut(path);
                 } catch (MatlabEngineException mee) {
-                    showMessageDialog(mee.getMessage());
+                    showDialog(mee.getMessage());
                 }
             }
         }
@@ -1211,7 +1241,7 @@ public final class MainWindow extends Window {
                 matlabHandler.saveSongCut(currentSongModel.getPath());
                 openSong(currentSongModel);
             } catch (MatlabEngineException mee) {
-                showMessageDialog(mee.getMessage());
+                showDialog(mee.getMessage());
             }
         }
     }
@@ -1232,7 +1262,7 @@ public final class MainWindow extends Window {
                         .setMinimumSize(changePitchDialog.getSize());
                 });
             } catch (MatlabEngineException mee) {
-                showMessageDialog(mee.getMessage());
+                showDialog(mee.getMessage());
             }
         }
     }
@@ -1262,7 +1292,7 @@ public final class MainWindow extends Window {
                 try {
                     matlabHandler.saveSongChangePitch(path);
                 } catch (MatlabEngineException mee) {
-                    showMessageDialog(mee.getMessage());
+                    showDialog(mee.getMessage());
                 }
             }
         }
@@ -1272,7 +1302,7 @@ public final class MainWindow extends Window {
                 matlabHandler.saveSongChangePitch(currentSongModel.getPath());
                 openSong(currentSongModel);
             } catch (MatlabEngineException mee) {
-                showMessageDialog(mee.getMessage());
+                showDialog(mee.getMessage());
             }
         }
     }
@@ -1296,7 +1326,46 @@ public final class MainWindow extends Window {
                 SwingUtilities.invokeLater(() ->
                     analysisPanel.showEstimation(est));
             } catch (MatlabEngineException mee) {
-                showMessageDialog(mee.getMessage());
+                showDialog(mee.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Runnable for onset detection.
+     */
+    private final class OnsetDetRunnable implements Runnable {
+        private final int bpm;
+        private final int smoothness;
+        private final int base;
+        private final int smallest;
+
+        private OnsetDetRunnable(int bpm, int smoothness, int base,
+            int smallest) {
+            this.bpm = bpm;
+            this.smoothness = smoothness;
+            this.base = base;
+            this.smallest = smallest;
+        }
+
+        @Override
+        public synchronized void run() {
+            try {
+                matlabHandler.plotSongOnset(bpm, smoothness, base,
+                    smallest, ONSET_IMG_PATH);
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        BufferedImage plot = ImageIO.read(
+                            new File(ONSET_IMG_PATH));
+                        analysisPanel.setOnsetImage(
+                            currentSongModel.getTotalSamples(),
+                            currentSongModel.getFreq(), plot);
+                    } catch (IOException ioe) {
+                        showDialog(IMAGE_ERROR);
+                    }
+                });
+            } catch (MatlabEngineException mee) {
+                showDialog(mee.getMessage());
             }
         }
     }
@@ -1313,7 +1382,7 @@ public final class MainWindow extends Window {
 
         @Override
         public synchronized void run() {
-            showMessageDialog(message);
+            showDialog(message);
         }
     }
 }

@@ -16,6 +16,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_PITCH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_VOLUME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CREATE_WINDOW_MAP;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CUT_SONG;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.DETECT_ONSET;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.ESTIMATE_BEAT;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.GET_CURRENT_FRAME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.IS_PLAYING;
@@ -32,7 +33,9 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.SHOW_SPECTROGRAM;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands
     .SHOW_SPECTROGRAM_3D;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.STOP_SONG;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BASE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
@@ -44,13 +47,16 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.ONSET_DET_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SMALLEST_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.START_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.S_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.TOTAL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.TO_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_KEYS_VAR;
@@ -386,12 +392,37 @@ public final class MatlabHandler {
     public synchronized int estimateBeat(int minBpm, int maxBpm) throws
         MatlabEngineException {
         try {
-            eng.putVariable(MIN_BPM.toString(), minBpm);
-            eng.putVariable(MAX_BPM.toString(), maxBpm);
+            eng.putVariable(MIN_BPM_VAR.toString(), minBpm);
+            eng.putVariable(MAX_BPM_VAR.toString(), maxBpm);
             eng.eval(ESTIMATE_BEAT);
-            return eng.getVariable(BEAT_EST.toString());
+            return eng.getVariable(BEAT_EST_VAR.toString());
         } catch (Exception e) {
             throw new MatlabEngineException(CANNOT_ESTIMATE_BEAT);
+        }
+    }
+
+    /**
+     * Show a song's oscillogram with the detected onsets.
+     *
+     * @param bpm BPM
+     * @param smoothness Filter size
+     * @param base Lower value of the time signature (value of beat)
+     * @param smallest Smallest note value that might appear in the song
+     * @param imageName  Name of the generated image
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    public synchronized void plotSongOnset(int bpm, int smoothness, int base,
+        int smallest, String imageName)
+        throws MatlabEngineException {
+        try {
+            eng.putVariable(BPM_VAR.toString(), bpm);
+            eng.putVariable(S_VAR.toString(), smoothness);
+            eng.putVariable(BASE_VAR.toString(), base);
+            eng.putVariable(SMALLEST_VAR.toString(), smallest);
+            eng.putVariable(ONSET_DET_VAR.toString(), imageName.toCharArray());
+            eng.eval(DETECT_ONSET);
+        } catch (Exception e) {
+            throw new MatlabEngineException(IMAGE_ERROR);
         }
     }
 

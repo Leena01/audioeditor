@@ -35,6 +35,7 @@ import java.awt.event.MouseMotionListener;
 
 import static javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
 import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
+import static org.ql.audioeditor.view.enums.ActionName.MAXIMIZE;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE;
 import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE_HIDDEN;
 
@@ -47,7 +48,6 @@ public abstract class Window extends JFrame {
         "com.jtattoo.plaf.hifi.HiFiLookAndFeel";
     private static final String TITLE = "Audio Editor";
     private static final String FONT = "Alex Brush";
-    private static final String MAXIMIZE = "Maximize";
     private static final Dimension IMAGE_SIZE = new Dimension(20, 20);
     private static final Dimension BUTTON_SIZE = new Dimension(30, 20);
     private static final ImageIcon UPWARD_ICON =

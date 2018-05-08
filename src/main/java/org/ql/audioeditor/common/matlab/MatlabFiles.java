@@ -29,7 +29,9 @@ public enum MatlabFiles {
     HWINDOW("hwindow.m"),
     DIFFRECT("diffrect.m"),
     TIMECOMB("timecomb.m"),
-    BEAT_ALGO("beatAlgo.m");
+    BEAT_ALGO("beatAlgo.m"),
+    CALC_MIN_DISTANCE("calcMinDistance.m"),
+    ONSET_DET("onsetDet.m");
 
     private final String filePath;
 

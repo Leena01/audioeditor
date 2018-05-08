@@ -1,6 +1,8 @@
 package org.ql.audioeditor.logic.matlab;
 
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BASE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BEAT_EST_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CHROM_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.CURRENT_FRAME_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.EMPTY_VAR;
@@ -12,16 +14,19 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.ONSET_DET_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLAYER_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR_2;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SMALLEST_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.START_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.S_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.TOTAL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.TO_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.WINDOW_KEYS_VAR;
@@ -110,7 +115,12 @@ final class MatlabCommands {
 
     static final String ESTIMATE_BEAT =
         String.format("%s = beatAlgo(%s, %s, %s);",
-            BEAT_EST, SAMPLE_VAR, MIN_BPM, MAX_BPM);
+            BEAT_EST_VAR, SAMPLE_VAR, MIN_BPM_VAR, MAX_BPM_VAR);
+
+    static final String DETECT_ONSET =
+        String.format("onsetDet(%s, %s, %s, %s, %s, %s, %s);",
+            SAMPLE_VAR, FREQ_VAR, BPM_VAR, S_VAR, BASE_VAR,
+            SMALLEST_VAR, ONSET_DET_VAR);
 
     /**
      * Private constructor. May not be called.

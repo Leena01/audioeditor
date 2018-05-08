@@ -3,42 +3,31 @@ package org.ql.audioeditor.view.panel.analysis;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.label.Label;
-import org.ql.audioeditor.view.core.panel.BasicPanel;
+import org.ql.audioeditor.view.core.panel.BasicFormPanel;
 import org.ql.audioeditor.view.core.textfield.FormattedTextField;
 import org.ql.audioeditor.view.param.Constants;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-import static javax.swing.BoxLayout.PAGE_AXIS;
-import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
-import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
-import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
 
 /**
  * Panel for showing chroma feature.
  */
-public class ChromagramPanel extends BasicPanel {
+public class ChromagramPanel extends BasicFormPanel {
     private static final GridLayout FORM_PANEL_LAYOUT = new GridLayout(6, 2,
         10, 10);
     private static final String[] WINDOW_NAMES = SongPropertiesLoader
         .getWindowNames();
 
-    protected JButton doneButton;
     protected JButton backOptionButton;
-    protected JButton clearFieldsButton;
     protected JLabel windowSizeLabel;
     protected JFormattedTextField windowSizeTextField;
     protected JLabel hopSizeLabel;
@@ -47,27 +36,13 @@ public class ChromagramPanel extends BasicPanel {
     protected JFormattedTextField nfftTextField;
     protected JLabel windowLabel;
     protected JComboBox windowComboBox;
-    protected JLabel imageLabel;
-    protected JPanel formPanel;
-    protected JPanel outerFormPanel;
-    protected JPanel imagePanel;
-    protected JPanel mainPanel;
-    protected JPanel bodyPanel;
-    private ImageIcon specIcon;
-    private ImageIcon specIconMax;
 
     /**
      * Constructor.
      */
     public ChromagramPanel() {
         super();
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        formPanel = new JPanel();
         formPanel.setLayout(FORM_PANEL_LAYOUT);
-        outerFormPanel = new JPanel();
-
-        clearFieldsButton = new Button("Clear fields", e -> clearFields());
 
         windowSizeLabel = new Label("Window size:");
         NumberFormat nf = NumberFormat.getIntegerInstance();
@@ -88,16 +63,6 @@ public class ChromagramPanel extends BasicPanel {
 
         windowLabel = new Label("Window type:");
         windowComboBox = new JComboBox<>(WINDOW_NAMES);
-
-        imageLabel = new Label();
-        imagePanel = new JPanel();
-
-        bodyPanel = new JPanel(new FlowLayout());
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, PAGE_AXIS));
-
-        specIcon = new ImageIcon();
-        specIconMax = new ImageIcon();
     }
 
     /**
@@ -151,75 +116,6 @@ public class ChromagramPanel extends BasicPanel {
     }
 
     /**
-     * Clears text fields.
-     */
-    private void clearFields() {
-        windowSizeTextField.setValue(null);
-        hopSizeTextField.setValue(null);
-        nfftTextField.setValue(null);
-    }
-
-    /**
-     * Changes the image.
-     *
-     * @param image       Image
-     * @param isNormal    Is the size normal
-     * @param isMaximized Is the image maximized
-     */
-    public void changeImage(Image image, boolean isNormal, boolean
-        isMaximized) {
-        removeImages();
-        specIconMax = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE_MAX));
-        specIcon = new ImageIcon(resizeImage(image, SPEC_IMAGE_SIZE));
-
-        maximizeImage(isMaximized);
-        if (isNormal) {
-            imagePanel.setVisible(true);
-        }
-    }
-
-    /**
-     * Hides image.
-     *
-     * @param isHidden Is the image hidden
-     */
-    public void hideImage(boolean isHidden) {
-        if (isHidden) {
-            imagePanel.setVisible(false);
-        } else {
-            imagePanel.setVisible(true);
-        }
-    }
-
-    /**
-     * Removes the images.
-     */
-    public void removeImages() {
-        if (specIcon.getImage() != null) {
-            specIcon.getImage().flush();
-            specIcon = new ImageIcon();
-        }
-        if (specIconMax.getImage() != null) {
-            specIconMax.getImage().flush();
-            specIconMax = new ImageIcon();
-        }
-        imageLabel.setIcon(new ImageIcon());
-    }
-
-    /**
-     * Maximizes the image.
-     *
-     * @param isMaximized Is the image maximized
-     */
-    public void maximizeImage(boolean isMaximized) {
-        if (isMaximized) {
-            imageLabel.setIcon(specIconMax);
-        } else {
-            imageLabel.setIcon(specIcon);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -254,5 +150,15 @@ public class ChromagramPanel extends BasicPanel {
         mainPanel.add(imagePanel);
         bodyPanel.add(mainPanel);
         add(bodyPanel);
+    }
+
+    /**
+     * Clears text fields.
+     */
+    @Override
+    protected void clearFields() {
+        windowSizeTextField.setValue(null);
+        hopSizeTextField.setValue(null);
+        nfftTextField.setValue(null);
     }
 }

@@ -18,19 +18,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import static org.ql.audioeditor.common.util.ViewUtils.resizeImageIcon;
+import static org.ql.audioeditor.view.enums.ActionName.MOVE_BACKWARD;
+import static org.ql.audioeditor.view.enums.ActionName.MOVE_FORWARD;
+import static org.ql.audioeditor.view.enums.ActionName.MUTE;
+import static org.ql.audioeditor.view.enums.ActionName.PAUSE;
+import static org.ql.audioeditor.view.enums.ActionName.STOP;
+import static org.ql.audioeditor.view.enums.ActionName.VOLUME_DOWN;
+import static org.ql.audioeditor.view.enums.ActionName.VOLUME_UP;
 
 /**
  * Panel for playing media, saving files to the database and show
  * recommendations.
  */
 final class PlayerPanel extends SimplePlayerPanel {
-    private static final String MOVE_BACKWARD = "moveBackwardAction";
-    private static final String MOVE_FORWARD = "moveForwardAction";
-    private static final String VOLUME_UP = "volumeUpAction";
-    private static final String VOLUME_DOWN = "volumeDownAction";
-    private static final String PAUSE = "pauseAction";
-    private static final String STOP = "stopAction";
-    private static final String MUTE = "muteAction";
 
     private static final ImageIcon FAVORITE_ICON =
         resizeImageIcon(new ImageIcon(ImageLoader.getFavoriteIcon()),

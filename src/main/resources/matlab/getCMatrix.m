@@ -2,6 +2,7 @@ function [C] = getCMatrix(Fs, N, A0)
 %GETCMATRIX	Gets the matrix that amplifies the frequency of each note.
 %	Fs: Sampling rate of audio (cycles/second)
 %	N: The window size of the short-time Fourier Transform
+%	A0: Base frequency
     NSpec = N/2 + 1; %The number of bins in the spectrogram
     C = zeros(12, NSpec); %Allocate space for the C matrix
 %   A0 = 440.0/4; %The lowest octave range to search

@@ -14,8 +14,8 @@ import java.awt.event.ItemListener;
 
 import static org.ql.audioeditor.common.util.ViewUtils.resizeImage;
 import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
-import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE;
-import static org.ql.audioeditor.view.param.Constants.SPEC_IMAGE_SIZE_MAX;
+import static org.ql.audioeditor.view.param.Constants.IMAGE_SIZE;
+import static org.ql.audioeditor.view.param.Constants.IMAGE_SIZE_MAX;
 
 /**
  * Panel for showing spectrograms.
@@ -68,8 +68,8 @@ public final class SpectrogramPanel extends ChromagramPanel {
         }
 
         specIcon3dMax =
-            new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE_MAX));
-        specIcon3d = new ImageIcon(resizeImage(image3d, SPEC_IMAGE_SIZE));
+            new ImageIcon(resizeImage(image3d, IMAGE_SIZE_MAX));
+        specIcon3d = new ImageIcon(resizeImage(image3d, IMAGE_SIZE));
         super.changeImage(image, isNormal, isMaximized);
     }
 

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\enums\NoteValue.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\enums\PanelName.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\AnalysisPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\OnsetDetPanel.java">
 </file>
 </checkstyle>

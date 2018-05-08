@@ -20,6 +20,7 @@ public final class ImageLoader {
     private static String specImagePath;
     private static String spec3dImagePath;
     private static String chromImagePath;
+    private static String onsetImagePath;
     private static Image cover;
     private static Image playIcon;
     private static Image pauseIcon;
@@ -64,6 +65,7 @@ public final class ImageLoader {
         specImagePath = PATH + properties.getProperty("spec.image.name");
         spec3dImagePath = PATH + properties.getProperty("spec.3d.image.name");
         chromImagePath = PATH + properties.getProperty("chrom.image.name");
+        onsetImagePath = PATH + properties.getProperty("onset.image.name");
         cover = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("cover.name")));
         playIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
@@ -138,6 +140,15 @@ public final class ImageLoader {
      */
     public static String getChromImagePath() {
         return chromImagePath;
+    }
+
+    /**
+     * Returns the path to the image showing the detected onsets.
+     *
+     * @return Path
+     */
+    public static String getOnsetImagePath() {
+        return onsetImagePath;
     }
 
     /**

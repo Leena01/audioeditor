@@ -24,7 +24,7 @@ public final class SongModel {
         = SongPropertiesLoader.getDefaultSongId();
     private static final int EMPTY_ID
         = SongPropertiesLoader.getEmptySongId();
-    private static final Song DEFAULT_SONG = new Song();
+    private static final Song EMPTY_SONG = new Song();
     private Song song;
     private double totalSamples = 0.0;
     private double freq = 0.0;
@@ -36,7 +36,7 @@ public final class SongModel {
      * Constructor.
      */
     public SongModel() {
-        this.song = DEFAULT_SONG;
+        this.song = EMPTY_SONG;
     }
 
     /**
