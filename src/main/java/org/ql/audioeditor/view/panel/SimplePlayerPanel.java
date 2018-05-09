@@ -225,6 +225,7 @@ public class SimplePlayerPanel extends BasicPanel {
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
         if (plot != null) {
             trackSlider.setImage(plot);
+            trackSlider.repaint();
         }
     }
 

@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.text.NumberFormat;
 
 import static org.ql.audioeditor.view.param.Constants.MEDIA_CONTROL_PANEL_HEIGHT;
 
@@ -66,7 +67,8 @@ public final class OnsetDetPanel extends BasicFormPanel {
         bpmTextField.setToolTipText(BPM_LIMIT);
 
         smoothnessLabel = new Label("Smoothness:");
-        NumberFormatter nf2 = new NumberFormatter();
+        NumberFormat nf2 = NumberFormat.getIntegerInstance();
+        nf2.setGroupingUsed(false);
         smoothnessTextField = new FormattedTextField(nf2);
 
         baseLabel = new Label("Base note value:");
@@ -107,8 +109,8 @@ public final class OnsetDetPanel extends BasicFormPanel {
      *
      * @return Base note value
      */
-    public String getBase() {
-        return (String) baseComboBox.getSelectedItem();
+    public Integer getBase() {
+        return (Integer) baseComboBox.getSelectedItem();
     }
 
     /**
@@ -116,8 +118,8 @@ public final class OnsetDetPanel extends BasicFormPanel {
      *
      * @return Smallest note value
      */
-    public String getSmallest() {
-        return (String) smallestComboBox.getSelectedItem();
+    public Integer getSmallest() {
+        return (Integer) smallestComboBox.getSelectedItem();
     }
 
     /**
@@ -129,6 +131,16 @@ public final class OnsetDetPanel extends BasicFormPanel {
     public void setOnsetImage(double totalSamples, double freq, BufferedImage
         plot) {
         simplePlayerPanel.setCurrentSong(totalSamples, freq, plot);
+        simplePlayerPanel.setVisible(true);
+        mediaControlPanel.setVisible(true);
+    }
+
+    /**
+     * Hides the current song's settings.
+     */
+    public void removeSong() {
+        simplePlayerPanel.setVisible(false);
+        mediaControlPanel.setVisible(false);
     }
 
     /**
@@ -150,7 +162,6 @@ public final class OnsetDetPanel extends BasicFormPanel {
      */
     @Override
     protected void addPanels() {
-        imagePanel.add(simplePlayerPanel);
         formPanel.add(bpmLabel);
         formPanel.add(bpmTextField);
         formPanel.add(smoothnessLabel);
@@ -163,7 +174,8 @@ public final class OnsetDetPanel extends BasicFormPanel {
         formPanel.add(clearFieldsButton);
         outerFormPanel.add(formPanel);
         mainPanel.add(outerFormPanel);
-        mainPanel.add(imagePanel);
+        mainPanel.add(simplePlayerPanel);
+        mainPanel.add(mediaControlPanel);
         bodyPanel.add(mainPanel);
         add(bodyPanel);
     }

@@ -163,7 +163,7 @@ public final class AnalysisPanel extends BasicPanel {
      *
      * @return Base note value
      */
-    public String getBase() {
+    public Integer getBase() {
         return onsetDetPanel.getBase();
     }
 
@@ -172,7 +172,7 @@ public final class AnalysisPanel extends BasicPanel {
      *
      * @return Smallest note value
      */
-    public String getSmallest() {
+    public Integer getSmallest() {
         return onsetDetPanel.getSmallest();
     }
 
@@ -186,6 +186,13 @@ public final class AnalysisPanel extends BasicPanel {
     public void setOnsetImage(double totalSamples, double freq, BufferedImage
         plot) {
         onsetDetPanel.setOnsetImage(totalSamples, freq, plot);
+    }
+
+    /**
+     * Hides the current song's settings.
+     */
+    public void removeSong() {
+        onsetDetPanel.removeSong();
     }
 
     /**

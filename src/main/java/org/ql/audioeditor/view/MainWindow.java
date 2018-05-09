@@ -131,7 +131,8 @@ public final class MainWindow extends Window {
         ImageLoader.getOnsetImagePath();
     private static final int INFO_LABEL_DELAY = 5000;
     private static final int BASE_NUM = 10;
-    private static final int TIMEOUT_MILLIS = 60 * MILLIS_SECONDS_CONVERSION;
+    private static final int TIMEOUT_MILLIS =
+        ConfigPropertiesLoader.getTimeoutSeconds() * MILLIS_SECONDS_CONVERSION;
 
     /**
      * Private data members.
@@ -333,13 +334,13 @@ public final class MainWindow extends Window {
         add(bottomPanel, BorderLayout.SOUTH);
         mainPanel.add(innerMainPanel, BorderLayout.CENTER);
         mainPanel.add(mediaControlPanel, BorderLayout.SOUTH);
-        innerMainPanel.add(menuPanel, MENU_PANEL);
-        innerMainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL);
-        innerMainPanel.add(dataPanel, DATA_PANEL);
-        innerMainPanel.add(analysisPanel, ANALYSIS_PANEL);
-        innerMainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL);
-        innerMainPanel.add(chromagramPanel, CHROMAGRAM_PANEL);
-        innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL);
+        innerMainPanel.add(menuPanel, MENU_PANEL.toString());
+        innerMainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL.toString());
+        innerMainPanel.add(dataPanel, DATA_PANEL.toString());
+        innerMainPanel.add(analysisPanel, ANALYSIS_PANEL.toString());
+        innerMainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL.toString());
+        innerMainPanel.add(chromagramPanel, CHROMAGRAM_PANEL.toString());
+        innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL.toString());
     }
 
     /**
@@ -1004,12 +1005,10 @@ public final class MainWindow extends Window {
         onsetDetDoneListener = ae -> {
             String bpmText = analysisPanel.getBpm();
             String smoothnessText = analysisPanel.getSmoothness();
-            String baseText = analysisPanel.getBase();
-            String smallestText = analysisPanel.getSmallest();
+            int base = analysisPanel.getBase();
+            int smallest = analysisPanel.getSmallest();
             int bpm = convertToNumber(bpmText);
             int smoothness = convertToNumber(smoothnessText);
-            int base = convertToNumber(baseText);
-            int smallest = convertToNumber(smallestText);
             if (checkNumbersOnset(bpm, smoothness)) {
                 t = new Thread(
                     new OnsetDetRunnable(bpm, smoothness, base, smallest));
@@ -1118,6 +1117,7 @@ public final class MainWindow extends Window {
             spectrogramPanel.removeImages();
             chromagramPanel.removeImages();
             analysisPanel.removeImages();
+            analysisPanel.removeSong();
             optionPanel.showOptions(true);
             changePanel(MENU_PANEL);
         }

@@ -16,6 +16,7 @@ public final class ConfigPropertiesLoader {
     private static String url;
     private static String matlabFolder;
     private static int refreshMillis;
+    private static int timeoutSeconds;
 
     private ConfigPropertiesLoader() {
         throw new AssertionError();
@@ -43,6 +44,7 @@ public final class ConfigPropertiesLoader {
         matlabFolder = properties.getProperty("matlab.folder");
         refreshMillis =
             Integer.parseInt(properties.getProperty("refresh.millis"));
+        timeoutSeconds = Integer.parseInt(properties.getProperty("timeout.seconds"));
     }
 
     /**
@@ -89,6 +91,10 @@ public final class ConfigPropertiesLoader {
      */
     public static int getRefreshMillis() {
         return refreshMillis;
+    }
+
+    public static int getTimeoutSeconds() {
+        return timeoutSeconds;
     }
 
     /**
