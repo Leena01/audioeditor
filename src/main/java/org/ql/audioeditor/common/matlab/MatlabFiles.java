@@ -24,6 +24,7 @@ public enum MatlabFiles {
     SHOW_CHROMAGRAM("showChromagram.m"),
     SHOW_SPECTROGRAM("showSpectrogram.m"),
     SHOW_SPECTROGRAM_3D("showSpectrogram3d.m"),
+    STOP_SONG("stopSong.m"),
     STFT("stft.m"),
     FILTERBANK("filterbank.m"),
     HWINDOW("hwindow.m"),
@@ -31,7 +32,12 @@ public enum MatlabFiles {
     TIMECOMB("timecomb.m"),
     BEAT_ALGO("beatAlgo.m"),
     CALC_MIN_DISTANCE("calcMinDistance.m"),
-    ONSET_DET("onsetDet.m");
+    ONSET_DET("onsetDet.m"),
+    MINKCOL("minkcol.m"),
+    ONSETS("onsets.m"),
+    NOTE_DETECTION("noteDetection.m"),
+    GET_KEY("getKey.m"),
+    KEY_DETECTION("keyDetection.m");
 
     private final String filePath;
 

@@ -82,6 +82,7 @@ import static org.ql.audioeditor.view.enums.Message.IMAGE_ERROR;
 import static org.ql.audioeditor.view.enums.Message.INTERRUPTED_ERROR;
 import static org.ql.audioeditor.view.enums.Message.LONG_SONG_INFO;
 import static org.ql.audioeditor.view.enums.Message.SONGS_DELETED_INFO;
+import static org.ql.audioeditor.view.enums.Message.SONG_TOO_SHORT_ERROR;
 import static org.ql.audioeditor.view.enums.Message.SUCCESSFUL_OPERATION_INFO;
 import static org.ql.audioeditor.view.enums.Message.TIMEOUT_ERROR;
 import static org.ql.audioeditor.view.enums.Message.WRONG_INPUT_ERROR;
@@ -89,7 +90,9 @@ import static org.ql.audioeditor.view.enums.PanelName.ANALYSIS_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.CHROMAGRAM_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.CUT_SONG_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.DATA_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.MEDIA_CONTROL_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.MENU_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.ONSET_MEDIA_CONTROL_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.SPECTROGRAM_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.VIEW_SONGS_PANEL;
 import static org.ql.audioeditor.view.param.Constants.ATTRIBUTES;
@@ -143,12 +146,15 @@ public final class MainWindow extends Window {
     private final SongTableModel deleteSongTableModel;
     private final SongTableModel similarSongTableModel;
     private final CardLayout cardLayout;
+    private final CardLayout lowerCardLayout;
     private final Component glassPane;
     private SongModel currentSongModel;
     private SongListModel currentSongListModel;
     private JPanel mainPanel;
     private JPanel innerMainPanel;
     private HorizontalBar mediaControlPanel;
+    private HorizontalBar onsetMediaControlPanel;
+    private JPanel lowerBar;
     private MenuPanel menuPanel;
     private ViewSongsPanel viewSongsPanel;
     private AnalysisPanel analysisPanel;
@@ -206,9 +212,10 @@ public final class MainWindow extends Window {
     private ActionListener showSimilarDoneListener;
     private ActionListener beatEstListener;
     private ActionListener onsetDetListener;
-    private ActionListener keyEstListener;
+    private ActionListener keyDetListener;
     private ActionListener beatEstDoneListener;
     private ActionListener onsetDetDoneListener;
+    private ActionListener keyDetDoneListener;
 
     /**
      * Constructor.
@@ -227,6 +234,7 @@ public final class MainWindow extends Window {
         this.currentSongModel = new SongModel();
         this.currentSongListModel = new SongListModel();
         this.cardLayout = new CardLayout();
+        this.lowerCardLayout = new CardLayout();
         this.glassPane = getGlassPane();
         this.rootPane.setBorder(ROOT_PANE_BORDER);
         this.t = new Thread();
@@ -251,7 +259,7 @@ public final class MainWindow extends Window {
         if (currentSongModel.isEmpty()) {
             optionPanel.showOptions(false);
             menuPanel.hideImage(true);
-            mediaControlPanel.setVisible(false);
+            lowerBar.setVisible(false);
         }
         setMinimumSize(WIN_MIN_SIZE);
         setSize(WIN_MIN_SIZE);
@@ -333,7 +341,7 @@ public final class MainWindow extends Window {
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         mainPanel.add(innerMainPanel, BorderLayout.CENTER);
-        mainPanel.add(mediaControlPanel, BorderLayout.SOUTH);
+        mainPanel.add(lowerBar, BorderLayout.SOUTH);
         innerMainPanel.add(menuPanel, MENU_PANEL.toString());
         innerMainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL.toString());
         innerMainPanel.add(dataPanel, DATA_PANEL.toString());
@@ -341,6 +349,9 @@ public final class MainWindow extends Window {
         innerMainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL.toString());
         innerMainPanel.add(chromagramPanel, CHROMAGRAM_PANEL.toString());
         innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL.toString());
+        lowerBar.add(mediaControlPanel, MEDIA_CONTROL_PANEL.toString());
+        lowerBar.add(onsetMediaControlPanel,
+            ONSET_MEDIA_CONTROL_PANEL.toString());
     }
 
     /**
@@ -752,6 +763,9 @@ public final class MainWindow extends Window {
         innerMainPanel.setVisible(true);
         mediaControlPanel = new InverseHorizontalBar(new BorderLayout());
         mediaControlPanel.setHeight(MEDIA_CONTROL_PANEL_HEIGHT);
+        onsetMediaControlPanel = new InverseHorizontalBar(new BorderLayout());
+        onsetMediaControlPanel.setHeight(MEDIA_CONTROL_PANEL_HEIGHT);
+        lowerBar = new JPanel(lowerCardLayout);
 
         menuPanel =
             new MenuPanel(matlabHandler, mediaControlPanel, inputMap, actionMap,
@@ -801,9 +815,10 @@ public final class MainWindow extends Window {
         sideBar = new SideBar();
         sideBar.add(optionPanel);
 
-        analysisPanel = new AnalysisPanel(matlabHandler, beatEstListener,
-            onsetDetListener, keyEstListener, backToMenuListener,
-            beatEstDoneListener, onsetDetDoneListener);
+        analysisPanel = new AnalysisPanel(matlabHandler,
+            onsetMediaControlPanel, beatEstListener,
+            onsetDetListener, keyDetListener, backToMenuListener,
+            beatEstDoneListener, onsetDetDoneListener, keyDetDoneListener);
         spectrogramPanel =
             new SpectrogramPanel(showSpecListener, backToMenuListener);
         chromagramPanel =
@@ -822,12 +837,24 @@ public final class MainWindow extends Window {
      */
     private void changePanel(PanelName panelName) {
         cardLayout.show(innerMainPanel, panelName.toString());
-        if (panelName.equals(MENU_PANEL) && !currentSongModel.isEmpty()) {
-            mediaControlPanel.setVisible(true);
-            menuPanel.setActive(true);
-        } else {
-            menuPanel.setActive(false);
-            mediaControlPanel.setVisible(false);
+        if (!currentSongModel.isEmpty()) {
+            if (panelName.equals(MENU_PANEL)) {
+                lowerCardLayout.show(lowerBar, MEDIA_CONTROL_PANEL.toString());
+                menuPanel.setActive(true);
+                lowerBar.setVisible(true);
+            } else if (panelName.equals(ANALYSIS_PANEL)) {
+                lowerCardLayout
+                    .show(lowerBar, ONSET_MEDIA_CONTROL_PANEL.toString());
+                menuPanel.setActive(false);
+                if (analysisPanel.isMediaControlActive()) {
+                    lowerBar.setVisible(true);
+                } else {
+                    lowerBar.setVisible(false);
+                }
+            } else {
+                menuPanel.setActive(false);
+                lowerBar.setVisible(false);
+            }
         }
     }
 
@@ -837,7 +864,14 @@ public final class MainWindow extends Window {
     private void initializeGeneralListeners() {
         emptyMouseListener = new EmptyMouseListener();
 
-        backToMenuListener = ae -> changePanel(MENU_PANEL);
+        backToMenuListener = ae -> {
+            if (analysisPanel.isVisible() && analysisPanel
+                .isMediaControlActive()) {
+                analysisPanel.stopSong();
+                analysisPanel.resetVolume();
+            }
+            changePanel(MENU_PANEL);
+        };
 
         openFileListener = ae -> {
             File f = openFile();
@@ -982,16 +1016,30 @@ public final class MainWindow extends Window {
 
         analyzeSongListener = ae -> {
             if (!currentSongModel.isEmpty()) {
-                menuPanel.pauseSong();
+                if (framesToSeconds(currentSongModel.getTotalSamples(),
+                    currentSongModel.getFreq()) < 2) {
+                    showDialog(SONG_TOO_SHORT_ERROR);
+                } else {
+                    if (analysisPanel.isMediaControlActive()) {
+                        lowerBar.setVisible(true);
+                    }
+                }
+                menuPanel.stopSong();
+                menuPanel.resetVolume();
                 changePanel(ANALYSIS_PANEL);
             }
         };
 
         beatEstListener = ae -> analysisPanel.setBeatEstOn();
-        onsetDetListener = ae -> analysisPanel.setOnsetDetOn();
-        keyEstListener = ae -> {
-            //TODO
+
+        onsetDetListener = ae -> {
+            analysisPanel.setOnsetDetOn();
+            if (analysisPanel.isMediaControlActive()) {
+                lowerBar.setVisible(true);
+            }
         };
+
+        keyDetListener = ae -> analysisPanel.setKeyDetOn();
 
         beatEstDoneListener = ae -> {
             int minBpm = analysisPanel.getMinBpm();
@@ -1003,15 +1051,29 @@ public final class MainWindow extends Window {
         };
 
         onsetDetDoneListener = ae -> {
-            String bpmText = analysisPanel.getBpm();
-            String smoothnessText = analysisPanel.getSmoothness();
-            int base = analysisPanel.getBase();
-            int smallest = analysisPanel.getSmallest();
+            String bpmText = analysisPanel.getBpmOnset();
+            String smoothnessText = analysisPanel.getSmoothnessOnset();
+            int base = analysisPanel.getBaseOnset();
+            int smallest = analysisPanel.getSmallestOnset();
             int bpm = convertToNumber(bpmText);
             int smoothness = convertToNumber(smoothnessText);
             if (checkNumbersOnset(bpm, smoothness)) {
                 t = new Thread(
                     new OnsetDetRunnable(bpm, smoothness, base, smallest));
+                waitForThread(t);
+            }
+        };
+
+        keyDetDoneListener = ae -> {
+            String bpmText = analysisPanel.getBpmKey();
+            String smoothnessText = analysisPanel.getSmoothnessKey();
+            int base = analysisPanel.getBaseKey();
+            int smallest = analysisPanel.getSmallestKey();
+            int bpm = convertToNumber(bpmText);
+            int smoothness = convertToNumber(smoothnessText);
+            if (checkNumbersOnset(bpm, smoothness)) {
+                t = new Thread(
+                    new KeyDetRunnable(bpm, smoothness, base, smallest));
                 waitForThread(t);
             }
         };
@@ -1116,7 +1178,6 @@ public final class MainWindow extends Window {
             analysisPanel.resetFields();
             spectrogramPanel.removeImages();
             chromagramPanel.removeImages();
-            analysisPanel.removeImages();
             analysisPanel.removeSong();
             optionPanel.showOptions(true);
             changePanel(MENU_PANEL);
@@ -1360,10 +1421,41 @@ public final class MainWindow extends Window {
                         analysisPanel.setOnsetImage(
                             currentSongModel.getTotalSamples(),
                             currentSongModel.getFreq(), plot);
+                        lowerBar.setVisible(true);
                     } catch (IOException ioe) {
                         showDialog(IMAGE_ERROR);
                     }
                 });
+            } catch (MatlabEngineException mee) {
+                showDialog(mee.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Runnable for key detection.
+     */
+    private final class KeyDetRunnable implements Runnable {
+        private final int bpm;
+        private final int smoothness;
+        private final int base;
+        private final int smallest;
+
+        private KeyDetRunnable(int bpm, int smoothness, int base,
+            int smallest) {
+            this.bpm = bpm;
+            this.smoothness = smoothness;
+            this.base = base;
+            this.smallest = smallest;
+        }
+
+        @Override
+        public synchronized void run() {
+            try {
+                String est = matlabHandler.keyDet(bpm, smoothness, base,
+                    smallest);
+                SwingUtilities
+                    .invokeLater(() -> analysisPanel.showEstimation(est));
             } catch (MatlabEngineException mee) {
                 showDialog(mee.getMessage());
             }

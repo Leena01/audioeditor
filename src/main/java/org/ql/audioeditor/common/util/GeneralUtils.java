@@ -63,7 +63,11 @@ public final class GeneralUtils {
      */
     public static int convertToNumber(String numberString) {
         if (!numberString.equals("")) {
-            return Integer.parseInt(numberString);
+            try {
+                return Integer.parseInt(numberString);
+            } catch (NumberFormatException e) {
+                return 0;
+            }
         }
         return 0;
     }

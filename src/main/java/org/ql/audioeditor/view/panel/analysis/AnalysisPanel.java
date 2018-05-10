@@ -1,6 +1,7 @@
 package org.ql.audioeditor.view.panel.analysis;
 
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
+import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.Button;
 import org.ql.audioeditor.view.core.panel.BasicPanel;
 
@@ -15,14 +16,15 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import static org.ql.audioeditor.view.enums.PanelName.BEAT_EST_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.KEY_DET_PANEL;
+import static org.ql.audioeditor.view.enums.PanelName.ONSET_DET_PANEL;
 import static org.ql.audioeditor.view.param.Constants.BACK_TO_MAIN_MENU_TEXT;
 
 /**
  * Panel for analysis.
  */
 public final class AnalysisPanel extends BasicPanel {
-    private static final String BEAT_EST_PANEL = "Beat estimation panel";
-    private static final String ONSET_DET_PANEL = "Onset detection panel";
     private static final Border BUTTON_PANEL_BORDER =
         BorderFactory.createEmptyBorder(20, 10, 20, 10);
     private final JButton beatButton;
@@ -32,6 +34,7 @@ public final class AnalysisPanel extends BasicPanel {
     private final JPanel buttonPanel;
     private final BeatEstPanel beatEstPanel;
     private final OnsetDetPanel onsetDetPanel;
+    private final KeyDetPanel keyDetPanel;
     private final CardLayout cardLayout;
     private final JPanel resultPanel;
     private final JPanel mainPanel;
@@ -39,17 +42,20 @@ public final class AnalysisPanel extends BasicPanel {
     /**
      * Constructor.
      *
-     * @param matlabHandler MATLAB handler
-     * @param be            BeatButton listener
-     * @param o             OnsetButton listener
-     * @param k             KeyButton listener
-     * @param b             BackOptionButton listener
-     * @param bed           BeatEstPanel doneButton listener
-     * @param od            OnsetDetPanel doneButton listener
+     * @param matlabHandler     MATLAB handler
+     * @param mediaControlPanel Media control panel
+     * @param be                BeatButton listener
+     * @param o                 OnsetButton listener
+     * @param k                 KeyButton listener
+     * @param b                 BackOptionButton listener
+     * @param bed               BeatEstPanel doneButton listener
+     * @param od                OnsetDetPanel doneButton listener
+     * @param kd                KeyDetPanel doneButton listener
      */
-    public AnalysisPanel(MatlabHandler matlabHandler, ActionListener be,
-        ActionListener o, ActionListener k, ActionListener b, ActionListener
-        bed, ActionListener od) {
+    public AnalysisPanel(MatlabHandler matlabHandler, HorizontalBar
+        mediaControlPanel, ActionListener be, ActionListener o,
+        ActionListener k, ActionListener b, ActionListener
+        bed, ActionListener od, ActionListener kd) {
         super();
         beatButton = new Button("Beat estimation", be);
         onsetButton = new Button("Onset detection", o);
@@ -58,7 +64,8 @@ public final class AnalysisPanel extends BasicPanel {
         buttonPanel = new JPanel(new FlowLayout());
 
         beatEstPanel = new BeatEstPanel(bed);
-        onsetDetPanel = new OnsetDetPanel(matlabHandler, od);
+        onsetDetPanel = new OnsetDetPanel(matlabHandler, mediaControlPanel, od);
+        keyDetPanel = new KeyDetPanel(kd);
 
         cardLayout = new CardLayout();
         resultPanel = new JPanel(cardLayout);
@@ -71,14 +78,35 @@ public final class AnalysisPanel extends BasicPanel {
      * Shows BeatEstPanel.
      */
     public void setBeatEstOn() {
-        cardLayout.show(resultPanel, BEAT_EST_PANEL);
+        cardLayout.show(resultPanel, BEAT_EST_PANEL.toString());
     }
 
     /**
      * Shows OnsetDetPanel.
      */
     public void setOnsetDetOn() {
-        cardLayout.show(resultPanel, ONSET_DET_PANEL);
+        cardLayout.show(resultPanel, ONSET_DET_PANEL.toString());
+    }
+
+    /**
+     * Shows KeyDetPanel.
+     */
+    public void setKeyDetOn() {
+        cardLayout.show(resultPanel, KEY_DET_PANEL.toString());
+    }
+
+    /**
+     * Stops the current song.
+     */
+    public void stopSong() {
+        onsetDetPanel.stopSong();
+    }
+
+    /**
+     * Sets the volume to default.
+     */
+    public void resetVolume() {
+        onsetDetPanel.resetVolume();
     }
 
     /**
@@ -109,10 +137,21 @@ public final class AnalysisPanel extends BasicPanel {
     }
 
     /**
+     * Shows the key estimation.
+     *
+     * @param est Estimated key
+     */
+    public void showEstimation(String est) {
+        keyDetPanel.showEstimation(est);
+    }
+
+    /**
      * Resets the fields to their default value.
      */
     public void resetFields() {
         beatEstPanel.resetFields();
+        onsetDetPanel.resetFields();
+        keyDetPanel.resetFields();
     }
 
     /**
@@ -125,13 +164,6 @@ public final class AnalysisPanel extends BasicPanel {
     }
 
     /**
-     * Removes the images.
-     */
-    public void removeImages() {
-        onsetDetPanel.removeImages();
-    }
-
-    /**
      * Maximizes the image.
      *
      * @param isMaximized Is the image maximized
@@ -141,11 +173,21 @@ public final class AnalysisPanel extends BasicPanel {
     }
 
     /**
+     * Returns whether the media controls are active.
+     *
+     * @return Is media control active
+     */
+    public boolean isMediaControlActive() {
+        return onsetDetPanel.isMediaControlActive() && onsetDetPanel
+            .isVisible();
+    }
+
+    /**
      * Returns the BPM.
      *
      * @return BPM
      */
-    public String getBpm() {
+    public String getBpmOnset() {
         return onsetDetPanel.getBpm();
     }
 
@@ -154,7 +196,7 @@ public final class AnalysisPanel extends BasicPanel {
      *
      * @return Filter size
      */
-    public String getSmoothness() {
+    public String getSmoothnessOnset() {
         return onsetDetPanel.getSmoothness();
     }
 
@@ -163,7 +205,7 @@ public final class AnalysisPanel extends BasicPanel {
      *
      * @return Base note value
      */
-    public Integer getBase() {
+    public Integer getBaseOnset() {
         return onsetDetPanel.getBase();
     }
 
@@ -172,8 +214,44 @@ public final class AnalysisPanel extends BasicPanel {
      *
      * @return Smallest note value
      */
-    public Integer getSmallest() {
+    public Integer getSmallestOnset() {
         return onsetDetPanel.getSmallest();
+    }
+
+    /**
+     * Returns the BPM.
+     *
+     * @return BPM
+     */
+    public String getBpmKey() {
+        return keyDetPanel.getBpm();
+    }
+
+    /**
+     * Returns the filter size.
+     *
+     * @return Filter size
+     */
+    public String getSmoothnessKey() {
+        return keyDetPanel.getSmoothness();
+    }
+
+    /**
+     * Returns the base note value.
+     *
+     * @return Base note value
+     */
+    public Integer getBaseKey() {
+        return keyDetPanel.getBase();
+    }
+
+    /**
+     * Returns the smallest note value.
+     *
+     * @return Smallest note value
+     */
+    public Integer getSmallestKey() {
+        return keyDetPanel.getSmallest();
     }
 
     /**
@@ -217,8 +295,9 @@ public final class AnalysisPanel extends BasicPanel {
         buttonPanel.add(onsetButton);
         buttonPanel.add(keyButton);
         buttonPanel.add(backOptionButton);
-        resultPanel.add(beatEstPanel, BEAT_EST_PANEL);
-        resultPanel.add(onsetDetPanel, ONSET_DET_PANEL);
+        resultPanel.add(beatEstPanel, BEAT_EST_PANEL.toString());
+        resultPanel.add(onsetDetPanel, ONSET_DET_PANEL.toString());
+        resultPanel.add(keyDetPanel, KEY_DET_PANEL.toString());
         mainPanel.add(buttonPanel);
         mainPanel.add(resultPanel);
         add(mainPanel);

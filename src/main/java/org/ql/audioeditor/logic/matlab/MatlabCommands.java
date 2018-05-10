@@ -17,11 +17,13 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NOTE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.ONSET_DET_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLAYER_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SAMPLE_VAR_2;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SCALE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SMALLEST_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
@@ -121,6 +123,11 @@ final class MatlabCommands {
         String.format("onsetDet(%s, %s, %s, %s, %s, %s, %s);",
             SAMPLE_VAR, FREQ_VAR, BPM_VAR, S_VAR, BASE_VAR,
             SMALLEST_VAR, ONSET_DET_VAR);
+
+    static final String DETECT_KEY =
+        String.format("[%s, %s] = keyDetection(%s, %s, %s, %s, %s, %s);",
+            NOTE_VAR, SCALE_VAR, SAMPLE_VAR, FREQ_VAR, BPM_VAR, S_VAR, BASE_VAR,
+            SMALLEST_VAR);
 
     /**
      * Private constructor. May not be called.

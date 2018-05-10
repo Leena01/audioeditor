@@ -89,6 +89,7 @@ public final class BeatEstPanel extends BasicPanel {
     public int getMinBpm() {
         String text = minBpmTextField.getText();
         if (text.equals("")) {
+            maxBpmTextField.setText(Integer.toString(BPM_MIN));
             return BPM_MIN;
         }
         return Integer.parseInt(text);
@@ -103,6 +104,7 @@ public final class BeatEstPanel extends BasicPanel {
     public int getMaxBpm() {
         String text = maxBpmTextField.getText();
         if (text.equals("")) {
+            maxBpmTextField.setText(Integer.toString(BPM_MAX));
             return BPM_MAX;
         }
         return Integer.parseInt(text);

@@ -115,7 +115,7 @@ public class SimplePlayerPanel extends BasicPanel {
     private Thread playbackThread;
     private int framesToSkip;
     private int recentVolumeLevel;
-    private boolean isPlaying;
+    private boolean playing;
 
     /**
      * Constructor.
@@ -138,7 +138,7 @@ public class SimplePlayerPanel extends BasicPanel {
         this.mediaControlPanel = mediaControlPanel;
         framesToSkip = 0;
         recentVolumeLevel = VOLUME_INIT;
-        isPlaying = false;
+        playing = false;
 
         timeField = new TimeLabel(FIELD_DIMENSION, SwingConstants.RIGHT);
         trackSlider = new TrackSlider(JSlider.HORIZONTAL);
@@ -239,6 +239,21 @@ public class SimplePlayerPanel extends BasicPanel {
     }
 
     /**
+     * Stops the current song.
+     */
+    public void stopSong() {
+        if (!playing) {
+            sliderTimer.reset();
+        }
+        playbackThread = new Thread(() -> matlabHandler.stopSong());
+        playbackThread.start();
+        try {
+            playbackThread.join();
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    /**
      * Plays/resumes the current song.
      */
     protected void playSong() {
@@ -256,21 +271,6 @@ public class SimplePlayerPanel extends BasicPanel {
      */
     protected void pauseSong() {
         playbackThread = new Thread(() -> matlabHandler.pauseSong());
-        playbackThread.start();
-        try {
-            playbackThread.join();
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    /**
-     * Stops the current song.
-     */
-    protected void stopSong() {
-        if (!isPlaying) {
-            sliderTimer.reset();
-        }
-        playbackThread = new Thread(() -> matlabHandler.stopSong());
         playbackThread.start();
         try {
             playbackThread.join();
@@ -358,7 +358,7 @@ public class SimplePlayerPanel extends BasicPanel {
      * @return Logical value (true if playing)
      */
     protected boolean isPlaying() {
-        return isPlaying;
+        return playing;
     }
 
     /**
@@ -475,12 +475,12 @@ public class SimplePlayerPanel extends BasicPanel {
             String message = (String) obj;
             switch (message) {
                 case "Play":
-                    isPlaying = true;
+                    playing = true;
                     pauseButton.setVisible(true);
                     playButton.setVisible(false);
                     break;
                 case "Pause":
-                    isPlaying = false;
+                    playing = false;
                     pauseButton.setVisible(false);
                     playButton.setVisible(true);
                     break;

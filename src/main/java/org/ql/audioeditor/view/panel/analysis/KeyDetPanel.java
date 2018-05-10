@@ -1,31 +1,54 @@
 package org.ql.audioeditor.view.panel.analysis;
 
-import org.ql.audioeditor.view.core.panel.BasicPanel;
+import org.ql.audioeditor.view.core.label.Label;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 
 /**
  * Panel for key detection.
  */
-public final class KeyDetPanel extends BasicPanel {
+public final class KeyDetPanel extends DetPanel {
+    private static final String EST_MESSAGE = "The detected key is %s.";
+    private final JLabel estimationLabel;
+    private final JPanel estimationPanel;
+
     /**
      * Constructor.
+     *
+     * @param d DoneButton listener
      */
-    public KeyDetPanel() {
-        setStyle();
-        addPanels();
+    public KeyDetPanel(ActionListener d) {
+        super(d);
+
+        estimationLabel = new Label(EST_MESSAGE);
+        estimationPanel = new JPanel();
+        setStyleAdditional();
+        addPanelsAdditional();
+        init();
     }
 
     /**
-     * {@inheritDoc}
+     * Shows the detected key.
+     *
+     * @param est Detected key
      */
-    @Override
-    protected void setStyle() {
-        setOpaque(false);
+    public void showEstimation(String est) {
+        estimationLabel.setText(String.format(EST_MESSAGE, est));
+        estimationPanel.setVisible(true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void addPanels() {
+    private void setStyleAdditional() {
+        estimationPanel.setOpaque(false);
+    }
+
+    private void addPanelsAdditional() {
+        estimationPanel.add(estimationLabel);
+        mainPanel.add(estimationPanel);
+    }
+
+    private void init() {
+        estimationPanel.setVisible(false);
     }
 }

@@ -16,6 +16,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_PITCH;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CHANGE_VOLUME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CREATE_WINDOW_MAP;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.CUT_SONG;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.DETECT_KEY;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.DETECT_ONSET;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.ESTIMATE_BEAT;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.GET_CURRENT_FRAME;
@@ -50,8 +51,10 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MIN_BPM_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.NFFT_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NOTE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.ONSET_DET_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.PLOT_IMG_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.SCALE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SMALLEST_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_3D_IMG_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.SPEC_IMG_VAR;
@@ -76,6 +79,7 @@ public final class MatlabHandler {
         "Cannot change pitch.";
     private static final String CANNOT_ESTIMATE_BEAT =
         "Beat estimation has failed.";
+    private static final String KEY_DET_ERROR = "Key detection has failed.";
     private static final String CLOSE_ERROR = "Error closing Matlab Engine.";
     private static final String FOLDER = getPath() + File.separator
         + ConfigPropertiesLoader.getMatlabFolder();
@@ -404,10 +408,10 @@ public final class MatlabHandler {
     /**
      * Show a song's oscillogram with the detected onsets.
      *
-     * @param bpm BPM
+     * @param bpm        BPM
      * @param smoothness Filter size
-     * @param base Lower value of the time signature (value of beat)
-     * @param smallest Smallest note value that might appear in the song
+     * @param base       Lower value of the time signature (value of beat)
+     * @param smallest   Smallest note value that might appear in the song
      * @param imageName  Name of the generated image
      * @throws MatlabEngineException Exception caused by the MATLAB Engine
      */
@@ -423,6 +427,32 @@ public final class MatlabHandler {
             eng.eval(DETECT_ONSET);
         } catch (Exception e) {
             throw new MatlabEngineException(IMAGE_ERROR);
+        }
+    }
+
+    /**
+     * Show a song's detected key.
+     *
+     * @param bpm        BPM
+     * @param smoothness Filter size
+     * @param base       Lower value of the time signature (value of beat)
+     * @param smallest   Smallest note value that might appear in the song
+     * @return Detected key
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    public synchronized String keyDet(int bpm, int smoothness, int base,
+        int smallest)
+        throws MatlabEngineException {
+        try {
+            eng.putVariable(BPM_VAR.toString(), bpm);
+            eng.putVariable(S_VAR.toString(), smoothness);
+            eng.putVariable(BASE_VAR.toString(), base);
+            eng.putVariable(SMALLEST_VAR.toString(), smallest);
+            eng.eval(DETECT_KEY);
+            return eng.getVariable(NOTE_VAR.toString())
+                + " " + eng.getVariable(SCALE_VAR.toString());
+        } catch (Exception e) {
+            throw new MatlabEngineException(KEY_DET_ERROR);
         }
     }
 

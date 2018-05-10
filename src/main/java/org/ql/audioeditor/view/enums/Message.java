@@ -12,7 +12,8 @@ public enum Message {
     TIMEOUT_ERROR("Error: process took too long to finish."),
     INTERRUPTED_ERROR("Error: the process was interrupted."),
     FILE_TYPE_ERROR("This file type is not supported."),
-    IMAGE_ERROR("Cannot load image.");
+    IMAGE_ERROR("Cannot load image."),
+    SONG_TOO_SHORT_ERROR("The current song is too short to analyze.");
 
     private final String text;
 

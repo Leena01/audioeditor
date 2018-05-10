@@ -36,7 +36,9 @@ enum MatlabVariables {
     BPM_VAR("bpm"),
     S_VAR("s"),
     BASE_VAR("base"),
-    SMALLEST_VAR("smallest");
+    SMALLEST_VAR("smallest"),
+    NOTE_VAR("note"),
+    SCALE_VAR("scale");
 
     private final String variable;
 

@@ -44,7 +44,8 @@ public final class ConfigPropertiesLoader {
         matlabFolder = properties.getProperty("matlab.folder");
         refreshMillis =
             Integer.parseInt(properties.getProperty("refresh.millis"));
-        timeoutSeconds = Integer.parseInt(properties.getProperty("timeout.seconds"));
+        timeoutSeconds = Integer
+            .parseInt(properties.getProperty("timeout.seconds"));
     }
 
     /**
@@ -93,6 +94,12 @@ public final class ConfigPropertiesLoader {
         return refreshMillis;
     }
 
+    /**
+     * Returns the timeout (in seconds). Any ongoing process is interrupted if
+     * this time period is exceeded.
+     *
+     * @return The period of time allowed
+     */
     public static int getTimeoutSeconds() {
         return timeoutSeconds;
     }

@@ -28,7 +28,7 @@ public final class SongModel {
     private Song song;
     private double totalSamples = 0.0;
     private double freq = 0.0;
-    private boolean isSaved = false;
+    private boolean saved = false;
     private Image cover = ImageLoader.getCover();
     private BufferedImage plot = null;
 
@@ -68,7 +68,7 @@ public final class SongModel {
         this.song = other.song;
         this.totalSamples = other.totalSamples;
         this.freq = other.freq;
-        this.isSaved = other.isSaved;
+        this.saved = other.saved;
         this.cover = other.cover;
         this.plot = other.plot;
     }
@@ -286,7 +286,7 @@ public final class SongModel {
      * @return Logical value (true if stored)
      */
     public boolean isSaved() {
-        return isSaved;
+        return saved;
     }
 
     /**
@@ -295,7 +295,7 @@ public final class SongModel {
      * @param isSaved Shows whether the current song is saved in the database
      */
     public void setSaved(boolean isSaved) {
-        this.isSaved = isSaved;
+        this.saved = isSaved;
     }
 
     /**

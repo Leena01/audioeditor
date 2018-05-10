@@ -1,5 +1,5 @@
 function onsetDet(x, fs, bpm, s, lower, smallest, imgname)
-%ONSETDET Finds the onset of musical notes.
+%ONSETDET Finds and plots the onset of musical notes.
 %	x: samples
 %	fs: sampling rate
 %	bpm: BPM
