@@ -263,18 +263,18 @@ public final class SongModel {
     }
 
     /**
-     * Returns the sampling rate.
+     * Returns the sample rate.
      *
-     * @return Sampling rate
+     * @return Sample rate
      */
     public double getFreq() {
         return freq;
     }
 
     /**
-     * Sets the sampling rate.
+     * Sets the sample rate.
      *
-     * @param freq Sampling rate
+     * @param freq Sample rate
      */
     public void setFreq(double freq) {
         this.freq = freq;

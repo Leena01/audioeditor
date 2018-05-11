@@ -1,8 +1,5 @@
 package org.ql.audioeditor.view.param;
 
-import org.ql.audioeditor.view.enums.Attribute;
-import org.ql.audioeditor.view.enums.SaveOption;
-
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import java.awt.Color;
@@ -23,7 +20,7 @@ public final class Constants {
     public static final Border PLAYER_PANEL_BORDER =
         BorderFactory.createEmptyBorder(15, 15, 15, 15);
     public static final Dimension WIN_MIN_SIZE = new Dimension(800, 600);
-    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 330);
+    public static final Dimension WIN_MIN_SIZE_HIDDEN = new Dimension(800, 300);
     public static final Dimension COVER_SIZE = new Dimension(300, 300);
     public static final Dimension COVER_SIZE_MAX = new Dimension(450, 450);
     public static final Dimension BOTTOM_FIELD_SIZE =
@@ -37,8 +34,9 @@ public final class Constants {
     public static final Dimension LEVEL_SLIDER_SIZE = new Dimension(200, 30);
     public static final Dimension IMAGE_SIZE = new Dimension(360, 270);
     public static final Dimension IMAGE_SIZE_MAX = new Dimension(560, 420);
-    public static final Object[] OPTIONS = SaveOption.values();
-    public static final Object[] ATTRIBUTES = Attribute.values();
+    public static final Object[] OPTIONS = {"Save as...", "Save", "Cancel"};
+    public static final Object[] ATTRIBUTES = {"Every song in order",
+        "Artist", "Album", "Genre"};
     public static final String BACK_TO_MAIN_MENU_TEXT = "Back to main menu";
     public static final int TEXT_FIELD_DIGIT_SIZE_MIN = 1;
     public static final int TEXT_FIELD_DIGIT_SIZE_MAX = 5;

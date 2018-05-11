@@ -12,7 +12,7 @@ function [x, t] = istft(stft, wlen, hop, nfft, fs)
 % wlen - length of the sinthesis Hamming window
 % hop - hop size
 % nfft - number of FFT points
-% fs - sampling frequency, Hz
+% fs - sample frequency, Hz
 % x - signal in the time domain
 % t - time vector, s
 

@@ -113,6 +113,7 @@ public class SimplePlayerPanel extends BasicPanel {
     private final GridBagConstraints c;
     private final GridBagLayout gridBag;
     private Thread playbackThread;
+    private double totalSamples;
     private int framesToSkip;
     private int recentVolumeLevel;
     private boolean playing;
@@ -136,6 +137,7 @@ public class SimplePlayerPanel extends BasicPanel {
         setLayout(gridBag);
         this.matlabHandler = matlabHandler;
         this.mediaControlPanel = mediaControlPanel;
+        totalSamples = 0.0;
         framesToSkip = 0;
         recentVolumeLevel = VOLUME_INIT;
         playing = false;
@@ -216,17 +218,27 @@ public class SimplePlayerPanel extends BasicPanel {
      * Sets the current song.
      *
      * @param totalSamples Total number of samples
-     * @param freq         Sampling rate
+     * @param freq         Sample rate
      * @param plot         Plot
      */
     public void setCurrentSong(double totalSamples, double freq, BufferedImage
         plot) {
+        this.totalSamples = totalSamples;
         framesToSkip = secondsToFrames(SECONDS_TO_SKIP, freq);
         sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
         if (plot != null) {
             trackSlider.setImage(plot);
             trackSlider.repaint();
         }
+    }
+
+    /**
+     * Sets the sample rate.
+     *
+     * @param freq Sample rate
+     */
+    public void setFreq(double freq) {
+        sliderTimer.schedule(REFRESH_MILLIS, totalSamples, freq);
     }
 
     /**
@@ -284,7 +296,13 @@ public class SimplePlayerPanel extends BasicPanel {
      */
     protected void moveBackward() {
         int newValue = trackSlider.getValue() - framesToSkip;
-        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
+        int min = trackSlider.getMinimum();
+        if (newValue < min) {
+            newValue = min;
+        }
+        int finalNewValue = newValue;
+        playbackThread = new Thread(() ->
+            matlabHandler.relocateSong(finalNewValue));
         playbackThread.start();
         try {
             playbackThread.join();
@@ -299,13 +317,19 @@ public class SimplePlayerPanel extends BasicPanel {
      */
     protected void moveForward() {
         int newValue = trackSlider.getValue() + framesToSkip;
-        playbackThread = new Thread(() -> matlabHandler.relocateSong(newValue));
-        playbackThread.start();
-        try {
-            playbackThread.join();
-        } catch (InterruptedException ignored) {
+        int max = trackSlider.getMaximum();
+        if (newValue >= max) {
+            stopSong();
+        } else {
+            playbackThread = new Thread(() ->
+                matlabHandler.relocateSong(newValue));
+            playbackThread.start();
+            try {
+                playbackThread.join();
+            } catch (InterruptedException ignored) {
+            }
+            sliderTimer.changeTime(newValue);
         }
-        sliderTimer.changeTime(newValue);
     }
 
     /**

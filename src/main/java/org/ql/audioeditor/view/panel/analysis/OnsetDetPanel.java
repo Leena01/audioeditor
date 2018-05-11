@@ -36,7 +36,7 @@ public final class OnsetDetPanel extends DetPanel {
      * Sets image.
      *
      * @param totalSamples Total number of samples
-     * @param freq         Sampling rate
+     * @param freq         Sample rate
      * @param plot         Plot
      */
     public void setOnsetImage(double totalSamples, double freq, BufferedImage

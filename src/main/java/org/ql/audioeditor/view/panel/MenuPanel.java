@@ -100,7 +100,7 @@ public final class MenuPanel extends BasicPanel {
      * Sets the current song.
      *
      * @param totalSamples Total number of samples
-     * @param freq         Sampling rate
+     * @param freq         Sample rate
      * @param plot         Plot
      * @param cover        Cover
      * @param isNormal     Is the image size normal

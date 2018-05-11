@@ -70,7 +70,7 @@ public class SliderTimer extends Observable {
      *
      * @param refreshMillis Refresh interval (in milliseconds)
      * @param totalSamples  Total number of samples
-     * @param freq          Sampling rate
+     * @param freq          Sample rate
      */
     public void schedule(int refreshMillis, double totalSamples, double freq) {
         this.refreshMillis = refreshMillis;

@@ -1,7 +1,7 @@
 function locs = onsets(x, fs, bpm, s, lower, smallest)
 %ONSETDET Returns the onset of musical notes.
 %	x: samples
-%	fs: sampling rate
+%	fs: sample rate
 %	bpm: BPM
 %	s: filter size
 %   lower: lower value of the time signature (value of beat)
@@ -11,8 +11,8 @@ function locs = onsets(x, fs, bpm, s, lower, smallest)
 
 	figure('visible', 'off');
 	
-	% Observed frequency domain: 20 - 4096 Hz
-    bandlimits = 20;
+	% Observed frequency domain: 32 - 4096 Hz
+    bandlimits = 32;
     a = filterbank(x, bandlimits);
     b = hwindow(a, 0.4, bandlimits);
     c = diffrect(b, 1);

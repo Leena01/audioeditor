@@ -258,7 +258,7 @@ public final class AnalysisPanel extends BasicPanel {
      * Shows the plot.
      *
      * @param totalSamples Total number of samples
-     * @param freq         Sampling rate
+     * @param freq         Sample rate
      * @param plot         Plot
      */
     public void setOnsetImage(double totalSamples, double freq, BufferedImage

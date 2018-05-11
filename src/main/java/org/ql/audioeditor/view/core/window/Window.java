@@ -3,7 +3,6 @@ package org.ql.audioeditor.view.core.window;
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.view.core.bar.HorizontalBar;
 import org.ql.audioeditor.view.core.button.TransparentButton;
-import org.ql.audioeditor.view.core.label.Label;
 import org.ql.audioeditor.view.core.listener.EmptyMouseListener;
 
 import javax.swing.AbstractAction;
@@ -14,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
@@ -23,9 +21,7 @@ import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -43,11 +39,8 @@ import static org.ql.audioeditor.view.param.Constants.WIN_MIN_SIZE_HIDDEN;
  * General window (frame).
  */
 public abstract class Window extends JFrame {
-    private static final int FONT_SIZE = 30;
     private static final String LOOK_AND_FEEL =
         "com.jtattoo.plaf.hifi.HiFiLookAndFeel";
-    private static final String TITLE = "Audio Editor";
-    private static final String FONT = "Alex Brush";
     private static final Dimension IMAGE_SIZE = new Dimension(20, 20);
     private static final Dimension BUTTON_SIZE = new Dimension(30, 20);
     private static final ImageIcon UPWARD_ICON =
@@ -70,10 +63,9 @@ public abstract class Window extends JFrame {
             IMAGE_SIZE);
     private static final Border MENU_PANEL_BORDER =
         BorderFactory.createEmptyBorder(5, 5, 5, 5);
+    private static final int TITLE_HEIGHT = 36;
     private static Point compCoordinates = null;
     private final HorizontalBar titleBar;
-    private final JLabel titleLabel;
-    private final JPanel titlePanel;
     private final JPanel menuPanel;
     private final JButton hideButton;
     private final JButton minimizeButton;
@@ -131,9 +123,6 @@ public abstract class Window extends JFrame {
         inputMap = rootPane.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         actionMap = rootPane.getActionMap();
         titleBar = new HorizontalBar(maximizeMouseListener, dragListener);
-        titlePanel = new JPanel(new GridBagLayout());
-        titleLabel = new Label(TITLE);
-        titleLabel.setFont(new Font(FONT, Font.ITALIC, FONT_SIZE));
 
         FlowLayout menuPanelLayout = new FlowLayout(FlowLayout.RIGHT);
         menuPanel = new JPanel(menuPanelLayout);
@@ -149,16 +138,14 @@ public abstract class Window extends JFrame {
         exitButton =
             new TransparentButton(CLOSE_ICON, BUTTON_SIZE, e -> close());
 
-        titlePanel.setOpaque(false);
         menuPanel.setOpaque(false);
         menuPanel.add(hideButton);
         menuPanel.add(minimizeButton);
         menuPanel.add(maximizeButton);
         menuPanel.add(exitButton);
         menuPanel.setBorder(MENU_PANEL_BORDER);
-        titlePanel.add(titleLabel);
         titleBar.add(menuPanel, BorderLayout.NORTH);
-        titleBar.add(titlePanel, BorderLayout.SOUTH);
+        titleBar.setHeight(TITLE_HEIGHT);
         add(titleBar, BorderLayout.NORTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

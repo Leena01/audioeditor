@@ -20,6 +20,7 @@ public class PopupDialog extends JDialog {
         super(owner, title, true);
         getContentPane().add(panel);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         pack();
     }
 

@@ -576,6 +576,24 @@ public final class MainWindow extends Window {
     private void cutSong() {
         t = new Thread(new CutSongRunnable());
         waitForThread(t);
+
+        int result = showSaveDialog();
+        switch (result) {
+            case JOptionPane.YES_OPTION:
+                String path = saveAsNewFile();
+                if (path != null) {
+                    t = new Thread(new CutSongDoneRunnable(path));
+                    waitForThread(t);
+                }
+                break;
+            case JOptionPane.NO_OPTION:
+                t = new Thread(new CutSongDoneRunnable(currentSongModel
+                    .getPath()));
+                waitForThread(t);
+                openSong(currentSongModel);
+            default:
+                break;
+        }
     }
 
     /**
@@ -635,12 +653,14 @@ public final class MainWindow extends Window {
                 validFiles.add(f);
             }
         }
-        SongListModel songListModel = new SongListModel(validFiles);
-        try {
-            databaseAccessModel.addSongs(songListModel);
-            showDialog(SUCCESSFUL_OPERATION_INFO);
-        } catch (InvalidOperationException | SQLConnectionException e) {
-            showDialog(e.getMessage());
+        if (!validFiles.isEmpty()) {
+            SongListModel songListModel = new SongListModel(validFiles);
+            try {
+                databaseAccessModel.addSongs(songListModel);
+                showDialog(SUCCESSFUL_OPERATION_INFO);
+            } catch (InvalidOperationException | SQLConnectionException e) {
+                showDialog(e.getMessage());
+            }
         }
     }
 
@@ -979,9 +999,26 @@ public final class MainWindow extends Window {
         };
 
         cpSaveListener = ae -> {
-            t = new Thread(new ChangePitchRunnable());
-            waitForThread(t);
+            int result = showSaveDialog();
+            switch (result) {
+                case JOptionPane.YES_OPTION:
+                    String path = saveAsNewFile();
+                    if (path != null) {
+                        t = new Thread(new ChangePitchRunnable(path));
+                        waitForThread(t);
+                    }
+                    break;
+                case JOptionPane.NO_OPTION:
+                    t = new Thread(new ChangePitchRunnable(currentSongModel
+                        .getPath()));
+                    waitForThread(t);
+                    openSong(currentSongModel);
+                    break;
+                default:
+                    break;
+            }
         };
+
 
         cutFileListener = ae -> {
             if (!currentSongModel.isEmpty()) {
@@ -1023,10 +1060,10 @@ public final class MainWindow extends Window {
                     if (analysisPanel.isMediaControlActive()) {
                         lowerBar.setVisible(true);
                     }
+                    menuPanel.stopSong();
+                    menuPanel.resetVolume();
+                    changePanel(ANALYSIS_PANEL);
                 }
-                menuPanel.stopSong();
-                menuPanel.resetVolume();
-                changePanel(ANALYSIS_PANEL);
             }
         };
 
@@ -1113,12 +1150,14 @@ public final class MainWindow extends Window {
      */
     private final class ClosingChangePitchAdapter extends WindowAdapter {
         @Override
-        public void windowClosed(WindowEvent we) {
+        public void windowClosing(WindowEvent we) {
             changePitchPanel.removeSong();
             t = new Thread(() -> {
                 matlabHandler.stopSong();
                 try {
-                    matlabHandler.changePitch(currentSongModel.getFreq());
+                    double freq = currentSongModel.getFreq();
+                    matlabHandler.changePitch(freq);
+                    changePitchPanel.setFreq(freq);
                 } catch (MatlabEngineException mee) {
                     new Thread(new DialogRunnable(mee.getMessage())).start();
                 }
@@ -1268,39 +1307,27 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler
                     .cutSong(cutSongPanel.getFrom(), cutSongPanel.getTo());
-                SwingUtilities.invokeLater(() -> {
-                    int result = showSaveDialog();
-                    switch (result) {
-                        case JOptionPane.YES_OPTION:
-                            saveAs();
-                            break;
-                        case JOptionPane.NO_OPTION:
-                            save();
-                        default:
-                            break;
-                    }
-                });
             } catch (MatlabEngineException mee) {
                 new Thread(new DialogRunnable(mee.getMessage())).start();
                 cutSongPanel.setDefaultValues();
             }
         }
+    }
 
-        private void saveAs() {
-            String path = saveAsNewFile();
-            if (path != null) {
-                try {
-                    matlabHandler.saveSongCut(path);
-                } catch (MatlabEngineException mee) {
-                    showDialog(mee.getMessage());
-                }
-            }
+    /**
+     * Runnable for changing pitch.
+     */
+    private final class CutSongDoneRunnable implements Runnable {
+        private final String path;
+
+        private CutSongDoneRunnable(String path) {
+            this.path = path;
         }
 
-        private void save() {
+        @Override
+        public synchronized void run() {
             try {
-                matlabHandler.saveSongCut(currentSongModel.getPath());
-                openSong(currentSongModel);
+                matlabHandler.saveSongCut(path);
             } catch (MatlabEngineException mee) {
                 showDialog(mee.getMessage());
             }
@@ -1332,36 +1359,16 @@ public final class MainWindow extends Window {
      * Runnable for changing pitch.
      */
     private final class ChangePitchRunnable implements Runnable {
+        private final String path;
+
+        private ChangePitchRunnable(String path) {
+            this.path = path;
+        }
+
         @Override
         public synchronized void run() {
-            int result = showSaveDialog();
-            switch (result) {
-                case JOptionPane.YES_OPTION:
-                    saveAs();
-                    break;
-                case JOptionPane.NO_OPTION:
-                    save();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void saveAs() {
-            String path = saveAsNewFile();
-            if (path != null) {
-                try {
-                    matlabHandler.saveSongChangePitch(path);
-                } catch (MatlabEngineException mee) {
-                    showDialog(mee.getMessage());
-                }
-            }
-        }
-
-        private void save() {
             try {
-                matlabHandler.saveSongChangePitch(currentSongModel.getPath());
-                openSong(currentSongModel);
+                matlabHandler.saveSongChangePitch(path);
             } catch (MatlabEngineException mee) {
                 showDialog(mee.getMessage());
             }

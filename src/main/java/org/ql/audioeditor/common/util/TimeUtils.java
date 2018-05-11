@@ -36,10 +36,10 @@ public final class TimeUtils {
     }
 
     /**
-     * Converts frames to seconds according to the sampling rate given.
+     * Converts frames to seconds according to the sample rate given.
      *
      * @param frame Number of frames
-     * @param freq  Sampling rate
+     * @param freq  Sample rate
      * @return Seconds
      */
     public static int framesToSeconds(double frame, double freq) {
@@ -47,10 +47,10 @@ public final class TimeUtils {
     }
 
     /**
-     * Converts seconds to frames according to the sampling rate given.
+     * Converts seconds to frames according to the sample rate given.
      *
      * @param seconds Seconds
-     * @param freq    Sampling rate
+     * @param freq    Sample rate
      * @return Number of frames
      */
     public static int secondsToFrames(int seconds, double freq) {

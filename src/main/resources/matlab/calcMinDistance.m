@@ -2,7 +2,7 @@ function mindis = calcMinDistance(bpm, fs, lower, smallest)
 %CALCMINDISTANCE Calculates the minimum distance between notes measured in
 %frames.
 %   bpm: BPM
-%   fs: Sampling rate
+%   fs: Sample rate
 %   lower: Lower value of the time signature (value of beat)
 %   smallest: Smallest note value that might appear in the song
     timeOfBeat = 60/bpm;

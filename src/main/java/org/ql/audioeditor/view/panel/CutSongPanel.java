@@ -98,7 +98,7 @@ public final class CutSongPanel extends BasicPanel {
      * Sets the current song.
      *
      * @param totalSamples Total number of samples
-     * @param freq         Sampling rate
+     * @param freq         Sample rate
      * @param plot         Plot
      * @param isMaximized  Is the window maximized
      */

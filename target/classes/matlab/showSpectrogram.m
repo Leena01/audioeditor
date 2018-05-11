@@ -4,7 +4,7 @@ function showSpectrogram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
 %	wlen: window size
 %	nfft: number of FFT points
 %	window: window function
-%	fs: sampling rate
+%	fs: sample rate
 %	imgname: name of file to save the image to
 %	windowmap: map of window names and window functions
 %

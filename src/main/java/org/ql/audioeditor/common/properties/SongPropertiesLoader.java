@@ -266,18 +266,18 @@ public final class SongPropertiesLoader {
     }
 
     /**
-     * Returns the smallest sampling rate allowed.
+     * Returns the smallest sample rate allowed.
      *
-     * @return Smallest sampling rate
+     * @return Smallest sample rate
      */
     public static int getFrequencyMin() {
         return frequencyMin;
     }
 
     /**
-     * Returns the biggest sampling rate allowed.
+     * Returns the biggest sample rate allowed.
      *
-     * @return Biggest sampling rate
+     * @return Biggest sample rate
      */
     public static int getFrequencyMax() {
         return frequencyMax;

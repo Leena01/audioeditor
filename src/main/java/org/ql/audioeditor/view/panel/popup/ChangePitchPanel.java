@@ -97,21 +97,22 @@ public final class ChangePitchPanel extends BasicPanel {
     }
 
     /**
-     * Returns the sampling rate shown by the slider.
-     * @return Sampling rate
+     * Returns the sample rate shown by the slider.
+     * @return Sample rate
      */
     public int getFreq() {
         return frequencySlider.getValue();
     }
 
     /**
-     * Set new sampling rate.
-     * @param freq Sampling rate
+     * Set new sample rate.
+     * @param freq Sample rate
      */
     public void setFreq(double freq) {
         frequencySlider.setValue((int) freq);
         currentFreqLabel.setText(String.format(CURR_FREQ_TEXT, freq));
         simplePlayerPanel.resetVolume();
+        simplePlayerPanel.setFreq(freq);
         currentFreqPanel.setVisible(true);
         simplePlayerPanel.setVisible(true);
         mediaControlPanel.setVisible(true);
@@ -121,7 +122,7 @@ public final class ChangePitchPanel extends BasicPanel {
     /**
      * Sets the current song.
      * @param totalSamples Total number of samples
-     * @param freq Sampling rate
+     * @param freq Sample rate
      * @param plot Plot image
      */
     public void setSong(double totalSamples, double freq, BufferedImage plot) {

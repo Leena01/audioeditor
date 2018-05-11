@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\properties\ConfigPropertiesLoader.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\SimplePlayerPanel.java">
 </file>
 </checkstyle>

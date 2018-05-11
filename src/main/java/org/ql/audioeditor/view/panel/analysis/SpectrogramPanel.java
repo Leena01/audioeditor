@@ -60,6 +60,7 @@ public final class SpectrogramPanel extends ChromagramPanel {
      */
     public void changeImage(Image image, Image image3d, boolean isNormal,
         boolean isMaximized) {
+        super.changeImage(image, isNormal, isMaximized);
         if (specIcon3d.getImage() != null) {
             specIcon3d.getImage().flush();
         }

@@ -1,7 +1,7 @@
 function locs = onsets(x, fs, bpm, s, lower, smallest)
 %ONSETDET Returns the onset of musical notes.
 %	x: samples
-%	fs: sampling rate
+%	fs: sample rate
 %	bpm: BPM
 %	s: filter size
 %   lower: lower value of the time signature (value of beat)

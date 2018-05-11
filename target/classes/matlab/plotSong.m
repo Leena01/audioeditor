@@ -1,7 +1,7 @@
 function plotSong(x, fs, imgname)
 %PLOTSONG	Plots the oscillogram of a sound file (without labels).
 %	x: samples
-%	fs: sampling rate
+%	fs: sample rate
 %	imgname: name of the file to save to
 	figure('visible', 'off');
 	xsize = size(x);

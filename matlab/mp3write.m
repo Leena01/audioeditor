@@ -11,7 +11,7 @@ function mp3write(D,SR,NBITS,FILE,OPTIONS)
 %     program; default is '--quiet -h' for high-quality model.
 %
 %   Example: 
-%   To convert a wav file to mp3 (assuming the sample rate is 
+%   To convert a wav file to mp3 (assuming the sampling rate is
 %   supported):
 %     [Y,FS] = wavread('piano.wav');
 %     mp3write(Y,FS,'piano.mp3');

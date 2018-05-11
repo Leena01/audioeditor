@@ -62,8 +62,8 @@ public abstract class BasicFormPanel extends BasicPanel {
     public void changeImage(Image image, boolean isNormal, boolean
         isMaximized) {
         removeImages();
-        imageIcon = new ImageIcon(resizeImage(image, IMAGE_SIZE_MAX));
-        imageIconMax = new ImageIcon(resizeImage(image, IMAGE_SIZE));
+        imageIcon = new ImageIcon(resizeImage(image, IMAGE_SIZE));
+        imageIconMax = new ImageIcon(resizeImage(image, IMAGE_SIZE_MAX));
 
         maximizeImage(isMaximized);
         if (isNormal) {
