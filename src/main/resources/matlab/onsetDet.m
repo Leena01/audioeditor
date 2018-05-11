@@ -12,8 +12,8 @@ function onsetDet(x, fs, bpm, s, lower, smallest, imgname)
 
 	figure('visible', 'off');
 	
-	% Observed frequency domain: 20 - 4096 Hz
-    bandlimits = 20;
+	% Observed frequency domain: 32 - 4096 Hz
+    bandlimits = 32;
     a = filterbank(x, bandlimits);
     b = hwindow(a, 0.4, bandlimits);
     c = diffrect(b, 1);

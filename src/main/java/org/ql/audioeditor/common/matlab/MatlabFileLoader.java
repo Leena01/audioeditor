@@ -29,6 +29,9 @@ public final class MatlabFileLoader {
         for (MatlabFiles f : MatlabFiles.values()) {
             copyFile(f.toString());
         }
+        for (int i = 0; i < SoundFiles.size(); i++) {
+            copyFile(SoundFiles.get(i));
+        }
     }
 
     private static void copyFile(String file) throws IOException {

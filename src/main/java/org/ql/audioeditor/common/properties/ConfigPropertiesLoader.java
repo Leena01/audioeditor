@@ -15,6 +15,7 @@ public final class ConfigPropertiesLoader {
     private static String jdbc;
     private static String url;
     private static String matlabFolder;
+    private static String soundFilesFolder;
     private static int refreshMillis;
     private static int timeoutSeconds;
 
@@ -42,6 +43,7 @@ public final class ConfigPropertiesLoader {
         jdbc = properties.getProperty("jdbc");
         url = properties.getProperty("url");
         matlabFolder = properties.getProperty("matlab.folder");
+        soundFilesFolder = properties.getProperty("sound.files.folder");
         refreshMillis =
             Integer.parseInt(properties.getProperty("refresh.millis"));
         timeoutSeconds = Integer
@@ -82,6 +84,15 @@ public final class ConfigPropertiesLoader {
      */
     public static String getMatlabFolder() {
         return matlabFolder;
+    }
+
+    /**
+     * Returns the path of the subfolder in which the sound files are stored.
+     *
+     * @return Folder path
+     */
+    public static String getSoundFilesFolder() {
+        return soundFilesFolder;
     }
 
     /**
