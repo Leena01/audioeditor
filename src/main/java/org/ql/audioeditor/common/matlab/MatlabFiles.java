@@ -13,7 +13,6 @@ public enum MatlabFiles {
     GET_C_MATRIX("getCMatrix.m"),
     GET_CURRENT_FRAME("getCurrentFrame.m"),
     IS_PLAYING("isPlaying.m"),
-    ISTFT("istft.m"),
     MP3WRITE("mp3write.m"),
     OPEN_SONG("openSong.m"),
     PAUSE_SONG("pauseSong.m"),

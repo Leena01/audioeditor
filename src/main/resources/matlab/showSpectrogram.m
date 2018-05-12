@@ -1,7 +1,8 @@
-function showSpectrogram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
+function showSpectrogram(x, wlen, noverlap, nfft, window, fs, imgname, windowmap)
 %SHOWSPECTROGRAM Displaying a spectrogram generated using a Short-Time Fourier Transform (STFT).
 %	x: samples
 %	wlen: window size
+%	noverlap: number of overlapped samples
 %	nfft: number of FFT points
 %	window: window function
 %	fs: sample rate
@@ -15,7 +16,7 @@ function showSpectrogram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
 	
 	% generate spectrogram
 	win = windowmap(window);
-	spectrogram(x, feval(win, wlen), hop, nfft, fs, 'yaxis');
+	spectrogram(x, feval(win, wlen), noverlap, nfft, fs, 'yaxis');
 	
 	% export image
 	hgexport(gcf, imgname, hgexport('factorystyle'), 'Format', 'png');

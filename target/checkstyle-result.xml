@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\AudioEditor.java">
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\SimplePlayerPanel.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\matlab\MatlabFiles.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\database\DatabaseDaoImpl.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\matlab\MatlabCommands.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\matlab\MatlabHandler.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\matlab\MatlabVariables.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\core\panel\BasicFormPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+<error line="865" severity="error" message="Line is longer than 80 characters (found 81)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\AnalysisPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\BeatEstPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\ChromagramPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\DetPanel.java">
+<error line="13" column="8" severity="error" message="Unused import - javax.swing.JPanel." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\KeyDetPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\panel\analysis\SpectrogramPanel.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\param\Constants.java">
+</file>
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\song.properties">
 </file>
 </checkstyle>

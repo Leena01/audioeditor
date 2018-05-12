@@ -60,18 +60,17 @@ public final class SpectrogramPanel extends ChromagramPanel {
      */
     public void changeImage(Image image, Image image3d, boolean isNormal,
         boolean isMaximized) {
-        super.changeImage(image, isNormal, isMaximized);
-        if (specIcon3d.getImage() != null) {
-            specIcon3d.getImage().flush();
-        }
-        if (specIcon3dMax.getImage() != null) {
-            specIcon3dMax.getImage().flush();
-        }
-
+        removeImages();
+        imageIcon = new ImageIcon(resizeImage(image, IMAGE_SIZE));
+        imageIconMax = new ImageIcon(resizeImage(image, IMAGE_SIZE_MAX));
         specIcon3dMax =
             new ImageIcon(resizeImage(image3d, IMAGE_SIZE_MAX));
         specIcon3d = new ImageIcon(resizeImage(image3d, IMAGE_SIZE));
-        super.changeImage(image, isNormal, isMaximized);
+
+        maximizeImage(isMaximized);
+        if (isNormal) {
+            imagePanel.setVisible(true);
+        }
     }
 
     /**

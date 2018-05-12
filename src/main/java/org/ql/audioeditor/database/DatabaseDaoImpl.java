@@ -158,7 +158,6 @@ public final class DatabaseDaoImpl implements DatabaseDao {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ignored) {

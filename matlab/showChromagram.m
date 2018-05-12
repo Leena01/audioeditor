@@ -1,7 +1,8 @@
-function showChromagram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
+function showChromagram(x, wlen, noverlap, nfft, window, fs, imgname, windowmap)
 %SHOWCHROMAGRAM   Displaying a chromagram generated using a Short-Time Fourier Transform (STFT).
 %	x: samples
 %	wlen: window size
+%	noverlap: number of overlapped samples
 %	nfft: number of FFT points
 %	window: window function
 %	fs: sample rate
@@ -15,18 +16,17 @@ function showChromagram(x, wlen, hop, nfft, window, fs, imgname, windowmap)
 	
 	% generate chromagram
 	win = windowmap(window);
-	[S, ~, T] = spectrogram(x, feval(win, wlen), hop, nfft, fs, 'yaxis');
-	C = getCMatrix(fs, wlen, 27.5);
+	[S, ~, T] = spectrogram(x, feval(win, wlen), noverlap, nfft, fs, 'yaxis');
+	C = getCMatrix(fs, nfft, 27.5);
 	Y = C * abs(S);
-	
-	% set axis tick labels
-	notes = {'G^#/A^b', 'G', 'F^#/G^b', 'F', 'E', 'D^#/E^b', 'D', 'C^#/D^b', 'C', 'B', 'A^#/B^b', 'A'};
-	yticklabels(notes);
-	[T, ~, ut] = engunits(T, 'unicode', 'time');
 	
 	% plot image
 	imagesc(T, 1:12, Y);
-	
+	% set axis tick labels
+	notes = {'G^#/A^b', 'G', 'F^#/G^b', 'F', 'E', 'D^#/E^b', 'D', 'C^#/D^b', 'C', 'B', 'A^#/B^b', 'A'};
+	set(gca, 'YTick', 1:12);
+    set(gca, 'YTickLabel', notes);
+	[T, ~, ut] = engunits(T, 'unicode', 'time');
 	% set axis labels
 	timelbl = [getString(message('signal:spectrogram:Time')) ' (' ut ')'];
 	xlabel(timelbl);

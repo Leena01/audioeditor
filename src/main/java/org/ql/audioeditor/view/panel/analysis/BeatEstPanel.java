@@ -77,7 +77,7 @@ public final class BeatEstPanel extends BasicPanel {
         resetFields();
         setStyle();
         addPanels();
-        init();
+        hideEstimation();
     }
 
     /**
@@ -89,10 +89,15 @@ public final class BeatEstPanel extends BasicPanel {
     public int getMinBpm() {
         String text = minBpmTextField.getText();
         if (text.equals("")) {
-            maxBpmTextField.setText(Integer.toString(BPM_MIN));
+            minBpmTextField.setText(Integer.toString(BPM_MIN));
             return BPM_MIN;
         }
-        return Integer.parseInt(text);
+        int minBpm = Integer.parseInt(text);
+        if (minBpm < BPM_MIN) {
+            minBpmTextField.setText(Integer.toString(BPM_MIN));
+            return BPM_MIN;
+        }
+        return minBpm;
     }
 
     /**
@@ -107,7 +112,12 @@ public final class BeatEstPanel extends BasicPanel {
             maxBpmTextField.setText(Integer.toString(BPM_MAX));
             return BPM_MAX;
         }
-        return Integer.parseInt(text);
+        int maxBpm = Integer.parseInt(text);
+        if (maxBpm > BPM_MAX) {
+            maxBpmTextField.setText(Integer.toString(BPM_MAX));
+            return BPM_MAX;
+        }
+        return maxBpm;
     }
 
     /**
@@ -118,6 +128,14 @@ public final class BeatEstPanel extends BasicPanel {
     public void showEstimation(int est) {
         estimationLabel.setText(String.format(EST_MESSAGE, est));
         estimationPanel.setVisible(true);
+    }
+
+    /**
+     * Shows the estimated number.
+     */
+    public void hideEstimation() {
+        estimationLabel.setText(String.format(EST_MESSAGE, 0));
+        estimationPanel.setVisible(false);
     }
 
     /**
@@ -159,9 +177,5 @@ public final class BeatEstPanel extends BasicPanel {
         mainPanel.add(formPanel);
         mainPanel.add(estimationPanel);
         add(mainPanel);
-    }
-
-    private void init() {
-        estimationPanel.setVisible(false);
     }
 }

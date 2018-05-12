@@ -5,9 +5,8 @@ package org.ql.audioeditor.view.enums;
  */
 public enum Message {
     LONG_SONG_INFO("Warning: this song might be too long to analyze."),
-    SONGS_DELETED_INFO("Songs deleted."),
+    SONGS_DELETED_INFO("Some songs were deleted from the database."),
     SUCCESSFUL_OPERATION_INFO("Successful operation."),
-    FILE_ALREADY_EXISTS_ERROR("The path specified already exists."),
     WRONG_INPUT_ERROR("Wrong input data."),
     TIMEOUT_ERROR("Error: process took too long to finish."),
     INTERRUPTED_ERROR("Error: the process was interrupted."),

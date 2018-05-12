@@ -33,9 +33,11 @@ public final class AudioEditor {
     private static final String IMAGES_PROPERTIES_FILE =
         "/config/images.properties";
     private static final String MATLAB_CONNECTION_ERROR =
-        "Matlab connection error.";
-    private static final String CANNOT_READ_PROPERIES_ERROR =
-        "Properties file not found.";
+        "MATLAB connection error.";
+    private static final String MATLAB_CONNECTION_INTERRUPTED =
+        "MATLAB connection is interrupted.";
+    private static final String CANNOT_READ_ERROR =
+        "Some of the required files are not found.";
     private static final String DATABASE_CONNECTION_FAILED =
         "Database connection failed.";
 
@@ -61,7 +63,6 @@ public final class AudioEditor {
                 new DatabaseDaoImpl(ConfigPropertiesLoader.getDriver(),
                     ConfigPropertiesLoader.getJdbc() + getPath()
                         + ConfigPropertiesLoader.getUrl());
-            // DatabaseDao database = new MockDatabase();
             final Cache cache = new Cache(database,
                 ConfigPropertiesLoader.getRefreshMillis());
             final Persistence persistence = new Persistence(cache);
@@ -81,17 +82,15 @@ public final class AudioEditor {
             } catch (EngineException ee) {
                 showDialog(MATLAB_CONNECTION_ERROR);
             } catch (Exception e) {
-                e.printStackTrace();
+                showDialog(MATLAB_CONNECTION_INTERRUPTED);
             }
             ConfigPropertiesLoader.close();
             SongPropertiesLoader.close();
             ImageLoader.close();
         } catch (IOException ioe) {
-            showDialog(CANNOT_READ_PROPERIES_ERROR);
+            showDialog(CANNOT_READ_ERROR);
         } catch (ClassNotFoundException | SQLException e) {
             showDialog(DATABASE_CONNECTION_FAILED);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

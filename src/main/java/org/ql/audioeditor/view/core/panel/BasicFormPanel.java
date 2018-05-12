@@ -28,8 +28,8 @@ public abstract class BasicFormPanel extends BasicPanel {
     protected final JPanel mainPanel;
     protected final JPanel bodyPanel;
     protected JButton doneButton;
-    private ImageIcon imageIcon;
-    private ImageIcon imageIconMax;
+    protected ImageIcon imageIcon;
+    protected ImageIcon imageIconMax;
 
     /**
      * Constructor.

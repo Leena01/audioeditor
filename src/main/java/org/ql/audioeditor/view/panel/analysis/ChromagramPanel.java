@@ -157,8 +157,8 @@ public class ChromagramPanel extends BasicFormPanel {
      */
     @Override
     protected void clearFields() {
-        windowSizeTextField.setValue("");
-        hopSizeTextField.setValue("");
-        nfftTextField.setValue("");
+        windowSizeTextField.setText("");
+        hopSizeTextField.setText("");
+        nfftTextField.setText("");
     }
 }

@@ -21,7 +21,7 @@ enum MatlabVariables {
     EMPTY_VAR("empty"),
     IS_PLAYING_VAR("isplaying"),
     WINDOW_SIZE_VAR("wlen"),
-    HOP_SIZE_VAR("hop"),
+    NOVERLAP_SIZE_VAR("noverlap"),
     NFFT_VAR("nfft"),
     WINDOW_VAR("window"),
     FROM_VAR("from"),

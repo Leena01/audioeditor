@@ -26,7 +26,7 @@ public final class KeyDetPanel extends DetPanel {
         estimationPanel = new JPanel();
         setStyleAdditional();
         addPanelsAdditional();
-        init();
+        hideEstimation();
     }
 
     /**
@@ -39,6 +39,14 @@ public final class KeyDetPanel extends DetPanel {
         estimationPanel.setVisible(true);
     }
 
+    /**
+     * Hides the detected key.
+     */
+    public void hideEstimation() {
+        estimationLabel.setText(String.format(EST_MESSAGE, ""));
+        estimationPanel.setVisible(false);
+    }
+
     private void setStyleAdditional() {
         estimationPanel.setOpaque(false);
     }
@@ -46,9 +54,5 @@ public final class KeyDetPanel extends DetPanel {
     private void addPanelsAdditional() {
         estimationPanel.add(estimationLabel);
         mainPanel.add(estimationPanel);
-    }
-
-    private void init() {
-        estimationPanel.setVisible(false);
     }
 }

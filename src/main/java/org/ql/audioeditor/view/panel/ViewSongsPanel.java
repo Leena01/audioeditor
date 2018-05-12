@@ -185,10 +185,11 @@ public class ViewSongsPanel extends BasicPanel {
      * @return selected items
      */
     public SongModel getSelectedRow() {
-        int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+        int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
             return null;
         }
+        selectedRow = table.convertRowIndexToModel(selectedRow);
         selected = new SongModel(tableModel.getRow(selectedRow));
         return selected;
     }

@@ -76,7 +76,6 @@ import static org.ql.audioeditor.common.util.ViewUtils.showDialog;
 import static org.ql.audioeditor.common.util.ViewUtils.showInfo;
 import static org.ql.audioeditor.view.enums.ActionName.MAKE_FAVORITE;
 import static org.ql.audioeditor.view.enums.ActionName.SHOW_RELATED;
-import static org.ql.audioeditor.view.enums.Message.FILE_ALREADY_EXISTS_ERROR;
 import static org.ql.audioeditor.view.enums.Message.FILE_TYPE_ERROR;
 import static org.ql.audioeditor.view.enums.Message.IMAGE_ERROR;
 import static org.ql.audioeditor.view.enums.Message.INTERRUPTED_ERROR;
@@ -102,6 +101,8 @@ import static org.ql.audioeditor.view.param.Constants.CURRENT_SONG_TITLE_BORDER;
 import static org.ql.audioeditor.view.param.Constants.INFO_LABEL_BORDER;
 import static org.ql.audioeditor.view.param.Constants
     .MEDIA_CONTROL_PANEL_HEIGHT;
+import static org.ql.audioeditor.view.param.Constants
+    .NFFT_TEXT_FIELD_DIGIT_SIZE_MAX;
 import static org.ql.audioeditor.view.param.Constants.OPTIONS;
 import static org.ql.audioeditor.view.param.Constants.ROOT_PANE_BORDER;
 import static org.ql.audioeditor.view.param.Constants.TEXT_FIELD_DIGIT_SIZE_MIN;
@@ -154,7 +155,7 @@ public final class MainWindow extends Window {
     private JPanel innerMainPanel;
     private HorizontalBar mediaControlPanel;
     private HorizontalBar onsetMediaControlPanel;
-    private JPanel lowerBar;
+    private JPanel controlBar;
     private MenuPanel menuPanel;
     private ViewSongsPanel viewSongsPanel;
     private AnalysisPanel analysisPanel;
@@ -259,7 +260,7 @@ public final class MainWindow extends Window {
         if (currentSongModel.isEmpty()) {
             optionPanel.showOptions(false);
             menuPanel.hideImage(true);
-            lowerBar.setVisible(false);
+            controlBar.setVisible(false);
         }
         setMinimumSize(WIN_MIN_SIZE);
         setSize(WIN_MIN_SIZE);
@@ -341,7 +342,7 @@ public final class MainWindow extends Window {
         add(sideBar, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
         mainPanel.add(innerMainPanel, BorderLayout.CENTER);
-        mainPanel.add(lowerBar, BorderLayout.SOUTH);
+        mainPanel.add(controlBar, BorderLayout.SOUTH);
         innerMainPanel.add(menuPanel, MENU_PANEL.toString());
         innerMainPanel.add(viewSongsPanel, VIEW_SONGS_PANEL.toString());
         innerMainPanel.add(dataPanel, DATA_PANEL.toString());
@@ -349,8 +350,8 @@ public final class MainWindow extends Window {
         innerMainPanel.add(spectrogramPanel, SPECTROGRAM_PANEL.toString());
         innerMainPanel.add(chromagramPanel, CHROMAGRAM_PANEL.toString());
         innerMainPanel.add(cutSongPanel, CUT_SONG_PANEL.toString());
-        lowerBar.add(mediaControlPanel, MEDIA_CONTROL_PANEL.toString());
-        lowerBar.add(onsetMediaControlPanel,
+        controlBar.add(mediaControlPanel, MEDIA_CONTROL_PANEL.toString());
+        controlBar.add(onsetMediaControlPanel,
             ONSET_MEDIA_CONTROL_PANEL.toString());
     }
 
@@ -531,8 +532,9 @@ public final class MainWindow extends Window {
     private boolean checkNumbers(int windowSize, int hopSize, int nfft) {
         if (windowSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
             || hopSize < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
-            || nfft < Math.pow(BASE_NUM, TEXT_FIELD_DIGIT_SIZE_MIN - 1)
-            || windowSize <= hopSize) {
+            || nfft < Math.pow(BASE_NUM, NFFT_TEXT_FIELD_DIGIT_SIZE_MAX - 1)
+            || windowSize <= hopSize
+            || windowSize > currentSongModel.getTotalSamples()) {
             showInfo(infoLabel, WRONG_INPUT_ERROR, INFO_LABEL_DELAY);
             return false;
         }
@@ -584,6 +586,9 @@ public final class MainWindow extends Window {
                 if (path != null) {
                     t = new Thread(new CutSongDoneRunnable(path));
                     waitForThread(t);
+                    if (path.equals(currentSongModel.getPath())) {
+                        openSong(currentSongModel);
+                    }
                 }
                 break;
             case JOptionPane.NO_OPTION:
@@ -607,10 +612,6 @@ public final class MainWindow extends Window {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            if (fileToSave.exists()) {
-                showDialog(FILE_ALREADY_EXISTS_ERROR);
-                return null;
-            }
             return fileToSave.getAbsolutePath();
         }
         return null;
@@ -785,7 +786,7 @@ public final class MainWindow extends Window {
         mediaControlPanel.setHeight(MEDIA_CONTROL_PANEL_HEIGHT);
         onsetMediaControlPanel = new InverseHorizontalBar(new BorderLayout());
         onsetMediaControlPanel.setHeight(MEDIA_CONTROL_PANEL_HEIGHT);
-        lowerBar = new JPanel(lowerCardLayout);
+        controlBar = new JPanel(lowerCardLayout);
 
         menuPanel =
             new MenuPanel(matlabHandler, mediaControlPanel, inputMap, actionMap,
@@ -859,21 +860,22 @@ public final class MainWindow extends Window {
         cardLayout.show(innerMainPanel, panelName.toString());
         if (!currentSongModel.isEmpty()) {
             if (panelName.equals(MENU_PANEL)) {
-                lowerCardLayout.show(lowerBar, MEDIA_CONTROL_PANEL.toString());
+                lowerCardLayout
+                    .show(controlBar, MEDIA_CONTROL_PANEL.toString());
                 menuPanel.setActive(true);
-                lowerBar.setVisible(true);
+                controlBar.setVisible(true);
             } else if (panelName.equals(ANALYSIS_PANEL)) {
                 lowerCardLayout
-                    .show(lowerBar, ONSET_MEDIA_CONTROL_PANEL.toString());
+                    .show(controlBar, ONSET_MEDIA_CONTROL_PANEL.toString());
                 menuPanel.setActive(false);
                 if (analysisPanel.isMediaControlActive()) {
-                    lowerBar.setVisible(true);
+                    controlBar.setVisible(true);
                 } else {
-                    lowerBar.setVisible(false);
+                    controlBar.setVisible(false);
                 }
             } else {
                 menuPanel.setActive(false);
-                lowerBar.setVisible(false);
+                controlBar.setVisible(false);
             }
         }
     }
@@ -1006,6 +1008,9 @@ public final class MainWindow extends Window {
                     if (path != null) {
                         t = new Thread(new ChangePitchRunnable(path));
                         waitForThread(t);
+                        if (path.equals(currentSongModel.getPath())) {
+                            openSong(currentSongModel);
+                        }
                     }
                     break;
                 case JOptionPane.NO_OPTION:
@@ -1018,7 +1023,6 @@ public final class MainWindow extends Window {
                     break;
             }
         };
-
 
         cutFileListener = ae -> {
             if (!currentSongModel.isEmpty()) {
@@ -1058,7 +1062,7 @@ public final class MainWindow extends Window {
                     showDialog(SONG_TOO_SHORT_ERROR);
                 } else {
                     if (analysisPanel.isMediaControlActive()) {
-                        lowerBar.setVisible(true);
+                        controlBar.setVisible(true);
                     }
                     menuPanel.stopSong();
                     menuPanel.resetVolume();
@@ -1067,16 +1071,32 @@ public final class MainWindow extends Window {
             }
         };
 
-        beatEstListener = ae -> analysisPanel.setBeatEstOn();
+        beatEstListener = ae -> {
+            analysisPanel.setBeatEstOn();
+            if (analysisPanel.isMediaControlActive()) {
+                controlBar.setVisible(true);
+            } else {
+                controlBar.setVisible(false);
+            }
+        };
 
         onsetDetListener = ae -> {
             analysisPanel.setOnsetDetOn();
             if (analysisPanel.isMediaControlActive()) {
-                lowerBar.setVisible(true);
+                controlBar.setVisible(true);
+            } else {
+                controlBar.setVisible(false);
             }
         };
 
-        keyDetListener = ae -> analysisPanel.setKeyDetOn();
+        keyDetListener = ae -> {
+            analysisPanel.setKeyDetOn();
+            if (analysisPanel.isMediaControlActive()) {
+                controlBar.setVisible(true);
+            } else {
+                controlBar.setVisible(false);
+            }
+        };
 
         beatEstDoneListener = ae -> {
             int minBpm = analysisPanel.getMinBpm();
@@ -1202,8 +1222,6 @@ public final class MainWindow extends Window {
                 });
             } catch (MatlabEngineException mee) {
                 new Thread(new DialogRunnable(mee.getMessage())).start();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
 
@@ -1428,7 +1446,7 @@ public final class MainWindow extends Window {
                         analysisPanel.setOnsetImage(
                             currentSongModel.getTotalSamples(),
                             currentSongModel.getFreq(), plot);
-                        lowerBar.setVisible(true);
+                        controlBar.setVisible(true);
                     } catch (IOException ioe) {
                         showDialog(IMAGE_ERROR);
                     }

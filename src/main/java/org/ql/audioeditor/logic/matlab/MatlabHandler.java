@@ -45,7 +45,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FOLDER_PATH_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR_2;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NOVERLAP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
@@ -80,7 +80,7 @@ public final class MatlabHandler {
     private static final String CANNOT_ESTIMATE_BEAT =
         "Beat estimation has failed.";
     private static final String KEY_DET_ERROR = "Key detection has failed.";
-    private static final String CLOSE_ERROR = "Error closing Matlab Engine.";
+    private static final String CLOSE_ERROR = "Error closing MATLAB.";
     private static final String FOLDER = getPath() + File.separator
         + ConfigPropertiesLoader.getMatlabFolder();
     private static MatlabHandler instance = null;
@@ -205,8 +205,7 @@ public final class MatlabHandler {
     public synchronized void pauseSong() {
         try {
             eng.eval(PAUSE_SONG);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -216,8 +215,7 @@ public final class MatlabHandler {
     public synchronized void resumeSong() {
         try {
             eng.eval(RESUME_SONG);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -227,8 +225,7 @@ public final class MatlabHandler {
     public synchronized void stopSong() {
         try {
             eng.eval(STOP_SONG);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -241,8 +238,7 @@ public final class MatlabHandler {
         try {
             eng.eval(GET_CURRENT_FRAME);
             return eng.getVariable(CURRENT_FRAME_VAR.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return MIN_FRAMES;
     }
@@ -256,8 +252,7 @@ public final class MatlabHandler {
         try {
             eng.eval(IS_PLAYING);
             return eng.getVariable(IS_PLAYING_VAR.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return false;
     }
@@ -276,8 +271,7 @@ public final class MatlabHandler {
                 eng.putVariable(EMPTY_VAR.toString(), 0);
             }
             eng.eval(RELOCATE_SONG);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -291,8 +285,7 @@ public final class MatlabHandler {
         try {
             eng.putVariable(LEVEL_VAR.toString(), level);
             eng.eval(CHANGE_VOLUME);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -312,7 +305,7 @@ public final class MatlabHandler {
         throws MatlabEngineException {
         try {
             eng.putVariable(WINDOW_SIZE_VAR.toString(), windowSize);
-            eng.putVariable(HOP_SIZE_VAR.toString(), hopSize);
+            eng.putVariable(NOVERLAP_SIZE_VAR.toString(), windowSize - hopSize);
             eng.putVariable(NFFT_VAR.toString(), nfft);
             eng.putVariable(WINDOW_VAR.toString(), window.toCharArray());
             eng.putVariable(SPEC_IMG_VAR.toString(), imageName.toCharArray());
@@ -340,7 +333,7 @@ public final class MatlabHandler {
         throws MatlabEngineException {
         try {
             eng.putVariable(WINDOW_SIZE_VAR.toString(), windowSize);
-            eng.putVariable(HOP_SIZE_VAR.toString(), hopSize);
+            eng.putVariable(NOVERLAP_SIZE_VAR.toString(), windowSize - hopSize);
             eng.putVariable(NFFT_VAR.toString(), nfft);
             eng.putVariable(WINDOW_VAR.toString(), window.toCharArray());
             eng.putVariable(CHROM_IMG_VAR.toString(), imageName.toCharArray());

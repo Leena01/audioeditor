@@ -11,7 +11,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabVariables.FOLDER_PATH_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FREQ_VAR_2;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.FROM_VAR;
-import static org.ql.audioeditor.logic.matlab.MatlabVariables.HOP_SIZE_VAR;
+import static org.ql.audioeditor.logic.matlab.MatlabVariables.NOVERLAP_SIZE_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.IS_PLAYING_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.LEVEL_VAR;
 import static org.ql.audioeditor.logic.matlab.MatlabVariables.MAX_BPM_VAR;
@@ -78,17 +78,17 @@ final class MatlabCommands {
 
     static final String SHOW_SPECTROGRAM =
         String.format("showSpectrogram(%s, %s, %s, %s, %s, %s, %s, %s);",
-            SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
+            SAMPLE_VAR, WINDOW_SIZE_VAR, NOVERLAP_SIZE_VAR, NFFT_VAR,
             WINDOW_VAR, FREQ_VAR, SPEC_IMG_VAR, WINDOW_MAP_VAR);
 
     static final String SHOW_SPECTROGRAM_3D =
         String.format("showSpectrogram3d(%s, %s, %s, %s, %s, %s, %s, %s);",
-            SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
+            SAMPLE_VAR, WINDOW_SIZE_VAR, NOVERLAP_SIZE_VAR, NFFT_VAR,
             WINDOW_VAR, FREQ_VAR, SPEC_3D_IMG_VAR, WINDOW_MAP_VAR);
 
     static final String SHOW_CHROMAGRAM =
         String.format("showChromagram(%s, %s, %s, %s, %s, %s, %s, %s);",
-            SAMPLE_VAR, WINDOW_SIZE_VAR, HOP_SIZE_VAR, NFFT_VAR,
+            SAMPLE_VAR, WINDOW_SIZE_VAR, NOVERLAP_SIZE_VAR, NFFT_VAR,
             WINDOW_VAR, FREQ_VAR, CHROM_IMG_VAR, WINDOW_MAP_VAR);
 
     static final String CUT_SONG =

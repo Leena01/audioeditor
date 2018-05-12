@@ -270,7 +270,9 @@ public final class AnalysisPanel extends BasicPanel {
      * Hides the current song's settings.
      */
     public void removeSong() {
+        beatEstPanel.hideEstimation();
         onsetDetPanel.removeSong();
+        keyDetPanel.hideEstimation();
     }
 
     /**
