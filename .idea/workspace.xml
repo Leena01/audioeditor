@@ -11,54 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50a7f7a4-aa0d-4795-910f-5572edb6c5a6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/music.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/music.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/generated/temp.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/temp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/generated/temp2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/temp2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/generated/temp3.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/temp3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/generated/temp4.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/temp4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/generated/temp5.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/temp5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/getCMatrix.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/getCMatrix.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/keyDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/keyDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/noteDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/noteDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/showChromagram.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/showChromagram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/showSpectrogram.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/showSpectrogram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/showSpectrogram3d.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab/showSpectrogram3d.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/music.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/music.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/matlab/MatlabFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/matlab/MatlabFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/DatabaseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/DatabaseDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabVariables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/panel/BasicFormPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/panel/BasicFormPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/ViewSongsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/ViewSongsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/AnalysisPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/AnalysisPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/BeatEstPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/BeatEstPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/ChromagramPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/ChromagramPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/KeyDetPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/KeyDetPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/SpectrogramPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/SpectrogramPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/param/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/param/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config/song.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config/song.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/getCMatrix.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/getCMatrix.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/istft.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/keyDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/keyDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/noteDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/noteDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/showChromagram.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/showChromagram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/showSpectrogram.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/showSpectrogram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/matlab/showSpectrogram3d.m" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/matlab/showSpectrogram3d.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/checkstyle-cachefile" beforeDir="false" afterPath="$PROJECT_DIR$/target/checkstyle-cachefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/checkstyle-result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/checkstyle-result.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config/song.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config/song.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/getCMatrix.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/getCMatrix.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/istft.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/keyDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/keyDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/noteDetection.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/noteDetection.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/showChromagram.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/showChromagram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/showSpectrogram.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/showSpectrogram.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/matlab/showSpectrogram3d.m" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/matlab/showSpectrogram3d.m" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -95,20 +48,179 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SpectrogramPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/SpectrogramPanel.java">
+      <file leaf-file-name="SongModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="89" column="46" selection-start-line="89" selection-start-column="46" selection-end-line="89" selection-end-column="46" />
+            <state relative-caret-position="204">
+              <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MatlabHandler.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabHandler.java">
+      <file leaf-file-name="JAVA/org.ql.audioeditor.logic.dbaccess.SongModel" pinned="false" current-in-tab="false">
+        <entry file="uml://JAVA/org.ql.audioeditor.logic.dbaccess.SongModel">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>JAVA</ID>
+              <OriginalElement>org.ql.audioeditor.logic.dbaccess.SongModel</OriginalElement>
+              <nodes>
+                <node x="0.0" y="0.0">org.ql.audioeditor.logic.dbaccess.SongModel</node>
+              </nodes>
+              <notes />
+              <edges />
+              <settings layout="Hierarchic Group" zoom="1.0" x="-181.0" y="281.0" />
+              <SelectedNodes>
+                <node>org.ql.audioeditor.logic.dbaccess.SongModel</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Fields</Category>
+                <Category>Constructors</Category>
+                <Category>Methods</Category>
+                <Category>Properties</Category>
+              </Categories>
+              <SCOPE>All</SCOPE>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Song.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/entities/Song.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="817">
-              <caret line="341" column="55" selection-start-line="341" selection-start-column="44" selection-end-line="341" selection-end-column="55" />
+            <state relative-caret-position="119">
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JAVA/org.ql.audioeditor.database.entities.Song" pinned="false" current-in-tab="false">
+        <entry file="uml://JAVA/org.ql.audioeditor.database.entities.Song">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>JAVA</ID>
+              <OriginalElement>org.ql.audioeditor.database.entities.Song</OriginalElement>
+              <nodes>
+                <node x="0.0" y="0.0">org.ql.audioeditor.database.entities.Song</node>
+              </nodes>
+              <notes />
+              <edges />
+              <settings layout="Hierarchic Group" zoom="1.0" x="-198.0" y="94.0" />
+              <SelectedNodes>
+                <node>org.ql.audioeditor.database.entities.Song</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Methods</Category>
+                <Category>Properties</Category>
+                <Category>Constructors</Category>
+                <Category>Fields</Category>
+              </Categories>
+              <SCOPE>All</SCOPE>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BeatEstPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/BeatEstPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1153">
+              <caret line="89" column="28" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JAVA/org.ql.audioeditor.view.panel.analysis.BeatEstPanel" pinned="false" current-in-tab="false">
+        <entry file="uml://JAVA/org.ql.audioeditor.view.panel.analysis.BeatEstPanel">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>JAVA</ID>
+              <OriginalElement>org.ql.audioeditor.view.panel.analysis.BeatEstPanel</OriginalElement>
+              <nodes>
+                <node x="48.5" y="0.0">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+                <node x="0.0" y="146.0">org.ql.audioeditor.view.panel.analysis.BeatEstPanel</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="org.ql.audioeditor.view.panel.analysis.BeatEstPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+                  <point x="0.0" y="-302.0" />
+                  <point x="0.0" y="48.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="1.0" x="134.94047619046688" y="415.0" />
+              <SelectedNodes>
+                <node>org.ql.audioeditor.view.panel.analysis.BeatEstPanel</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Methods</Category>
+                <Category>Constructors</Category>
+                <Category>Fields</Category>
+                <Category>Inner Classes</Category>
+                <Category>Properties</Category>
+              </Categories>
+              <SCOPE>Project Files</SCOPE>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JAVA/org.ql.audioeditor.common.properties.ConfigPropertiesLoader" pinned="false" current-in-tab="false">
+        <entry file="uml://JAVA/org.ql.audioeditor.common.properties.ConfigPropertiesLoader">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>JAVA</ID>
+              <OriginalElement>org.ql.audioeditor.common.properties.ConfigPropertiesLoader</OriginalElement>
+              <nodes>
+                <node x="0.0" y="0.0">org.ql.audioeditor.common.properties.ConfigPropertiesLoader</node>
+              </nodes>
+              <notes />
+              <edges />
+              <settings layout="Hierarchic Group" zoom="1.0" x="-149.0" y="78.0" />
+              <SelectedNodes>
+                <node>org.ql.audioeditor.common.properties.ConfigPropertiesLoader</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Methods</Category>
+                <Category>Properties</Category>
+                <Category>Constructors</Category>
+                <Category>Fields</Category>
+              </Categories>
+              <SCOPE>All</SCOPE>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JAVA/org.ql.audioeditor.AudioEditor" pinned="false" current-in-tab="true">
+        <entry file="uml://JAVA/org.ql.audioeditor.AudioEditor">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>JAVA</ID>
+              <OriginalElement>org.ql.audioeditor.AudioEditor</OriginalElement>
+              <nodes>
+                <node x="0.0" y="0.0">org.ql.audioeditor.AudioEditor</node>
+              </nodes>
+              <notes />
+              <edges />
+              <settings layout="Hierarchic Group" zoom="1.0" x="55.5" y="14.5" />
+              <SelectedNodes>
+                <node>org.ql.audioeditor.AudioEditor</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Properties</Category>
+                <Category>Methods</Category>
+                <Category>Constructors</Category>
+              </Categories>
+              <SCOPE>All</SCOPE>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AudioEditor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="367">
+              <caret line="53" column="25" lean-forward="true" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,38 +228,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java">
+      <file leaf-file-name="SongTableModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongTableModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="537" column="40" selection-start-line="537" selection-start-column="32" selection-end-line="537" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#42867#42868#0" expanded="true" />
-                <element signature="e#42903#42904#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseAccessModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/DatabaseAccessModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
-              <folding>
-                <element signature="e#13373#13374#0" expanded="true" />
-                <element signature="e#13403#13404#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SongListModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongListModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-136">
-              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+            <state relative-caret-position="-85">
+              <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -164,11 +249,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>error =</find>
-      <find>printst</find>
-      <find>setOnsetDet</find>
-      <find>beat</find>
-      <find>error(</find>
       <find>error closi</find>
       <find>process was</find>
       <find>INTERRUPTED_ERROR</find>
@@ -194,6 +274,11 @@
       <find>showinfo</find>
       <find>Wrong input data</find>
       <find>wrong_in</find>
+      <find>showch</find>
+      <find>songdata</find>
+      <find>setfro</find>
+      <find>songmodel</find>
+      <find>minbpm</find>
     </findStrings>
     <replaceStrings>
       <replace>ex.printStackTrace();</replace>
@@ -284,10 +369,10 @@
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/DatabaseDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/DetPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/ViewSongsPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java" />
       </list>
     </option>
   </component>
@@ -352,7 +437,7 @@
     <scope name="RangeSlider" pattern="src:view.element.slider.ui.RangeSliderUI||src:view.element.slider.RangeSlider" />
     <scope name="TrackSlider" pattern="src:view.element.slider.TrackSlider||src:view.element.slider.ui.AudioSliderUI" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="246" />
     <option name="y" value="-8" />
     <option name="width" value="765" />
@@ -423,16 +508,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="matlab" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
               <item name="properties" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -444,6 +519,55 @@
               <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="entities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="dbaccess" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="dbaccess" type="462c0819:PsiDirectoryNode" />
+              <item name="adt" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
@@ -483,17 +607,7 @@
               <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="panel" type="462c0819:PsiDirectoryNode" />
-              <item name="popup" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="audioeditor" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="param" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Audio Editor" type="b2602c69:ProjectViewProjectNode" />
@@ -532,7 +646,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="Sqlite (Xerial)&#10;SQL Server (Microsoft)&#10;MySQL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../latex/uml/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../latex/img/uml/ViewPanel.png" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.32413793" />
@@ -1002,12 +1116,12 @@
       <workItem from="1525683457789" duration="3577000" />
       <workItem from="1525688031421" duration="54391000" />
       <workItem from="1525952701783" duration="39210000" />
-      <workItem from="1526119170004" duration="10999000" />
+      <workItem from="1526119170004" duration="23948000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1265705000" />
+    <option name="totallyTimeSpent" value="1278654000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1019,19 +1133,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.35930407" side_tool="true" weight="0.1825658" />
       <window_info anchor="bottom" id="JRebel Console" order="0" show_stripe_button="false" side_tool="true" weight="0.32894737" />
-      <window_info anchor="right" id="Maven Projects" order="11" sideWeight="0.6773455" side_tool="true" visible="true" weight="0.033282906" />
+      <window_info anchor="right" id="Maven Projects" order="11" sideWeight="0.6764706" side_tool="true" visible="true" weight="0.033282906" />
       <window_info anchor="bottom" id="Database Changes" order="12" weight="0.32817337" />
       <window_info anchor="bottom" id="JRebel Executor" order="2" weight="0.42927632" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="5" />
       <window_info anchor="bottom" id="Statistic" order="13" sideWeight="0.6406959" weight="0.5758514" />
-      <window_info active="true" anchor="right" id="Database" order="6" sideWeight="0.32265446" visible="true" weight="0.033282906" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.32352942" visible="true" weight="0.033282906" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.24962178" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.22184874" weight="0.102118" />
       <window_info id="UI Designer" order="6" />
@@ -1042,9 +1156,9 @@
       <window_info id="Image Layers" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.8126935" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.7193646" visible="true" weight="0.32352942" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.7193646" weight="0.103715174" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49394855" weight="0.21671827" />
-      <window_info content_ui="combo" x="177" y="92" width="362" height="595" id="Project" order="0" sideWeight="0.4795181" side_tool="true" visible="true" weight="0.2473525" />
+      <window_info active="true" content_ui="combo" x="177" y="92" width="362" height="595" id="Project" order="0" sideWeight="0.4795181" side_tool="true" visible="true" weight="0.2473525" />
       <window_info id="JRebel" order="1" show_stripe_button="false" sideWeight="0.51287127" side_tool="true" weight="0.19969743" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.47510982" weight="0.71671826" />
       <window_info anchor="right" id="UML design tool window" order="10" show_stripe_button="false" weight="0.6527988" />
@@ -1115,467 +1229,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/NoteValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#253#254#0" expanded="true" />
-            <element signature="e#287#288#0" expanded="true" />
-            <element signature="e#356#357#0" expanded="true" />
-            <element signature="e#384#385#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/popup/EditPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/slider/TrackSlider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/MenuPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="208" selection-end-column="5" />
-          <folding>
-            <element signature="e#6211#6212#0" expanded="true" />
-            <element signature="e#6256#6257#0" expanded="true" />
-            <element signature="e#6574#6575#0" expanded="true" />
-            <element signature="e#6612#6613#0" expanded="true" />
-            <element signature="e#6696#6697#0" expanded="true" />
-            <element signature="e#6737#6738#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/PanelName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabCommands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="127" column="71" selection-start-line="127" selection-start-column="71" selection-end-line="127" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/CutSongPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="212" column="13" selection-start-line="212" selection-start-column="13" selection-end-line="212" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/util/GeneralUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="62" column="7" selection-start-line="62" selection-start-column="7" selection-end-line="62" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/properties/ImageLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/org.ql.audioeditor.common.util.DoubleActionTool">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>org.ql.audioeditor.common.util.DoubleActionTool</OriginalElement>
-          <nodes>
-            <node x="148.0" y="1.0">org.ql.audioeditor.common.util.GeneralUtils</node>
-            <node x="105.0" y="242.0">org.ql.audioeditor.common.util.DoubleActionTool</node>
-            <node x="-221.0" y="0.0">org.ql.audioeditor.common.util.ViewUtils</node>
-            <node x="-220.0" y="241.0">org.ql.audioeditor.common.util.TimeUtils</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-33.0" y="220.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Constructors</Category>
-            <Category>Methods</Category>
-            <Category>Properties</Category>
-            <Category>Inner Classes</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/org.ql.audioeditor.common.properties.ConfigPropertiesLoader">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>org.ql.audioeditor.common.properties.ConfigPropertiesLoader</OriginalElement>
-          <nodes>
-            <node x="" y="">org.ql.audioeditor.common.properties.ConfigPropertiesLoader</node>
-            <node x="" y="">org.ql.audioeditor.common.properties.SongPropertiesLoader</node>
-            <node x="" y="">org.ql.audioeditor.common.properties.ImageLoader</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="376.0" y="89.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Constructors</Category>
-            <Category>Methods</Category>
-            <Category>Properties</Category>
-            <Category>Inner Classes</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/properties/ConfigPropertiesLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="93" column="44" selection-start-line="93" selection-start-column="25" selection-end-line="93" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2152#2153#0" expanded="true" />
-            <element signature="e#2187#2188#0" expanded="true" />
-            <element signature="e#2356#2357#0" expanded="true" />
-            <element signature="e#2391#2392#0" expanded="true" />
-            <element signature="e#2380#2381#0" expanded="true" />
-            <element signature="e#2416#2417#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/matlab/SoundFiles.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-          <folding>
-            <element signature="e#711#712#0" expanded="true" />
-            <element signature="e#753#754#0" expanded="true" />
-            <element signature="e#1294#1295#0" expanded="true" />
-            <element signature="e#1329#1330#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/org.ql.audioeditor.common.matlab.MatlabFileLoader">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>org.ql.audioeditor.common.matlab.MatlabFileLoader</OriginalElement>
-          <nodes>
-            <node x="226.0" y="0.0">org.ql.audioeditor.common.matlab.MatlabFileLoader</node>
-            <node x="0.0" y="0.0">org.ql.audioeditor.common.matlab.MatlabFiles</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="-112.0" y="17.0" />
-          <SelectedNodes>
-            <node>org.ql.audioeditor.common.matlab.MatlabFileLoader</node>
-          </SelectedNodes>
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Constructors</Category>
-            <Category>Methods</Category>
-            <Category>Properties</Category>
-            <Category>Inner Classes</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/entities/Song.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-701">
-          <caret line="251" column="28" selection-start-line="251" selection-start-column="28" selection-end-line="251" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="364" column="16" selection-start-line="364" selection-start-column="16" selection-end-line="364" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/SaveOption.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/enums/Attribute.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/PlayerPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="117" selection-start-line="117" selection-end-line="117" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4098#4099#0" expanded="true" />
-            <element signature="e#4134#4135#0" expanded="true" />
-            <element signature="e#4544#4791#0" expanded="true" />
-            <element signature="e#4790#4791#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/popup/ChangePitchPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/util/TimeUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="45" column="36" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/window/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="61" column="54" lean-forward="true" selection-start-line="61" selection-start-column="54" selection-end-line="61" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/slider/VolumeSlider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/SimplePlayerPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#13129#13130#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/dialog/PopupDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/slider/SliderTimer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/matlab/MatlabFiles.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/common/matlab/MatlabFileLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/OnsetDetPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/KeyDetPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/ChromagramPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3306#3307#0" expanded="true" />
-            <element signature="e#3352#3353#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/panel/BasicFormPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabVariables.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/param/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="42" column="58" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config/song.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/AnalysisPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="180" column="68" selection-start-line="180" selection-start-column="55" selection-end-line="180" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/DetPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="95" column="5" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/DatabaseDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="161" column="38" lean-forward="true" selection-start-line="161" selection-start-column="38" selection-end-line="161" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/BeatEstPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-131">
-          <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/SpectrogramPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="89" column="46" selection-start-line="89" selection-start-column="46" selection-end-line="89" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/adt/ListModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
-          <folding>
-            <element signature="e#721#722#0" expanded="true" />
-            <element signature="e#755#756#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/DatabaseAccessModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
-          <folding>
-            <element signature="e#13373#13374#0" expanded="true" />
-            <element signature="e#13403#13404#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongListModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/popup/DeleteSongsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="89" column="35" lean-forward="true" selection-start-line="89" selection-start-column="35" selection-end-line="89" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/popup/SimilarSongsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="61" column="66" selection-start-line="61" selection-start-column="50" selection-end-line="61" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/ViewSongsPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1242">
@@ -1594,25 +1247,1189 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="537" column="40" selection-start-line="537" selection-start-column="32" selection-end-line="537" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#42867#42868#0" expanded="true" />
-            <element signature="e#42903#42904#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/matlab/MatlabHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
+        <state relative-caret-position="-1019">
           <caret line="341" column="55" selection-start-line="341" selection-start-column="44" selection-end-line="341" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.common.matlab.MatlabFileLoader">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.common.matlab.MatlabFileLoader</OriginalElement>
+          <nodes>
+            <node x="392.0" y="-2.0">org.ql.audioeditor.common.matlab.MatlabFileLoader</node>
+            <node x="0.0" y="0.0">org.ql.audioeditor.common.matlab.MatlabFiles</node>
+            <node x="194.0" y="-1.0">org.ql.audioeditor.common.matlab.SoundFiles</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-43.0" y="178.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.common.matlab.MatlabFileLoader</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.common.util.DoubleActionTool">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.common.util.DoubleActionTool</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.common.util.GeneralUtils</node>
+            <node x="" y="">org.ql.audioeditor.common.util.DoubleActionTool</node>
+            <node x="" y="">org.ql.audioeditor.common.util.ViewUtils</node>
+            <node x="" y="">org.ql.audioeditor.common.util.TimeUtils</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="119.5" y="88.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.common.matlab.SoundFiles">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.common.matlab.SoundFiles</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.common.matlab.MatlabFileLoader</node>
+            <node x="" y="">org.ql.audioeditor.common.matlab.MatlabFiles</node>
+            <node x="" y="">org.ql.audioeditor.common.matlab.SoundFiles</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="144.5" y="130.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.database.Cache">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.database.Cache</OriginalElement>
+          <nodes>
+            <node x="123.25" y="0.0">org.ql.audioeditor.database.DatabaseDao</node>
+            <node x="516.0" y="0.0">org.ql.audioeditor.database.Persistence</node>
+            <node x="0.0" y="256.0">org.ql.audioeditor.database.Cache</node>
+            <node x="230.0" y="289.0">org.ql.audioeditor.database.DatabaseDaoImpl</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="org.ql.audioeditor.database.DatabaseDaoImpl" target="org.ql.audioeditor.database.DatabaseDao">
+              <point x="0.0" y="-148.0" />
+              <point x="350.5" y="231.0" />
+              <point x="280.0" y="231.0" />
+              <point x="52.25" y="103.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.database.Cache" target="org.ql.audioeditor.database.DatabaseDao">
+              <point x="0.0" y="-181.0" />
+              <point x="105.0" y="231.0" />
+              <point x="175.5" y="231.0" />
+              <point x="-52.25" y="103.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="48.0" y="139.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.database.Cache</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.logic.dbaccess.adt.ListModel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.logic.dbaccess.adt.ListModel</OriginalElement>
+          <nodes>
+            <node x="237.0" y="-1.0">org.ql.audioeditor.logic.dbaccess.adt.ListModel</node>
+            <node x="0.0" y="0.0">org.ql.audioeditor.logic.dbaccess.adt.TableModel</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-23.0" y="220.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.logic.dbaccess.DatabaseAccessModel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.logic.dbaccess.DatabaseAccessModel</OriginalElement>
+          <nodes>
+            <node x="327.0" y="0.0">org.ql.audioeditor.logic.dbaccess.SongModel</node>
+            <node x="313.0" y="988.0">org.ql.audioeditor.logic.dbaccess.SongTableModel</node>
+            <node x="79.5" y="693.0">org.ql.audioeditor.logic.dbaccess.adt.ListModel</node>
+            <node x="0.0" y="839.0">org.ql.audioeditor.logic.dbaccess.SongListModel</node>
+            <node x="302.0" y="688.0">org.ql.audioeditor.logic.dbaccess.adt.TableModel</node>
+            <node x="0.0" y="0.0">org.ql.audioeditor.logic.dbaccess.DatabaseAccessModel</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="org.ql.audioeditor.logic.dbaccess.SongTableModel" target="org.ql.audioeditor.logic.dbaccess.adt.TableModel">
+              <point x="0.0" y="-48.0" />
+              <point x="0.0" y="136.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.logic.dbaccess.SongListModel" target="org.ql.audioeditor.logic.dbaccess.adt.ListModel">
+              <point x="0.0" y="-70.0" />
+              <point x="0.0" y="48.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="174.0" y="565.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.logic.matlab.MatlabCommands">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.logic.matlab.MatlabCommands</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.logic.matlab.MatlabVariables</node>
+            <node x="" y="">org.ql.audioeditor.logic.matlab.MatlabHandler</node>
+            <node x="" y="">org.ql.audioeditor.logic.matlab.MatlabCommands</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="535.5" y="245.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.dialog.PopupDialog">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.dialog.PopupDialog</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.dialog.PopupDialog</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="344.5" y="251.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.button.Button">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.button.Button</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.button.Button</node>
+            <node x="" y="">org.ql.audioeditor.view.core.button.OptionButton</node>
+            <node x="" y="">org.ql.audioeditor.view.core.button.TransparentButton.ButtonListener</node>
+            <node x="" y="">org.ql.audioeditor.view.core.button.OptionButton.OptionButtonListener</node>
+            <node x="" y="">org.ql.audioeditor.view.core.button.TransparentButton</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="280.0" y="251.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.bar.HorizontalBar">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.bar.HorizontalBar</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.bar.SideBar</node>
+            <node x="" y="">org.ql.audioeditor.view.core.bar.HorizontalBar</node>
+            <node x="" y="">org.ql.audioeditor.view.core.bar.InverseHorizontalBar</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="280.0" y="251.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.label.Label">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.label.Label</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.label.Label</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="280.0" y="212.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.listener.EmptyMouseListener">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.listener.EmptyMouseListener</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.listener.EmptyMouseListener</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="79.5" y="93.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/table/SongTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/textfield/TextField.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/core/textfield/FormattedTextField.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.enums.ActionName">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.enums.ActionName</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.enums.PanelName</node>
+            <node x="" y="">org.ql.audioeditor.view.enums.NoteValue</node>
+            <node x="" y="">org.ql.audioeditor.view.enums.ActionName</node>
+            <node x="" y="">org.ql.audioeditor.view.enums.Message</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="240.5" y="214.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.window.Window">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.window.Window</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.window.Window</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="383.0" y="278.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.textfield.FormattedTextField">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.textfield.FormattedTextField</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.textfield.FormattedTextField.InnerFocusListener</node>
+            <node x="" y="">org.ql.audioeditor.view.core.textfield.FormattedTextField</node>
+            <node x="" y="">org.ql.audioeditor.view.core.textfield.TextField</node>
+            <node x="" y="">org.ql.audioeditor.view.core.textfield.TextField.InnerFocusListener</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="337.5" y="277.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.table.SongTable">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.table.SongTable</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.table.SongTable</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.9739900779588944" x="468.19799170486795" y="205.19287680889062" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.slider.FrequencySlider">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.slider.FrequencySlider</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.VolumeSlider</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.TimeLabel</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.FrequencySlider</node>
+            <node x="" y="">org.ql.audioeditor.view.core.label.Label</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.SliderTimer</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.TrackSlider</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.RangeSlider</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0413597733711049" x="415.49316615557075" y="229.20402611534274" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.slider.ui.AudioSliderUI">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.slider.ui.AudioSliderUI</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.ui.RangeSliderUI</node>
+            <node x="" y="">org.ql.audioeditor.view.core.slider.ui.AudioSliderUI</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="197.5" y="274.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.core.panel.BasicFormPanel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.core.panel.BasicFormPanel</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.core.panel.BasicFormPanel</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="280.0" y="251.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.logic.exceptions.InvalidOperationException">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.logic.exceptions.InvalidOperationException</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.logic.exceptions.SQLConnectionException</node>
+            <node x="" y="">org.ql.audioeditor.logic.exceptions.MatlabEngineException</node>
+            <node x="" y="">org.ql.audioeditor.logic.exceptions.InvalidOperationException</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="455.5" y="277.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.param.Constants">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.param.Constants</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.param.Constants</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="50.5" y="331.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14266">
+          <caret line="537" column="40" selection-start-line="537" selection-start-column="32" selection-end-line="537" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.MainWindow">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.MainWindow</OriginalElement>
+          <nodes>
+            <node x="1749.0" y="3602.0">org.ql.audioeditor.view.MainWindow.ClosingChangePitchAdapter</node>
+            <node x="3636.0" y="1652.0">org.ql.audioeditor.view.panel.analysis.KeyDetPanel</node>
+            <node x="1464.0" y="0.0">org.ql.audioeditor.view.core.window.Window</node>
+            <node x="1038.0" y="3546.0">org.ql.audioeditor.view.MainWindow.OnsetDetRunnable</node>
+            <node x="215.0" y="3568.0">org.ql.audioeditor.view.MainWindow.OpenSongRunnable</node>
+            <node x="3878.0" y="1640.5">org.ql.audioeditor.view.panel.analysis.OnsetDetPanel</node>
+            <node x="482.0" y="3546.0">org.ql.audioeditor.view.MainWindow.ShowSpecRunnable</node>
+            <node x="1425.0" y="785.0">org.ql.audioeditor.view.MainWindow</node>
+            <node x="3274.5" y="1086.0">org.ql.audioeditor.view.panel.analysis.ChromagramPanel</node>
+            <node x="4259.875" y="0.0">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="2276.0" y="3546.0">org.ql.audioeditor.view.MainWindow.ShowChromRunnable</node>
+            <node x="2769.0" y="3568.0">org.ql.audioeditor.view.MainWindow.BeatEstRunnable</node>
+            <node x="3316.5" y="1931.0">org.ql.audioeditor.view.panel.analysis.SpectrogramPanel.ToggleButtonListener</node>
+            <node x="2027.0" y="3579.0">org.ql.audioeditor.view.MainWindow.ChangePitchRunnable</node>
+            <node x="3767.25" y="1064.0">org.ql.audioeditor.view.panel.analysis.DetPanel</node>
+            <node x="2991.0" y="3579.0">org.ql.audioeditor.view.MainWindow.CutSongDoneRunnable</node>
+            <node x="777.0" y="3546.0">org.ql.audioeditor.view.MainWindow.KeyDetRunnable</node>
+            <node x="3898.1749999999997" y="146.0">org.ql.audioeditor.view.panel.analysis.AnalysisPanel</node>
+            <node x="3271.0" y="1630.0">org.ql.audioeditor.view.panel.analysis.SpectrogramPanel</node>
+            <node x="2583.0" y="3602.0">org.ql.audioeditor.view.MainWindow.PreviewSongRunnable</node>
+            <node x="3572.1749999999997" y="388.5">org.ql.audioeditor.view.core.panel.BasicFormPanel</node>
+            <node x="4801.175" y="278.0">org.ql.audioeditor.view.panel.analysis.BeatEstPanel</node>
+            <node x="1475.0" y="3602.0">org.ql.audioeditor.view.MainWindow.ClosingWindowAdapter</node>
+            <node x="1311.0" y="3602.0">org.ql.audioeditor.view.MainWindow.CutSongRunnable</node>
+            <node x="0.0" y="3579.0">org.ql.audioeditor.view.MainWindow.DialogRunnable</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="org.ql.audioeditor.view.MainWindow.OnsetDetRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-81.5" />
+              <point x="1164.5" y="3516.0" />
+              <point x="1547.5384615384614" y="3516.0" />
+              <point x="-54.46153846153857" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow" target="org.ql.audioeditor.view.core.window.Window">
+              <point x="0.0" y="-1335.5" />
+              <point x="0.0" y="367.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.DialogRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-48.5" />
+              <point x="97.5" y="3476.0" />
+              <point x="1438.6153846153845" y="3476.0" />
+              <point x="-163.38461538461547" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.core.panel.BasicFormPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-191.5" />
+              <point x="3725.1749999999997" y="121.0" />
+              <point x="4286.041666666666" y="121.0" />
+              <point x="-52.333333333333485" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.OnsetDetPanel" target="org.ql.audioeditor.view.panel.analysis.DetPanel">
+              <point x="0.0" y="-115.0" />
+              <point x="4076.5" y="1605.0" />
+              <point x="3984.0" y="1605.0" />
+              <point x="72.25" y="258.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.SpectrogramPanel.ToggleButtonListener" target="org.ql.audioeditor.view.panel.analysis.SpectrogramPanel">
+              <point x="0.0" y="-25.5" />
+              <point x="0.0" y="125.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.ClosingChangePitchAdapter" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-25.5" />
+              <point x="1878.0" y="3526.0" />
+              <point x="1629.2307692307693" y="3526.0" />
+              <point x="27.230769230769283" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.ClosingWindowAdapter" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-25.5" />
+              <point x="0.0" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.BeatEstPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-302.0" />
+              <point x="4928.175" y="121.0" />
+              <point x="4390.708333333333" y="121.0" />
+              <point x="52.33333333333303" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.AnalysisPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-434.0" />
+              <point x="4339.675" y="121.0" />
+              <point x="4338.375" y="121.0" />
+              <point x="0.0" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.CutSongRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-25.5" />
+              <point x="1383.0" y="3526.0" />
+              <point x="1574.7692307692307" y="3526.0" />
+              <point x="-27.230769230769283" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.OpenSongRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-59.5" />
+              <point x="338.5" y="3486.0" />
+              <point x="1465.8461538461538" y="3486.0" />
+              <point x="-136.1538461538462" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.DetPanel" target="org.ql.audioeditor.view.core.panel.BasicFormPanel">
+              <point x="0.0" y="-258.0" />
+              <point x="3911.75" y="1039.0" />
+              <point x="3801.6749999999997" y="1039.0" />
+              <point x="76.5" y="191.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.CutSongDoneRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-48.5" />
+              <point x="3108.5" y="3476.0" />
+              <point x="1765.3846153846152" y="3476.0" />
+              <point x="163.38461538461524" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.BeatEstRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-59.5" />
+              <point x="2870.0" y="3486.0" />
+              <point x="1738.1538461538462" y="3486.0" />
+              <point x="136.1538461538462" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.SpectrogramPanel" target="org.ql.audioeditor.view.panel.analysis.ChromagramPanel">
+              <point x="0.0" y="-125.5" />
+              <point x="0.0" y="236.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.ChromagramPanel" target="org.ql.audioeditor.view.core.panel.BasicFormPanel">
+              <point x="0.0" y="-236.0" />
+              <point x="3443.5" y="1039.0" />
+              <point x="3648.6749999999997" y="1039.0" />
+              <point x="-76.5" y="191.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.ChangePitchRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-48.5" />
+              <point x="2141.5" y="3516.0" />
+              <point x="1656.4615384615383" y="3516.0" />
+              <point x="54.46153846153834" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.analysis.KeyDetPanel" target="org.ql.audioeditor.view.panel.analysis.DetPanel">
+              <point x="0.0" y="-103.5" />
+              <point x="3747.0" y="1605.0" />
+              <point x="3839.5" y="1605.0" />
+              <point x="-72.25" y="258.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.ShowSpecRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-81.5" />
+              <point x="619.5" y="3496.0" />
+              <point x="1493.076923076923" y="3496.0" />
+              <point x="-108.9230769230769" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.KeyDetRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-81.5" />
+              <point x="897.5" y="3506.0" />
+              <point x="1520.3076923076924" y="3506.0" />
+              <point x="-81.69230769230762" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.ShowChromRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-81.5" />
+              <point x="2419.5" y="3506.0" />
+              <point x="1683.6923076923076" y="3506.0" />
+              <point x="81.69230769230762" y="1335.5" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.MainWindow.PreviewSongRunnable" target="org.ql.audioeditor.view.MainWindow">
+              <point x="0.0" y="-25.5" />
+              <point x="2666.0" y="3496.0" />
+              <point x="1710.923076923077" y="3496.0" />
+              <point x="108.9230769230769" y="1335.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="3355.0" y="1652.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/MenuPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1985">
+          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/shape/CubicCurveTo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="67" column="13" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/CutSongPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="60" column="29" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/DataPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1047">
+          <caret line="146" column="26" lean-forward="true" selection-start-line="146" selection-start-column="26" selection-end-line="146" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.panel.CutSongPanel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.panel.CutSongPanel</OriginalElement>
+          <nodes>
+            <node x="" y="">org.ql.audioeditor.view.panel.MenuPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.SimplePlayerPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.DataPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.SimplePlayerPanel.InnerObserver</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.CutSongPanel.ButtonListener</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.SimplePlayerPanel.InnerChangeListener</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.CutSongPanel.SliderListener</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.SimplePlayerPanel.InnerActionListener</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.OptionPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.CutSongPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.PlayerPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.ViewSongsPanel</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.1" x="557.2727272727273" y="1776.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/DatabaseDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.panel.analysis.DetPanel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.panel.analysis.DetPanel</OriginalElement>
+          <nodes>
+            <node x="" y="">java.awt.Container.WakingRunnable</node>
+            <node x="" y="">java.awt.Container.MouseEventTargetFilter</node>
+            <node x="" y="">java.awt.Component.DummyRequestFocusController</node>
+            <node x="" y="">java.awt.Component.BaselineResizeBehavior</node>
+            <node x="" y="">javax.swing.TransferHandler.HasGetTransferHandler</node>
+            <node x="" y="">java.awt.image.ImageObserver</node>
+            <node x="" y="">java.awt.Component.FlipBufferStrategy</node>
+            <node x="" y="">javax.swing.JComponent.AccessibleJComponent</node>
+            <node x="" y="">javax.swing.JComponent.IntVector</node>
+            <node x="" y="">java.awt.Component.BltBufferStrategy</node>
+            <node x="" y="">java.awt.Component.AccessibleAWTComponent</node>
+            <node x="" y="">javax.swing.JComponent.AccessibleJComponent.AccessibleFocusHandler</node>
+            <node x="" y="">java.awt.Component.FlipSubRegionBufferStrategy</node>
+            <node x="" y="">java.awt.Component.ProxyCapabilities</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.analysis.ChromagramPanel</node>
+            <node x="" y="">java.awt.Container.AccessibleAWTContainer</node>
+            <node x="" y="">java.awt.Component.SingleBufferStrategy</node>
+            <node x="" y="">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="" y="">java.awt.Container</node>
+            <node x="" y="">javax.swing.JComponent.ActionStandin</node>
+            <node x="" y="">java.awt.Container.DropTargetEventTargetFilter</node>
+            <node x="" y="">java.awt.Component.BltSubRegionBufferStrategy</node>
+            <node x="" y="">javax.swing.JComponent</node>
+            <node x="" y="">javax.swing.JPanel.AccessibleJPanel</node>
+            <node x="" y="">java.awt.MenuContainer</node>
+            <node x="" y="">javax.swing.JComponent.AccessibleJComponent.AccessibleContainerHandler</node>
+            <node x="" y="">javax.accessibility.Accessible</node>
+            <node x="" y="">java.awt.Container.AccessibleAWTContainer.AccessibleContainerHandler</node>
+            <node x="" y="">java.awt.Component</node>
+            <node x="" y="">java.awt.Container.EventTargetFilter</node>
+            <node x="" y="">java.io.Serializable</node>
+            <node x="" y="">java.awt.Component.AccessibleAWTComponent.AccessibleAWTComponentHandler</node>
+            <node x="" y="">java.awt.Component.AWTTreeLock</node>
+            <node x="" y="">org.ql.audioeditor.view.panel.analysis.DetPanel</node>
+            <node x="" y="">javax.swing.JComponent.KeyboardState</node>
+            <node x="" y="">javax.swing.JComponent.ReadObjectCallback</node>
+            <node x="" y="">org.ql.audioeditor.view.core.panel.BasicFormPanel</node>
+            <node x="" y="">java.awt.Component.AccessibleAWTComponent.AccessibleAWTFocusHandler</node>
+            <node x="" y="">javax.swing.JPanel</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="1376.5" y="277.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/awt/Container.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="2446" column="21" selection-start-line="2446" selection-start-column="21" selection-end-line="2446" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.panel.popup.ChangePitchPanel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.panel.popup.ChangePitchPanel</OriginalElement>
+          <nodes>
+            <node x="440.0" y="146.0">org.ql.audioeditor.view.panel.popup.EditPanel</node>
+            <node x="688.75" y="1053.0">org.ql.audioeditor.view.panel.popup.SimilarSongsPanel</node>
+            <node x="1057.75" y="1042.0">org.ql.audioeditor.view.panel.popup.DeleteSongsPanel</node>
+            <node x="87.0" y="1131.5">org.ql.audioeditor.view.panel.popup.ChangePitchPanel.SliderListener</node>
+            <node x="0.0" y="201.0">org.ql.audioeditor.view.panel.popup.ChangePitchPanel</node>
+            <node x="488.5" y="0.0">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="714.0" y="256.0">org.ql.audioeditor.view.panel.ViewSongsPanel</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="org.ql.audioeditor.view.panel.popup.SimilarSongsPanel" target="org.ql.audioeditor.view.panel.ViewSongsPanel">
+              <point x="0.0" y="-104.0" />
+              <point x="863.25" y="1017.0" />
+              <point x="880.5" y="1017.0" />
+              <point x="-166.5" y="313.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.ViewSongsPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-313.0" />
+              <point x="1047.0" y="121.0" />
+              <point x="619.3333333333334" y="121.0" />
+              <point x="52.33333333333337" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.popup.EditPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-423.0" />
+              <point x="0.0" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.popup.DeleteSongsPanel" target="org.ql.audioeditor.view.panel.ViewSongsPanel">
+              <point x="0.0" y="-115.0" />
+              <point x="1230.75" y="1017.0" />
+              <point x="1213.5" y="1017.0" />
+              <point x="166.5" y="313.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.popup.ChangePitchPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-368.0" />
+              <point x="210.0" y="121.0" />
+              <point x="514.6666666666666" y="121.0" />
+              <point x="-52.33333333333337" y="48.0" />
+            </edge>
+            <edge source="org.ql.audioeditor.view.panel.popup.ChangePitchPanel.SliderListener" target="org.ql.audioeditor.view.panel.popup.ChangePitchPanel">
+              <point x="0.0" y="-25.5" />
+              <point x="0.0" y="368.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="411.0" y="760.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.view.panel.popup.ChangePitchPanel</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/adt/ListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
+          <folding>
+            <element signature="e#721#722#0" expanded="true" />
+            <element signature="e#755#756#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/adt/TableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.logic.dbaccess.SongModel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.logic.dbaccess.SongModel</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">org.ql.audioeditor.logic.dbaccess.SongModel</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-181.0" y="281.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.logic.dbaccess.SongModel</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/database/entities/Song.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.database.entities.Song">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.database.entities.Song</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">org.ql.audioeditor.database.entities.Song</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-198.0" y="94.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.database.entities.Song</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/logic/dbaccess/SongTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-85">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/view/panel/analysis/BeatEstPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1153">
+          <caret line="89" column="28" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.view.panel.analysis.BeatEstPanel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.view.panel.analysis.BeatEstPanel</OriginalElement>
+          <nodes>
+            <node x="48.5" y="0.0">org.ql.audioeditor.view.core.panel.BasicPanel</node>
+            <node x="0.0" y="146.0">org.ql.audioeditor.view.panel.analysis.BeatEstPanel</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="org.ql.audioeditor.view.panel.analysis.BeatEstPanel" target="org.ql.audioeditor.view.core.panel.BasicPanel">
+              <point x="0.0" y="-302.0" />
+              <point x="0.0" y="48.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="134.94047619046688" y="415.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.view.panel.analysis.BeatEstPanel</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/ql/audioeditor/AudioEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="53" column="25" lean-forward="true" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.common.properties.ConfigPropertiesLoader">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.common.properties.ConfigPropertiesLoader</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">org.ql.audioeditor.common.properties.ConfigPropertiesLoader</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-149.0" y="78.0" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.common.properties.ConfigPropertiesLoader</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/org.ql.audioeditor.AudioEditor">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>org.ql.audioeditor.AudioEditor</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">org.ql.audioeditor.AudioEditor</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="55.5" y="14.5" />
+          <SelectedNodes>
+            <node>org.ql.audioeditor.AudioEditor</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
     </entry>

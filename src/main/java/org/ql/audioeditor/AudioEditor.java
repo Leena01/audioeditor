@@ -53,7 +53,7 @@ public final class AudioEditor {
      *
      * @param s Arguments
      */
-    public static void main(String[] s) {
+    public final void main(String[] s) {
         try {
             ConfigPropertiesLoader.init(CONFIG_PROPERTIES_FILE);
             SongPropertiesLoader.init(SONG_PROPERTIES_FILE);
