@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="6" passed="6">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="583" started-at="2018-05-13T21:32:29Z" finished-at="2018-05-13T21:32:30Z">
+    <groups>
+    </groups>
+    <test name="Command line test" duration-ms="583" started-at="2018-05-13T21:32:29Z" finished-at="2018-05-13T21:32:30Z">
+      <class name="org.ql.audioeditor.common.util.TimeUtilsTest">
+        <test-method status="PASS" signature="testSecondsToFrames()[pri:0, instance:testSecondsToFrames(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testSecondsToFrames" duration-ms="32" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSecondsToFrames -->
+        <test-method status="PASS" signature="testFramesToSeconds()[pri:0, instance:testFramesToSeconds(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFramesToSeconds" duration-ms="4" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFramesToSeconds -->
+        <test-method status="PASS" signature="testFormatDuration()[pri:0, instance:testFormatDuration(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFormatDuration" duration-ms="2" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFormatDuration -->
+      </class> <!-- org.ql.audioeditor.common.util.TimeUtilsTest -->
+      <class name="org.ql.audioeditor.common.util.GeneralUtilsTest">
+        <test-method status="PASS" signature="testConvertToNumber()[pri:0, instance:testConvertToNumber(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testConvertToNumber" duration-ms="126" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testConvertToNumber -->
+        <test-method status="PASS" signature="testGetFileExtension()[pri:0, instance:testGetFileExtension(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetFileExtension" duration-ms="9" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetFileExtension -->
+        <test-method status="PASS" signature="testGetDir()[pri:0, instance:testGetDir(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetDir" duration-ms="1" started-at="2018-05-13T23:32:30Z" finished-at="2018-05-13T23:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetDir -->
+      </class> <!-- org.ql.audioeditor.common.util.GeneralUtilsTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>

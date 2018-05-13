@@ -16,9 +16,11 @@ import org.ql.audioeditor.logic.exceptions.SQLConnectionException;
 import org.ql.audioeditor.logic.matlab.MatlabHandler;
 import org.ql.audioeditor.view.MainWindow;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static org.ql.audioeditor.common.util.GeneralUtils.getDir;
 import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
 import static org.ql.audioeditor.common.util.ViewUtils.showDialog;
 
@@ -53,16 +55,29 @@ public final class AudioEditor {
      *
      * @param s Arguments
      */
-    public final void main(String[] s) {
+    public static void main(String[] s) {
         try {
             ConfigPropertiesLoader.init(CONFIG_PROPERTIES_FILE);
             SongPropertiesLoader.init(SONG_PROPERTIES_FILE);
             ImageLoader.init(IMAGES_PROPERTIES_FILE);
             MatlabFileLoader.init();
+
+            String currentPath = getPath();
+            String url = ConfigPropertiesLoader.getUrl();
+            String dbDir = getDir(currentPath + url);
+            File directory = new File(dbDir);
+            if (!directory.exists()){
+                directory.mkdirs();
+            }
+            String imageDir = ImageLoader.getFullPath();
+            System.out.println(imageDir);
+            directory = new File(imageDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
             final DatabaseDao database =
                 new DatabaseDaoImpl(ConfigPropertiesLoader.getDriver(),
-                    ConfigPropertiesLoader.getJdbc() + getPath()
-                        + ConfigPropertiesLoader.getUrl());
+                    ConfigPropertiesLoader.getJdbc() + currentPath + url);
             final Cache cache = new Cache(database,
                 ConfigPropertiesLoader.getRefreshMillis());
             final Persistence persistence = new Persistence(cache);

@@ -8,7 +8,6 @@ public enum MatlabFiles {
     CHANGE_VOLUME("changeVolume.m"),
     CREATE_WINDOW_MAP("createWindowMap.m"),
     CUT_SONG("cutSong.m"),
-    DELETE_SONG("deleteSong.m"),
     FREQ_BIN("freqBin.m"),
     GET_C_MATRIX("getCMatrix.m"),
     GET_CURRENT_FRAME("getCurrentFrame.m"),

@@ -15,6 +15,7 @@ import static org.ql.audioeditor.common.util.GeneralUtils.getPath;
 public final class ImageLoader {
     private static final String PATH = getPath();
     private static Properties properties;
+    private static String fullPath;
     private static InputStream inputStream;
     private static String plotImagePath;
     private static String specImagePath;
@@ -61,11 +62,12 @@ public final class ImageLoader {
             throw new FileNotFoundException();
         }
 
-        plotImagePath = PATH + properties.getProperty("plot.image.name");
-        specImagePath = PATH + properties.getProperty("spec.image.name");
-        spec3dImagePath = PATH + properties.getProperty("spec.3d.image.name");
-        chromImagePath = PATH + properties.getProperty("chrom.image.name");
-        onsetImagePath = PATH + properties.getProperty("onset.image.name");
+        fullPath = PATH + properties.getProperty("folder.generated");
+        plotImagePath = fullPath + properties.getProperty("plot.image.name");
+        specImagePath = fullPath + properties.getProperty("spec.image.name");
+        spec3dImagePath = fullPath + properties.getProperty("spec.3d.image.name");
+        chromImagePath = fullPath + properties.getProperty("chrom.image.name");
+        onsetImagePath = fullPath + properties.getProperty("onset.image.name");
         cover = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("cover.name")));
         playIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
@@ -104,6 +106,14 @@ public final class ImageLoader {
             properties.getProperty("downward.icon.name")));
         closeIcon = ImageIO.read(ImageLoader.class.getResourceAsStream(
             properties.getProperty("close.icon.name")));
+    }
+
+    /**
+     * Returns the full path of the generated files' folder.
+     * @return Path
+     */
+    public static String getFullPath() {
+        return fullPath;
     }
 
     /**

@@ -25,7 +25,7 @@ public final class TimeUtils {
     public static String formatDuration(long duration) {
         long absSeconds = Math.abs(duration);
         String positive = String.format(
-            "%d:%02d:%02d",
+            "%02d:%02d:%02d",
             absSeconds / HOUR_CONVERSION,
             (absSeconds % HOUR_CONVERSION) / MINUTE_CONVERSION,
             absSeconds % MINUTE_CONVERSION);
@@ -43,6 +43,9 @@ public final class TimeUtils {
      * @return Seconds
      */
     public static int framesToSeconds(double frame, double freq) {
+        if (freq == 0) {
+            throw new IllegalArgumentException("Frequency cannot be null");
+        }
         return (int) (frame / freq);
     }
 
@@ -54,6 +57,9 @@ public final class TimeUtils {
      * @return Number of frames
      */
     public static int secondsToFrames(int seconds, double freq) {
+        if (freq == 0) {
+            throw new IllegalArgumentException("Frequency cannot be null");
+        }
         return (int) (seconds * freq);
     }
 }

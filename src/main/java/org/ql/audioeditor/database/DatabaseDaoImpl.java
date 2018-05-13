@@ -50,7 +50,7 @@ public final class DatabaseDaoImpl implements DatabaseDao {
                     + "song_year VARCHAR(255) NOT NULL, "
                     + "song_genre VARCHAR(255) NOT NULL, "
                     + "song_comment VARCHAR(255) NOT NULL, "
-                    + "song_path VARCHAR(255) NOT NULL UNIQUE);";
+                    + "song_path VARCHAR(4000) NOT NULL UNIQUE);";
             stat.executeUpdate(query);
             connection.commit();
             return true;

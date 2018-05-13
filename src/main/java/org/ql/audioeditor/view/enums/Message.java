@@ -4,7 +4,7 @@ package org.ql.audioeditor.view.enums;
  * Messages shown by the GUI.
  */
 public enum Message {
-    LONG_SONG_INFO("Warning: this song might be too long to analyze."),
+    LONG_SONG_INFO("This song is too long to analyze."),
     SONGS_DELETED_INFO("Some songs were deleted from the database."),
     SUCCESSFUL_OPERATION_INFO("Successful operation."),
     WRONG_INPUT_ERROR("Wrong input data."),

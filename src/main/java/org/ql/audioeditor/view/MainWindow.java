@@ -1057,9 +1057,13 @@ public final class MainWindow extends Window {
 
         analyzeSongListener = ae -> {
             if (!currentSongModel.isEmpty()) {
-                if (framesToSeconds(currentSongModel.getTotalSamples(),
-                    currentSongModel.getFreq()) < 2) {
+                int seconds = framesToSeconds(
+                    currentSongModel.getTotalSamples(),
+                    currentSongModel.getFreq());
+                if (seconds < 2) {
                     showDialog(SONG_TOO_SHORT_ERROR);
+                } else if (seconds > SongPropertiesLoader.getMaxSeconds()) {
+                    showDialog(LONG_SONG_INFO);
                 } else {
                     if (analysisPanel.isMediaControlActive()) {
                         controlBar.setVisible(true);
