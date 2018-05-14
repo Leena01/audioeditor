@@ -21,7 +21,8 @@ public final class SongPropertiesLoader {
     private static String defaultGenre;
     private static String defaultComment;
     private static String defaultPath;
-    private static int maxSeconds;
+    private static int maxSecondsLoad;
+    private static int maxSecondsAnalyze;
     private static String[] windowNames;
     private static String[] extensionNames;
     private static int volumeMin;
@@ -68,7 +69,10 @@ public final class SongPropertiesLoader {
         defaultGenre = properties.getProperty("default.genre");
         defaultComment = properties.getProperty("default.comment");
         defaultPath = properties.getProperty("default.path");
-        maxSeconds = Integer.parseInt(properties.getProperty("max.seconds"));
+        maxSecondsLoad =
+            Integer.parseInt(properties.getProperty("max.seconds.load"));
+        maxSecondsAnalyze =
+            Integer.parseInt(properties.getProperty("max.seconds.analyze"));
         windowNames = properties.getProperty("window.names").split(",");
         extensionNames = properties.getProperty("extension.names").split(",");
         volumeMin = Integer.parseInt(properties.getProperty("volume.min"));
@@ -188,8 +192,18 @@ public final class SongPropertiesLoader {
      *
      * @return Maximum number of seconds
      */
-    public static int getMaxSeconds() {
-        return maxSeconds;
+    public static int getMaxSecondsLoad() {
+        return maxSecondsLoad;
+    }
+
+    /**
+     * Returns the length over which it is not recommended to analyze a song (in
+     * seconds).
+     *
+     * @return Maximum number of seconds
+     */
+    public static int getMaxSecondsAnalyze() {
+        return maxSecondsAnalyze;
     }
 
     /**

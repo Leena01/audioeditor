@@ -49,8 +49,12 @@ final class MatlabCommands {
             WINDOW_MAP_VAR, WINDOW_KEYS_VAR);
 
     static final String OPEN_SONG =
-        String.format("[%s, %s, %s, %s] = openSong(%s);",
-            PLAYER_VAR, SAMPLE_VAR, TOTAL_VAR, FREQ_VAR, FILE_VAR);
+        String.format("[%s, %s, %s] = openSong(%s);",
+            SAMPLE_VAR, FREQ_VAR, TOTAL_VAR, FILE_VAR);
+
+    static final String LOAD_SONG =
+        String.format("[%s] = loadSong(%s, %s);",
+            PLAYER_VAR, SAMPLE_VAR, FREQ_VAR);
 
     static final String PAUSE_SONG =
         String.format("pauseSong(%s);",

@@ -79,7 +79,8 @@ import static org.ql.audioeditor.view.enums.ActionName.SHOW_RELATED;
 import static org.ql.audioeditor.view.enums.Message.FILE_TYPE_ERROR;
 import static org.ql.audioeditor.view.enums.Message.IMAGE_ERROR;
 import static org.ql.audioeditor.view.enums.Message.INTERRUPTED_ERROR;
-import static org.ql.audioeditor.view.enums.Message.LONG_SONG_INFO;
+import static org.ql.audioeditor.view.enums.Message.LONG_SONG_ANALYZE_ERROR;
+import static org.ql.audioeditor.view.enums.Message.LONG_SONG_LOAD_ERROR;
 import static org.ql.audioeditor.view.enums.Message.SONGS_DELETED_INFO;
 import static org.ql.audioeditor.view.enums.Message.SONG_TOO_SHORT_ERROR;
 import static org.ql.audioeditor.view.enums.Message.SUCCESSFUL_OPERATION_INFO;
@@ -361,8 +362,6 @@ public final class MainWindow extends Window {
     private void refreshCache() {
         try {
             currentSongListModel = databaseAccessModel.getSongList();
-            viewSongsPanel.setList(currentSongListModel);
-            deleteSongsPanel.setList(currentSongListModel);
             if (databaseAccessModel.hasInvalid()) {
                 showInfo(infoLabel, SONGS_DELETED_INFO, INFO_LABEL_DELAY);
                 if (!databaseAccessModel.isSongValid(currentSongModel)) {
@@ -371,7 +370,10 @@ public final class MainWindow extends Window {
                         .setPath(SongPropertiesLoader.getDefaultPath());
                 }
             }
+            viewSongsPanel.setList(currentSongListModel);
+            deleteSongsPanel.setList(currentSongListModel);
             dataPanel.setSongData(currentSongModel);
+            currentSongTitle.setText(currentSongModel.getTitle());
         } catch (SQLConnectionException sqe) {
             showInfo(infoLabel, sqe.getMessage(), INFO_LABEL_DELAY);
         }
@@ -480,6 +482,13 @@ public final class MainWindow extends Window {
     private void openSong(SongModel sm) {
         getCover(sm);
         getSavedInstance(sm);
+        try {
+            if (!sm.isDefault()) {
+                sm = databaseAccessModel.getSong(sm);
+            }
+        } catch (SQLConnectionException e) {
+            showDialog(e.getMessage());
+        }
         t = new Thread(new OpenSongRunnable(sm));
         waitForThread(t);
     }
@@ -626,10 +635,6 @@ public final class MainWindow extends Window {
             SongModel sm = editPanel.getSelectedSongModel();
             if (sm.getId() == currentSongModel.getId()) {
                 currentSongModel = new SongModel(sm);
-            }
-            try {
-                sm.setTags();
-            } catch (Exception ignored) {
             }
             databaseAccessModel.editSong(sm);
             refreshCache();
@@ -820,6 +825,7 @@ public final class MainWindow extends Window {
         changePitchPanel =
             new ChangePitchPanel(matlabHandler, cpPreviewListener,
                 cpSaveListener);
+        changePitchPanel.removeSong();
         changePitchDialog =
             new PopupDialog(this, "Change pitch", changePitchPanel, new
                 ClosingChangePitchAdapter());
@@ -976,7 +982,18 @@ public final class MainWindow extends Window {
 
         deleteSongListener = ae -> deleteSongsDialog.setVisible(true);
 
-        deleteDoneListener = ae -> deleteSongsDone();
+        deleteDoneListener = ae -> {
+            deleteSongsDone();
+            try {
+                if (!databaseAccessModel.isSongValid(currentSongModel)) {
+                    setFavorite(false);
+                    currentSongModel
+                        .setPath(SongPropertiesLoader.getDefaultPath());
+                }
+            } catch (SQLConnectionException e) {
+                showDialog(e.getMessage());
+            }
+        };
 
         showSimilarDoneListener = ae -> {
             SongModel sm = similarSongsPanel.getSelectedRow();
@@ -1044,7 +1061,15 @@ public final class MainWindow extends Window {
             }
         };
 
-        showSpecListener = ae -> showSpec();
+        showSpecListener = ae -> {
+            if (framesToSeconds(currentSongModel.getTotalSamples(),
+                currentSongModel.getFreq())
+                > SongPropertiesLoader.getMaxSecondsAnalyze()) {
+                showDialog(LONG_SONG_ANALYZE_ERROR);
+            } else {
+                showSpec();
+            }
+        };
 
         viewChromListener = ae -> {
             if (!currentSongModel.isEmpty()) {
@@ -1053,7 +1078,15 @@ public final class MainWindow extends Window {
             }
         };
 
-        showChromListener = ae -> showChrom();
+        showChromListener = ae -> {
+            if (framesToSeconds(currentSongModel.getTotalSamples(),
+                currentSongModel.getFreq())
+                > SongPropertiesLoader.getMaxSecondsAnalyze()) {
+                showDialog(LONG_SONG_ANALYZE_ERROR);
+            } else {
+                showChrom();
+            }
+        };
 
         analyzeSongListener = ae -> {
             if (!currentSongModel.isEmpty()) {
@@ -1062,8 +1095,9 @@ public final class MainWindow extends Window {
                     currentSongModel.getFreq());
                 if (seconds < 2) {
                     showDialog(SONG_TOO_SHORT_ERROR);
-                } else if (seconds > SongPropertiesLoader.getMaxSeconds()) {
-                    showDialog(LONG_SONG_INFO);
+                } else if (seconds
+                    > SongPropertiesLoader.getMaxSecondsAnalyze()) {
+                    showDialog(LONG_SONG_ANALYZE_ERROR);
                 } else {
                     if (analysisPanel.isMediaControlActive()) {
                         controlBar.setVisible(true);
@@ -1162,7 +1196,7 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.close();
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
             databaseAccessModel.close();
         }
@@ -1204,26 +1238,37 @@ public final class MainWindow extends Window {
         public synchronized void run() {
             try {
                 matlabHandler.openSong(sm.getPath());
-                matlabHandler
-                    .plotSong(PLOT_IMG_PATH);
                 matlabHandler.passData(sm);
-                SwingUtilities.invokeLater(() -> {
-                    double freq = sm.getFreq();
-                    double totalSamples = sm.getTotalSamples();
-                    try {
-                        BufferedImage plot = ImageIO.read(
-                            new File(PLOT_IMG_PATH));
-                        sm.setPlot(plot);
-                        menuPanel.setCurrentSong(
-                            totalSamples, freq, plot, sm.getCover(), isNormal,
-                            getExtendedState() == MAXIMIZED_BOTH);
-                        changePitchPanel.setSong(totalSamples, freq, plot);
-                        currentSongModel = sm;
-                        loadEnv();
-                    } catch (IOException ioe) {
-                        showDialog(IMAGE_ERROR);
-                    }
-                });
+                double freq = sm.getFreq();
+                double totalSamples = sm.getTotalSamples();
+                if (framesToSeconds(totalSamples, freq)
+                    > SongPropertiesLoader.getMaxSecondsLoad()) {
+                    new Thread(
+                        new DialogRunnable(LONG_SONG_LOAD_ERROR.toString()))
+                        .start();
+                } else {
+                    matlabHandler.loadSong();
+                    matlabHandler
+                        .plotSong(PLOT_IMG_PATH);
+                    SwingUtilities.invokeLater(() -> {
+                        try {
+                            BufferedImage plot = ImageIO.read(
+                                new File(PLOT_IMG_PATH));
+                            sm.setPlot(plot);
+                            menuPanel.setCurrentSong(
+                                totalSamples, freq, plot, sm.getCover(),
+                                isNormal,
+                                getExtendedState() == MAXIMIZED_BOTH);
+                            changePitchPanel.setSong(totalSamples, freq, plot);
+                            currentSongModel = new SongModel(sm);
+                            loadEnv();
+                        } catch (IOException ioe) {
+                            new Thread(
+                                new DialogRunnable(IMAGE_ERROR.toString()))
+                                .start();
+                        }
+                    });
+                }
             } catch (MatlabEngineException mee) {
                 new Thread(new DialogRunnable(mee.getMessage())).start();
             }
@@ -1231,8 +1276,8 @@ public final class MainWindow extends Window {
 
         private void loadEnv() {
             if (framesToSeconds(sm.getTotalSamples(), sm.getFreq())
-                > SongPropertiesLoader.getMaxSeconds()) {
-                showInfo(infoLabel, LONG_SONG_INFO,
+                > SongPropertiesLoader.getMaxSecondsAnalyze()) {
+                showInfo(infoLabel, LONG_SONG_ANALYZE_ERROR,
                     INFO_LABEL_DELAY);
             }
             currentSongTitle.setText(sm.getTitle());
@@ -1351,7 +1396,7 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.saveSongCut(path);
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1372,7 +1417,7 @@ public final class MainWindow extends Window {
                         .setMinimumSize(changePitchDialog.getSize());
                 });
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1392,7 +1437,7 @@ public final class MainWindow extends Window {
             try {
                 matlabHandler.saveSongChangePitch(path);
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1416,7 +1461,7 @@ public final class MainWindow extends Window {
                 SwingUtilities.invokeLater(() ->
                     analysisPanel.showEstimation(est));
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1452,11 +1497,12 @@ public final class MainWindow extends Window {
                             currentSongModel.getFreq(), plot);
                         controlBar.setVisible(true);
                     } catch (IOException ioe) {
-                        showDialog(IMAGE_ERROR);
+                        new Thread(new DialogRunnable(IMAGE_ERROR.toString()))
+                            .start();
                     }
                 });
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }
@@ -1486,7 +1532,7 @@ public final class MainWindow extends Window {
                 SwingUtilities
                     .invokeLater(() -> analysisPanel.showEstimation(est));
             } catch (MatlabEngineException mee) {
-                showDialog(mee.getMessage());
+                new Thread(new DialogRunnable(mee.getMessage())).start();
             }
         }
     }

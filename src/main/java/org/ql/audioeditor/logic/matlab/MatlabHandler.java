@@ -21,6 +21,7 @@ import static org.ql.audioeditor.logic.matlab.MatlabCommands.DETECT_ONSET;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.ESTIMATE_BEAT;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.GET_CURRENT_FRAME;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.IS_PLAYING;
+import static org.ql.audioeditor.logic.matlab.MatlabCommands.LOAD_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.OPEN_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.PAUSE_SONG;
 import static org.ql.audioeditor.logic.matlab.MatlabCommands.PLOT_SONG;
@@ -73,6 +74,10 @@ public final class MatlabHandler {
     private static final int MIN_FRAMES = 1;
     private static final String OPEN_ERROR =
         "Error: file cannot be opened.";
+    private static final String LOAD_ERROR =
+        "Error: file cannot be loaded.";
+    private static final String SAVE_ERROR =
+        "Error: file cannot be saved. Wrong file format or sample rate";
     private static final String IMAGE_ERROR = "Cannot generate image.";
     private static final String CANNOT_CUT_ERROR = "Cannot cut song.";
     private static final String CANNOT_CHANGE_PITCH_ERROR =
@@ -180,6 +185,20 @@ public final class MatlabHandler {
             this.freq = eng.getVariable(FREQ_VAR.toString());
         } catch (Exception e) {
             throw new MatlabEngineException(OPEN_ERROR);
+        }
+    }
+
+    /**
+     * Loads a song.
+     *
+     * @throws MatlabEngineException Exception caused by the MATLAB Engine
+     */
+    public synchronized void loadSong()
+        throws MatlabEngineException {
+        try {
+            eng.eval(LOAD_SONG);
+        } catch (Exception e) {
+            throw new MatlabEngineException(LOAD_ERROR);
         }
     }
 
@@ -484,7 +503,7 @@ public final class MatlabHandler {
             eng.putVariable(FILE_VAR.toString(), file.toCharArray());
             eng.eval(type);
         } catch (Exception e) {
-            throw new MatlabEngineException(OPEN_ERROR);
+            throw new MatlabEngineException(SAVE_ERROR);
         }
     }
 }

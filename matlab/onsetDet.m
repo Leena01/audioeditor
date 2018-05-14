@@ -36,7 +36,7 @@ function onsetDet(x, fs, bpm, s, lower, smallest, imgname)
     locs = locs(I);
     
     % Plot
-    plot(x);
+    plot(x, 'b');
     if ~isempty(locs)
         hold on
         for i = 1:length(locs)

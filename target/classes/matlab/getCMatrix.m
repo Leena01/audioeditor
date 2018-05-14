@@ -3,7 +3,7 @@ function [C] = getCMatrix(Fs, N, A0)
 %	Fs: Sample rate of audio (cycles/second)
 %	N: The window size of the short-time Fourier Transform
 %	A0: Base frequency
-    NSpec = ceil(N/2) + 1; %The number of bins in the spectrogram
+    NSpec = floor(N/2) + 1; %The number of bins in the spectrogram
     C = zeros(12, NSpec); %Allocate space for the C matrix
 %   A0 = 440.0/4; %The lowest octave range to search
     FMax = Fs/2; %Maximum frequency supported by this sample rate

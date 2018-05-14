@@ -65,7 +65,8 @@ public final class ImageLoader {
         fullPath = PATH + properties.getProperty("folder.generated");
         plotImagePath = fullPath + properties.getProperty("plot.image.name");
         specImagePath = fullPath + properties.getProperty("spec.image.name");
-        spec3dImagePath = fullPath + properties.getProperty("spec.3d.image.name");
+        spec3dImagePath = fullPath + properties
+            .getProperty("spec.3d.image.name");
         chromImagePath = fullPath + properties.getProperty("chrom.image.name");
         onsetImagePath = fullPath + properties.getProperty("onset.image.name");
         cover = ImageIO.read(ImageLoader.class.getResourceAsStream(
@@ -110,6 +111,7 @@ public final class ImageLoader {
 
     /**
      * Returns the full path of the generated files' folder.
+     *
      * @return Path
      */
     public static String getFullPath() {

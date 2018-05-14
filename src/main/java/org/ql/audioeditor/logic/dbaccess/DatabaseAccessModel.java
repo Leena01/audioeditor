@@ -73,7 +73,7 @@ public final class DatabaseAccessModel {
      * Get list of songs filtered by a given attribute.
      *
      * @param attribute Filter
-     * @param sm Song model
+     * @param sm        Song model
      * @return Song list model
      *
      * @throws SQLConnectionException Exception caused by database connection
@@ -89,6 +89,8 @@ public final class DatabaseAccessModel {
      * Getter that checks the validity of every song in the database.
      *
      * @return Songs in the database
+     *
+     * @throws SQLConnectionException Exception caused by database connection
      */
     private List<Song> getSongs() throws SQLConnectionException {
         List<Song> songs = persistence.getSongs();
@@ -112,6 +114,8 @@ public final class DatabaseAccessModel {
      * Getter that filters songs according to a given attribute.
      *
      * @return Songs in the database
+     *
+     * @throws SQLConnectionException Exception caused by database connection
      */
     private List<Song> getSongs(String attribute, SongModel sm) throws
         SQLConnectionException {
@@ -138,10 +142,24 @@ public final class DatabaseAccessModel {
     }
 
     /**
+     * Returns the proper song from the database.
+     *
+     * @param sm Song model
+     * @return SongModel
+     *
+     * @throws SQLConnectionException Exception caused by database connection
+     */
+    public SongModel getSong(SongModel sm) throws SQLConnectionException {
+        return new SongModel(getSong(sm.getId()));
+    }
+
+    /**
      * Getter.
      *
      * @param id ID of a certain song
      * @return The actual song
+     *
+     * @throws SQLConnectionException Exception caused by database connection
      */
     private Song getSong(int id) throws SQLConnectionException {
         try {
@@ -159,6 +177,8 @@ public final class DatabaseAccessModel {
      *
      * @param path File path to a certain song
      * @return The actual song
+     *
+     * @throws SQLConnectionException Exception caused by database connection
      */
     private Song getSong(String path) throws SQLConnectionException {
         try {

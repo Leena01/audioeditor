@@ -5,6 +5,7 @@
     <classes>
       <class name="org.ql.audioeditor.common.util.GeneralUtilsTest"/>
       <class name="org.ql.audioeditor.common.util.TimeUtilsTest"/>
+      <class name="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest"/>
     </classes>
   </test> <!-- Command line test -->
 </suite> <!-- Failed suite [Command line suite] -->

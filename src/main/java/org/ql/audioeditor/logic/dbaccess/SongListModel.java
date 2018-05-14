@@ -8,6 +8,7 @@ import org.ql.audioeditor.logic.dbaccess.adt.ListModel;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Model class designed to encapsulate a list of songs.
@@ -97,5 +98,47 @@ public final class SongListModel extends ListModel<Song> {
      */
     private int currentSongPos(SongModel sm) {
         return items.indexOf(sm.getSong());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final SongListModel other = (SongListModel) obj;
+
+        return Objects.equals(this.items, other.items);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return items.hashCode();
+    }
+
+    /**
+     * Determine field hashcode.
+     *
+     * @param field The field
+     * @return Hashcode
+     */
+    private int addHashNum(String field) {
+        if (field != null) {
+            return field.hashCode();
+        }
+        return 0;
     }
 }

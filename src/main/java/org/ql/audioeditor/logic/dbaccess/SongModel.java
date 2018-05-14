@@ -1,11 +1,7 @@
 package org.ql.audioeditor.logic.dbaccess;
 
 import com.mpatric.mp3agic.ID3v1;
-import com.mpatric.mp3agic.ID3v1Tag;
-import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
-import com.mpatric.mp3agic.NotSupportedException;
-import com.mpatric.mp3agic.UnsupportedTagException;
 import org.ql.audioeditor.common.properties.ImageLoader;
 import org.ql.audioeditor.common.properties.SongPropertiesLoader;
 import org.ql.audioeditor.database.entities.Song;
@@ -13,7 +9,7 @@ import org.ql.audioeditor.database.entities.Song;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Model class to encapsulate a song. The ID of the song contained in this class
@@ -80,6 +76,15 @@ public final class SongModel {
      */
     Song getSong() {
         return song;
+    }
+
+    /**
+     * Sets the song.
+     *
+     * @param song Song
+     */
+    public void setSong(Song song) {
+        this.song = new Song(song);
     }
 
     /**
@@ -388,34 +393,32 @@ public final class SongModel {
             new Song(title, track, artist, album, year, genre, comment, path);
     }
 
-    /**
-     * Sets the MP3 tags if present.
-     *
-     * @throws UnsupportedTagException UnsupportedTagException
-     * @throws NotSupportedException NotSupportedException
-     * @throws InvalidDataException InvalidDataException
-     * @throws IOException IOException
-     */
-    public void setTags()
-        throws UnsupportedTagException, NotSupportedException,
-        InvalidDataException, IOException {
-        Mp3File song = new Mp3File(getPath());
-        ID3v1 id3v1Tag;
-        if (song.hasId3v1Tag()) {
-            id3v1Tag = song.getId3v1Tag();
-        } else {
-            id3v1Tag = new ID3v1Tag();
-            song.setId3v1Tag(id3v1Tag);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-        id3v1Tag.setTitle(getTitle());
-        id3v1Tag.setTrack(getTrack());
-        id3v1Tag.setArtist(getArtist());
-        id3v1Tag.setAlbum(getAlbum());
-        id3v1Tag.setYear(getYear());
-        id3v1Tag.setGenre(Integer.parseInt(getGenre()));
-        id3v1Tag.setComment(getComment());
-        song.save(getPath());
-        setGenre(
-            id3v1Tag.getGenre() + " (" + id3v1Tag.getGenreDescription() + ")");
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final SongModel other = (SongModel) obj;
+
+        return Objects.equals(this.song, other.song);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return song.hashCode();
     }
 }

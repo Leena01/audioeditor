@@ -1,5 +1,5 @@
-function [player, x, total, fs] = openSong(file)
+function [x, fs, total] = openSong(file)
+%OPENSONG	Reads the given song.
 	[x, fs] = audioread(file);
-	player = audioplayer(x, fs);
-	total = get(player, 'TotalSamples');
+	total = length(x);
 end

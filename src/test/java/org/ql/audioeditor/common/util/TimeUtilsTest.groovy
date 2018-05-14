@@ -34,10 +34,8 @@ class TimeUtilsTest extends GroovyTestCase {
         assertEquals(2,
                 TimeUtils.framesToSeconds(44100, 22050))
 
-        String message = shouldFail {
-            TimeUtils.framesToSeconds(44100, 0)
-        }
-        assert message == "Frequency cannot be null"
+        assertEquals(0,
+                TimeUtils.framesToSeconds(44100, 0))
     }
 
     void testSecondsToFrames() {
@@ -53,9 +51,7 @@ class TimeUtilsTest extends GroovyTestCase {
         assertEquals(44100,
                 TimeUtils.secondsToFrames(2, 22050.3))
 
-        String message = shouldFail {
-            TimeUtils.secondsToFrames(44100, 0)
-        }
-        assert message == "Frequency cannot be null"
+        assertEquals(0,
+            TimeUtils.secondsToFrames(44100, 0))
     }
 }

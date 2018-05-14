@@ -66,11 +66,10 @@ public final class AudioEditor {
             String url = ConfigPropertiesLoader.getUrl();
             String dbDir = getDir(currentPath + url);
             File directory = new File(dbDir);
-            if (!directory.exists()){
+            if (!directory.exists()) {
                 directory.mkdirs();
             }
             String imageDir = ImageLoader.getFullPath();
-            System.out.println(imageDir);
             directory = new File(imageDir);
             if (!directory.exists()) {
                 directory.mkdirs();

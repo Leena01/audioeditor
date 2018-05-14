@@ -44,7 +44,7 @@ public final class TimeUtils {
      */
     public static int framesToSeconds(double frame, double freq) {
         if (freq == 0) {
-            throw new IllegalArgumentException("Frequency cannot be null");
+            return 0;
         }
         return (int) (frame / freq);
     }
@@ -58,7 +58,7 @@ public final class TimeUtils {
      */
     public static int secondsToFrames(int seconds, double freq) {
         if (freq == 0) {
-            throw new IllegalArgumentException("Frequency cannot be null");
+            return 0;
         }
         return (int) (seconds * freq);
     }

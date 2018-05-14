@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestSuite" time="0.17" tests="6" errors="0" skipped="0" failures="0">
+<testsuite name="TestSuite" time="13.6" tests="27" errors="0" skipped="0" failures="0">
   <properties>
     <property name="idea.version" value="2018.1"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_144\jre"/>
-    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2018.1 install -f pom.xml"/>
+    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2018.1 test -f pom.xml"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,10 +61,31 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testConvertToNumber on testConvertToNumber(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.124"/>
-  <testcase name="testGetFileExtension on testGetFileExtension(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.008"/>
-  <testcase name="testGetDir on testGetDir(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.002"/>
-  <testcase name="testSecondsToFrames on testSecondsToFrames(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.031"/>
-  <testcase name="testFramesToSeconds on testFramesToSeconds(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.003"/>
-  <testcase name="testFormatDuration on testFormatDuration(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.002"/>
+  <testcase name="testConvertToNumber on testConvertToNumber(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.113"/>
+  <testcase name="testGetFileExtension on testGetFileExtension(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.011"/>
+  <testcase name="testGetDir on testGetDir(org.ql.audioeditor.common.util.GeneralUtilsTest)" classname="org.ql.audioeditor.common.util.GeneralUtilsTest" time="0.001"/>
+  <testcase name="testSecondsToFrames on testSecondsToFrames(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.004"/>
+  <testcase name="testFramesToSeconds on testFramesToSeconds(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.001"/>
+  <testcase name="testFormatDuration on testFormatDuration(org.ql.audioeditor.common.util.TimeUtilsTest)" classname="org.ql.audioeditor.common.util.TimeUtilsTest" time="0.003"/>
+  <testcase name="testEditSongNoSongLoaded on testEditSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.888"/>
+  <testcase name="testEditSong on testEditSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.725"/>
+  <testcase name="testDeleteSongs on testDeleteSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.635"/>
+  <testcase name="testAddSong on testAddSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.619"/>
+  <testcase name="testAddSongAlreadyExists on testAddSongAlreadyExists(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.639"/>
+  <testcase name="testGetId on testGetId(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.613"/>
+  <testcase name="testAddSongNoSongLoaded on testAddSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.652"/>
+  <testcase name="testDeleteSongNoSuchSong on testDeleteSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.624"/>
+  <testcase name="testAddSongs on testAddSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.606"/>
+  <testcase name="testEditSongNoSuchSong on testEditSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.635"/>
+  <testcase name="testIsSongValid on testIsSongValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.626"/>
+  <testcase name="testDeleteSongNoSongLoaded on testDeleteSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.644"/>
+  <testcase name="testDeleteSong on testDeleteSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.625"/>
+  <testcase name="testGetSongListInvalid on testGetSongListInvalid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.608"/>
+  <testcase name="testAddSongsFail on testAddSongsFail(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.611"/>
+  <testcase name="testGetSongList1 on testGetSongList1(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.607"/>
+  <testcase name="testGetId2 on testGetId2(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.602"/>
+  <testcase name="testHasInvalidFalse on testHasInvalidFalse(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.602"/>
+  <testcase name="testGetSongListValid on testGetSongListValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.599"/>
+  <testcase name="testAddSongNotValid on testAddSongNotValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.622"/>
+  <testcase name="testHasInvalidTrue on testHasInvalidTrue(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)" classname="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest" time="0.685"/>
 </testsuite>

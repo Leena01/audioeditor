@@ -62,16 +62,19 @@ public final class DeleteSongsPanel extends ViewSongsPanel {
      */
     @Override
     public void setList(SongListModel slm) {
-        int[] selectedRows = this.table.getSelectedRows();
-        initTable(slm);
-        this.table.setModel(this.tableModel);
-        if (this.table.getRowCount() <= 0) {
-            return;
-        }
-        if (selectedRows.length != 0) {
-            for (int i : selectedRows) {
-                this.table.addRowSelectionInterval(i, i);
+        try {
+            int[] selectedRows = this.table.getSelectedRows();
+            initTable(slm);
+            this.table.setModel(this.tableModel);
+            if (this.table.getRowCount() <= 0) {
+                return;
             }
+            if (selectedRows.length != 0) {
+                for (int i : selectedRows) {
+                    this.table.addRowSelectionInterval(i, i);
+                }
+            }
+        } catch (Exception ignored) {
         }
     }
 
