@@ -7,11 +7,11 @@ function [note, scale] = keyDetection(x1, fs1, bpm, s, lower, smallest)
 	
     x1 = x1(:, 1);
 	
-    wlen = 2^10;
+    wlen = 256;
     nfft = wlen;
-    noverlap = wlen/4;
+    hop = wlen/4;
 	
-    [S1, ~, ~] = spectrogram(x1, hann(wlen), noverlap, nfft, fs1, 'yaxis');
+    [S1, ~, ~] = stft(x1, wlen, hop, nfft, fs1);
     [~, slen] = size(S1);
     locs1 = onsets(x1, fs1, bpm, s, lower, smallest);
     locs1 = int32(locs1 * (slen/length(x1)));
@@ -23,16 +23,18 @@ function [note, scale] = keyDetection(x1, fs1, bpm, s, lower, smallest)
 	for j = 1:m
         for i = 1:n
             p = strjoin(path, notes{j}(i));
-            sim = noteDetection(S1, locs1, p, wlen, nfft, noverlap);
+            sim = noteDetection(S1, locs1, p, wlen, nfft, hop);
             sims(i, j, :) = sim;
         end
     end
 	
-	first = 1;
+	[n, m, llen] = size(sims);
+    first = 1;
     res = zeros(first, m, llen);
     for i = 1:llen
         res(:, :, i) = minkcol(sims(:, :, i), first);
     end
+	
 	
     modes = zeros(n, 2);
     modes(:, 1) = 1:12;
@@ -48,5 +50,5 @@ function [note, scale] = keyDetection(x1, fs1, bpm, s, lower, smallest)
 	
 	modes = flipud(modes);
 	
-	[note, scale] = getKey(modes);
+	[note, scale] = getKey(modes(:, 2));
 end

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="6.18">
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\AudioEditor.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\config.properties">
 </file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\common\properties\ImageLoader.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\SongListModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\logic\dbaccess\SongModel.java">
-</file>
-<file name="C:\Users\livix\Desktop\audioeditor\src\main\java\org\ql\audioeditor\view\MainWindow.java">
+<file name="C:\Users\livix\Desktop\audioeditor\src\main\resources\config\song.properties">
 </file>
 </checkstyle>

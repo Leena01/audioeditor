@@ -4,7 +4,7 @@ function sim = noteDetection(S1, locs1, n, wlen, nfft, hop)
     x2 = x2(:, 1);
     
     % Short-time Fourier transform
-    [S2, F2, T2] = spectrogram(x2, hann(wlen), hop, nfft, fs2, 'yaxis');
+    [S2, F2, T2] = stft(x2, wlen, hop, nfft, fs2);
     [sheight, slen] = size(S1);
     [~, slen2] = size(S2);
     

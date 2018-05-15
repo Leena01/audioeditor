@@ -7,7 +7,7 @@ import java.util.List;
  * Common note values.
  */
 public enum NoteValue {
-    HALF(2), QUARTER(4), EIGTH(8), SIXTEENTH(16);
+    HALF(2), QUARTER(4), SIXTH(6), EIGTH(8), SIXTEENTH(16);
 
     private final int value;
 

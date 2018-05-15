@@ -2,120 +2,120 @@
 <testng-results skipped="0" failed="0" total="27" passed="27">
   <reporter-output>
   </reporter-output>
-  <suite name="Command line suite" duration-ms="14096" started-at="2018-05-14T22:23:53Z" finished-at="2018-05-14T22:24:07Z">
+  <suite name="Command line suite" duration-ms="15313" started-at="2018-05-15T05:24:55Z" finished-at="2018-05-15T05:25:11Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="14096" started-at="2018-05-14T22:23:53Z" finished-at="2018-05-14T22:24:07Z">
+    <test name="Command line test" duration-ms="15313" started-at="2018-05-15T05:24:55Z" finished-at="2018-05-15T05:25:11Z">
       <class name="org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest">
-        <test-method status="PASS" signature="testEditSongNoSongLoaded()[pri:0, instance:testEditSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSongNoSongLoaded" duration-ms="888" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:55Z">
+        <test-method status="PASS" signature="testEditSongNoSongLoaded()[pri:0, instance:testEditSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSongNoSongLoaded" duration-ms="1113" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:58Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testEditSongNoSongLoaded -->
-        <test-method status="PASS" signature="testEditSong()[pri:0, instance:testEditSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSong" duration-ms="724" started-at="2018-05-15T00:23:55Z" finished-at="2018-05-15T00:23:56Z">
+        <test-method status="PASS" signature="testEditSong()[pri:0, instance:testEditSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSong" duration-ms="691" started-at="2018-05-15T07:24:58Z" finished-at="2018-05-15T07:24:59Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testEditSong -->
-        <test-method status="PASS" signature="testDeleteSongs()[pri:0, instance:testDeleteSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongs" duration-ms="634" started-at="2018-05-15T00:23:56Z" finished-at="2018-05-15T00:23:56Z">
+        <test-method status="PASS" signature="testDeleteSongs()[pri:0, instance:testDeleteSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongs" duration-ms="664" started-at="2018-05-15T07:24:59Z" finished-at="2018-05-15T07:24:59Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testDeleteSongs -->
-        <test-method status="PASS" signature="testAddSong()[pri:0, instance:testAddSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSong" duration-ms="619" started-at="2018-05-15T00:23:56Z" finished-at="2018-05-15T00:23:57Z">
+        <test-method status="PASS" signature="testAddSong()[pri:0, instance:testAddSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSong" duration-ms="632" started-at="2018-05-15T07:24:59Z" finished-at="2018-05-15T07:25:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSong -->
-        <test-method status="PASS" signature="testAddSongAlreadyExists()[pri:0, instance:testAddSongAlreadyExists(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongAlreadyExists" duration-ms="639" started-at="2018-05-15T00:23:57Z" finished-at="2018-05-15T00:23:57Z">
+        <test-method status="PASS" signature="testAddSongAlreadyExists()[pri:0, instance:testAddSongAlreadyExists(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongAlreadyExists" duration-ms="690" started-at="2018-05-15T07:25:00Z" finished-at="2018-05-15T07:25:01Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSongAlreadyExists -->
-        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetId" duration-ms="613" started-at="2018-05-15T00:23:57Z" finished-at="2018-05-15T00:23:58Z">
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetId" duration-ms="621" started-at="2018-05-15T07:25:01Z" finished-at="2018-05-15T07:25:01Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetId -->
-        <test-method status="PASS" signature="testAddSongNoSongLoaded()[pri:0, instance:testAddSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongNoSongLoaded" duration-ms="652" started-at="2018-05-15T00:23:58Z" finished-at="2018-05-15T00:23:59Z">
+        <test-method status="PASS" signature="testAddSongNoSongLoaded()[pri:0, instance:testAddSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongNoSongLoaded" duration-ms="667" started-at="2018-05-15T07:25:01Z" finished-at="2018-05-15T07:25:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSongNoSongLoaded -->
-        <test-method status="PASS" signature="testDeleteSongNoSuchSong()[pri:0, instance:testDeleteSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongNoSuchSong" duration-ms="624" started-at="2018-05-15T00:23:59Z" finished-at="2018-05-15T00:23:59Z">
+        <test-method status="PASS" signature="testDeleteSongNoSuchSong()[pri:0, instance:testDeleteSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongNoSuchSong" duration-ms="635" started-at="2018-05-15T07:25:02Z" finished-at="2018-05-15T07:25:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testDeleteSongNoSuchSong -->
-        <test-method status="PASS" signature="testAddSongs()[pri:0, instance:testAddSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongs" duration-ms="606" started-at="2018-05-15T00:23:59Z" finished-at="2018-05-15T00:24:00Z">
+        <test-method status="PASS" signature="testAddSongs()[pri:0, instance:testAddSongs(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongs" duration-ms="614" started-at="2018-05-15T07:25:03Z" finished-at="2018-05-15T07:25:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSongs -->
-        <test-method status="PASS" signature="testEditSongNoSuchSong()[pri:0, instance:testEditSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSongNoSuchSong" duration-ms="635" started-at="2018-05-15T00:24:00Z" finished-at="2018-05-15T00:24:01Z">
+        <test-method status="PASS" signature="testEditSongNoSuchSong()[pri:0, instance:testEditSongNoSuchSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testEditSongNoSuchSong" duration-ms="627" started-at="2018-05-15T07:25:03Z" finished-at="2018-05-15T07:25:04Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testEditSongNoSuchSong -->
-        <test-method status="PASS" signature="testIsSongValid()[pri:0, instance:testIsSongValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testIsSongValid" duration-ms="626" started-at="2018-05-15T00:24:01Z" finished-at="2018-05-15T00:24:01Z">
+        <test-method status="PASS" signature="testIsSongValid()[pri:0, instance:testIsSongValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testIsSongValid" duration-ms="611" started-at="2018-05-15T07:25:04Z" finished-at="2018-05-15T07:25:04Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testIsSongValid -->
-        <test-method status="PASS" signature="testDeleteSongNoSongLoaded()[pri:0, instance:testDeleteSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongNoSongLoaded" duration-ms="645" started-at="2018-05-15T00:24:01Z" finished-at="2018-05-15T00:24:02Z">
+        <test-method status="PASS" signature="testDeleteSongNoSongLoaded()[pri:0, instance:testDeleteSongNoSongLoaded(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSongNoSongLoaded" duration-ms="625" started-at="2018-05-15T07:25:04Z" finished-at="2018-05-15T07:25:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testDeleteSongNoSongLoaded -->
-        <test-method status="PASS" signature="testDeleteSong()[pri:0, instance:testDeleteSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSong" duration-ms="626" started-at="2018-05-15T00:24:02Z" finished-at="2018-05-15T00:24:03Z">
+        <test-method status="PASS" signature="testDeleteSong()[pri:0, instance:testDeleteSong(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testDeleteSong" duration-ms="607" started-at="2018-05-15T07:25:05Z" finished-at="2018-05-15T07:25:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testDeleteSong -->
-        <test-method status="PASS" signature="testGetSongListInvalid()[pri:0, instance:testGetSongListInvalid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongListInvalid" duration-ms="608" started-at="2018-05-15T00:24:03Z" finished-at="2018-05-15T00:24:03Z">
+        <test-method status="PASS" signature="testGetSongListInvalid()[pri:0, instance:testGetSongListInvalid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongListInvalid" duration-ms="609" started-at="2018-05-15T07:25:06Z" finished-at="2018-05-15T07:25:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetSongListInvalid -->
-        <test-method status="PASS" signature="testAddSongsFail()[pri:0, instance:testAddSongsFail(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongsFail" duration-ms="611" started-at="2018-05-15T00:24:03Z" finished-at="2018-05-15T00:24:04Z">
+        <test-method status="PASS" signature="testAddSongsFail()[pri:0, instance:testAddSongsFail(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongsFail" duration-ms="667" started-at="2018-05-15T07:25:06Z" finished-at="2018-05-15T07:25:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSongsFail -->
-        <test-method status="PASS" signature="testGetSongList1()[pri:0, instance:testGetSongList1(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongList1" duration-ms="607" started-at="2018-05-15T00:24:04Z" finished-at="2018-05-15T00:24:04Z">
+        <test-method status="PASS" signature="testGetSongList1()[pri:0, instance:testGetSongList1(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongList1" duration-ms="609" started-at="2018-05-15T07:25:07Z" finished-at="2018-05-15T07:25:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetSongList1 -->
-        <test-method status="PASS" signature="testGetId2()[pri:0, instance:testGetId2(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetId2" duration-ms="602" started-at="2018-05-15T00:24:04Z" finished-at="2018-05-15T00:24:05Z">
+        <test-method status="PASS" signature="testGetId2()[pri:0, instance:testGetId2(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetId2" duration-ms="603" started-at="2018-05-15T07:25:08Z" finished-at="2018-05-15T07:25:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetId2 -->
-        <test-method status="PASS" signature="testHasInvalidFalse()[pri:0, instance:testHasInvalidFalse(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testHasInvalidFalse" duration-ms="603" started-at="2018-05-15T00:24:05Z" finished-at="2018-05-15T00:24:06Z">
+        <test-method status="PASS" signature="testHasInvalidFalse()[pri:0, instance:testHasInvalidFalse(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testHasInvalidFalse" duration-ms="602" started-at="2018-05-15T07:25:08Z" finished-at="2018-05-15T07:25:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testHasInvalidFalse -->
-        <test-method status="PASS" signature="testGetSongListValid()[pri:0, instance:testGetSongListValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongListValid" duration-ms="599" started-at="2018-05-15T00:24:06Z" finished-at="2018-05-15T00:24:06Z">
+        <test-method status="PASS" signature="testGetSongListValid()[pri:0, instance:testGetSongListValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testGetSongListValid" duration-ms="604" started-at="2018-05-15T07:25:09Z" finished-at="2018-05-15T07:25:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetSongListValid -->
-        <test-method status="PASS" signature="testAddSongNotValid()[pri:0, instance:testAddSongNotValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongNotValid" duration-ms="621" started-at="2018-05-15T00:24:06Z" finished-at="2018-05-15T00:24:07Z">
+        <test-method status="PASS" signature="testAddSongNotValid()[pri:0, instance:testAddSongNotValid(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testAddSongNotValid" duration-ms="653" started-at="2018-05-15T07:25:09Z" finished-at="2018-05-15T07:25:10Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddSongNotValid -->
-        <test-method status="PASS" signature="testHasInvalidTrue()[pri:0, instance:testHasInvalidTrue(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testHasInvalidTrue" duration-ms="684" started-at="2018-05-15T00:24:07Z" finished-at="2018-05-15T00:24:07Z">
+        <test-method status="PASS" signature="testHasInvalidTrue()[pri:0, instance:testHasInvalidTrue(org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest)]" name="testHasInvalidTrue" duration-ms="610" started-at="2018-05-15T07:25:10Z" finished-at="2018-05-15T07:25:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testHasInvalidTrue -->
       </class> <!-- org.ql.audioeditor.logic.dbaccess.DatabaseAccessModelTest -->
       <class name="org.ql.audioeditor.common.util.TimeUtilsTest">
-        <test-method status="PASS" signature="testSecondsToFrames()[pri:0, instance:testSecondsToFrames(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testSecondsToFrames" duration-ms="4" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testSecondsToFrames()[pri:0, instance:testSecondsToFrames(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testSecondsToFrames" duration-ms="4" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testSecondsToFrames -->
-        <test-method status="PASS" signature="testFramesToSeconds()[pri:0, instance:testFramesToSeconds(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFramesToSeconds" duration-ms="1" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testFramesToSeconds()[pri:0, instance:testFramesToSeconds(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFramesToSeconds" duration-ms="1" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testFramesToSeconds -->
-        <test-method status="PASS" signature="testFormatDuration()[pri:0, instance:testFormatDuration(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFormatDuration" duration-ms="3" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testFormatDuration()[pri:0, instance:testFormatDuration(org.ql.audioeditor.common.util.TimeUtilsTest)]" name="testFormatDuration" duration-ms="2" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testFormatDuration -->
       </class> <!-- org.ql.audioeditor.common.util.TimeUtilsTest -->
       <class name="org.ql.audioeditor.common.util.GeneralUtilsTest">
-        <test-method status="PASS" signature="testConvertToNumber()[pri:0, instance:testConvertToNumber(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testConvertToNumber" duration-ms="117" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testConvertToNumber()[pri:0, instance:testConvertToNumber(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testConvertToNumber" duration-ms="251" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testConvertToNumber -->
-        <test-method status="PASS" signature="testGetFileExtension()[pri:0, instance:testGetFileExtension(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetFileExtension" duration-ms="12" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testGetFileExtension()[pri:0, instance:testGetFileExtension(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetFileExtension" duration-ms="23" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetFileExtension -->
-        <test-method status="PASS" signature="testGetDir()[pri:0, instance:testGetDir(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetDir" duration-ms="1" started-at="2018-05-15T00:23:54Z" finished-at="2018-05-15T00:23:54Z">
+        <test-method status="PASS" signature="testGetDir()[pri:0, instance:testGetDir(org.ql.audioeditor.common.util.GeneralUtilsTest)]" name="testGetDir" duration-ms="1" started-at="2018-05-15T07:24:57Z" finished-at="2018-05-15T07:24:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetDir -->
