@@ -3,6 +3,7 @@ function plotSong(x, fs, imgname)
 %	x: samples
 %	fs: sample rate
 %	imgname: name of the file to save to
+
 	figure('visible', 'off');
 	xsize = size(x);
 	xlen = xsize(1);

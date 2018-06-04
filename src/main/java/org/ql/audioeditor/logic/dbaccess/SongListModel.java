@@ -91,6 +91,15 @@ public final class SongListModel extends ListModel<Song> {
     }
 
     /**
+     * Returns the number of songs.
+     *
+     * @return Number of songs
+     */
+    public int getSize() {
+        return items.size();
+    }
+
+    /**
      * Returns the current song's position in the list.
      *
      * @param sm Song model

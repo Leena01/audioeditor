@@ -106,6 +106,13 @@ public final class SongModel {
     }
 
     /**
+     * Sets ID to EMTPY_ID.
+     */
+    public void setEmpty() {
+        this.song.setId(EMPTY_ID);
+    }
+
+    /**
      * Returns the title of the song.
      *
      * @return Title

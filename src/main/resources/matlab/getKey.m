@@ -1,4 +1,9 @@
 function [note, scale] = getKey(A)
+%GETKEY	Returns the key detected.
+%	A: cumulative similarity vectors
+%
+%   Author: Lívia Qian
+
 	maj = zeros(12, 1);
 	min = zeros(12, 1);
 	major = [1, 5, 8];

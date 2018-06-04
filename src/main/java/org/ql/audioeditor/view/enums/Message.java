@@ -13,7 +13,8 @@ public enum Message {
     INTERRUPTED_ERROR("Error: the process was interrupted."),
     FILE_TYPE_ERROR("This file type is not supported."),
     IMAGE_ERROR("Cannot load image."),
-    SONG_TOO_SHORT_ERROR("The current song is too short to analyze.");
+    SONG_TOO_SHORT_ERROR("The current song is too short to analyze."),
+    TOO_MANY_FILES_ERROR("Too many files are selected.");
 
     private final String text;
 

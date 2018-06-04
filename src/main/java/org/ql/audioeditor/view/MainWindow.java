@@ -85,6 +85,7 @@ import static org.ql.audioeditor.view.enums.Message.SONGS_DELETED_INFO;
 import static org.ql.audioeditor.view.enums.Message.SONG_TOO_SHORT_ERROR;
 import static org.ql.audioeditor.view.enums.Message.SUCCESSFUL_OPERATION_INFO;
 import static org.ql.audioeditor.view.enums.Message.TIMEOUT_ERROR;
+import static org.ql.audioeditor.view.enums.Message.TOO_MANY_FILES_ERROR;
 import static org.ql.audioeditor.view.enums.Message.WRONG_INPUT_ERROR;
 import static org.ql.audioeditor.view.enums.PanelName.ANALYSIS_PANEL;
 import static org.ql.audioeditor.view.enums.PanelName.CHROMAGRAM_PANEL;
@@ -136,6 +137,7 @@ public final class MainWindow extends Window {
         ImageLoader.getOnsetImagePath();
     private static final int INFO_LABEL_DELAY = 5000;
     private static final int BASE_NUM = 10;
+    private static final int FILE_LIMIT = 3;
     private static final int TIMEOUT_MILLIS =
         ConfigPropertiesLoader.getTimeoutSeconds() * MILLIS_SECONDS_CONVERSION;
 
@@ -650,23 +652,27 @@ public final class MainWindow extends Window {
      */
     private void addSongs() {
         File[] files = openFiles();
-        List<File> validFiles = new ArrayList<>();
-        for (File f : files) {
-            if (!Arrays.asList(SongPropertiesLoader.getExtensionNames())
-                .contains(getFileExtension(f))) {
-                showInfo(infoLabel, FILE_TYPE_ERROR, INFO_LABEL_DELAY);
-            } else {
-                validFiles.add(f);
+        if (files.length <= FILE_LIMIT) {
+            List<File> validFiles = new ArrayList<>();
+            for (File f : files) {
+                if (!Arrays.asList(SongPropertiesLoader.getExtensionNames())
+                    .contains(getFileExtension(f))) {
+                    showInfo(infoLabel, FILE_TYPE_ERROR, INFO_LABEL_DELAY);
+                } else {
+                    validFiles.add(f);
+                }
             }
-        }
-        if (!validFiles.isEmpty()) {
-            SongListModel songListModel = new SongListModel(validFiles);
-            try {
-                databaseAccessModel.addSongs(songListModel);
-                showDialog(SUCCESSFUL_OPERATION_INFO);
-            } catch (InvalidOperationException | SQLConnectionException e) {
-                showDialog(e.getMessage());
+            if (!validFiles.isEmpty()) {
+                SongListModel songListModel = new SongListModel(validFiles);
+                try {
+                    databaseAccessModel.addSongs(songListModel);
+                    showDialog(SUCCESSFUL_OPERATION_INFO);
+                } catch (InvalidOperationException | SQLConnectionException e) {
+                    showDialog(e.getMessage());
+                }
             }
+        } else {
+            showInfo(infoLabel, TOO_MANY_FILES_ERROR, INFO_LABEL_DELAY);
         }
     }
 
@@ -678,9 +684,14 @@ public final class MainWindow extends Window {
         try {
             SongListModel slm = deleteSongsPanel.getSelectedRows();
             if (slm != null) {
-                databaseAccessModel.deleteSongs(slm);
+                if (slm.getSize() <= FILE_LIMIT) {
+                    databaseAccessModel.deleteSongs(slm);
+                    showDialog(SUCCESSFUL_OPERATION_INFO);
+                }
+                else {
+                    showInfo(infoLabel, TOO_MANY_FILES_ERROR, INFO_LABEL_DELAY);
+                }
             }
-            showDialog(SUCCESSFUL_OPERATION_INFO);
         } catch (InvalidOperationException | SQLConnectionException e) {
             showDialog(e.getMessage());
         }
@@ -989,6 +1000,7 @@ public final class MainWindow extends Window {
                     setFavorite(false);
                     currentSongModel
                         .setPath(SongPropertiesLoader.getDefaultPath());
+                    currentSongModel.setEmpty();
                 }
             } catch (SQLConnectionException e) {
                 showDialog(e.getMessage());

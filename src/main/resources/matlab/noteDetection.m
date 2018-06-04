@@ -1,5 +1,13 @@
 function sim = noteDetection(S1, locs1, n, wlen, nfft, hop)
-    %note = file;
+%NOTEDETECTION   Compares a certain note with each detected note of the given sound file and returns a vector of similarity.
+%	S1: STFT matrix
+%	n: file name (note)
+%	wlen: window size
+%	nfft: number of FFT points
+%	hop: Hop size
+%
+%   Author: Lívia Qian
+
     [x2, fs2] = audioread(n);
     x2 = x2(:, 1);
     
@@ -21,7 +29,7 @@ function sim = noteDetection(S1, locs1, n, wlen, nfft, hop)
     
     sim = zeros(1, llen);
     for i=1:llen
-        % Calculate the start end end point
+        % Calculate the start and end point
         beginning = locs1(i);
         if i == llen
             ending = slen;
